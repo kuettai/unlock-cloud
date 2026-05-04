@@ -1,0 +1,60 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "The Head Table",
+      "description": "The head of the wedding feast — where the mystery begins",
+      "connects_to": [120],
+      "unlocked_by": null,
+      "unlock_text": "You sit at the head of the wedding feast"
+    },
+    {
+      "card_id": 120,
+      "name": "The Servants' Corner",
+      "description": "Three servants huddle by the far wall, whispering",
+      "connects_to": [140, 160],
+      "unlocked_by": { "type": "event", "card_id": 109 },
+      "unlock_text": "Ezra directs you to the servants"
+    },
+    {
+      "card_id": 140,
+      "name": "The Stone Jars",
+      "description": "Six massive stone jars at the courtyard entrance",
+      "connects_to": [180],
+      "unlocked_by": { "type": "event", "card_id": 131 },
+      "unlock_text": "The servants tell you to see the jars yourself"
+    },
+    {
+      "card_id": 160,
+      "name": "Joachim's Shop",
+      "description": "The only wine merchant's shop in Cana",
+      "connects_to": [180],
+      "unlocked_by": { "type": "event", "card_id": 131 },
+      "unlock_text": "You pursue the merchant explanation"
+    },
+    {
+      "card_id": 180,
+      "name": "The Bride's Family Area",
+      "description": "Near the bride's family, where Mary sits",
+      "connects_to": [200],
+      "unlocked_by": { "type": "event", "card_id": 169 },
+      "unlock_text": "Both physical evidence and merchant testimony gathered"
+    },
+    {
+      "card_id": 200,
+      "name": "The Eastern Corner",
+      "description": "A group of fishermen and their teacher",
+      "connects_to": [220],
+      "unlocked_by": { "type": "event", "card_id": 191 },
+      "unlock_text": "Mary points you toward her son's followers"
+    },
+    {
+      "card_id": 220,
+      "name": "The Well",
+      "description": "The well and the stone jars — where it all began",
+      "connects_to": [],
+      "unlocked_by": { "type": "event", "card_id": 211 },
+      "unlock_text": "You have gathered all the testimony"
+    }
+  ]
+}

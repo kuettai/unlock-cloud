@@ -1,0 +1,113 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Story narrator — warm, sets the scene" },
+    "philip": { "voice_id": "Matthew", "role": "Philip's inner thoughts — practical, calculating" }
+  },
+  "intro": {
+    "segments": [
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='92%'>The hillside above the Sea of Galilee is alive with people. <break time='400ms'/> Thousands of them <break time='300ms'/> — men, women, children <break time='300ms'/> — spread across the grass like a living carpet.</prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='92%'>You are <prosody rate='90%' volume='+2dB'>Philip of Bethsaida</prosody>. <break time='300ms'/> The practical disciple. <break time='200ms'/> The one who counts the money, plans the routes, arranges the lodging.</prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='90%'>The teacher has been speaking all day. <break time='300ms'/> The sun is dropping toward the western hills. <break time='400ms'/> And now he turns to you.</prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='85%' volume='+4dB'>\"Where shall we buy bread <break time='200ms'/> for these people to eat?\"</prosody>",
+        "pause_after_ms": 1200
+      },
+      {
+        "voice": "philip",
+        "ssml": "<prosody rate='90%'>I look out at the crowd. <break time='300ms'/> My stomach drops. <break time='400ms'/> This isn't a question <break time='200ms'/> — it's an <prosody rate='85%' volume='+4dB'>impossibility</prosody>. <break time='300ms'/> But he asked me. And I'm the one with the numbers.</prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "philip",
+        "ssml": "<prosody rate='88%' volume='+2dB'>Time to do the math.</prosody>",
+        "pause_after_ms": 0
+      }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "segments": [
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='90%'>The sun drops lower. <break time='300ms'/> The crowd grows restless. <break time='400ms'/> Hungry faces turn toward the disciples.</prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "philip",
+        "ssml": "<prosody rate='95%' volume='+2dB'>I'm running out of time. <break time='300ms'/> Five thousand men and their families <break time='200ms'/> — and I still don't have an answer.</prosody>",
+        "pause_after_ms": 0
+      }
+    ],
+    "audio": null
+  },
+  "urgency": {
+    "segments": [
+      {
+        "voice": "philip",
+        "ssml": "<prosody rate='95%' volume='+2dB'>The sun is almost gone. <break time='300ms'/> Five thousand hungry people and I still have no answer. <break time='200ms'/> I <prosody rate='85%' volume='+4dB'>must</prosody> finish this now.</prosody>",
+        "pause_after_ms": 0
+      }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='88%'>You sit on the grass among twelve baskets, <break time='300ms'/> each overflowing with fragments of barley bread.</prosody>",
+          "pause_after_ms": 1000
+        },
+        {
+          "voice": "philip",
+          "ssml": "<prosody rate='85%'>Five loaves. <break time='300ms'/> Two fish. <break time='400ms'/> Five thousand fed. <break time='400ms'/> Twelve baskets left over. <break time='600ms'/> The math doesn't work. <break time='300ms'/> It never did. <break time='400ms'/> And now I understand <break time='300ms'/> — it was <prosody rate='85%' volume='+4dB'>never supposed to</prosody>.</prosody>",
+          "pause_after_ms": 1200
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='90%'>The crowd is buzzing. <break time='300ms'/> The same phrase passes from group to group like a wave: <break time='400ms'/> <prosody rate='85%' volume='+4dB'>\"This is truly the prophet who comes into the world.\"</prosody></prosody>",
+          "pause_after_ms": 1000
+        },
+        {
+          "voice": "philip",
+          "ssml": "<prosody rate='85%'>He asked me the question <break time='200ms'/> not because he needed an answer. <break time='400ms'/> He asked because he wanted me to see <break time='300ms'/> — truly see <break time='300ms'/> — that what he was about to do was beyond anything I could calculate, purchase, or arrange.</prosody>",
+          "pause_after_ms": 800
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='88%'>You pick up your basket <break time='200ms'/> — still heavy with fragments <break time='300ms'/> — and follow the others down the hillside. <break time='500ms'/> The stars are coming out over the Sea of Galilee.</prosody>",
+          "pause_after_ms": 0
+        }
+      ],
+      "audio": null
+    },
+    "failure": {
+      "segments": [
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='88%'>The sun sets. <break time='400ms'/> The crowd disperses, hungry and disappointed.</prosody>",
+          "pause_after_ms": 800
+        },
+        {
+          "voice": "philip",
+          "ssml": "<prosody rate='85%'>You stand on the empty hillside, <break time='300ms'/> holding nothing but your calculations. <break time='400ms'/> The math was right <break time='300ms'/> — but the answer was <prosody rate='85%' volume='+4dB'>never</prosody> in the numbers.</prosody>",
+          "pause_after_ms": 0
+        }
+      ],
+      "audio": null
+    }
+  }
+}

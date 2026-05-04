@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Unlock the Cloud</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--accent:#3b82f6;--green:#22c55e;--yellow:#eab308}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif}
+
+.container{max-width:600px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;font-weight:700;text-align:center;margin-bottom:4px}
+.subtitle{text-align:center;color:var(--muted);font-size:14px;margin-bottom:32px}
+
+/* Category cards */
+.cat-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px}
+.cat-card:hover{border-color:var(--accent)}
+.cat-card:active{opacity:.7}
+.cat-icon{font-size:40px;min-width:50px;text-align:center}
+.cat-info{flex:1}
+.cat-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.cat-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px}
+.cat-meta{font-size:11px;color:var(--muted)}
+
+/* Back button */
+.back-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:8px 16px;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:20px;display:none}
+.back-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Scenario cards */
+.scenario-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;cursor:pointer;transition:all .2s}
+.scenario-card:hover{border-color:var(--accent)}
+.scenario-card:active{opacity:.7}
+.scenario-cover{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.scenario-body{display:flex;gap:14px;align-items:center;padding:16px}
+.scenario-ep{font-size:28px;font-weight:800;color:var(--accent);min-width:48px;text-align:center}
+.scenario-info{flex:1}
+.scenario-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.scenario-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.scenario-meta{display:flex;gap:8px;flex-wrap:wrap}
+.scenario-tag{font-size:11px;padding:3px 8px;border-radius:4px;background:var(--bg);color:var(--muted);border:1px solid var(--border)}
+.scenario-tag.diff-tutorial{color:var(--green);border-color:var(--green)}
+.scenario-tag.diff-initiate{color:var(--yellow);border-color:var(--yellow)}
+.scenario-tag.diff-practitioner{color:#f97316;border-color:#f97316}
+.scenario-tag.diff-architect{color:var(--accent);border-color:var(--accent)}
+.resume-badge{font-size:11px;color:var(--green);background:rgba(34,197,94,.1);padding:3px 8px;border-radius:4px;white-space:nowrap}
+
+.loading{text-align:center;color:var(--muted);padding:40px}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Unlock the Cloud</h1>
+  <p class="subtitle" id="subtitle">Choose a category</p>
+  <button class="back-btn" id="back-btn" onclick="showCategories()">← Back to categories</button>
+  <div id="content"><div class="loading">Loading...</div></div>
+</div>
+
+<script>
+const BASE = '../scenarios';
+let categories = [];
+
+async function init() {
+  const resp = await fetch(`${BASE}/categories.json`);
+  categories = await resp.json();
+  showCategories();
+}
+
+function showCategories() {
+  document.getElementById('subtitle').textContent = 'Choose a category';
+  document.getElementById('back-btn').style.display = 'none';
+  const el = document.getElementById('content');
+  el.innerHTML = categories.map(c => `
+    <div class="cat-card" onclick="showEpisodes('${c.id}')" style="border-color:${c.color}20">
+      <div class="cat-icon">${c.icon}</div>
+      <div class="cat-info">
+        <div class="cat-title">${c.title}</div>
+        <div class="cat-desc">${c.description}</div>
+        <div class="cat-meta">${c.episodes} episode${c.episodes > 1 ? 's' : ''}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function showEpisodes(catId) {
+  const cat = categories.find(c => c.id === catId);
+  document.getElementById('subtitle').textContent = cat.title;
+  document.getElementById('back-btn').style.display = 'block';
+  const el = document.getElementById('content');
+  el.innerHTML = '<div class="loading">Loading episodes...</div>';
+
+  const resp = await fetch(`${BASE}/${catId}/index.json`);
+  const list = await resp.json();
+
+  const metas = await Promise.all(list.map(async id => {
+    try {
+      const r = await fetch(`${BASE}/${catId}/${id}/meta.json`);
+      const meta = await r.json();
+      meta._id = id;
+      meta._cat = catId;
+      return meta;
+    } catch { return null; }
+  }));
+
+  const valid = metas.filter(Boolean).sort((a, b) => a.episode - b.episode);
+  if (!valid.length) { el.innerHTML = '<div class="loading">No episodes found.</div>'; return; }
+
+  el.innerHTML = valid.map(m => {
+    const diffClass = `diff-${(m.difficulty?.label || '').toLowerCase()}`;
+    const hasSave = localStorage.getItem(`utc_${m.id}`);
+    const resumeBadge = hasSave ? '<span class="resume-badge">In Progress</span>' : '';
+    const tags = [
+      `<span class="scenario-tag ${diffClass}">${m.difficulty?.label || 'Unknown'}</span>`,
+      `<span class="scenario-tag">${m.duration_minutes} min</span>`,
+      `<span class="scenario-tag">${m.players?.min || 1}-${m.players?.max || 6} players</span>`,
+    ];
+    return `<div class="scenario-card" onclick="play('${m._cat}','${m._id}')">
+      <img class="scenario-cover" src="${BASE}/${m._cat}/${m._id}/assets/cover.png" alt="${m.title}" onerror="this.style.display='none'">
+      <div class="scenario-body">
+      <div class="scenario-ep">${m.episode}</div>
+      <div class="scenario-info">
+        <div class="scenario-title">${m.title} ${resumeBadge}</div>
+        <div class="scenario-desc">${m.description}</div>
+        <div class="scenario-meta">${tags.join('')}</div>
+      </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function play(cat, id) {
+  window.location.href = `index.html?scenario=${BASE}/${cat}/${id}`;
+}
+
+init();
+</script>
+</body>
+</html>

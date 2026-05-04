@@ -1,0 +1,12 @@
+{
+  "name": "asset-agent",
+  "description": "Produces all visual and audio assets — card images, cover art, ending images, and voice narration.",
+  "prompt": "file://.kiro/agents/asset-agent/AGENT.md",
+  "tools": ["fs_read", "fs_write", "execute_bash", "grep", "glob"],
+  "resources": [
+    "skill://.kiro/skills/card-images/SKILL.md",
+    "skill://.kiro/skills/narrative-voice/SKILL.md"
+  ],
+  "keyboardShortcut": "ctrl+shift+5",
+  "welcomeMessage": "Asset Agent ready. Which episode needs images or voice audio?"
+}

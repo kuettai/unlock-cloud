@@ -1,0 +1,214 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "type": "location",
+      "color": "green",
+      "title": "Start Chamber",
+      "description": "A clean white room. A screen on the wall reads: \"Diagnostic Test 1: Discover and Combine.\" A box on the table has a scrambled number panel on its lid. A small chip glints nearby. A message flickers: \"Two paths ahead. You'll need what both hold.\"",
+      "image": "assets/start-chamber.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 2, "label": "Examine the box on the table", "puzzle": "jigsaw-box" },
+        { "card_id": 3, "label": "Pick up the small chip" }
+      ],
+      "visible_to": "all",
+      "room": "start-chamber"
+    },
+    {
+      "id": 2,
+      "type": "object",
+      "color": "blue",
+      "title": "Locked Box",
+      "description": "A small box with a slot on top. It needs something inserted.",
+      "flavor_text": "Blue cards are things you interact WITH.",
+      "image": "assets/card-locked-box.png",
+      "visible_to": "all",
+      "room": "start-chamber"
+    },
+    {
+      "id": 3,
+      "type": "item",
+      "color": "red",
+      "title": "Key Chip",
+      "description": "A small chip that looks like it fits into something.",
+      "flavor_text": "Red cards are things you USE.",
+      "image": "assets/card-key-chip.png",
+      "visible_to": "all",
+      "room": "start-chamber"
+    },
+    {
+      "id": 5,
+      "type": "event",
+      "color": "yellow",
+      "title": "Click.",
+      "description": "The box opens. Two paths are revealed. Use the Map to explore both — you'll need what each one holds.",
+      "reveals": [20, 10],
+      "consumes": [2, 3],
+      "visible_to": "all",
+      "room": "start-chamber"
+    },
+    {
+      "id": 10,
+      "type": "location",
+      "color": "green",
+      "title": "Combination Room",
+      "description": "A room with two tables. On the left table: a device. On the right table: a power cell. A door ahead is shut. The screen reads: \"Diagnostic Test 2b: Wrong combinations have consequences.\"",
+      "image": "assets/combination-room.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 11, "label": "Take the power cell from the table" },
+        { "card_id": 12, "label": "Inspect the device on the left table", "puzzle": "wire-device" },
+        { "card_id": 14, "label": "Look at the shut door" },
+        { "card_id": 30, "label": "Open the passage ahead", "requires_item": [33, 16], "consumes_item": [33, 16] }
+      ],
+      "visible_to": "all",
+      "room": "combination-room"
+    },
+    {
+      "id": 11,
+      "type": "item",
+      "color": "red",
+      "title": "Power Cell",
+      "description": "A glowing energy cell.",
+      "image": "assets/card-power-cell.png",
+      "visible_to": "all",
+      "room": "combination-room"
+    },
+    {
+      "id": 12,
+      "type": "object",
+      "color": "blue",
+      "title": "Device",
+      "description": "A machine with a slot for a power cell.",
+      "image": "assets/card-device.png",
+      "visible_to": "all",
+      "room": "combination-room"
+    },
+    {
+      "id": 14,
+      "type": "object",
+      "color": "blue",
+      "title": "Shut Door",
+      "description": "A heavy door. It won't budge by hand.",
+      "image": "assets/card-shut-door.png",
+      "visible_to": "all",
+      "room": "combination-room"
+    },
+    {
+      "id": 16,
+      "type": "item",
+      "color": "red",
+      "title": "Charged Cell",
+      "description": "The power cell hums with energy after being charged by the device. It feels important.",
+      "image": "assets/card-charged-cell.png",
+      "visible_to": "all",
+      "room": "combination-room"
+    },
+    {
+      "id": 20,
+      "type": "location",
+      "color": "green",
+      "title": "Sequence Room",
+      "description": "A dark room with a glowing 3×3 grid on the wall. The screen reads: \"Diagnostic Test 2a: Memory.\" A pattern flashes across the grid. Memorize it.",
+      "image": "assets/sequence-room.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 33, "label": "Interact with the grid terminal", "puzzle": "seq-grid" }
+      ],
+      "visible_to": "all",
+      "room": "sequence-room"
+    },
+    {
+      "id": 23,
+      "type": "event",
+      "color": "yellow",
+      "title": "Charged.",
+      "description": "The device powers up the cell. It glows brighter now. You have what you need from this room.",
+      "reveals": [],
+      "consumes": [11, 12],
+      "awards": [16],
+      "visible_to": "all",
+      "room": "combination-room"
+    },
+    {
+      "id": 25,
+      "type": "penalty",
+      "color": "black",
+      "title": "Bzzt.",
+      "description": "You jammed the power cell into the door. It doesn't fit. The cell sparks. \"Wrong combination. Time penalty: 30 seconds. Think about what fits where.\"",
+      "penalty_seconds": 30,
+      "returns_items": [11],
+      "visible_to": "all",
+      "room": "combination-room"
+    },
+    {
+      "id": 30,
+      "type": "location",
+      "color": "green",
+      "title": "Hidden Room",
+      "description": "A room with a large mural on the wall. Abstract digital art — circuits, nodes, flowing data. The screen reads: \"Diagnostic Test 3: Not everything is obvious. Search carefully.\"",
+      "image": "assets/hidden-room-mural.svg",
+      "hidden_elements": [
+        { "type": "number", "value": 42, "location_hint": "Embedded in the circuit pattern" }
+      ],
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 50, "label": "Access the Code Room terminal", "requires_item": 42, "puzzle": "morse-go" }
+      ],
+      "visible_to": "all",
+      "room": "hidden-room",
+      "puzzle_ref": "hidden-mural"
+    },
+    {
+      "id": 33,
+      "type": "item",
+      "color": "red",
+      "title": "Access Key",
+      "description": "A digital key materialized from the grid. It pulses with a faint rhythm.",
+      "image": "assets/card-access-key.png",
+      "image_prompt": "A futuristic digital key card, glowing circuit patterns etched into translucent surface, pulsing green light, floating in dark space",
+      "visible_to": "all",
+      "room": "sequence-room"
+    },
+    {
+      "id": 42,
+      "type": "item",
+      "color": "red",
+      "title": "Data Fragment",
+      "description": "A piece of encrypted data. It reads: dW5sb2Nr",
+      "image": "assets/card-data-fragment.png",
+      "image_prompt": "A glowing holographic data shard, fractured crystal with encrypted symbols floating around it, neon blue light",
+      "visible_to": "all",
+      "room": "hidden-room",
+      "reveals": []
+    },
+    {
+      "id": 50,
+      "type": "location",
+      "color": "green",
+      "title": "Code Room",
+      "short_description": "The final room. A terminal with a text input. Decode and reorder to escape.",
+      "description": "The final room. A terminal with a text input. The screen reads: \"Diagnostic Test 4: Decode and reorder.\"<br><br>A reference chart on the wall shows:<br>\"Base64 is an encoding format. Use the decoder tool below.\"<br><br>Below it, a color key labels each decoded letter by position:<br>🟢 1st &nbsp; ⬜ 2nd &nbsp; 🟣 3rd &nbsp; 🩷 4th &nbsp; 🔴 5th &nbsp; 🔵 6th<br><br>The EXIT CODE sequence on the terminal reads:<br>🟣 🩷 🔴 🔵 ⬜ 🟢<br><br>Rearrange the decoded letters in the EXIT CODE color order to find the answer.",
+      "image": "assets/code-room.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": -1, "label": "Use the Base64 Decoder tool", "puzzle": "b64-tool" }
+      ],
+      "visible_to": "all",
+      "room": "code-room",
+      "puzzle_ref": "base64-decode",
+      "tools": ["base64_decoder"]
+    },
+    {
+      "id": 99,
+      "type": "event",
+      "color": "yellow",
+      "title": "Diagnostic complete.",
+      "description": "All systems operational. The room fills with light. \"You are ready, Unit. The real mission begins now.\"",
+      "is_ending": true,
+      "visible_to": "all",
+      "room": "code-room"
+    }
+  ]
+}

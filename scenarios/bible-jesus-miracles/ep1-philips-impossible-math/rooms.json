@@ -1,0 +1,52 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "The Hillside",
+      "description": "The hillside above the Sea of Galilee — where the impossible question is asked",
+      "connects_to": [120],
+      "unlocked_by": null,
+      "unlock_text": "You stand on the hillside above the Sea of Galilee"
+    },
+    {
+      "card_id": 120,
+      "name": "The Crowd",
+      "description": "Among the crowd, searching for food that doesn't exist",
+      "connects_to": [140, 160],
+      "unlocked_by": { "type": "event", "card_id": 113 },
+      "unlock_text": "You descend into the crowd to search for food"
+    },
+    {
+      "card_id": 140,
+      "name": "The Boy's Basket",
+      "description": "Andrew brings a boy with five loaves and two fish",
+      "connects_to": [180],
+      "unlocked_by": { "type": "event", "card_id": 133 },
+      "unlock_text": "Andrew brings a boy with a small basket"
+    },
+    {
+      "card_id": 160,
+      "name": "The Arrangement",
+      "description": "Organizing the crowd into groups of fifties and hundreds",
+      "connects_to": [180],
+      "unlocked_by": { "type": "event", "card_id": 133 },
+      "unlock_text": "The teacher says: 'Have the people sit down'"
+    },
+    {
+      "card_id": 180,
+      "name": "The Blessing",
+      "description": "The teacher takes the loaves and fish, gives thanks, and breaks the bread",
+      "connects_to": [200],
+      "unlocked_by": { "type": "event", "card_id": 175 },
+      "unlock_text": "The food and the crowd are ready"
+    },
+    {
+      "card_id": 200,
+      "name": "The Hillside (After)",
+      "description": "The miracle is done — gather the leftovers",
+      "connects_to": [],
+      "unlocked_by": { "type": "event", "card_id": 195 },
+      "unlock_text": "The miracle is done. Gather the leftovers."
+    }
+  ]
+}

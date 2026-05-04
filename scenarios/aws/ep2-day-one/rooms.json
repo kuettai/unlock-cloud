@@ -1,0 +1,100 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Reception",
+      "description": "NovaCorp 14th Floor — Lobby and front desk",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "You step off the elevator into NovaCorp reception."
+    },
+    {
+      "card_id": 200,
+      "name": "Your Desk",
+      "description": "Open-plan office — Desk 7B with dual monitors and sticky notes",
+      "connects_to": [300, 500, 700, 900, 1100, 600, 800],
+      "unlocked_by": { "type": "item", "card_id": 104 },
+      "unlock_text": "Maya hands you a badge. \"Desk 7B. Down the hall, second left.\""
+    },
+    {
+      "card_id": 300,
+      "name": "War Room",
+      "description": "Glass-walled conference room — incident command center",
+      "connects_to": [],
+      "unlocked_by": { "type": "discovery", "from_room": 200 },
+      "unlock_text": "You push open the glass door marked \"WAR ROOM.\""
+    },
+    {
+      "card_id": 400,
+      "name": "Server Closet",
+      "description": "Cramped room behind DevOps — server racks and cables",
+      "connects_to": [],
+      "unlocked_by": { "type": "discovery", "from_room": 700 },
+      "unlock_text": "Sam points to the back door. \"Closet's through there. Good luck.\""
+    },
+    {
+      "card_id": 500,
+      "name": "Data Team Office",
+      "description": "Whiteboard-covered room — model diagrams and benchmarks",
+      "connects_to": [],
+      "unlocked_by": { "type": "discovery", "from_room": 200 },
+      "unlock_text": "The whiteboard-covered room at the end of the hall."
+    },
+    {
+      "card_id": 600,
+      "name": "Security Office",
+      "description": "Locked room with CCTV monitors and intrusion detection",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "npc-frank" },
+      "unlock_text": "Frank grudgingly buzzes you in. \"Don't touch anything.\""
+    },
+    {
+      "card_id": 700,
+      "name": "DevOps Bullpen",
+      "description": "Standing desks and monitors — CI/CD pipelines all red",
+      "connects_to": [400],
+      "unlocked_by": { "type": "discovery", "from_room": 200 },
+      "unlock_text": "A cluster of standing desks covered in monitors."
+    },
+    {
+      "card_id": 800,
+      "name": "Executive Floor",
+      "description": "15th floor — CTO Diana Park's corner office",
+      "connects_to": [1200],
+      "unlocked_by": { "type": "item", "card_id": 613 },
+      "unlock_text": "The elevator opens on 15. Corner office ahead."
+    },
+    {
+      "card_id": 900,
+      "name": "Break Room",
+      "description": "Kitchen with coffee machine and nervous engineers",
+      "connects_to": [1000],
+      "unlocked_by": { "type": "discovery", "from_room": 200 },
+      "unlock_text": "The smell of burnt coffee pulls you in."
+    },
+    {
+      "card_id": 1000,
+      "name": "Call Center",
+      "description": "Rows of desks with headsets — 47 minute wait time",
+      "connects_to": [],
+      "unlocked_by": { "type": "discovery", "from_room": 900 },
+      "unlock_text": "Through the break room's back door — headsets and chaos."
+    },
+    {
+      "card_id": 1100,
+      "name": "Archive Basement",
+      "description": "B2 — Dusty server racks and original architecture docs",
+      "connects_to": [],
+      "unlocked_by": { "type": "item", "card_id": 205 },
+      "unlock_text": "Stairs behind the fire exit. B2. The air smells like old paper."
+    },
+    {
+      "card_id": 1200,
+      "name": "Rooftop",
+      "description": "Satellite uplink — final service activation chain",
+      "connects_to": [],
+      "unlocked_by": { "type": "item", "card_id": 806 },
+      "unlock_text": "The roof access door swings open. Wind and city skyline."
+    }
+  ]
+}

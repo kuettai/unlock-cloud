@@ -1,0 +1,12 @@
+{
+  "timed_events": [],
+  "triggered_events": [
+    {
+      "id": "hint-tooltip",
+      "trigger": "first_hint_request",
+      "message": "Hints are always available. They cost points but never block you. Use them if you're stuck.",
+      "type": "tooltip",
+      "once": true
+    }
+  ]
+}

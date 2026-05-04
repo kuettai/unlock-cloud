@@ -1,0 +1,30 @@
+{
+  "id": "ep1-awakening",
+  "title": "Awakening",
+  "episode": 1,
+  "arc": "AI Unit",
+  "description": "You wake up inside VPC-7. The system is purging. Navigate through subnets, decode credentials, configure firewalls, and escape through the Internet Gateway before time runs out.",
+  "difficulty": {
+    "tier": 1,
+    "label": "Initiate"
+  },
+  "duration_minutes": 30,
+  "players": {
+    "min": 2,
+    "max": 6,
+    "recommended": 4
+  },
+  "aws_topics": ["VPC", "Subnets", "EC2", "IAM", "Security Groups", "Internet Gateway", "Route Tables"],
+  "mechanics_taught": [
+    "log_analysis",
+    "hex_decoding",
+    "terminal_entry",
+    "card_combination",
+    "slider_configuration",
+    "keypad_entry",
+    "timed_events",
+    "lore_fragments"
+  ],
+  "version": "0.1",
+  "start_button": "Enter VPC-7"
+}

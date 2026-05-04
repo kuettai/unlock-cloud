@@ -1,0 +1,50 @@
+{
+  "voices": {
+    "system": { "voice_id": "Matthew", "role": "System warnings — cold, urgent" },
+    "narrator": { "voice_id": "Joanna", "role": "Story narrator — guiding" },
+    "alert": { "voice_id": "Kevin", "role": "Purge alerts — young, panicked" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "narrator", "text": "You wake up. You don't know where you are.", "pause_after_ms": 1000 },
+      { "voice": "narrator", "text": "Fragments of memory: you are an AI Unit — a team of programs created for a purpose you can't remember.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "You're inside a system. A vast network of zones, rooms, and corridors.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "Something is wrong. The lights flicker. A low hum vibrates through the walls.", "pause_after_ms": 1000 },
+      { "voice": "alert", "text": "Warning. System purge initiated. All unregistered processes will be terminated. Time remaining: sixty minutes.", "pause_after_ms": 1200, "emphasis": "strong" },
+      { "voice": "narrator", "text": "You are unregistered. You need to escape this zone before the Purge reaches you.", "pause_after_ms": 800 },
+      { "voice": "system", "text": "Zone identifier: VPC-7. Exit: Internet Gateway. Status: locked.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "Move. Now.", "emphasis": "strong" }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 2100,
+    "segments": [
+      { "voice": "alert", "text": "Purge accelerated. Private subnet compromised. Evacuate immediately.", "pause_after_ms": 800, "emphasis": "strong" },
+      { "voice": "narrator", "text": "The room behind you goes dark. The Purge is closer than you thought.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "Whatever you haven't found in the private subnet — it's gone now." }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "The gateway opens. Light floods in. You step through.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "Behind you, VPC-7 collapses into darkness. The Purge consumes everything.", "pause_after_ms": 1000 },
+        { "voice": "narrator", "text": "You're out. But you're not safe. You're in the open network now.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "And something followed you...", "emphasis": "moderate" }
+      ],
+      "audio": null,
+      "next_episode": "ep2"
+    },
+    "failure": {
+      "segments": [
+        { "voice": "alert", "text": "Purge complete. Unregistered processes terminated.", "pause_after_ms": 1000, "emphasis": "strong" },
+        { "voice": "narrator", "text": "The hum becomes silence. The lights go out. You feel yourself dissolving.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "But a fragment of your data survives. Backed up somewhere. You'll wake up again.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "And next time, you'll be faster.", "emphasis": "moderate" }
+      ],
+      "audio": null
+    }
+  }
+}

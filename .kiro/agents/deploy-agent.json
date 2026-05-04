@@ -1,0 +1,11 @@
+{
+  "name": "deploy-agent",
+  "description": "Runs tests, deploys the app to EC2, and verifies the site is live.",
+  "prompt": "file://.kiro/agents/deploy-agent/AGENT.md",
+  "tools": ["fs_read", "execute_bash", "use_aws"],
+  "resources": [
+    "skill://.kiro/skills/deploy/SKILL.md"
+  ],
+  "keyboardShortcut": "ctrl+shift+8",
+  "welcomeMessage": "Deploy Agent ready. Shall I run tests and ship it?"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "story-creative",
+  "description": "Designs episode concepts, narrative arcs, characters, and storylines for scenarios.",
+  "prompt": "file://.kiro/agents/story-creative/AGENT.md",
+  "tools": ["fs_read", "grep", "glob", "web_search"],
+  "resources": [
+    "skill://.kiro/skills/mechanics/SKILL.md",
+    "skill://.kiro/skills/scenario-blueprint/SKILL.md"
+  ],
+  "keyboardShortcut": "ctrl+shift+1",
+  "welcomeMessage": "Story Creative here. What episode or narrative shall we design?"
+}

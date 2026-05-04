@@ -1,0 +1,129 @@
+{
+  "puzzles": [
+    {
+      "id": "jigsaw-box",
+      "type": "jigsaw_lock",
+      "card_ref": 1,
+      "description": "Arrange the tiles in order (1-9) to unlock the box",
+      "ui": "jigsaw-lock",
+      "config": {
+        "cols": 3,
+        "rows": 3,
+        "tiles": ["1","2","3","4","5","6","7","8","9"],
+        "revealCorrect": true
+      },
+      "hints": [
+        "Tap two tiles to swap them. The numbers should read 1-9, left to right, top to bottom.",
+        "Start from the top-left. Which number belongs there?",
+        "Row 1: 1 2 3 / Row 2: 4 5 6 / Row 3: 7 8 9"
+      ]
+    },
+    {
+      "id": "seq-grid",
+      "type": "sequence_lock",
+      "card_ref": 20,
+      "description": "Memorize and replay the flashing pattern on the 3x3 grid",
+      "ui": "sequence-lock",
+      "config": {
+        "sequence": [0, 1, 2, 5, 8],
+        "mode": "flash",
+        "flashMs": 400,
+        "gapMs": 200
+      },
+      "hints": [
+        "Watch the pattern carefully. It traces a shape.",
+        "The pattern goes: top-left, top-center, top-right, middle-right, bottom-right.",
+        "Tap cells in order: 0, 1, 2, 5, 8 (an L-shape from top-left to bottom-right)."
+      ]
+    },
+    {
+      "id": "wire-device",
+      "type": "wire_lock",
+      "card_ref": 10,
+      "description": "Connect the wires to the correct sockets to activate the device",
+      "ui": "wire-lock",
+      "config": {
+        "wires": [
+          { "id": "power", "color": "#22c55e", "label": "Power" },
+          { "id": "data", "color": "#3b82f6", "label": "Data" },
+          { "id": "ground", "color": "#7a8ba8", "label": "Ground" }
+        ],
+        "sockets": [
+          { "id": "energy", "label": "Energy Port" },
+          { "id": "signal", "label": "Signal Port" },
+          { "id": "drain", "label": "Drain Port" }
+        ],
+        "solution": { "power": "energy", "data": "signal", "ground": "drain" },
+        "falseOutputs": ["Sparks fly... wrong connection.", "The device hums but nothing happens."]
+      },
+      "hints": [
+        "Match each wire to the socket that makes sense. Power goes to energy.",
+        "Power → Energy Port, Data → Signal Port. What's left?",
+        "Power → Energy, Data → Signal, Ground → Drain."
+      ]
+    },
+    {
+      "id": "morse-go",
+      "type": "morse_lock",
+      "card_ref": 30,
+      "description": "Tap the morse code for 'GO' to activate the terminal",
+      "ui": "morse-lock",
+      "config": {
+        "answer": "GO",
+        "showReference": true
+      },
+      "hints": [
+        "You need to tap morse code. Short tap = dot, long tap = dash.",
+        "G is dash-dash-dot (--.). O is dash-dash-dash (---).",
+        "Tap: long long short (pause) long long long."
+      ]
+    },
+    {
+      "id": "hidden-mural",
+      "type": "hidden_element",
+      "card_ref": 30,
+      "description": "Find the hidden number in the mural artwork",
+      "solution": {
+        "type": "card_number",
+        "value": 42
+      },
+      "auto_hint_after_seconds": 180,
+      "hints": [
+        "The mural isn't just decoration.",
+        "Look for a number hidden in the circuit pattern.",
+        "The number is 42. Look at card 42."
+      ]
+    },
+    {
+      "id": "b64-tool",
+      "type": "tool",
+      "card_ref": 50,
+      "description": "Base64 Decoder",
+      "ui": "base64-decoder",
+      "config": {},
+      "hints": []
+    },
+    {
+      "id": "base64-decode",
+      "type": "code_entry",
+      "card_ref": 50,
+      "description": "Decode the Base64 data fragment, then rearrange letters using the color cipher",
+      "input": "dW5sb2Nr",
+      "solution": {
+        "type": "text",
+        "value": "locknu",
+        "case_sensitive": false
+      },
+      "tools_available": ["base64_decoder"],
+      "puzzle_ui": "word_lock",
+      "penalty_on_wrong": false,
+      "wrong_answer_message": "Incorrect. Did you rearrange the letters using the EXIT CODE color order?",
+      "success_card": 99,
+      "hints": [
+        "First decode the Base64 text. Then look at the color key and the EXIT CODE sequence.",
+        "The decoded text is 'unlock'. Each letter has a color by position: u=Green, n=White, l=Purple, o=Pink, c=Red, k=Blue. Now follow the EXIT CODE color order.",
+        "EXIT CODE order: Purple Pink Red Blue White Green = l o c k n u. The answer is 'locknu'."
+      ]
+    }
+  ]
+}

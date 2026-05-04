@@ -1,0 +1,67 @@
+{
+  "combinations": [
+    {
+      "card_a": 1006,
+      "card_b": 303,
+      "result_card": 1311,
+      "type": "item_object",
+      "description": "Cross-reference Error Logs with War Room Dashboard — reveal full failure timeline"
+    },
+    {
+      "card_a": 503,
+      "card_b": 702,
+      "result_card": 1312,
+      "type": "item_object",
+      "description": "Match Model Benchmarks to Pipeline Diagram — discover cost optimization"
+    },
+    {
+      "card_a": 613,
+      "card_b": 602,
+      "result_card": 1313,
+      "type": "item_object",
+      "description": "Use Exec Badge to unlock full CCTV footage — see Marcus sabotage video"
+    },
+    {
+      "card_a": 709,
+      "card_b": 703,
+      "result_card": 1314,
+      "type": "item_object",
+      "description": "Cross-reference Root Cause Report with Deployment Logs — generate rollback plan"
+    },
+    {
+      "card_a": 606,
+      "card_b": 603,
+      "result_card": 1315,
+      "type": "item_object",
+      "description": "Compare Guardrails Config with IDS Alert Log — produce security audit report"
+    },
+    {
+      "card_a": 1103,
+      "card_b": 1101,
+      "result_card": 1316,
+      "type": "item_object",
+      "description": "Compare Architecture Doc with Original Whiteboard — see before/after diff"
+    },
+    {
+      "card_a": 1005,
+      "card_b": 1002,
+      "result_card": 1317,
+      "type": "item_object",
+      "description": "Combine Comprehend Report with Call Recordings — full PII incident report"
+    },
+    {
+      "card_a": 1006,
+      "card_b": 302,
+      "result_card": 1318,
+      "type": "item_object",
+      "description": "Cross-reference Error Logs with Timeline Whiteboard — fill in the gaps"
+    },
+    {
+      "card_a": 1006,
+      "card_b": 1201,
+      "result_card": 1302,
+      "type": "penalty",
+      "description": "Wrong: Upload raw Error Logs to Satellite Console — console rejects diagnostics, -5 points"
+    }
+  ]
+}

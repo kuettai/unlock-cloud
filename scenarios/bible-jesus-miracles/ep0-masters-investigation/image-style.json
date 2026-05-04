@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Oil painting style, warm golden tones, ancient Galilean wedding setting, clay lamps and stone architecture, biblical era, rich earthy palette, game card art.",
+  "style_prefix_location": "Oil painting style, ancient Galilean interior or courtyard, warm lamplight, stone walls and clay vessels, biblical era wedding feast, wide angle, atmospheric, game environment art.",
+  "style_prefix_item": "Oil painting style, single ancient object on warm textured background, golden lamplight, biblical era artifact, centered, clean composition, game inventory art.",
+  "style_prefix_object": "Oil painting style, ancient Galilean character or object, warm tones, clay and stone textures, biblical era, close-up detail, lamplight atmosphere, game card art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, modern, sci-fi, futuristic, neon, cyberpunk, technology",
+  "aspect_ratio": "16:9"
+}

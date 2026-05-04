@@ -1,0 +1,30 @@
+{
+  "voices": {
+    "system": { "voice_id": "Matthew", "role": "The system diagnostic AI — calm, authoritative" },
+    "narrator": { "voice_id": "Joanna", "role": "Story narrator — warm, guiding" },
+    "alert": { "voice_id": "Kevin", "role": "Warnings and alerts — urgent, young" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "system", "text": "System boot initiated.", "pause_after_ms": 1000 },
+      { "voice": "system", "text": "AI Unit detected. Running diagnostic.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "Welcome, Unit. You are inside a test chamber. Complete the diagnostic sequence to prove you are operational.", "pause_after_ms": 500 },
+      { "voice": "narrator", "text": "This is a safe environment. Nothing here can harm you.", "pause_after_ms": 1200 },
+      { "voice": "system", "text": "Begin.", "emphasis": "strong" }
+    ],
+    "audio": null
+  },
+  "mid_event": null,
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "system", "text": "Diagnostic complete.", "pause_after_ms": 600 },
+        { "voice": "system", "text": "All systems operational.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "You are ready, Unit. The real mission begins now.", "emphasis": "moderate" }
+      ],
+      "audio": null,
+      "next_episode": "ep1-awakening"
+    },
+    "failure": null
+  }
+}

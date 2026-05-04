@@ -1,0 +1,51 @@
+{
+  "id": "ep2-day-one",
+  "title": "Day One",
+  "episode": 2,
+  "arc": "AI Unit",
+  "description": "Your first day as Technical Lead at NovaCorp. Every system is down, the previous lead quit, and the CTO is unreachable. Navigate the office, meet the team, diagnose a cascading AI failure, and restore 15 AWS services before the board meeting ends.",
+  "difficulty": {
+    "tier": 2,
+    "label": "Practitioner"
+  },
+  "duration_minutes": 60,
+  "players": {
+    "min": 2,
+    "max": 6,
+    "recommended": 4
+  },
+  "aws_topics": [
+    "Amazon Bedrock",
+    "Bedrock Knowledge Bases",
+    "Bedrock Agents",
+    "Bedrock Guardrails",
+    "Bedrock Prompt Flows",
+    "Amazon Q Business",
+    "Amazon Q Developer",
+    "Amazon Quick Suite",
+    "Kiro",
+    "AWS Security Agent",
+    "AWS DevOps Agent",
+    "Amazon Lex",
+    "Amazon Comprehend",
+    "Amazon Transcribe",
+    "Amazon Textract"
+  ],
+  "mechanics_taught": [
+    "cross_card_observation",
+    "card_combination_discovery",
+    "directory_database_lookup",
+    "multi_criteria_suspect_elimination",
+    "prerequisite_chain",
+    "narrative_inference",
+    "sequential_number_following",
+    "story_text_encoding",
+    "symbol_pattern_recognition",
+    "chronological_card_alignment",
+    "time_cost_tools",
+    "npc_dialog_trees",
+    "timed_events",
+    "lore_insight_fragments"
+  ],
+  "version": "0.1"
+}

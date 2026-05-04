@@ -1,0 +1,18 @@
+{
+  "combinations": [
+    {
+      "card_a": 112,
+      "card_b": 103,
+      "result_card": 115,
+      "type": "item_object",
+      "description": "Combine Repair Kit with Broken Communicator"
+    },
+    {
+      "card_a": 112,
+      "card_b": 111,
+      "result_card": 124,
+      "type": "item_object",
+      "description": "Use Repair Kit on Active Machine (wrong)"
+    }
+  ]
+}

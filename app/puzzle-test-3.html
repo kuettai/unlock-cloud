@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>AWS Puzzle Lock Tests</title>
+<style>
+:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--accent:#3b82f6;--green:#22c55e}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif}
+body{display:flex;flex-direction:column;align-items:center;padding:24px 16px;gap:32px;overflow-y:auto}
+h3{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+section{width:100%;max-width:420px}
+.result{margin-top:8px;text-align:center;font-size:14px;color:var(--muted);min-height:20px}
+hr{border:none;border-top:1px solid var(--border);width:100%;max-width:420px}
+</style>
+</head>
+<body>
+  <section>
+    <h3>Tag Builder Lock</h3>
+    <div id="tag-lock"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Architecture Diagram Lock</h3>
+    <div id="arch-lock"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Log Parser Lock</h3>
+    <div id="log-lock"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>JSON Policy Lock</h3>
+    <div id="policy-lock"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Cost Calculator Lock (target: $85/mo)</h3>
+    <div id="cost-lock"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>DNS Resolver Lock</h3>
+    <div id="dns-lock"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Encryption Key Lock</h3>
+    <div id="key-lock"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>AZ Placement Lock</h3>
+    <div id="az-lock"></div>
+  </section>
+
+<script src="puzzle/tag-lock.js"></script>
+<script src="puzzle/arch-lock.js"></script>
+<script src="puzzle/log-lock.js"></script>
+<script src="puzzle/policy-lock.js"></script>
+<script src="puzzle/cost-lock.js"></script>
+<script src="puzzle/dns-lock.js"></script>
+<script src="puzzle/key-lock.js"></script>
+<script src="puzzle/az-lock.js"></script>
+<script>
+new TagLock(document.getElementById('tag-lock'), {
+  resources: [
+    { id: 'web', label: 'Web Server', requiredTags: { Environment: 'Production', Team: 'Frontend' } },
+    { id: 'db', label: 'Database', requiredTags: { Environment: 'Production', Team: 'Backend' } },
+  ],
+  extraTags: [{ key: 'Environment', value: 'Staging' }, { key: 'Team', value: 'DevOps' }],
+  onSubmit() { alert('Tags validated!'); }
+});
+
+new ArchLock(document.getElementById('arch-lock'), {
+  zones: [
+    { id: 'front', label: 'Frontend Tier', x: 50, y: 15 },
+    { id: 'app', label: 'App Tier', x: 50, y: 50 },
+    { id: 'data', label: 'Data Tier', x: 50, y: 85 },
+  ],
+  services: [
+    { id: 'alb', label: 'ALB', icon: '⚖️' },
+    { id: 'ec2', label: 'EC2', icon: '🖥️' },
+    { id: 'rds', label: 'RDS', icon: '🗄️' },
+    { id: 'sqs', label: 'SQS', icon: '📨' },
+  ],
+  solution: { front: 'alb', app: 'ec2', data: 'rds' },
+  onSubmit() { alert('Architecture deployed!'); }
+});
+
+new LogLock(document.getElementById('log-lock'), {
+  prompt: 'Find the database connection error',
+  lines: [
+    { text: '2024-01-15 10:23:01 INFO  Starting web service on port 8080', correct: false },
+    { text: '2024-01-15 10:23:02 INFO  Health check passed', correct: false },
+    { text: '2024-01-15 10:23:05 ERROR Connection refused 10.0.3.42:5432', correct: true },
+    { text: '2024-01-15 10:23:06 WARN  Retrying database connection in 5s', correct: false },
+    { text: '2024-01-15 10:23:11 ERROR Connection refused 10.0.3.42:5432', correct: true },
+    { text: '2024-01-15 10:23:12 INFO  Fallback cache enabled', correct: false },
+  ],
+  onSubmit() { alert('Correct lines identified!'); }
+});
+
+new PolicyLock(document.getElementById('policy-lock'), {
+  template: '{\n  "Effect": "___",\n  "Action": "___",\n  "Resource": "___"\n}',
+  blanks: [
+    { placeholder: '___', answer: 'Allow', options: ['Allow','Deny'] },
+    { placeholder: '___', answer: 's3:GetObject', options: ['s3:GetObject','s3:*','ec2:RunInstances'] },
+    { placeholder: '___', answer: 'arn:aws:s3:::data-bucket/*', options: ['*','arn:aws:s3:::data-bucket/*','arn:aws:s3:::logs/*'] },
+  ],
+  onSubmit() { alert('Policy applied!'); }
+});
+
+new CostLock(document.getElementById('cost-lock'), {
+  target: 85,
+  tolerance: 5,
+  inputs: [
+    { label: 'Instance', type: 'select', options: [{label:'t3.micro',cost:8},{label:'t3.small',cost:15},{label:'m5.large',cost:70}] },
+    { label: 'Count', type: 'slider', min: 1, max: 5, step: 1 },
+    { label: 'Storage GB', type: 'slider', min: 20, max: 500, step: 10 },
+  ],
+  costFn(v) { return v[0].cost * v[1] + v[2] * 0.10; },
+  onSubmit() { alert('Budget approved!'); }
+});
+
+new DnsLock(document.getElementById('dns-lock'), {
+  steps: [
+    { label: 'Domain', options: ['app.example.com','api.example.com','www.example.com'], answer: 'app.example.com' },
+    { label: 'Hosted Zone', options: ['example.com','example.org'], answer: 'example.com' },
+    { label: 'Record Type', options: ['A','CNAME','AAAA','MX'], answer: 'CNAME' },
+    { label: 'Target', options: ['d1234.cloudfront.net','10.0.1.5','mail.example.com'], answer: 'd1234.cloudfront.net' },
+  ],
+  onSubmit() { alert('DNS resolved!'); }
+});
+
+new KeyLock(document.getElementById('key-lock'), {
+  fragments: ['A3','F7','B1','D9'],
+  encrypted: 'dW5sb2Nr',
+  decrypted: 'unlock',
+  onSubmit() { alert('Message decrypted!'); }
+});
+
+new AzLock(document.getElementById('az-lock'), {
+  zones: ['us-east-1a','us-east-1b','us-east-1c'],
+  resources: [
+    { id: 'web1', label: 'Web Server 1', icon: '🖥️' },
+    { id: 'web2', label: 'Web Server 2', icon: '🖥️' },
+    { id: 'db1', label: 'DB Primary', icon: '🗄️' },
+    { id: 'db2', label: 'DB Replica', icon: '🗄️' },
+  ],
+  solution: { web1: 0, web2: 1, db1: 0, db2: 2 },
+  onSubmit() { alert('High availability achieved!'); }
+});
+</script>
+</body>
+</html>

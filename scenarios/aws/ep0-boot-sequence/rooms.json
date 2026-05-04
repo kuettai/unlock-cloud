@@ -1,0 +1,44 @@
+{
+  "rooms": [
+    {
+      "card_id": 1,
+      "name": "Start Chamber",
+      "description": "Diagnostic Test 1: Discover and Combine",
+      "connects_to": [20, 10],
+      "unlocked_by": null,
+      "unlock_text": "Starting room"
+    },
+    {
+      "card_id": 20,
+      "name": "Sequence Room",
+      "description": "Diagnostic Test 2a: Memory",
+      "connects_to": [],
+      "unlocked_by": { "type": "event", "card_id": 5 },
+      "unlock_text": "Opened the locked box"
+    },
+    {
+      "card_id": 10,
+      "name": "Combination Room",
+      "description": "Diagnostic Test 2b: Consequences",
+      "connects_to": [30],
+      "unlocked_by": { "type": "event", "card_id": 5 },
+      "unlock_text": "Opened the locked box"
+    },
+    {
+      "card_id": 30,
+      "name": "Hidden Room",
+      "description": "Diagnostic Test 3: Observation",
+      "connects_to": [50],
+      "unlocked_by": { "type": "items", "card_ids": [33, 16] },
+      "unlock_text": "Collected both keys"
+    },
+    {
+      "card_id": 50,
+      "name": "Code Room",
+      "description": "Diagnostic Test 4: Decoding",
+      "connects_to": [],
+      "unlocked_by": { "type": "item", "card_id": 42 },
+      "unlock_text": "Found the data fragment"
+    }
+  ]
+}

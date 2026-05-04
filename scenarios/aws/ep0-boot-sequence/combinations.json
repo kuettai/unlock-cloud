@@ -1,0 +1,25 @@
+{
+  "combinations": [
+    {
+      "card_a": 3,
+      "card_b": 2,
+      "result_card": 5,
+      "type": "item_object",
+      "description": "Insert Key Chip into Locked Box"
+    },
+    {
+      "card_a": 11,
+      "card_b": 12,
+      "result_card": 23,
+      "type": "item_object",
+      "description": "Insert Power Cell into Device"
+    },
+    {
+      "card_a": 11,
+      "card_b": 14,
+      "result_card": 25,
+      "type": "item_object",
+      "description": "Jam Power Cell into Shut Door (wrong)"
+    }
+  ]
+}

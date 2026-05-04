@@ -1,0 +1,58 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Story narrator — warm, professional" },
+    "system": { "voice_id": "Matthew", "role": "System alerts — cold, clinical" },
+    "jordan": { "voice_id": "Brian", "role": "VP Jordan — stressed, demanding" },
+    "nova": { "voice_id": "Ivy", "role": "NOVA AI — broken, glitchy" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "narrator", "text": "Monday morning. Manhattan. Your first day as Technical Lead at NovaCorp.", "pause_after_ms": 1000 },
+      { "voice": "narrator", "text": "The elevator doors open on the 14th floor. Fluorescent lights hum. Someone's burnt coffee lingers in the air.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "You're Alex Chen. You left a comfortable senior role for this. A chance to lead. To build something.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "The receptionist looks up. Smiles. Then her screen flashes red.", "pause_after_ms": 800 },
+      { "voice": "system", "text": "ALERT: Production systems unresponsive. All services degraded. Incident severity: SEV-1.", "pause_after_ms": 1200, "emphasis": "strong" },
+      { "voice": "narrator", "text": "It's 9:07 AM. Every screen on the floor turns red. Slack explodes. Phones start ringing.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "The CTO is unreachable. The previous lead quit last Friday. No handoff notes. No runbook.", "pause_after_ms": 1000 },
+      { "voice": "narrator", "text": "Everyone on the floor turns to look at you.", "pause_after_ms": 800 },
+      { "voice": "jordan", "text": "You're the new tech lead, right? Everything is down. Customers can't log in. The board meets in an hour. Fix this.", "pause_after_ms": 1000 },
+      { "voice": "narrator", "text": "Welcome to NovaCorp. Your sixty minutes start now." }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 1800,
+    "segments": [
+      { "voice": "jordan", "text": "I'm on with the board in five minutes. Tell me you have something. Anything.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "Jordan's voice cracks. Half the office has stopped trying. Maya leaves for lunch. Frank locks his door.", "pause_after_ms": 600 },
+      { "voice": "system", "text": "Customer complaint volume: 340% above baseline. Call center queue: 47 minutes.", "pause_after_ms": 800, "emphasis": "strong" },
+      { "voice": "narrator", "text": "The ones still here are watching you. Not with hope — with curiosity. They want to see what you do next.", "pause_after_ms": 600 },
+      { "voice": "nova", "text": "h...hello? is... someone... there? sys...tems... frag...mented..." }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "The dashboards flicker. One by one, the red tiles turn green.", "pause_after_ms": 800 },
+        { "voice": "system", "text": "All services restored. Incident resolved. Duration: less than sixty minutes.", "pause_after_ms": 1000, "emphasis": "strong" },
+        { "voice": "narrator", "text": "The office erupts. Sam pumps a fist. Dr. Priya nods with quiet respect. Even Frank cracks a smile.", "pause_after_ms": 800 },
+        { "voice": "jordan", "text": "I don't know how you did it. On your first day. I'll make sure the board knows.", "pause_after_ms": 800 },
+        { "voice": "nova", "text": "All systems nominal. Thank you, Alex. It's good to be whole again.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "You lean back in your chair. Your coffee is cold. Your badge still says \"TEMPORARY.\"", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "But you're not temporary. Not anymore." }
+      ],
+      "audio": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "system", "text": "Incident duration exceeded. Escalating to AWS Enterprise Support.", "pause_after_ms": 1000, "emphasis": "strong" },
+        { "voice": "narrator", "text": "The clock runs out. Systems are still down. Jordan walks past your desk without a word.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "But you learned something today. You mapped the architecture. You met the team. You understand the stack.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "Sam drops a sticky note on your keyboard: \"Same time tomorrow?\"", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "Tomorrow, you'll be faster." }
+      ],
+      "audio": null
+    }
+  }
+}

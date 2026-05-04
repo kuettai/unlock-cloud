@@ -1,0 +1,167 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 3300,
+      "message": "Laptop Slack update: \"#general: @channel Is anyone looking at this? Customers are complaining.\"",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 2700,
+      "message": "Jordan appears in War Room (if player is there) or sends Slack message: \"I need an update in 15 minutes. The board wants to know if we have a root cause.\"",
+      "type": "atmosphere",
+      "voice": "jordan"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 1800,
+      "message": "MID-EVENT: Jordan's board call begins. Maya goes to lunch (NPC unavailable). Frank locks his office (Security Office inaccessible for 5 minutes, reopens at 25:00). Slack: \"#general: Half the team just left for lunch. They've given up.\"",
+      "type": "lockout",
+      "locks_npcs": ["npc-maya"],
+      "locks_rooms": [600],
+      "triggers_narrative": "mid_event",
+      "notes": "Maya becomes unavailable for the rest of the game. Frank's Security Office reopens at TE-04 (25:00)."
+    },
+    {
+      "id": "TE-04",
+      "time_remaining": 1500,
+      "message": "Frank's office reopens. Slack: \"#security: Frank's back. Says he'll help if you have something concrete.\"",
+      "type": "unlock",
+      "unlocks_rooms": [600]
+    },
+    {
+      "id": "TE-05",
+      "time_remaining": 1200,
+      "message": "Customer complaints spike. Call Center Slack: \"#support: Queue is now 47 minutes. We're losing customers.\" If player hasn't visited Call Center, Angry Customer calls the main line (audio event).",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-06",
+      "time_remaining": 600,
+      "message": "Jordan (Slack or in-person): \"If this isn't fixed in 10 minutes, we're calling AWS Enterprise Support. That's a $15,000 call. Fix. This. Now.\"",
+      "type": "alarm",
+      "voice": "jordan"
+    },
+    {
+      "id": "TE-07",
+      "time_remaining": 300,
+      "message": "Emergency lighting activates (UI tint goes amber). NOVA sends garbled Slack messages if partially rebuilt: \"sys...tems... almost... connect... the... chain...\" If NOVA not rebuilt: \"📡 Satellite uplink detected. Signal waiting. No services to broadcast.\"",
+      "type": "atmosphere",
+      "voice": "nova"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "dashboard-solved",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "tool-dashboard",
+      "result_card": 1006,
+      "message": "Critical services identified. Error logs compiled.",
+      "type": "reveal"
+    },
+    {
+      "id": "triage-complete",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "sort-triage",
+      "result_card": 305,
+      "message": "Incident triaged. Jordan nods. \"Now I can tell the board we understand the problem. Go fix it.\"",
+      "type": "reveal"
+    },
+    {
+      "id": "cables-reconnected",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "wire-cables",
+      "result_card": 403,
+      "message": "The disconnected LEDs stop blinking red. Three racks hum back to life. Physical layer restored.",
+      "type": "reveal"
+    },
+    {
+      "id": "model-selected",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "match-models",
+      "result_card": 505,
+      "message": "Priya smiles. \"Now you understand the model zoo. Each service needs the right model — or the right dedicated service. Let me update the Bedrock config.\"",
+      "awards_card": 506,
+      "type": "reveal"
+    },
+    {
+      "id": "guardrails-restored",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "sg-guardrails",
+      "result_card": 605,
+      "message": "Guardrails restored. The IDS console stops blinking red. Frank nods approvingly.",
+      "awards_cards": [606, 613],
+      "type": "reveal"
+    },
+    {
+      "id": "root-cause-found",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "timeline-rootcause",
+      "result_card": 708,
+      "message": "The full picture clicks. Marcus's Friday deploy was a triple sabotage: deleted guardrails, broke the model config, and disconnected physical cables. The weekend masked it. Monday morning traffic exposed everything.",
+      "awards_card": 709,
+      "type": "reveal"
+    },
+    {
+      "id": "cabinet-opened",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "policy-cabinet",
+      "result_card": 804,
+      "message": "The cabinet clicks open. Inside: a folder labeled 'NOVA MASTER CONFIG' and a small brass key labeled 'ROOFTOP — SATELLITE UPLINK.'",
+      "type": "reveal"
+    },
+    {
+      "id": "cto-files-decrypted",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "key-ctofiles",
+      "result_card": 806,
+      "message": "Decryption complete. Satellite Key and Prompt Flow Config recovered from the CTO's files.",
+      "awards_cards": [806, 807],
+      "type": "reveal"
+    },
+    {
+      "id": "sentiment-analyzed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "log-sentiment",
+      "result_card": 1004,
+      "message": "Comprehend analysis complete. Three calls with PII exposure identified. Incident report updated.",
+      "awards_card": 1005,
+      "type": "reveal"
+    },
+    {
+      "id": "archive-searched",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "terminal-archive",
+      "result_card": 1103,
+      "message": "Architecture document retrieved from the archive database.",
+      "type": "reveal"
+    },
+    {
+      "id": "nova-rebuilt",
+      "trigger": "has_cards",
+      "card_ids": [107, 1103, 506],
+      "result_card": 1209,
+      "message": "NOVA's systems initialize. The USB drive provides the backup config. The Architecture Doc provides the correct service connections. The Model Config assigns Claude 3.5 Sonnet as the reasoning engine. NOVA is back.",
+      "type": "reveal",
+      "location": "rooftop"
+    },
+    {
+      "id": "promptflow-restored",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "path-promptflow",
+      "result_card": 1203,
+      "message": "Prompt Flow restored. Customer queries now route correctly: sentiment analysis first, then classification, then the right handler.",
+      "awards_card": 1204,
+      "type": "reveal"
+    },
+    {
+      "id": "systems-restored",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "chain-final",
+      "result_card": 1205,
+      "message": "You press ACTIVATE. The satellite dish rotates, locks onto the signal. One by one, the status lights turn green. ALL SERVICES RESTORED.",
+      "type": "ending"
+    }
+  ]
+}

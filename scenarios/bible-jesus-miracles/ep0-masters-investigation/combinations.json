@@ -1,0 +1,74 @@
+{
+  "combinations": [
+    {
+      "card_a": 101,
+      "card_b": 102,
+      "result_card": 108,
+      "type": "item_object",
+      "description": "Compare the extraordinary cup with the wine ledger"
+    },
+    {
+      "card_a": 101,
+      "card_b": 103,
+      "result_card": 109,
+      "type": "item_object",
+      "description": "Show the extraordinary cup to Ezra"
+    },
+    {
+      "card_a": 142,
+      "card_b": 143,
+      "result_card": 148,
+      "type": "item_object",
+      "description": "Compare jar wine with well water"
+    },
+    {
+      "card_a": 144,
+      "card_b": 141,
+      "result_card": 147,
+      "type": "item_object",
+      "description": "Check the ground beneath the stone jars"
+    },
+    {
+      "card_a": 122,
+      "card_b": 141,
+      "result_card": 145,
+      "type": "item_object",
+      "description": "Suspect the servants hid wine skins in the jars"
+    },
+    {
+      "card_a": 162,
+      "card_b": 163,
+      "result_card": 167,
+      "type": "item_object",
+      "description": "Cross-reference delivery records with wine stock"
+    },
+    {
+      "card_a": 162,
+      "card_b": 161,
+      "result_card": 165,
+      "type": "item_object",
+      "description": "Accuse Joachim of hiding a secret delivery"
+    },
+    {
+      "card_a": 221,
+      "card_b": 222,
+      "result_card": 224,
+      "type": "item_item",
+      "description": "Compare well water with the final wine taste"
+    },
+    {
+      "card_a": 225,
+      "card_b": 223,
+      "result_card": 226,
+      "type": "item_object",
+      "description": "Lay out the complete evidence chain on the table"
+    },
+    {
+      "card_a": 203,
+      "card_b": 223,
+      "result_card": 227,
+      "type": "item_object",
+      "description": "Dismiss the disciples as gullible"
+    }
+  ]
+}

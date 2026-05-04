@@ -1,0 +1,27 @@
+{
+  "id": "ep0-boot-sequence",
+  "title": "Boot Sequence",
+  "episode": 0,
+  "arc": "tutorial",
+  "description": "A diagnostic test chamber. Learn the basics: combine cards, spot hidden clues, decode data, and escape.",
+  "difficulty": {
+    "tier": 0,
+    "label": "Tutorial"
+  },
+  "duration_minutes": 10,
+  "players": {
+    "min": 1,
+    "max": 6,
+    "recommended": 1
+  },
+  "aws_topics": [],
+  "mechanics_taught": [
+    "card_combination",
+    "hidden_elements",
+    "code_entry",
+    "hints",
+    "penalties"
+  ],
+  "version": "0.1",
+  "start_button": "Begin Diagnostic"
+}

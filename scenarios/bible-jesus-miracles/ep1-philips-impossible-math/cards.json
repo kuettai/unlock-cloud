@@ -1,0 +1,751 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "The Hillside",
+      "description": "The hillside above the Sea of Galilee stretches before you, covered in green grass. Thousands of people sit in clusters — men, women, children — as far as you can see. The teacher has been speaking all day. Now he turns to you with an impossible question: \"Where shall we buy bread for these people to eat?\" You need to count the crowd before you can even begin to calculate.",
+      "image": "assets/the-hillside.png",
+      "discoveries": [
+        {
+          "card_id": 113,
+          "label": "Survey the crowd from the ridge",
+          "puzzle": "crowd-counter"
+        },
+        {
+          "card_id": 102,
+          "label": "Calculate the cost in your head"
+        },
+        {
+          "card_id": 103,
+          "label": "Notice the distant villages"
+        }
+      ],
+      "visible_to": "all",
+      "room": "the-hillside"
+    },
+    {
+      "id": 101,
+      "type": "object",
+      "color": "blue",
+      "title": "The Vast Crowd",
+      "description": "From the ridge, you can see the full scale of the crowd. Thousands upon thousands, spread across the green hillside like a living carpet. You need to count them — select groups that total exactly 5,000 men.",
+      "image": "assets/card-vast-crowd.png",
+      "puzzle_ref": "crowd-counter",
+      "visible_to": "all",
+      "room": "the-hillside"
+    },
+    {
+      "id": 102,
+      "type": "item",
+      "color": "red",
+      "title": "Philip's Calculation",
+      "description": "Your mind races through the numbers. Loaves, denarii, mouths to feed. The math is relentless — and the answer is always the same: not enough.",
+      "image": "assets/card-philips-calculation.png",
+      "visible_to": "all",
+      "room": "the-hillside"
+    },
+    {
+      "id": 103,
+      "type": "item",
+      "color": "red",
+      "title": "Distant Markets",
+      "description": "You can see the villages dotting the hills — Bethsaida, small fishing towns. Their markets are tiny. Even if you could reach them before dark, they couldn't feed five thousand.",
+      "image": "assets/card-distant-markets.png",
+      "visible_to": "all",
+      "room": "the-hillside"
+    },
+    {
+      "id": 112,
+      "type": "event",
+      "color": "yellow",
+      "title": "\"More than 200 denarii!\"",
+      "description": "You combine your calculation with the crowd count. \"Two hundred denarii worth of bread is not sufficient for them, that each one may receive a little!\" Eight months' wages — and even that wouldn't be enough.",
+      "reveals": [
+        302
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-hillside"
+    },
+    {
+      "id": 113,
+      "type": "event",
+      "color": "yellow",
+      "title": "Crowd counted — 5,000 men.",
+      "description": "Five thousand men. At least. Plus women and children — the true number could be ten thousand or more.",
+      "reveals": [
+        120,
+        300,
+        301,
+        303
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-hillside"
+    },
+    {
+      "id": 120,
+      "type": "location",
+      "color": "green",
+      "title": "The Crowd",
+      "description": "You descend into the crowd, searching for food. Families huddle on the grass. A merchant sits with an empty cart. The other disciples fan out — Peter shrugs, James and John have nothing. Judas clutches the money bag, counting coins. Surely someone brought provisions. You ask family after family. Nothing. The crowd came unprepared, drawn by the teacher's words, not thinking about dinner.",
+      "image": "assets/the-crowd.png",
+      "discoveries": [
+        {
+          "card_id": 121,
+          "label": "Ask the families for food",
+          "puzzle": "npc-families"
+        },
+        {
+          "card_id": 122,
+          "label": "Speak with the merchant",
+          "puzzle": "npc-merchant"
+        },
+        {
+          "card_id": 123,
+          "label": "Consult Judas about the money",
+          "puzzle": "npc-judas"
+        },
+        {
+          "card_id": 133,
+          "label": "Calculate the denarii needed",
+          "puzzle": "denarii-math",
+          "requires_item": [
+            122,
+            123,
+            103
+          ],
+          "consumes_item": [
+            122,
+            123,
+            103
+          ]
+        }
+      ],
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 121,
+      "type": "object",
+      "color": "blue",
+      "title": "The Hungry Families (NPC)",
+      "description": "Families huddle on the grass, children tugging at their parents' robes. They came to hear the teacher, not thinking about dinner.",
+      "image": "assets/card-families.png",
+      "puzzle_ref": "npc-families",
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 122,
+      "type": "object",
+      "color": "blue",
+      "title": "The Empty Merchant (NPC)",
+      "description": "A merchant sits beside his empty cart, arms crossed. He sold everything hours ago.",
+      "image": "assets/card-merchant.png",
+      "puzzle_ref": "npc-merchant",
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 123,
+      "type": "object",
+      "color": "blue",
+      "title": "Judas & the Money Bag (NPC)",
+      "description": "Judas clutches the money bag, counting coins. He deals in numbers, same as you.",
+      "image": "assets/card-judas.png",
+      "puzzle_ref": "npc-judas",
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 124,
+      "type": "object",
+      "color": "blue",
+      "title": "Denarii Calculator",
+      "description": "With your calculation in hand, you can work out the exact cost. A loaf feeds 3 people. 5,000 men need at least 1,667 loaves. At half a denarius per loaf — how many denarii minimum?",
+      "image": "assets/card-denarii-calc.png",
+      "puzzle_ref": "denarii-math",
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 128,
+      "type": "penalty",
+      "color": "black",
+      "title": "Arguing over numbers.",
+      "description": "You and Judas argue over the numbers. 200 denarii, 30 denarii — it doesn't matter. Neither amount feeds five thousand. You've wasted time on arithmetic.",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 130,
+      "type": "event",
+      "color": "yellow",
+      "title": "\"No supply chain solves this.\"",
+      "description": "Every market within reach is empty or too far. There is no supply chain that solves this.",
+      "reveals": [],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 133,
+      "type": "event",
+      "color": "yellow",
+      "title": "Search exhausted — 200 denarii not enough.",
+      "description": "200 denarii. Eight months' wages. And even that wouldn't be enough — just 'a little' for each person. The math doesn't work. It can't work.",
+      "reveals": [
+        140,
+        160,
+        304,
+        302
+      ],
+      "consumes": [
+        103
+      ],
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 140,
+      "type": "location",
+      "color": "green",
+      "title": "The Boy's Basket",
+      "description": "Andrew appears, pushing through the crowd with a boy at his side. The boy is young — perhaps twelve — clutching a small woven basket. Andrew looks embarrassed, almost apologetic. \"There is a boy here who has five barley loaves and two fish.\" You stare at the basket. Barley loaves — the cheapest bread. Two dried fish. For five thousand men and their families. It's not a solution — it's a joke. But the teacher doesn't laugh.",
+      "image": "assets/the-boys-basket.png",
+      "discoveries": [
+        {
+          "card_id": 141,
+          "label": "Speak with Andrew",
+          "puzzle": "npc-andrew"
+        },
+        {
+          "card_id": 153,
+          "label": "Examine the boy's basket",
+          "puzzle": "offering-table",
+          "requires_item": 102,
+          "consumes_item": 102
+        },
+        {
+          "card_id": 143,
+          "label": "Look at the boy"
+        }
+      ],
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 141,
+      "type": "object",
+      "color": "blue",
+      "title": "Andrew (NPC)",
+      "description": "Andrew shifts his weight, uncomfortable. He searched the entire crowd and this boy's basket is all he found.",
+      "image": "assets/card-andrew.png",
+      "puzzle_ref": "npc-andrew",
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 142,
+      "type": "object",
+      "color": "blue",
+      "title": "The Boy's Basket",
+      "description": "A small woven basket containing five barley loaves and two fish. The boy's entire lunch — offered freely.",
+      "image": "assets/card-boys-basket.png",
+      "puzzle_ref": "offering-table",
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 143,
+      "type": "item",
+      "color": "red",
+      "title": "The Boy's Trust",
+      "description": "The boy holds out his basket without hesitation. He doesn't calculate whether it's enough. He just offers everything he has.",
+      "image": "assets/card-boys-trust.png",
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 152,
+      "type": "event",
+      "color": "yellow",
+      "title": "\"He just offered everything.\"",
+      "description": "The boy didn't calculate whether it was enough. He just offered everything he had. Perhaps faith isn't about the math.",
+      "reveals": [
+        305
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 153,
+      "type": "event",
+      "color": "yellow",
+      "title": "Five loaves and two fish gathered.",
+      "description": "Five loaves and two fish. Andrew's question echoes: 'What are these among so many?' But the teacher takes the basket.",
+      "reveals": [
+        155,
+        306,
+        180,
+        305
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 155,
+      "type": "item",
+      "color": "red",
+      "title": "The Offering",
+      "description": "Five barley loaves and two fish, given freely by a boy.",
+      "image": "assets/card-the-offering.png",
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 160,
+      "type": "location",
+      "color": "green",
+      "title": "The Arrangement",
+      "description": "The teacher gives an instruction that makes no logistical sense: \"Have the people sit down.\" You and the other disciples begin organizing the crowd into groups — fifties and hundreds — across the green hillside. It takes time. The sun continues to drop. The crowd murmurs — some confused, some impatient, some trusting. You walk among them, directing, counting, arranging. The hillside transforms from a chaotic mass into an organized assembly. Like a feast being prepared — except there is no feast.",
+      "image": "assets/the-arrangement.png",
+      "discoveries": [
+        {
+          "card_id": 173,
+          "label": "Begin organizing the crowd",
+          "puzzle": "crowd-seating",
+          "requires_item": 162,
+          "consumes_item": 162
+        },
+        {
+          "card_id": 162,
+          "label": "Count the organized groups"
+        }
+      ],
+      "visible_to": "all",
+      "room": "the-arrangement"
+    },
+    {
+      "id": 161,
+      "type": "object",
+      "color": "blue",
+      "title": "The Crowd Groups",
+      "description": "The crowd must be organized into groups of fifties and hundreds. Navigate the hillside and visit each group to seat them.",
+      "image": "assets/card-crowd-groups.png",
+      "puzzle_ref": "arrangement-maze",
+      "visible_to": "all",
+      "room": "the-arrangement"
+    },
+    {
+      "id": 162,
+      "type": "item",
+      "color": "red",
+      "title": "Group Tally",
+      "description": "You count the organized groups. Fifties and hundreds, neatly arranged across the hillside. Ready for... something.",
+      "image": "assets/card-group-tally.png",
+      "visible_to": "all",
+      "room": "the-arrangement"
+    },
+    {
+      "id": 173,
+      "type": "event",
+      "color": "yellow",
+      "title": "Crowd arranged in groups.",
+      "description": "The crowd is seated. Groups of fifty. Groups of a hundred. The hillside is organized like a feast — except there are only five loaves and two fish.",
+      "reveals": [
+        174,
+        307,
+        308,
+        180
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-arrangement"
+    },
+    {
+      "id": 174,
+      "type": "item",
+      "color": "red",
+      "title": "Crowd Arranged",
+      "description": "Five thousand men seated in orderly groups, ready for... something.",
+      "image": "assets/card-crowd-arranged.png",
+      "visible_to": "all",
+      "room": "the-arrangement"
+    },
+    {
+      "id": 175,
+      "type": "event",
+      "color": "yellow",
+      "title": "Both tasks complete — ready for the blessing.",
+      "description": "The food is gathered. The crowd is seated. Everything is ready. The teacher takes the basket from the boy.",
+      "reveals": [
+        180
+      ],
+      "consumes": [
+        155,
+        174
+      ],
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 180,
+      "type": "location",
+      "color": "green",
+      "title": "The Blessing",
+      "description": "The teacher takes the five loaves and the two fish. He looks up to heaven. He gives thanks. And then he begins to break the bread. You watch his hands. He tears a loaf and hands a piece to you. You take it — warm, fresh, as if just baked. He tears another piece. And another. The loaf doesn't get smaller. He hands you a basket: \"Distribute.\"",
+      "image": "assets/the-blessing.png",
+      "discoveries": [
+        {
+          "card_id": 182,
+          "label": "Examine the boy's basket",
+          "requires_item": [
+            155,
+            174
+          ],
+          "consumes_item": [
+            155,
+            174
+          ]
+        },
+        {
+          "card_id": 195,
+          "label": "Watch the teacher break the bread",
+          "puzzle": "bread-break",
+          "requires_item": [
+            182,
+            143
+          ],
+          "consumes_item": 143
+        },
+        {
+          "card_id": 193,
+          "label": "Take a basket and distribute",
+          "requires_item": 195,
+          "puzzle": "supply-run",
+          "consumes_item": 182
+        }
+      ],
+      "visible_to": "all",
+      "room": "the-blessing"
+    },
+    {
+      "id": 181,
+      "type": "object",
+      "color": "blue",
+      "title": "The Breaking",
+      "description": "The teacher breaks the bread. Each piece torn away is replaced by more. The loaf never gets smaller. The basket never empties.",
+      "image": "assets/card-the-breaking.png",
+      "puzzle_ref": "bread-break",
+      "visible_to": "all",
+      "room": "the-blessing"
+    },
+    {
+      "id": 182,
+      "type": "item",
+      "color": "red",
+      "title": "The Endless Basket",
+      "description": "You take a basket and begin distributing. Group after group. The basket never empties.",
+      "image": "assets/card-endless-basket.png",
+      "visible_to": "all",
+      "room": "the-blessing"
+    },
+    {
+      "id": 193,
+      "type": "event",
+      "color": "yellow",
+      "title": "\"The basket never empties.\"",
+      "description": "You keep distributing. Group after group. Fifty people. A hundred. Five hundred. A thousand. The basket never empties.",
+      "reveals": [
+        200
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-blessing"
+    },
+    {
+      "id": 195,
+      "type": "event",
+      "color": "yellow",
+      "title": "Miracle witnessed — 5,000 fed.",
+      "description": "5,000 fed. From five loaves and two fish. The basket never emptied. The bread was always warm. The fish was always fresh. 'As much as they wanted.' Not a little. Not a bite. As much as they wanted.",
+      "reveals": [
+        309,
+        310
+      ],
+      "consumes": [
+        182
+      ],
+      "visible_to": "all",
+      "room": "the-blessing"
+    },
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "The Hillside (After)",
+      "description": "The crowd is satisfied. Every person on this hillside has eaten their fill. Stunned silence gives way to wonder, then excited whispers. The teacher turns to you: \"Gather the pieces that are left over. Let nothing be lost.\" You take a basket and begin collecting. Fragments of barley bread, pieces of fish — scattered across the grass where thousands just ate. The hillside stretches before you in the fading light, dotted with the remains of an impossible feast.",
+      "image": "assets/the-hillside-after.png",
+      "discoveries": [
+        {
+          "card_id": 202,
+          "label": "Gather the leftover fragments",
+          "puzzle": "hidden-baskets"
+        },
+        {
+          "card_id": 203,
+          "label": "Listen to the crowd's reaction"
+        },
+        {
+          "card_id": 218,
+          "label": "Reflect on the sign",
+          "puzzle": "prophet-word",
+          "requires_item": [
+            202,
+            203
+          ],
+          "consumes_item": [
+            202,
+            203
+          ]
+        },
+        {
+          "card_id": 222,
+          "label": "Study the Hebrew letters on the rock",
+          "puzzle": "hebrew-sign",
+          "requires_item": 219,
+          "consumes_item": 219
+        }
+      ],
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 201,
+      "type": "object",
+      "color": "blue",
+      "title": "Hidden Baskets",
+      "description": "The teacher said to gather the leftovers. Look carefully at the hillside — how many baskets did the disciples collect?",
+      "image": "assets/card-hidden-baskets.png",
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 202,
+      "type": "item",
+      "color": "red",
+      "title": "Twelve Baskets",
+      "description": "Twelve full baskets of leftovers from five loaves and two fish. One for each disciple.",
+      "image": "assets/card-twelve-baskets.png",
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 203,
+      "type": "item",
+      "color": "red",
+      "title": "The Crowd's Declaration",
+      "description": "The crowd buzzes with the same phrase: \"This is truly the prophet who comes into the world.\"",
+      "image": "assets/card-crowd-declaration.png",
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 204,
+      "type": "object",
+      "color": "blue",
+      "title": "The Sign Revealed",
+      "description": "The crowd saw the sign and declared Jesus a prophet. What title did they use?",
+      "image": "assets/card-sign-revealed.png",
+      "puzzle_ref": "prophet-word",
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 205,
+      "type": "object",
+      "color": "blue",
+      "title": "The Hebrew Sign",
+      "description": "Hebrew letters carved on a rock back on the hillside. The word means 'sign' — what the crowd called this miracle.",
+      "image": "assets/card-hebrew-sign.png",
+      "puzzle_ref": "hebrew-sign",
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 215,
+      "type": "penalty",
+      "color": "black",
+      "title": "\"The math breaks.\"",
+      "description": "You try to make the numbers work. Five loaves divided by five thousand... twelve baskets of leftovers from seven items... The math breaks every way you try it. That's the point.",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 218,
+      "type": "event",
+      "color": "yellow",
+      "title": "\"Surely this is the Prophet.\"",
+      "description": "The crowd declares: \"This is truly the prophet who comes into the world.\" The sign is understood.",
+      "reveals": [
+        219,
+        311
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 219,
+      "type": "item",
+      "color": "red",
+      "title": "The Sign Understood",
+      "description": "This was not luck, or planning, or logistics. It was a sign.",
+      "image": "assets/card-sign-understood.png",
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 222,
+      "type": "event",
+      "color": "yellow",
+      "title": "\"אות — Sign.\"",
+      "description": "אות — Sign. The feeding of the five thousand was not just a meal. It was a sign — pointing beyond itself to who Jesus is.",
+      "reveals": [
+        999
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 999,
+      "type": "event",
+      "color": "yellow",
+      "title": "Investigation complete.",
+      "description": "Five loaves. Two fish. Five thousand fed. Twelve baskets left over. The math doesn't work. It never did. And now you understand — it was never supposed to.",
+      "is_ending": true,
+      "consumes": [
+        219
+      ],
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 300,
+      "type": "lore",
+      "color": "gold",
+      "title": "Where are we to buy bread...?",
+      "description": "\"Jesus therefore, lifting up his eyes and seeing that a great multitude was coming to him, said to Philip, 'Where are we to buy bread, that these may eat?'\" — John 6:5 (WEB)",
+      "visible_to": "all",
+      "room": "the-hillside"
+    },
+    {
+      "id": 301,
+      "type": "lore",
+      "color": "gold",
+      "title": "Now there was much grass in the place.",
+      "description": "\"Now there was much grass in that place.\" — John 6:10 (WEB)",
+      "visible_to": "all",
+      "room": "the-hillside"
+    },
+    {
+      "id": 302,
+      "type": "lore",
+      "color": "gold",
+      "title": "Two hundred denarii worth of bread...",
+      "description": "\"Philip answered him, 'Two hundred denarii worth of bread is not sufficient for them, that each one may receive a little.'\" — John 6:7 (WEB)",
+      "visible_to": "all",
+      "room": "the-hillside"
+    },
+    {
+      "id": 303,
+      "type": "lore",
+      "color": "gold",
+      "title": "He said this to test him...",
+      "description": "\"He said this to test him, for he himself knew what he would do.\" — John 6:6 (WEB)",
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 304,
+      "type": "lore",
+      "color": "gold",
+      "title": "You give them something to eat.",
+      "description": "\"He answered them, 'You give them something to eat.'\" — Mark 6:37 (WEB)",
+      "visible_to": "all",
+      "room": "the-crowd"
+    },
+    {
+      "id": 305,
+      "type": "lore",
+      "color": "gold",
+      "title": "What are these among so many?",
+      "description": "\"But what are these among so many?\" — John 6:9 (WEB)",
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 306,
+      "type": "lore",
+      "color": "gold",
+      "title": "Five barley loaves and two fish.",
+      "description": "\"There is a boy here who has five barley loaves and two fish, but what are these among so many?\" — John 6:9 (WEB)",
+      "visible_to": "all",
+      "room": "the-boys-basket"
+    },
+    {
+      "id": 307,
+      "type": "lore",
+      "color": "gold",
+      "title": "Have the people sit down.",
+      "description": "\"Jesus said, 'Have the people sit down.'\" — John 6:10 (WEB)",
+      "visible_to": "all",
+      "room": "the-arrangement"
+    },
+    {
+      "id": 308,
+      "type": "lore",
+      "color": "gold",
+      "title": "Groups of hundreds and fifties.",
+      "description": "\"They sat down in groups, by hundreds and by fifties.\" — Mark 6:40 (WEB)",
+      "visible_to": "all",
+      "room": "the-arrangement"
+    },
+    {
+      "id": 309,
+      "type": "lore",
+      "color": "gold",
+      "title": "He distributed to those who were seated.",
+      "description": "\"Jesus took the loaves, and having given thanks, he distributed to those who were seated; likewise also of the fish as much as they desired.\" — John 6:11 (WEB)",
+      "visible_to": "all",
+      "room": "the-blessing"
+    },
+    {
+      "id": 310,
+      "type": "lore",
+      "color": "gold",
+      "title": "Let nothing be lost.",
+      "description": "\"When they were filled, he said to his disciples, 'Gather up the broken pieces which are left over, that nothing be lost.'\" — John 6:12 (WEB)",
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    },
+    {
+      "id": 311,
+      "type": "lore",
+      "color": "gold",
+      "title": "Twelve baskets of broken pieces.",
+      "description": "\"So they gathered them up, and filled twelve baskets with broken pieces from the five barley loaves, which were left over by those who had eaten.\" — John 6:13 (WEB)",
+      "visible_to": "all",
+      "room": "the-hillside-after"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "aws",
+    "title": "Amazon Web Services",
+    "subtitle": "Cloud infrastructure, AI services, and security",
+    "icon": "☁️",
+    "color": "#f97316",
+    "episodes": 3,
+    "description": "From VPC networking to Generative AI — learn AWS by escaping."
+  },
+  {
+    "id": "bible-jesus-miracles",
+    "title": "Miracles of Jesus",
+    "subtitle": "Witness and unravel the miracles of Christ",
+    "icon": "✝️",
+    "color": "#a855f7",
+    "episodes": 2,
+    "description": "Walk through the miracles of Jesus — discover, solve, and learn the stories that changed the world."
+  }
+]

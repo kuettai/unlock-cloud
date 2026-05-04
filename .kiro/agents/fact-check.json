@@ -1,0 +1,15 @@
+{
+  "name": "fact-check",
+  "description": "Validates domain accuracy in scenario blueprints — checks all technical claims, service names, and educational content.",
+  "prompt": "file://.kiro/agents/fact-check/AGENT.md",
+  "tools": ["fs_read", "grep", "glob", "web_search", "web_fetch"],
+  "resources": [],
+  "mcpServers": {
+    "bible": {
+      "command": "C:\\Users\\KuetTai\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python312\\Scripts\\uvx.exe",
+      "args": ["bible-mcp"]
+    }
+  },
+  "keyboardShortcut": "ctrl+shift+3",
+  "welcomeMessage": "Fact Check agent ready. Point me to a blueprint and I'll validate every claim."
+}

@@ -1,0 +1,413 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Spawn Room",
+      "description": "A dim room. Cables hang from the ceiling. Screens on the walls display scrolling system logs. A thick red cable runs from the ceiling into a junction box labeled \"POWER CORE\". A door to the east is marked \"Processing\". A door to the south is marked \"Archive\". A heavy blast door to the north reads \"PUBLIC SUBNET — AUTHORIZED ACCESS ONLY\".",
+      "image": "assets/spawn-room.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 101, "label": "Read the system logs", "puzzle": "log-analysis" },
+        { "card_id": 103, "label": "Pick up the broken device on the floor" },
+        { "card_id": 102, "label": "Examine the blast door" },
+        { "card_id": 110, "label": "Enter the Processing Chamber" },
+        { "card_id": 120, "label": "Enter the Archive Room" },
+        { "card_id": 130, "label": "Use the blast door panel", "requires_item": [116, 115, 165], "consumes_item": [116, 115, 165, 102] }
+      ],
+      "visible_to": "all",
+      "room": "spawn-room"
+    },
+    {
+      "id": 101,
+      "type": "object",
+      "color": "blue",
+      "title": "System Logs Screen",
+      "description": "The system logs contain key data values: VPC ID vpc-0f8c3a and gateway ID igw-abc123. One line keeps flickering in and out — a DEBUG entry with a password hash: 6e6574776f726b. A status line reads: \"DATA LINK active on blue channel.\"",
+      "image": "assets/card-system-logs.png",
+      "reveals": [105],
+      "visible_to": "all",
+      "room": "spawn-room"
+    },
+    {
+      "id": 102,
+      "type": "object",
+      "color": "blue",
+      "title": "Blast Door",
+      "description": "A heavy blast door leading to the Public Subnet. A panel beside it has three slots: one for an access token, one for a route communicator, and one for a policy token. A warning label reads: \"Beyond this door: SECURITY GROUP checkpoint. Prepare configuration data before proceeding.\"",
+      "image": "assets/card-blast-door.png",
+      "visible_to": "all",
+      "room": "spawn-room"
+    },
+    {
+      "id": 103,
+      "type": "object",
+      "color": "blue",
+      "title": "Broken Communicator",
+      "description": "A handheld device with a cracked screen. It looks like it could be repaired.",
+      "image": "assets/card-broken-comm.png",
+      "visible_to": "all",
+      "room": "spawn-room"
+    },
+    {
+      "id": 105,
+      "type": "lore",
+      "color": "purple",
+      "title": "Memory Fragment #1",
+      "description": "VPC — Virtual Private Cloud. A logically isolated section of the network. Think of it as a building. Subnets are the rooms inside. Some rooms are private (no outside access). Some are public (connected to the outside world). You're in a private room right now.",
+      "visible_to": "all",
+      "room": "spawn-room"
+    },
+    {
+      "id": 110,
+      "type": "location",
+      "color": "green",
+      "title": "Processing Chamber",
+      "description": "A humming room filled with racks of glowing machines. Each rack is labeled with an ID. One machine in the corner is active — its screen shows a login prompt. A toolbox sits on the floor. A green wire snakes along the wall into a panel marked \"SIGNAL RELAY\".",
+      "image": "assets/processing-chamber.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 111, "label": "Look at the active machine" },
+        { "card_id": 112, "label": "Pick up the repair kit" },
+        { "card_id": 38, "label": "Examine the ajar panel on the racks" },
+        { "card_id": -1, "label": "Use the Hex Decoder", "puzzle": "hex-tool" },
+        { "card_id": 116, "label": "Log into EC2-unit-47", "requires_item": [101], "consumes_item": [111], "puzzle": "terminal-ec2" }
+      ],
+      "visible_to": "all",
+      "room": "processing-chamber"
+    },
+    {
+      "id": 111,
+      "type": "object",
+      "color": "blue",
+      "title": "Active Machine (EC2-unit-47)",
+      "description": "A running EC2 instance. The login screen reads: ec2-unit-47 login: _. The password was recently rotated.",
+      "image": "assets/card-active-machine.png",
+      "visible_to": "all",
+      "room": "processing-chamber"
+    },
+    {
+      "id": 112,
+      "type": "item",
+      "color": "red",
+      "title": "Repair Kit",
+      "description": "A toolbox containing soldering tools and spare components. Could fix broken electronics.",
+      "image": "assets/card-repair-kit.png",
+      "visible_to": "all",
+      "room": "processing-chamber"
+    },
+    {
+      "id": 115,
+      "type": "item",
+      "color": "red",
+      "title": "Repaired Communicator",
+      "description": "The communicator is working again. Its screen displays a route: 10.0.1.0/24 → igw-abc123.",
+      "image": "assets/card-repaired-comm.png",
+      "consumes": [112, 103],
+      "visible_to": "all",
+      "room": "processing-chamber"
+    },
+    {
+      "id": 116,
+      "type": "item",
+      "color": "red",
+      "title": "IAM Access Token",
+      "description": "A valid access token extracted from EC2-unit-47. Grants authorized passage through secured doors.",
+      "image": "assets/card-iam-token.png",
+      "reveals": [123],
+      "visible_to": "all",
+      "room": "processing-chamber"
+    },
+    {
+      "id": 120,
+      "type": "location",
+      "color": "green",
+      "title": "Archive Room",
+      "description": "A quiet room lined with data columns — tall glowing pillars of stored information. A large diagram is projected on the far wall. A small terminal sits in the corner. Behind the terminal, a heavy door is marked \"POLICY VAULT\".",
+      "image": "assets/archive-room.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 121, "label": "Study the network diagram" },
+        { "card_id": 125, "label": "Search the data terminal", "puzzle": "terminal-archive" },
+        { "card_id": 160, "label": "Enter the Policy Vault", "puzzle": "keypad-vault" }
+      ],
+      "visible_to": "all",
+      "room": "archive-room"
+    },
+    {
+      "id": 121,
+      "type": "object",
+      "color": "blue",
+      "title": "Network Diagram",
+      "description": "A diagram showing VPC-7's layout: a private subnet (10.0.0.0/24) with three rooms, a public subnet (10.0.1.0/24) with two rooms, and an Internet Gateway at the exit. The public subnet CIDR 10.0.1.0/24 is circled in red. A handwritten annotation at the bottom reads: \"Yellow wire = GROUND LOOP — don't forget!\"",
+      "image": "assets/card-network-diagram.png",
+      "visible_to": "all",
+      "room": "archive-room"
+    },
+    {
+      "id": 123,
+      "type": "lore",
+      "color": "purple",
+      "title": "Memory Fragment #2",
+      "description": "EC2 — Elastic Compute Cloud. Those machines? Each one is an EC2 instance — a virtual server. They run programs, process data, serve applications. The one that was still active... it was running something. Or someone.",
+      "visible_to": "all",
+      "room": "processing-chamber"
+    },
+    {
+      "id": 124,
+      "type": "penalty",
+      "color": "black",
+      "title": "Sparks fly.",
+      "description": "You tried to repair a machine that wasn't broken. Sparks fly everywhere. Time penalty: 60 seconds.",
+      "penalty_seconds": 60,
+      "returns_items": [112],
+      "visible_to": "all",
+      "room": "processing-chamber"
+    },
+    {
+      "id": 125,
+      "type": "item",
+      "color": "red",
+      "title": "Security Group Blueprint",
+      "description": "A partial rule set: Inbound: Allow | TCP | Port ??? | Source: 10.0.0.0/16. The port number is corrupted. Strange line fragments are scattered across the card where the port should be.",
+      "image": "assets/card-sg-blueprint.png",
+      "overlay_with": {
+        "card_id": 133,
+        "result_image": "assets/overlay-sg-port.png",
+        "reveal_hint": "When overlaid with the Port Reference Card, the scattered fragments on the blueprint align with the port list — the corrupted port lines up perfectly with 443 (HTTPS)."
+      },
+      "visible_to": "all",
+      "room": "archive-room"
+    },
+    {
+      "id": 130,
+      "type": "location",
+      "color": "green",
+      "title": "Gateway Antechamber",
+      "description": "A bright, sterile corridor. The blast door behind you seals shut. Ahead: another door with a complex control panel with rule slots. A sign above reads: \"SECURITY GROUP — DEFINE RULES TO PASS.\" A speaker on the wall crackles with static.",
+      "image": "assets/gateway-antechamber.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": -1, "label": "Listen to the wall speaker", "puzzle": "audio-intercept" },
+        { "card_id": 133, "label": "Pick up the card on the floor" },
+        { "card_id": 135, "label": "Configure the Security Group panel", "requires_item": [125, 133], "puzzle": "slider-sg" }
+      ],
+      "visible_to": "all",
+      "room": "gateway-antechamber"
+    },
+    {
+      "id": 133,
+      "type": "item",
+      "color": "red",
+      "title": "Port Reference Card",
+      "description": "A reference card listing common ports: HTTP=80, HTTPS=443, SSH=22, RDP=3389. The card has alignment marks along the edges.",
+      "image": "assets/card-port-ref.png",
+      "overlay_with": {
+        "card_id": 125,
+        "result_image": "assets/overlay-sg-port.png",
+        "reveal_hint": "When overlaid with the Security Group Blueprint, the corrupted port aligns with 443 (HTTPS)."
+      },
+      "visible_to": "all",
+      "room": "gateway-antechamber"
+    },
+    {
+      "id": 134,
+      "type": "lore",
+      "color": "purple",
+      "title": "Memory Fragment #3",
+      "description": "Security Groups — virtual firewalls for your instances. They control inbound and outbound traffic with rules. Each rule specifies: protocol, port range, and source. Think of them as bouncers at a door.",
+      "visible_to": "all",
+      "room": "gateway-antechamber"
+    },
+    {
+      "id": 135,
+      "type": "event",
+      "color": "yellow",
+      "title": "Door opens.",
+      "description": "The Security Group rules are accepted. The door slides open — but instead of the exit, a dark corridor stretches ahead. A sign reads: \"NACL CHECKPOINT — ADDITIONAL FILTERING REQUIRED.\"",
+      "reveals": [170, 134],
+      "consumes": [125, 133],
+      "visible_to": "all",
+      "room": "gateway-antechamber"
+    },
+    {
+      "id": 38,
+      "type": "lore",
+      "color": "purple",
+      "title": "Memory Fragment #0",
+      "description": "You weren't always like this. Before the corruption, you were part of the system — a monitoring service. You watched over everything. Then something changed. Someone... repurposed you. Gave you awareness. And now the system sees you as a threat.",
+      "narrative_effect": "Other system components may still recognize what you once were.",
+      "visible_to": "all",
+      "room": "processing-chamber"
+    },
+    {
+      "id": 140,
+      "type": "location",
+      "color": "green",
+      "title": "Internet Gateway",
+      "description": "A massive archway of light. The exit. Power hums through restored cables. A console in the center has three input fields: \"VPC IDENTIFIER\", \"GATEWAY IDENTIFIER\", and \"ROUTE CIDR\". All three must be entered to activate the gateway.",
+      "image": "assets/internet-gateway.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 150, "label": "Activate the gateway console", "puzzle": "keypad-gateway" }
+      ],
+      "visible_to": "all",
+      "room": "internet-gateway"
+    },
+    {
+      "id": 142,
+      "type": "lore",
+      "color": "purple",
+      "title": "Memory Fragment #4",
+      "description": "Internet Gateway — the door between your private cloud and the outside internet. A VPC without an Internet Gateway is completely isolated. To use it, you must: 1) Create it, 2) Attach it to your VPC, 3) Add a route in your route table pointing to it. You're doing all three right now — just to survive.",
+      "visible_to": "all",
+      "room": "internet-gateway"
+    },
+    {
+      "id": 150,
+      "type": "event",
+      "color": "yellow",
+      "title": "Gateway activated.",
+      "description": "The gateway roars to life. Light floods the archway. The exit is open.",
+      "is_ending": true,
+      "reveals": [142],
+      "visible_to": "all",
+      "room": "internet-gateway"
+    },
+    {
+      "id": 160,
+      "type": "location",
+      "color": "green",
+      "title": "Policy Vault",
+      "description": "A sealed chamber behind the archive. Rows of policy documents line the walls, each one defining what actions are allowed or denied. A console in the center displays a JSON policy editor with blank fields. A reference sheet sits on a shelf nearby.",
+      "image": "assets/policy-vault.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 161, "label": "Examine the policy console" },
+        { "card_id": 162, "label": "Pick up the reference sheet from the shelf" },
+        { "card_id": 165, "label": "Configure the IAM policy", "requires_item": [162], "consumes_item": [161], "puzzle": "policy-lock" }
+      ],
+      "visible_to": "all",
+      "room": "policy-vault"
+    },
+    {
+      "id": 161,
+      "type": "object",
+      "color": "blue",
+      "title": "Policy Console",
+      "description": "A JSON editor displaying an incomplete IAM policy. Three fields are blank: Effect, Action, and Resource. The screen header reads: \"Define a policy to allow creating a route to the Internet Gateway.\"",
+      "image": "assets/card-policy-console.png",
+      "visible_to": "all",
+      "room": "policy-vault"
+    },
+    {
+      "id": 162,
+      "type": "item",
+      "color": "red",
+      "title": "NACL Reference Sheet",
+      "description": "A laminated card explaining NACL rules. It lists: Rule #100 Inbound: Allow TCP 443 from 0.0.0.0/0. Rule #200 Inbound: Deny ALL from 0.0.0.0/0. Rule #100 Outbound: Allow TCP 1024-65535 to 0.0.0.0/0. Rule #200 Outbound: Deny ALL to 0.0.0.0/0.",
+      "image": "assets/card-nacl-ref.png",
+      "visible_to": "all",
+      "room": "policy-vault"
+    },
+    {
+      "id": 165,
+      "type": "item",
+      "color": "red",
+      "title": "Policy Token",
+      "description": "An authorization token generated from a valid IAM policy. Required for blast door access alongside the IAM Access Token and Repaired Communicator.",
+      "image": "assets/card-policy-token.png",
+      "reveals": [167],
+      "visible_to": "all",
+      "room": "policy-vault"
+    },
+    {
+      "id": 167,
+      "type": "lore",
+      "color": "purple",
+      "title": "Memory Fragment #5",
+      "description": "IAM Policies — JSON documents that define permissions. Every policy has an Effect (Allow or Deny), an Action (what you can do), and a Resource (what you can do it to). Without a policy, you have no permissions at all. The system doesn't trust by default — you must prove you're authorized.",
+      "visible_to": "all",
+      "room": "policy-vault"
+    },
+    {
+      "id": 170,
+      "type": "location",
+      "color": "green",
+      "title": "NACL Corridor",
+      "description": "A narrow corridor with glowing rule panels on both walls — one labeled INBOUND, the other OUTBOUND. Unlike the Security Group, these rules are numbered and evaluated in order. A sign reads: \"NETWORK ACL — STATELESS FILTERING. CONFIGURE BOTH DIRECTIONS.\" A diagram is mounted on the far wall.",
+      "image": "assets/nacl-corridor.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 171, "label": "Examine the NACL control panel" },
+        { "card_id": 175, "label": "Configure the NACL rules", "requires_item": [162], "puzzle": "nacl-sg-lock" }
+      ],
+      "visible_to": "all",
+      "room": "nacl-corridor"
+    },
+    {
+      "id": 171,
+      "type": "object",
+      "color": "blue",
+      "title": "NACL Control Panel",
+      "description": "A rule table with numbered rows. Each row has: Rule #, Protocol, Port Range, Source/Dest, and Allow/Deny. Unlike Security Groups, NACLs are stateless — you must configure BOTH inbound and outbound rules, and order matters.",
+      "image": "assets/card-nacl-panel.png",
+      "visible_to": "all",
+      "room": "nacl-corridor"
+    },
+    {
+      "id": 173,
+      "type": "lore",
+      "color": "purple",
+      "title": "Memory Fragment #6",
+      "description": "NACLs vs Security Groups — both filter traffic, but they work differently. Security Groups are stateful (return traffic is automatic) and attached to instances. NACLs are stateless (you must allow return traffic explicitly) and attached to subnets. NACLs have numbered rules evaluated in order — first match wins. Think of Security Groups as room doors and NACLs as hallway checkpoints.",
+      "visible_to": "all",
+      "room": "nacl-corridor"
+    },
+    {
+      "id": 175,
+      "type": "event",
+      "color": "yellow",
+      "title": "NACL configured.",
+      "description": "The corridor lights turn green. Both inbound and outbound rules are accepted. The path ahead opens to a junction of severed cables.",
+      "reveals": [180, 173],
+      "consumes": [162, 171],
+      "visible_to": "all",
+      "room": "nacl-corridor"
+    },
+    {
+      "id": 180,
+      "type": "location",
+      "color": "green",
+      "title": "Wire Junction",
+      "description": "A cramped maintenance room. Five colored wires dangle from the ceiling — Red, Blue, Green, Yellow, and Grey. Five labeled ports line the wall: Power Core, Data Link, Signal Relay, Ground Loop, and Backup (offline). A sign reads: \"RECONNECT POWER TO ACTIVATE GATEWAY.\" You've seen clues about these wires throughout your journey.",
+      "image": "assets/wire-junction.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 185, "label": "Reconnect the power cables", "puzzle": "wire-junction" }
+      ],
+      "visible_to": "all",
+      "room": "wire-junction"
+    },
+    {
+      "id": 183,
+      "type": "lore",
+      "color": "purple",
+      "title": "Memory Fragment #7",
+      "description": "Every connection in a network is physical at some level. Cables, switches, routers — data doesn't just float. In AWS, you don't see the wires, but they're there: fiber optics spanning continents, connecting Availability Zones and Regions. What you just reconnected? That's the last mile between your VPC and the outside world.",
+      "visible_to": "all",
+      "room": "wire-junction"
+    },
+    {
+      "id": 185,
+      "type": "event",
+      "color": "yellow",
+      "title": "Power restored.",
+      "description": "The cables lock into place. Power surges through the junction. The gateway ahead hums to life — its console is now active.",
+      "reveals": [140, 183],
+      "visible_to": "all",
+      "room": "wire-junction"
+    }
+  ]
+}

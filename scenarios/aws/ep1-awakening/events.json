@@ -1,0 +1,91 @@
+{
+  "timed_events": [
+    {
+      "id": "flicker-55",
+      "time_remaining": 3300,
+      "message": "The lights flicker briefly.",
+      "type": "atmosphere"
+    },
+    {
+      "id": "rumble-45",
+      "time_remaining": 2700,
+      "message": "A distant rumbling. The Purge is moving through outer zones.",
+      "type": "atmosphere",
+      "voice": "narrator"
+    },
+    {
+      "id": "mid-purge-35",
+      "time_remaining": 2100,
+      "message": "Private Subnet locks. Spawn Room, Processing Chamber, Archive Room, and Policy Vault become inaccessible.",
+      "type": "lockout",
+      "locks_rooms": [100, 110, 120, 160],
+      "triggers_narrative": "mid_event"
+    },
+    {
+      "id": "pulse-20",
+      "time_remaining": 1200,
+      "message": "Lights in Gateway Antechamber pulse red. Purge approaching public subnet.",
+      "type": "atmosphere"
+    },
+    {
+      "id": "alarm-10",
+      "time_remaining": 600,
+      "message": "FINAL WARNING. 10 MINUTES TO TOTAL PURGE.",
+      "type": "alarm",
+      "voice": "alert"
+    },
+    {
+      "id": "heartbeat-5",
+      "time_remaining": 300,
+      "message": "Screen edges glow red. Heartbeat sound.",
+      "type": "atmosphere"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "sg-door-open",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "slider-sg",
+      "result_card": 135,
+      "message": "The Security Group rules are accepted. A corridor opens ahead.",
+      "type": "reveal"
+    },
+    {
+      "id": "nacl-configured",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "nacl-sg-lock",
+      "result_card": 175,
+      "message": "NACL rules accepted. The corridor lights turn green.",
+      "type": "reveal"
+    },
+    {
+      "id": "power-restored",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "wire-junction",
+      "result_card": 185,
+      "message": "Power restored. The gateway hums to life.",
+      "type": "reveal"
+    },
+    {
+      "id": "gateway-activated",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "keypad-gateway",
+      "result_card": 150,
+      "message": "The gateway roars to life.",
+      "type": "ending"
+    },
+    {
+      "id": "audio-intercept-enhanced",
+      "trigger": "has_card",
+      "card_id": 38,
+      "location": "gateway-antechamber",
+      "mechanic": "narrative_inference",
+      "message": "The speaker crackles differently. It recognizes you — a former monitoring service. The voice becomes clear.",
+      "type": "tool_upgrade",
+      "upgrades": {
+        "puzzle_id": "audio-intercept",
+        "new_message": "...you were one of us. Listen carefully: inbound port four-four-three. HTTPS only. Outbound: allow all — set to zero. Configure the Security Group. Go. Before the Purge finds you."
+      }
+    }
+  ]
+}

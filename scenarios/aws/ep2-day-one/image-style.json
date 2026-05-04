@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Digital illustration, modern NYC office interior, warm fluorescent lighting, tech startup aesthetic, clean lines, muted colors with accent highlights, game card art.",
+  "style_prefix_location": "Digital illustration, modern NYC office interior, warm fluorescent lighting, tech startup aesthetic, clean lines, muted colors with accent highlights, wide angle, game card art.",
+  "style_prefix_item": "Digital illustration, modern NYC office item on clean desk surface, warm fluorescent lighting, tech startup aesthetic, muted colors with accent highlights, close-up, game card art.",
+  "style_prefix_object": "Digital illustration, modern NYC office interactive element, warm fluorescent lighting, tech startup aesthetic, clean lines, muted colors with accent highlights, close-up, game card art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, realistic photo",
+  "aspect_ratio": "16:9"
+}

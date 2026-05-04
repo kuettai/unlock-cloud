@@ -1,0 +1,105 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Story narrator — warm, sets the scene" },
+    "matthias": { "voice_id": "Matthew", "role": "Matthias's inner thoughts — authoritative, investigative" },
+    "miriam": { "voice_id": "Ruth", "role": "Mary's voice — gentle, knowing" }
+  },
+  "intro": {
+    "segments": [
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='92%'>The evening air is warm and sweet <break time='300ms'/> with the scent of roasted lamb and fresh bread.</prosody> <break time='500ms'/> <s>Music drifts across the courtyard of a modest but proud home <break time='200ms'/> in Cana of Galilee.</s>",
+        "pause_after_ms": 1200
+      },
+      {
+        "voice": "narrator",
+        "ssml": "You are <prosody rate='92%' volume='+2dB'>Matthias</prosody>, the master of the feast <break time='300ms'/> — a man of reputation, hired to ensure this wedding celebration is <prosody rate='85%' volume='+4dB'>flawless</prosody>.",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='85%'>A servant places a cup before you. <break time='400ms'/> You drink. <break time='600ms'/> And the world <prosody rate='85%' volume='+4dB'>stops</prosody>.</prosody>",
+        "pause_after_ms": 1500
+      },
+      {
+        "voice": "matthias",
+        "ssml": "<prosody rate='90%'>This wine <break time='300ms'/> — it is <prosody rate='85%' volume='+4dB'>extraordinary</prosody>. <break time='200ms'/> Rich, deep, layered with a complexity that the finest vineyards in Jerusalem could not produce.</prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "matthias",
+        "ssml": "<prosody rate='88%'>Something is impossible. <break time='500ms'/> And yet <break time='300ms'/> — it is <prosody rate='85%' volume='+4dB'>undeniably</prosody> real.</prosody>",
+        "pause_after_ms": 1500
+      },
+      {
+        "voice": "narrator",
+        "text": "You call the bridegroom over.",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "matthias",
+        "ssml": "<prosody rate='95%'>Everyone serves the good wine first, and the cheaper wine after the guests have drunk freely.</prosody> <break time='400ms'/> <prosody rate='90%' volume='+2dB'>But <prosody rate='85%' volume='+4dB'>you</prosody> — you have kept the good wine until <prosody rate='85%' volume='+4dB'>now</prosody>!</prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='92%'>The bridegroom smiles <break time='200ms'/> — but you see the flicker of confusion in his eyes. <break time='400ms'/> He doesn't know where this wine came from either.</prosody>",
+        "pause_after_ms": 1200
+      },
+      {
+        "voice": "matthias",
+        "ssml": "<prosody rate='85%' volume='loud'>I intend to find out <break time='300ms'/> what happened.</prosody>",
+        "pause_after_ms": 0
+      }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "segments": [
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='90%'>The hour grows late. <break time='300ms'/> Guests are beginning to leave. <break time='400ms'/> The courtyard thins.</prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "matthias",
+        "ssml": "<prosody rate='95%' volume='+2dB'>I'm running out of time. <break time='300ms'/> The witnesses will scatter by dawn. <break time='200ms'/> I <prosody rate='85%' volume='+4dB'>must</prosody> piece this together now.</prosody>",
+        "pause_after_ms": 0
+      }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='88%'>You sit alone at the head table <break time='400ms'/> — your cup still half full of the wine that should not exist.</prosody>",
+          "pause_after_ms": 1200
+        },
+        {
+          "voice": "matthias",
+          "ssml": "<prosody rate='85%'>I have eliminated every explanation I know. <break time='600ms'/> What remains <break time='300ms'/> is the one I don't.</prosody>",
+          "pause_after_ms": 1200
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='90%'><prosody rate='92%' volume='+2dB'>Water became wine.</prosody> <break time='400ms'/> The servants saw it. <break time='300ms'/> The mother believed it. <break time='300ms'/> The fishermen call it <prosody rate='85%' volume='+4dB'>the first sign</prosody>.</prosody>",
+          "pause_after_ms": 1200
+        },
+        {
+          "voice": "matthias",
+          "ssml": "<prosody rate='85%'>I don't have an answer. <break time='500ms'/> But for the first time in my careful, controlled life <break time='400ms'/> — the mystery itself <break time='300ms'/> is <prosody rate='85%' volume='+4dB'>enough</prosody>. <break time='600ms'/> What I witnessed tonight was not a trick. <break time='300ms'/> It was a sign. And signs point to something greater.</prosody>",
+          "pause_after_ms": 1500
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='88%'>You step out into the cool Galilean night. <break time='500ms'/> The stars are <prosody rate='92%' volume='+2dB'>impossibly</prosody> bright.</prosody>",
+          "pause_after_ms": 0
+        }
+      ],
+      "audio": null
+    },
+    "failure": null
+  }
+}

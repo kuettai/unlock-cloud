@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Digital illustration, dark sci-fi escape room, neon-lit cyberpunk interior, moody atmosphere, circuit patterns, glowing accents, game card art.",
+  "style_prefix_location": "Digital illustration, dark sci-fi escape room interior, neon-lit cyberpunk, moody atmosphere, circuit patterns, glowing accents, wide angle, game environment art.",
+  "style_prefix_item": "Digital illustration, single sci-fi object on dark background, glowing neon accents, clean icon style, centered, cyberpunk item, game inventory art.",
+  "style_prefix_object": "Digital illustration, sci-fi interactive prop, dark moody background, neon highlights, cyberpunk, close-up detail, game card art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly",
+  "aspect_ratio": "16:9"
+}

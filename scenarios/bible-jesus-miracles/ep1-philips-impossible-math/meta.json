@@ -1,0 +1,40 @@
+{
+  "id": "ep1-philips-impossible-math",
+  "title": "Philip's Impossible Math",
+  "episode": 1,
+  "arc": "Feeding the Five Thousand (John 6:1-14)",
+  "description": "Five thousand hungry people. No food. No money. No time. You are Philip — the practical disciple who counts the money. The teacher asks you an impossible question, and every calculation leads to the same answer: it can't be done. But what if the answer was never in the numbers?",
+  "difficulty": {
+    "tier": 1,
+    "label": "Initiate"
+  },
+  "duration_minutes": 30,
+  "players": {
+    "min": 1,
+    "max": 6,
+    "recommended": 4
+  },
+  "bible_topics": [
+    "Feeding the 5000",
+    "Divine provision",
+    "Faith beyond logistics",
+    "The sign of the Prophet"
+  ],
+  "mechanics_taught": [
+    "discoveries",
+    "npc_dialog",
+    "card_combination",
+    "crowd_counter_lock",
+    "keypad_lock",
+    "offering_table_lock",
+    "maze_lock",
+    "bread_break_lock",
+    "word_lock",
+    "hidden_elements",
+    "lore_fragments"
+  ],
+  "version": "0.1",
+  "lore_label": "Scripture Fragments",
+  "end_title": "Investigation Complete",
+  "start_button": "Survey the Hillside"
+}

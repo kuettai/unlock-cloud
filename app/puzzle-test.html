@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Puzzle Lock Tests</title>
+<style>
+:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--accent:#3b82f6}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif}
+body{display:flex;flex-direction:column;align-items:center;padding:24px 16px;gap:32px;overflow-y:auto}
+h3{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+section{width:100%;max-width:400px}
+.result{margin-top:8px;text-align:center;font-size:14px;color:var(--muted);min-height:20px}
+hr{border:none;border-top:1px solid var(--border);width:100%;max-width:400px}
+</style>
+</head>
+<body>
+  <section>
+    <h3>4-Digit Lock (answer: 1234)</h3>
+    <div id="digit-lock"></div>
+    <div class="result" id="digit-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Word Lock (answer: SHOUT)</h3>
+    <div id="word-lock"></div>
+    <div class="result" id="word-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Morse Lock (answer: SOS)</h3>
+    <div id="morse-lock"></div>
+    <div class="result" id="morse-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Jigsaw Lock (arrange 1–9 in order)</h3>
+    <div id="jig-lock"></div>
+    <div class="result" id="jig-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Binary Lock (answer: 10110001 = 177)</h3>
+    <div id="bin-lock"></div>
+    <div class="result" id="bin-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Rotation Lock (align ● and C at markers)</h3>
+    <div id="rot-lock"></div>
+    <div class="result" id="rot-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Slider Lock (Freq=42, Amp=7.5, Phase=180)</h3>
+    <div id="slider-lock"></div>
+    <div class="result" id="slider-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Sequence Lock (5-step pattern)</h3>
+    <div id="seq-lock"></div>
+    <div class="result" id="seq-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Wire Lock (5 wires, 6 ports — 1 decoy wire, 2 decoy ports)</h3>
+    <div id="wire-lock"></div>
+    <div class="result" id="wire-result"></div>
+  </section>
+
+<script src="puzzle/4digits-lock.js"></script>
+<script src="puzzle/word-lock.js"></script>
+<script src="puzzle/wire-lock.js"></script>
+<script src="puzzle/sequence-lock.js"></script>
+<script src="puzzle/slider-lock.js"></script>
+<script src="puzzle/rotation-lock.js"></script>
+<script src="puzzle/binary-lock.js"></script>
+<script src="puzzle/jigsaw-lock.js"></script>
+<script src="puzzle/morse-lock.js"></script>
+<script>
+new DigitLock(document.getElementById('digit-lock'), {
+  onSubmit(code) {
+    document.getElementById('digit-result').textContent =
+      code === '1234' ? '✅ Unlocked!' : `❌ Code: ${code}`;
+  }
+});
+new WordLock(document.getElementById('word-lock'), {
+  answer: 'SHOUT',
+  onSubmit(word, correct) {
+    document.getElementById('word-result').textContent =
+      correct ? '✅ Unlocked!' : `❌ Word: ${word}`;
+  }
+});
+new MorseLock(document.getElementById('morse-lock'), {
+  answer: 'SOS',
+  onSubmit(correct) {
+    document.getElementById('morse-result').textContent = '✅ Signal received!';
+  }
+});
+new JigsawLock(document.getElementById('jig-lock'), {
+  cols: 3, rows: 3,
+  tiles: ['1','2','3','4','5','6','7','8','9'],
+  onSubmit(correct) {
+    document.getElementById('jig-result').textContent = '✅ Tiles assembled!';
+  }
+});
+new BinaryLock(document.getElementById('bin-lock'), {
+  answer: '10110001',
+  onSubmit(correct) {
+    document.getElementById('bin-result').textContent = '✅ Binary pattern accepted!';
+  },
+  onWrong() {
+    document.getElementById('bin-result').textContent = '❌ Wrong pattern';
+  }
+});
+new RotationLock(document.getElementById('rot-lock'), {
+  dials: [
+    { symbols: ['▲','■','●','◆','★','✦'], answer: 2 },
+    { symbols: ['A','B','C','D'], answer: 2 },
+  ],
+  onSubmit(correct) {
+    document.getElementById('rot-result').textContent = '✅ Dials aligned!';
+  }
+});
+new SliderLock(document.getElementById('slider-lock'), {
+  sliders: [
+    { label: 'Frequency', min: 0, max: 100, step: 1, answer: 42 },
+    { label: 'Amplitude', min: 0, max: 10, step: 0.5, answer: 7.5 },
+    { label: 'Phase',     min: 0, max: 360, step: 10, answer: 180 },
+  ],
+  onSubmit(correct) {
+    document.getElementById('slider-result').textContent = '✅ Signal locked!';
+  }
+});
+new SequenceLock(document.getElementById('seq-lock'), {
+  sequence: [0, 4, 8, 6, 2],
+  onSubmit(correct) {
+    document.getElementById('seq-result').textContent = '✅ Pattern matched!';
+  }
+});
+new WireLock(document.getElementById('wire-lock'), {
+  wires: [
+    { id: 'vpc', color: '#22c55e', label: 'VPC' },
+    { id: 's3',  color: '#3b82f6', label: 'S3' },
+    { id: 'iam', color: '#eab308', label: 'IAM' },
+    { id: 'rds', color: '#ef4444', label: 'RDS' },
+    { id: 'sns', color: '#7a8ba8', label: 'SNS' },  // decoy
+  ],
+  sockets: [
+    { id: 'net',  label: 'Network' },
+    { id: 'str',  label: 'Storage' },
+    { id: 'auth', label: 'Identity' },
+    { id: 'db',   label: 'Database' },
+    { id: 'comp', label: 'Compute' },  // decoy
+    { id: 'msg',  label: 'Messaging' }, // decoy
+  ],
+  solution: { vpc: 'net', s3: 'str', iam: 'auth', rds: 'db' },
+  onSubmit(correct) {
+    document.getElementById('wire-result').textContent = '✅ All wires connected!';
+  }
+});
+</script>
+</body>
+</html>

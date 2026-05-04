@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Puzzle Lock Tests 2</title>
+<style>
+:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--accent:#3b82f6;--green:#22c55e}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif}
+body{display:flex;flex-direction:column;align-items:center;padding:24px 16px;gap:32px;overflow-y:auto}
+h3{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+section{width:100%;max-width:400px}
+.result{margin-top:8px;text-align:center;font-size:14px;color:var(--muted);min-height:20px}
+hr{border:none;border-top:1px solid var(--border);width:100%;max-width:400px}
+</style>
+</head>
+<body>
+  <section>
+    <h3>Path Trace Lock (IGW → Router → EC2)</h3>
+    <div id="path-lock"></div>
+    <div class="result" id="path-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Drag-Sort Lock (order deployment steps)</h3>
+    <div id="sort-lock"></div>
+    <div class="result" id="sort-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Match Pairs Lock (AWS service → category)</h3>
+    <div id="match-lock"></div>
+    <div class="result" id="match-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Color Mix Lock (match the target color)</h3>
+    <div id="color-lock"></div>
+    <div class="result" id="color-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Keypad Lock (PIN: 4721)</h3>
+    <div id="keypad-lock"></div>
+    <div class="result" id="keypad-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Terminal Lock (type: aws s3 ls)</h3>
+    <div id="terminal-lock"></div>
+    <div class="result" id="terminal-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Countdown Defuse Lock (30s)</h3>
+    <div id="defuse-lock"></div>
+    <div class="result" id="defuse-result"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>Pipe Connect Lock (connect green → red)</h3>
+    <div id="pipe-lock"></div>
+    <div class="result" id="pipe-result"></div>
+  </section>
+
+<script src="puzzle/path-lock.js"></script>
+<script src="puzzle/sort-lock.js"></script>
+<script src="puzzle/match-lock.js"></script>
+<script src="puzzle/color-lock.js"></script>
+<script src="puzzle/keypad-lock.js"></script>
+<script src="puzzle/terminal-lock.js"></script>
+<script src="puzzle/defuse-lock.js"></script>
+<script src="puzzle/pipe-lock.js"></script>
+<script>
+new PathLock(document.getElementById('path-lock'), {
+  nodes: [
+    { id: 'igw', label: 'IGW', x: 50, y: 10 },
+    { id: 'rt', label: 'Router', x: 50, y: 40 },
+    { id: 'ec2', label: 'EC2', x: 20, y: 75 },
+    { id: 'rds', label: 'RDS', x: 80, y: 75 },
+    { id: 'nat', label: 'NAT', x: 50, y: 75 },
+  ],
+  edges: [['igw','rt'],['rt','ec2'],['rt','rds'],['rt','nat'],['nat','rds']],
+  answer: ['igw','rt','ec2'],
+  onSubmit() { document.getElementById('path-result').textContent = '✅ Route traced!'; }
+});
+
+new SortLock(document.getElementById('sort-lock'), {
+  answer: ['Build image','Push to ECR','Update task def','Deploy service'],
+  onSubmit() { document.getElementById('sort-result').textContent = '✅ Correct order!'; }
+});
+
+new MatchLock(document.getElementById('match-lock'), {
+  pairs: [['S3','Storage'],['EC2','Compute'],['IAM','Identity'],['VPC','Network']],
+  onSubmit() { document.getElementById('match-result').textContent = '✅ All matched!'; }
+});
+
+new ColorLock(document.getElementById('color-lock'), {
+  answer: [180, 60, 220],
+  tolerance: 20,
+  onSubmit() { document.getElementById('color-result').textContent = '✅ Color matched!'; }
+});
+
+new KeypadLock(document.getElementById('keypad-lock'), {
+  answer: '4721',
+  onSubmit() { document.getElementById('keypad-result').textContent = '✅ Unlocked!'; }
+});
+
+new TerminalLock(document.getElementById('terminal-lock'), {
+  prompt: 'admin@cloud:~$',
+  answer: 'aws s3 ls',
+  history: ['System breach detected.', 'Enter override command:'],
+  falseOutputs: ['bash: command not found', 'Permission denied'],
+  onSubmit() { document.getElementById('terminal-result').textContent = '✅ Access granted!'; }
+});
+
+new DefuseLock(document.getElementById('defuse-lock'), {
+  timeSeconds: 30,
+  tasks: [
+    { type: 'toggle', label: 'Cut red wire', answer: true },
+    { type: 'toggle', label: 'Arm shield', answer: false },
+    { type: 'code', label: 'Enter code', answer: '42' },
+  ],
+  onSubmit() { document.getElementById('defuse-result').textContent = '✅ Defused!'; },
+  onTimeout() { document.getElementById('defuse-result').textContent = '💥 Too late!'; }
+});
+
+new PipeLock(document.getElementById('pipe-lock'), {
+  cols: 4, rows: 3,
+  pipes: ['┌','─','─','┐','│',' ',' ','│','└','─','─','┘'],
+  source: { col: 0, row: 0 },
+  sink: { col: 3, row: 2 },
+  onSubmit() { document.getElementById('pipe-result').textContent = '✅ Pipes connected!'; }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,587 @@
+{
+  "puzzles": [
+    {
+      "id": "npc-ezra",
+      "type": "tool",
+      "card_ref": 103,
+      "description": "Speak with Ezra the steward",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Ezra",
+        "portrait": "🧔",
+        "greeting": "M-master Matthias! I was just about to come find you...",
+        "lines": [
+          {
+            "label": "Where did this wine come from?",
+            "response": "From the stores, master. I... I think."
+          },
+          {
+            "label": "Don't lie to me, Ezra. I approved the stores.",
+            "response": "I... I will ask the servants. They were handling the jars tonight. Please, speak to them — they are by the far wall."
+          },
+          {
+            "label": "What do you know about the guests in the eastern corner?",
+            "response": "Out-of-town guests, master. Not from Cana. They were invited through Mary."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 101,
+            "label": "Taste this wine and tell me it came from our stores.",
+            "response": "That is... that is not our wine, master. I have never tasted anything like it. The servants — you must speak to the servants. They know something.",
+            "triggers_event": 109
+          }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "npc-servants",
+      "type": "tool",
+      "card_ref": 121,
+      "description": "Speak with Amos, Tobiah & Reuben",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Amos, Tobiah & Reuben",
+        "portrait": "👥",
+        "greeting": "Master Matthias! We were told not to—",
+        "lines": [
+          {
+            "label": "The wine. Tell me.",
+            "response": "Amos: \"Master, we were told not to speak of it.\" Tobiah shifts nervously."
+          },
+          {
+            "label": "I am not angry. I am puzzled. That wine is the finest I have encountered in twenty years.",
+            "response": "Tobiah breaks: \"It came from the water pots, sir. The purification jars. We filled them with water. To the brim. And then... we drew from them. And it was wine.\""
+          },
+          {
+            "label": "That is absurd. Who told you to do this?",
+            "response": "They exchange glances. Amos shakes his head. Reuben mutters: \"A woman came to us first. She said, 'Whatever he tells you, do it.' Then a man told us to fill the jars.\""
+          },
+          {
+            "label": "Which man? Point him out.",
+            "response": "Reuben's eyes dart toward the eastern corner, then back to the ground. \"I cannot say more, master. Please. Go see the jars for yourself.\""
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 101,
+            "label": "Taste this — is this what you drew from the jars?",
+            "response": "All three taste it. Tobiah goes pale. \"Yes, master. That is exactly what we drew. But we filled them with water. I swear it.\"",
+            "discovers": [
+              302
+            ]
+          }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "witness-wires",
+      "type": "wire_lock",
+      "card_ref": 120,
+      "description": "Connect each testimony to the correct servant",
+      "ui": "wire-lock",
+      "config": {
+        "wires": [
+          {
+            "id": "testimony-water",
+            "color": "#3b82f6",
+            "label": "From the water pots"
+          },
+          {
+            "id": "testimony-woman",
+            "color": "#22c55e",
+            "label": "'Do whatever he tells you'"
+          },
+          {
+            "id": "testimony-filled",
+            "color": "#a855f7",
+            "label": "Filled to the brim"
+          }
+        ],
+        "sockets": [
+          {
+            "id": "tobiah",
+            "label": "Tobiah"
+          },
+          {
+            "id": "reuben",
+            "label": "Reuben"
+          },
+          {
+            "id": "amos",
+            "label": "Amos"
+          }
+        ],
+        "solution": {
+          "testimony-water": "tobiah",
+          "testimony-woman": "reuben",
+          "testimony-filled": "amos"
+        },
+        "submitLabel": "✓ Confirm Testimony",
+        "falseOutputs": [
+          "The servants' stories don't match. Something is off..."
+        ]
+      },
+      "hints": [
+        "Listen carefully to each servant's words during the conversation. Who said what?",
+        "Tobiah spoke about the water pots first. Reuben mentioned the woman. Amos confirmed they filled the jars.",
+        "Connect: 'water pots' → Tobiah, 'woman's instruction' → Reuben, 'filled to the brim' → Amos."
+      ]
+    },
+    {
+      "id": "hidden-jars",
+      "type": "hidden_element",
+      "card_ref": 140,
+      "description": "Find the hidden number in the stone jar artwork",
+      "solution": {
+        "type": "card_number",
+        "value": 6
+      },
+      "auto_hint_after_seconds": 120,
+      "hints": [
+        "The jars themselves hold a clue. Look at the stone carefully.",
+        "Count the jars — but also look for a number hidden in the artwork.",
+        "The number 6 is hidden in the stone grain pattern. Look at card #146."
+      ]
+    },
+    {
+      "id": "fill-the-jars",
+      "type": "jar_fill_lock",
+      "card_ref": 140,
+      "description": "Fill the six stone jars to the brim — as the servants did",
+      "ui": "jar-fill-lock",
+      "config": {
+        "mode": "timing",
+        "pourSpeed": 1.8,
+        "tolerance": 0.2,
+        "spillMessage": "Water spilled! The servants were more careful than you...",
+        "jars": [
+          {
+            "id": "j1",
+            "capacity": 3,
+            "label": "I"
+          },
+          {
+            "id": "j2",
+            "capacity": 2,
+            "label": "II"
+          },
+          {
+            "id": "j3",
+            "capacity": 3,
+            "label": "III"
+          },
+          {
+            "id": "j4",
+            "capacity": 2,
+            "label": "IV"
+          },
+          {
+            "id": "j5",
+            "capacity": 2,
+            "label": "V"
+          },
+          {
+            "id": "j6",
+            "capacity": 3,
+            "label": "VI"
+          }
+        ]
+      },
+      "success_card": 146,
+      "hints": [
+        "Hold down on each jar to pour water. Release when the water reaches the brim line.",
+        "The larger jars (I, III, VI) hold 3 metretes. The smaller ones (II, IV, V) hold 2. Pour carefully.",
+        "Hold longer for big jars, shorter for small ones. Release right at the dashed line."
+      ]
+    },
+    {
+      "id": "jar-volume",
+      "type": "code_entry",
+      "card_ref": 140,
+      "description": "Calculate the minimum volume of wine in the six stone jars",
+      "ui": "keypad-lock",
+      "config": {
+        "solution": "120",
+        "max_length": 3,
+        "falseOutputs": [
+          "That's the maximum. What's the minimum volume?",
+          "That's the number of jars, not the total volume."
+        ]
+      },
+      "success_card": 149,
+      "hints": [
+        "The Bible says each jar holds two to three metretes. A metrete is about 10 gallons.",
+        "Six jars × two metretes minimum × 10 gallons = ?",
+        "6 × 2 × 10 = 120. Enter 120."
+      ]
+    },
+    {
+      "id": "merchant-eliminate",
+      "type": "match_lock",
+      "card_ref": 160,
+      "description": "Match each theory to the evidence that disproves it",
+      "ui": "match-lock",
+      "config": {
+        "pairs": [
+          [
+            "Smuggled wine",
+            "120+ gallons — impossible to smuggle"
+          ],
+          [
+            "Second wine order",
+            "Joachim is the only merchant in Cana"
+          ],
+          [
+            "Gift from a relative",
+            "The bridegroom didn't know the source"
+          ],
+          [
+            "Wine from another town",
+            "No delivery records exist"
+          ]
+        ]
+      },
+      "success_card": 169,
+      "hints": [
+        "Each wrong theory has a specific piece of evidence that disproves it. Think about what you've learned.",
+        "The volume rules out smuggling. Joachim's monopoly rules out a second order. The bridegroom's confusion rules out a gift.",
+        "Smuggled → 120 gallons. Second order → only merchant. Gift → bridegroom confused. Other town → no records."
+      ]
+    },
+    {
+      "id": "npc-joachim",
+      "type": "tool",
+      "card_ref": 161,
+      "description": "Speak with Joachim the wine merchant",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Joachim",
+        "portrait": "🧓",
+        "greeting": "Matthias? At this hour? What brings you from the wedding?",
+        "lines": [
+          {
+            "label": "The wine you sold for the wedding — was that all of it?",
+            "response": "Every drop. Three jars of my Galilean red, as agreed. Why?"
+          },
+          {
+            "label": "Did anyone else purchase wine for this wedding?",
+            "response": "Not through me. And I am the only merchant in Cana, Matthias. You know this."
+          },
+          {
+            "label": "Could someone have brought wine from outside? Sepphoris? Capernaum?",
+            "response": "Wine of that quality? You'd have to go to Jerusalem. Maybe Tyre. And even then... He pauses. Why? What happened?"
+          },
+          {
+            "label": "I tasted wine tonight that I cannot account for.",
+            "response": "Joachim laughs. Then someone is a better merchant than me. But it did not come from Cana, I promise you that."
+          }
+        ],
+        "state_lines": []
+      },
+      "hints": []
+    },
+    {
+      "id": "npc-miriam",
+      "type": "tool",
+      "card_ref": 181,
+      "description": "Speak with Mary",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Mary",
+        "portrait": "👩",
+        "greeting": "You must be the master of the feast. I could see you were troubled earlier.",
+        "lines": [
+          {
+            "label": "The servants said a woman told them to obey. Was that you?",
+            "response": "I did. A mother notices when things go wrong. The servants were worried. The bridegroom's family would have been shamed."
+          },
+          {
+            "label": "You knew the wine had run out?",
+            "response": "I did. So I went to my son and told him, 'They have no wine.'"
+          },
+          {
+            "label": "And he agreed to help?",
+            "response": "A complicated expression crosses her face. \"Not at first. He said to me, 'Woman, what does that have to do with you and me? My hour has not yet come.'\""
+          },
+          {
+            "label": "His hour?",
+            "response": "I did not fully understand it myself. But I have known my son for thirty years. Even when he says the time is not right... compassion moves him."
+          },
+          {
+            "label": "But what did he actually do?",
+            "response": "Matthias. You are a man who arranges things. You are looking for an arrangement — a system, a trick. What if there is no arrangement? What if what the servants told you is simply what happened?"
+          }
+        ],
+        "state_lines": []
+      },
+      "hints": []
+    },
+    {
+      "id": "courtyard-maze",
+      "type": "maze_lock",
+      "card_ref": 140,
+      "description": "Navigate the dark courtyard to find Mary",
+      "ui": "maze-lock",
+      "config": {
+        "cols": 5,
+        "rows": 4,
+        "walls": [
+          [
+            0,
+            1,
+            "S"
+          ],
+          [
+            0,
+            3,
+            "W"
+          ],
+          [
+            0,
+            3,
+            "S"
+          ],
+          [
+            1,
+            0,
+            "E"
+          ],
+          [
+            1,
+            2,
+            "S"
+          ],
+          [
+            1,
+            3,
+            "E"
+          ],
+          [
+            2,
+            1,
+            "E"
+          ],
+          [
+            2,
+            2,
+            "W"
+          ],
+          [
+            2,
+            4,
+            "W"
+          ],
+          [
+            3,
+            1,
+            "W"
+          ]
+        ],
+        "start": {
+          "row": 0,
+          "col": 0,
+          "facing": "E"
+        },
+        "goal": {
+          "row": 3,
+          "col": 4
+        },
+        "showWalls": false,
+        "showGoal": false,
+        "fallOnBump": true,
+        "playerIcon": "🕯️",
+        "showSteps": true,
+        "bumpMessage": "You stumble into a table in the dark! Back to the shop entrance...",
+        "bumpPenalty": 10
+      },
+      "success_card": 168,
+      "hints": [
+        "Joachim said Mary is near the bride's family, on the far side of the courtyard.",
+        "Head east and south through the courtyard. Avoid the tables and guests.",
+        "From start: E, E, S, S, E, S, E — reach the far corner."
+      ]
+    },
+    {
+      "id": "miriam-word",
+      "type": "code_entry",
+      "card_ref": 180,
+      "description": "Mary told her son what was missing at the wedding. 'They have no ____.'",
+      "ui": "word-lock",
+      "config": {
+        "solution": "WINE",
+        "max_length": 4,
+        "case_sensitive": false
+      },
+      "success_card": 191,
+      "hints": [
+        "Mary went to her son with a simple statement about what the wedding lacked.",
+        "She said, 'They have no ____.' What ran out at the wedding?",
+        "The answer is WINE. 'They have no wine.' (John 2:3)"
+      ]
+    },
+    {
+      "id": "npc-fishermen",
+      "type": "tool",
+      "card_ref": 201,
+      "description": "Speak with Simon & Andrew",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Simon & Andrew",
+        "portrait": "🧑‍🤝‍🧑",
+        "greeting": "Simon speaks up: \"We are from Capernaum and Bethsaida. We came with our teacher.\"",
+        "lines": [
+          {
+            "label": "Your teacher was invited to this wedding?",
+            "response": "He was. Along with us."
+          },
+          {
+            "label": "I'm told he spoke to the servants about the water jars.",
+            "response": "Simon and Andrew exchange a look — not fear, but wonder. Andrew: \"We saw it. We watched the servants fill the jars from the well. We saw them draw from the jars and bring the cup to you.\""
+          },
+          {
+            "label": "He simply told them to fill the jars with water?",
+            "response": "Simon nods slowly. \"'Fill the water pots with water.' And then, 'Now draw some out, and take it to the ruler of the feast.' Nothing else.\""
+          },
+          {
+            "label": "No powder, no mixture, no trick?",
+            "response": "\"Water, master.\" Simon's voice is steady. \"We watched. It was water.\""
+          },
+          {
+            "label": "Why do you follow this teacher?",
+            "response": "Andrew, almost to himself: \"We left our nets three days ago. We were not sure why. This is the first sign we have seen. And now we believe.\""
+          }
+        ],
+        "state_lines": []
+      },
+      "hints": []
+    },
+    {
+      "id": "kavod-word",
+      "type": "code_entry",
+      "card_ref": 200,
+      "description": "The disciples called it a revelation of glory. You saw four Hebrew letters carved on a wall. Hebrew reads right to left — what did they spell?",
+      "ui": "word-lock",
+      "config": {
+        "solution": "כבוד",
+        "alphabet": "אבגדהוזחטיכלמנסעפצקרשת",
+        "case_sensitive": true
+      },
+      "success_card": 999,
+      "hints": [
+        "You've seen these letters before — observe the artwork in The Bride's Family Area.",
+        "Look at the wall behind Mary. There are markings carved into the stone.",
+        "Four Hebrew characters are carved on the wall: כ ,ב ,ו ,ד — enter them: כבוד"
+      ]
+    },
+    {
+      "id": "first-sign",
+      "type": "sort_lock",
+      "card_ref": 200,
+      "description": "Order the events of the miracle as the disciples witnessed them",
+      "ui": "sort-lock",
+      "config": {
+        "answer": [
+          "The wine ran out at the wedding",
+          "Mary told her son, 'They have no wine'",
+          "He said, 'My hour has not yet come'",
+          "Mary told the servants, 'Do whatever he tells you'",
+          "He told the servants to fill the jars with water",
+          "The servants filled six stone jars to the brim",
+          "He said, 'Draw some out and take it to the ruler'",
+          "Matthias tasted the wine and was astonished"
+        ]
+      },
+      "success_card": 211,
+      "hints": [
+        "Think about the sequence of events. What happened first — the problem, or the solution?",
+        "The wine ran out → Mary told her son → He hesitated → She told the servants to obey → He gave instructions → They filled the jars → They drew out wine → You tasted it.",
+        "Order: wine ran out, Mary spoke to son, 'my hour has not yet come', 'do whatever he tells you', fill jars, filled to brim, draw some out, Matthias tasted."
+      ]
+    },
+    {
+      "id": "investigation-timeline",
+      "type": "timeline_lock",
+      "card_ref": 220,
+      "description": "Arrange Matthias's investigation steps in order, matching each to its key finding",
+      "ui": "timeline-lock",
+      "config": {
+        "events": [
+          {
+            "id": "a",
+            "label": "Tasted the extraordinary wine",
+            "time": "1"
+          },
+          {
+            "id": "b",
+            "label": "Questioned Ezra the steward",
+            "time": "2"
+          },
+          {
+            "id": "c",
+            "label": "Interviewed the three servants",
+            "time": "3"
+          },
+          {
+            "id": "d",
+            "label": "Examined the six stone jars",
+            "time": "4"
+          },
+          {
+            "id": "e",
+            "label": "Visited Joachim the merchant",
+            "time": "5"
+          },
+          {
+            "id": "f",
+            "label": "Spoke with Mary the mother",
+            "time": "6"
+          },
+          {
+            "id": "g",
+            "label": "Met Simon and the disciples",
+            "time": "7"
+          }
+        ],
+        "answer": [
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g"
+        ]
+      },
+      "hints": [
+        "Retrace your steps through the investigation. Where did you start?",
+        "You tasted the wine, then questioned Ezra, then the servants, then the jars, then the merchant, then Mary, then the disciples.",
+        "Order: wine → Ezra → servants → jars → Joachim → Mary → Simon & Andrew."
+      ]
+    },
+    {
+      "id": "final-conclusion",
+      "type": "code_entry",
+      "card_ref": 220,
+      "description": "According to every witness, what was poured into the six stone jars?",
+      "ui": "word-lock",
+      "config": {
+        "solution": "WATER",
+        "max_length": 5,
+        "case_sensitive": false,
+        "falseOutputs": {
+          "WINE": "That's what came OUT of the jars. But what went IN?",
+          "FAITH": "A beautiful thought, but the servants filled the jars with something physical."
+        }
+      },
+      "success_card": 228,
+      "hints": [
+        "Every witness told you the same thing about what went into the jars.",
+        "The servants filled the jars from the well. What comes from a well?",
+        "The answer is WATER. 'The water now become wine.' (John 2:9)"
+      ]
+    }
+  ]
+}

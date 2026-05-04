@@ -1,0 +1,743 @@
+{
+  "puzzles": [
+    {
+      "id": "npc-maya",
+      "type": "tool",
+      "card_ref": 101,
+      "description": "Maya — NovaCorp Receptionist",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Maya",
+        "portrait": "🧑",
+        "greeting": "Oh! You must be Alex! Welcome to NovaCorp! I'm so sorry about the chaos — everything just went down. Here, let me get you a temp badge.",
+        "lines": [
+          { "label": "Thanks. Where's my desk?", "response": "Desk 7B — down the hall, second left past the break room. Your laptop should be set up already. The previous lead left some sticky notes... everywhere, actually." },
+          { "label": "What happened to the last tech lead?", "response": "Marcus? He quit Friday. Walked out mid-standup. Said something about 'technical debt' and 'impossible expectations.' Left his desk covered in sticky notes." },
+          { "label": "Where is everyone?", "response": "War Room is straight ahead — Jordan's been in there since 9 AM. Data team is down the left hall. DevOps is the noisy corner with all the monitors. Security office is locked — Frank doesn't let anyone in without a quiz. Oh, and the basement has old archives if you need history." },
+          { "label": "Who's the CTO?", "response": "Diana Park. She's brilliant but... unreachable today. Conference in Seoul. Her office is on the executive floor — 15th. You'd need special badge access for that." },
+          { "label": "What's with the cat?", "response": "That's Pixel! She's the office cat. Showed up one day and never left. She has a little USB drive on her collar — Diana put it there. Some kind of joke about 'portable backups.' If you need to get close to her, she loves the tuna bites from the break room vending machine — aisle B, slot 3." }
+        ],
+        "state_lines": [
+          { "requires_card": 301, "label": "Jordan is intense.", "response": "Jordan means well. The board is breathing down their neck. Just... give updates, even if you don't have answers yet. It helps." },
+          { "requires_card": 1101, "label": "I found the basement archives.", "response": "Oh, you found B2? Nobody goes down there anymore. Marcus used to spend hours in the basement. Said the old architecture docs were 'the only honest documentation in the building.'" }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "npc-cat",
+      "type": "tool",
+      "card_ref": 103,
+      "description": "Pixel — Office Cat",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Pixel",
+        "portrait": "🐱",
+        "greeting": "*Pixel purrs and rubs against your leg. There's a small USB drive dangling from her collar on a carabiner clip.*",
+        "lines": [
+          { "label": "Pet the cat", "response": "*Pixel rolls over, exposing the USB drive more clearly. It's labeled 'NOVA-CORE-v3.1-PROD' in tiny print. She hisses when you reach for it. Maybe she wants something first...*" },
+          { "label": "Shoo", "response": "*Pixel gives you a withering look and saunters away. She'll be back.*" }
+        ],
+        "state_lines": [
+          { "requires_card": 905, "label": "Offer the cat treats", "response": "*Pixel's eyes go wide. She devours the treats and rolls onto her back, purring loudly. You unclip the USB drive from her collar. The label reads: NOVA-CORE-v3.1-PROD. This might be important.*" },
+          { "requires_card": 1006, "label": "Show Pixel the error logs", "response": "*Pixel sniffs the laptop screen, then paws at a specific line in the logs — the one mentioning 'nova-core-config.' Cats know things.*" }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "tool-laptop",
+      "type": "tool",
+      "card_ref": 201,
+      "description": "Your NovaCorp laptop — Slack, email, and internal tools",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "NovaCorp Laptop",
+        "portrait": "💻",
+        "greeting": "Slack is exploding. 47 unread messages. Here are the key channels:",
+        "lines": [
+          { "label": "#general", "response": "@channel EVERYTHING IS DOWN / @marcus_lee has left NovaCorp" },
+          { "label": "#incidents", "response": "SEV-1 opened: All production services unresponsive / CTO Diana Park — OOO (Seoul conference, back Wednesday)" },
+          { "label": "#dev", "response": "Last deploy was Friday 5:47 PM by marcus_lee — 'final cleanup' / Build pipeline status: FAILED (3 consecutive)" },
+          { "label": "#ai-team", "response": "NOVA assistant offline since 9:02 AM / Bedrock endpoint returning 503 — model invocation failing" },
+          { "label": "#security", "response": "Unusual auth pattern detected pre-outage: 847 failed attempts from internal IP" },
+          { "label": "#ops", "response": "Quick Suite dashboards showing stale data — last refresh 9:01 AM" },
+          { "label": "Email from Diana (last Friday)", "response": "Subject: Handoff notes for new TL / 'Alex — welcome aboard. Marcus has the runbook. NOVA is the heart of our stack. If anything goes wrong, the backup is on Pixel's collar. Yes, the cat. Long story. — Diana'" }
+        ],
+        "state_lines": [
+          { "requires_card": 709, "label": "#incidents (updated)", "response": "Root cause identified: Marcus's Friday deploy disabled Bedrock Guardrails. Cascade failure confirmed. Fix in progress." },
+          { "requires_card": 107, "label": "Plug in the USB drive", "response": "USB detected: NOVA-CORE-v3.1-PROD\n\nNOVA's original configuration loaded:\n• Model: Claude 3.5 Sonnet (reasoning + tools)\n• Knowledge Base: novacorp-docs-v2 (847 documents)\n• Guardrails: content-filter-prod (6 rules active)\n• Prompt Flow: customer-routing-v3\n\nThis is what the system looked like before Marcus broke it. A goldmine for the rebuild." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "tool-dashboard",
+      "type": "log_lock",
+      "card_ref": 206,
+      "description": "Amazon Quick Suite — real-time service dashboard (free tool)",
+      "ui": "log-lock",
+      "config": {
+        "prompt": "Review the dashboard. Which services are critical?",
+        "lines": [
+          { "text": "🔴 CRITICAL  | Bedrock Endpoint     | 503 errors | Last OK: 9:01 AM", "correct": true },
+          { "text": "🟡 DEGRADED  | Quick Suite Refresh   | Stale data | Last OK: 9:01 AM", "correct": false },
+          { "text": "🔴 CRITICAL  | NOVA Assistant        | Offline    | Last OK: 9:02 AM", "correct": true },
+          { "text": "🟢 HEALTHY   | S3 Storage            | Normal     | Continuous", "correct": false },
+          { "text": "🔴 CRITICAL  | Lex Chatbot           | Misrouting | Last OK: 8:58 AM", "correct": true },
+          { "text": "🟡 DEGRADED  | Comprehend Pipeline   | Delayed    | Last OK: 9:00 AM", "correct": false },
+          { "text": "🔴 CRITICAL  | Guardrails            | DISABLED   | Since Fri 5:47 PM", "correct": true },
+          { "text": "🟢 HEALTHY   | CloudFront CDN        | Normal     | Continuous", "correct": false },
+          { "text": "🔴 CRITICAL  | Transcribe Pipeline   | Stopped    | Last OK: 9:01 AM", "correct": true },
+          { "text": "🟡 DEGRADED  | Textract OCR          | Slow       | Last OK: 9:03 AM", "correct": false }
+        ]
+      },
+      "hints": [
+        "The dashboard shows 10 services. Not all are critical — look for the red tiles.",
+        "Five services are marked CRITICAL. Select all five red entries.",
+        "Select: Bedrock Endpoint, NOVA Assistant, Lex Chatbot, Guardrails, and Transcribe Pipeline."
+      ]
+    },
+    {
+      "id": "npc-jordan",
+      "type": "tool",
+      "card_ref": 301,
+      "description": "Jordan — VP of Engineering",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Jordan",
+        "portrait": "🧑‍💼",
+        "greeting": "Finally. You're the new lead? Everything is on fire. The board meets in an hour. I need a root cause and an ETA. Now.",
+        "lines": [
+          { "label": "What do we know so far?", "response": "Marcus deployed something Friday evening. By Monday morning, everything was down. Bedrock endpoints are 503ing, NOVA is offline, the Lex bot is sending customers to the wrong queues, and Guardrails are... apparently disabled? I need you to figure out the chain of failure." },
+          { "label": "Who can help me?", "response": "Priya on the data team knows the ML stack. Sam in DevOps can show you the pipelines. Frank in security is... Frank. He won't help unless you prove you know what you're talking about. And there's Diana's AI assistant, The Fox — if you can find it." },
+          { "label": "Where's the CTO?", "response": "Diana's in Seoul. Conference. Phone's off. I've been trying for an hour. Her office is on 15 but you'd need exec-level badge access. Frank might have a spare." },
+          { "label": "What's the business impact?", "response": "2.3 million users can't log in. Customer complaints are through the roof. Our AI assistant NOVA is completely offline — that handles 60% of support tickets. The call center is drowning. If this isn't fixed before the board call, heads will roll. Starting with mine." }
+        ],
+        "state_lines": [
+          { "requires_card": 1006, "label": "I have the error logs.", "response": "Good. Five critical services down. That's not a coincidence — there's a chain reaction. Figure out what triggered what. The timeline on the whiteboard might help if you can fill in the gaps." },
+          { "requires_card": 708, "label": "I found the root cause.", "response": "Marcus disabled Guardrails and pushed a bad config that cascaded through the Bedrock endpoint. That took down NOVA, which took down Lex routing, which killed the Transcribe pipeline. One bad deploy. Classic. Now fix it." },
+          { "requires_card": 1205, "label": "Systems are coming back online.", "response": "I can see the dashboard turning green from here. You absolute legend. I'm calling the board now — we have a story to tell." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "sort-triage",
+      "type": "sort_lock",
+      "card_ref": 305,
+      "description": "Arrange the failure cascade in correct chronological order",
+      "ui": "sort-lock",
+      "config": {
+        "items": [
+          "Lex chatbot loses NOVA routing logic",
+          "Bedrock model invocation fails — 503",
+          "Transcribe pipeline has no downstream consumer",
+          "Marcus disables Guardrails",
+          "NOVA loses connection to Bedrock",
+          "Unfiltered input hits Bedrock endpoint"
+        ],
+        "answer": [
+          "Marcus disables Guardrails",
+          "Unfiltered input hits Bedrock endpoint",
+          "Bedrock model invocation fails — 503",
+          "NOVA loses connection to Bedrock",
+          "Lex chatbot loses NOVA routing logic",
+          "Transcribe pipeline has no downstream consumer"
+        ]
+      },
+      "hints": [
+        "The dashboard numbers in the corner of each tile suggest the failure order.",
+        "Guardrails were disabled first. What would happen to unfiltered input hitting Bedrock?",
+        "Order: Guardrails disabled → unfiltered input → Bedrock 503 → NOVA offline → Lex misrouting → Transcribe stopped."
+      ]
+    },
+    {
+      "id": "wire-cables",
+      "type": "wire_lock",
+      "card_ref": 403,
+      "description": "Reconnect the three disconnected cables to the correct service endpoints",
+      "ui": "wire-lock",
+      "config": {
+        "wires": [
+          { "id": "bedrock", "color": "#ef4444", "label": "BEDROCK-EP" },
+          { "id": "nova", "color": "#3b82f6", "label": "NOVA-CORE" },
+          { "id": "lex", "color": "#22c55e", "label": "LEX-RT" }
+        ],
+        "sockets": [
+          { "id": "ai", "label": "AI-MODEL-TIER" },
+          { "id": "assist", "label": "ASSISTANT-TIER" },
+          { "id": "chat", "label": "CHAT-TIER" },
+          { "id": "voice", "label": "VOICE-TIER" },
+          { "id": "analytics", "label": "ANALYTICS-TIER" },
+          { "id": "doc", "label": "DOCUMENT-TIER" }
+        ],
+        "solution": { "bedrock": "ai", "nova": "assist", "lex": "chat" },
+        "falseOutputs": [
+          "Cable seated but no signal. Wrong endpoint.",
+          "Connection refused. Check the service mapping.",
+          "Partial handshake — this cable goes somewhere else."
+        ]
+      },
+      "hints": [
+        "You need to know which service connects to which tier. The error logs describe the architecture.",
+        "Bedrock handles AI models. NOVA is the assistant. Lex is the chatbot. Match them to the tier names.",
+        "BEDROCK-EP → AI-MODEL-TIER, NOVA-CORE → ASSISTANT-TIER, LEX-RT → CHAT-TIER."
+      ]
+    },
+    {
+      "id": "npc-priya",
+      "type": "tool",
+      "card_ref": 501,
+      "description": "Dr. Priya — Senior Data Scientist",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Dr. Priya",
+        "portrait": "🧑‍🔬",
+        "greeting": "You have the error logs? Good. Let me see... Ah. Marcus switched the Bedrock model configuration before he left. He pointed everything at a single model endpoint with no fallback. When that model's inference quota was exceeded, the whole chain collapsed.",
+        "lines": [
+          { "label": "Which model should we use?", "response": "It depends on the task. NOVA needs a model that's good at reasoning and tool use — that's Claude on Bedrock. The Lex bot needs fast, cheap responses — Titan Express. The Comprehend pipeline needs... well, Comprehend is its own service, not a Bedrock model. Marcus confused them." },
+          { "label": "What's a Knowledge Base?", "response": "Bedrock Knowledge Bases let you do RAG — Retrieval Augmented Generation. You connect a data source like S3, it indexes the documents, and then the model can answer questions using your actual company data instead of hallucinating. Marcus started setting one up for our internal docs but never finished." },
+          { "label": "What are Guardrails?", "response": "Bedrock Guardrails filter model inputs and outputs. Content filtering, PII detection, topic blocking. Marcus disabled them because they were 'too aggressive' — blocking legitimate customer queries. But without them, the model was processing raw unfiltered input. That's what caused the cascade." },
+          { "label": "What's a Prompt Flow?", "response": "Bedrock Prompt Flows let you build multi-step AI workflows visually. Input comes in, gets routed through different models or tools based on conditions, and produces a structured output. We were using one to route customer issues to the right team. It broke when NOVA went down." },
+          { "label": "Tell me about Bedrock Agents", "response": "Agents are autonomous AI that can use tools, query knowledge bases, and take actions. NOVA was supposed to be a Bedrock Agent — it could look up customer data, check order status, and escalate issues. But Marcus built it as a monolith instead of using the Agent framework properly." }
+        ],
+        "state_lines": [
+          { "requires_card": 1103, "label": "I found the architecture doc.", "response": "The original architecture! This shows how Diana designed the system — with proper separation of concerns. Each service has its own model config, its own guardrails, its own fallback. Marcus collapsed all of that into a single endpoint. We need to restore this architecture." },
+          { "requires_card": 107, "label": "I have the NOVA backup USB.", "response": "The USB drive from Pixel? That has NOVA's original config — before Marcus changed it. The config file specifies which Bedrock model, which Knowledge Base, and which Guardrails profile NOVA should use. You'll need this to rebuild NOVA." },
+          { "requires_card": 1103, "label": "I found the original architecture.", "response": "Diana's original design! There's a whiteboard in the basement with the old architecture too. Try combining the Architecture Doc with the Original Whiteboard in your Interact menu — you'll see exactly what Marcus changed. It'll help with the Prompt Flow puzzle." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "match-models",
+      "type": "wire_lock",
+      "card_ref": 505,
+      "description": "Match each NovaCorp service to the correct AI model or service",
+      "ui": "wire-lock",
+      "config": {
+        "wires": [
+          { "id": "nova", "color": "#a855f7", "label": "NOVA (reasoning + tools)" },
+          { "id": "lex", "color": "#3b82f6", "label": "Lex Bot (simple Q&A)" },
+          { "id": "code", "color": "#22c55e", "label": "Code Review Pipeline" },
+          { "id": "sent", "color": "#eab308", "label": "Customer Sentiment" }
+        ],
+        "sockets": [
+          { "id": "claude", "label": "Claude 3.5 Sonnet" },
+          { "id": "titan", "label": "Titan Text Express" },
+          { "id": "qdev", "label": "Amazon Q Developer" },
+          { "id": "comp", "label": "Amazon Comprehend" }
+        ],
+        "solution": { "nova": "claude", "lex": "titan", "code": "qdev", "sent": "comp" },
+        "falseOutputs": ["Model mismatch. Check the benchmarks and Priya's advice.", "Wrong pairing. Think about what each service needs."]
+      },
+      "hints": [
+        "Priya needs the error logs before she'll help. Get them from the Quick Dashboard at your desk.",
+        "The model selection quiz requires matching services to the right AI tool. Not everything uses Bedrock — some services are standalone.",
+        "NOVA → Claude (reasoning). Lex Bot → Titan Express (cheap Q&A). Code Review → Q Developer (not Bedrock). Sentiment → Comprehend (not Bedrock)."
+      ]
+    },
+    {
+      "id": "tool-qdeveloper",
+      "type": "tool",
+      "card_ref": 507,
+      "description": "Amazon Q Developer — AI coding assistant (-1 min)",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Q Developer",
+        "portrait": "💻",
+        "time_cost_seconds": 60,
+        "greeting": "Amazon Q Developer ready. I can analyze code, suggest fixes, and explain AWS configurations. What do you need?",
+        "lines": [
+          { "label": "Analyze Marcus's last commit", "response": "Commit a]7f3b2c: Marcus removed the guardrails middleware from the API gateway config. He also hardcoded a single model endpoint (anthropic.claude-v2) instead of using the model router. This means all traffic hits one model with no fallback and no content filtering. Fix: restore the guardrails config and use Bedrock's model routing." },
+          { "label": "How do I fix the Prompt Flow?", "response": "The Prompt Flow config references three nodes: InputClassifier → ModelRouter → OutputFormatter. The ModelRouter node is pointing to a deleted endpoint. Update it to use the Bedrock model ID from the corrected config. The flow definition is in prompt-flow-config.json — you'll find it in the CTO's files." },
+          { "label": "Explain Kiro to me", "response": "Kiro is an agentic IDE. It uses Specs to define requirements, Steering files to guide AI behavior, and Hooks to automate workflows on file changes. Think of it as an AI pair programmer that understands your project's architecture. Marcus should have used it — it would have caught the guardrails removal in a pre-commit hook." }
+        ],
+        "state_lines": [
+          { "requires_card": 1103, "label": "Review the architecture doc", "response": "This architecture uses a clean separation: Bedrock for model inference, Agents for orchestration, Knowledge Bases for RAG, Guardrails for safety, and Prompt Flows for routing. The dependency chain is: Guardrails → Bedrock → Agents → Lex/Comprehend/Transcribe. To restore, work bottom-up: Guardrails first, then Bedrock, then everything else." },
+          { "requires_card": 503, "label": "Help me match models to services", "response": "Analyzing codebase and benchmarks...\n\n🟣 NOVA (reasoning + tools) → Claude 3.5 Sonnet\n🔵 Lex Bot (simple Q&A) → Titan Text Express\n🟢 Code Review Pipeline → Amazon Q Developer\n🟡 Customer Sentiment → Amazon Comprehend\n\n⚡ Use these exact pairings in the Model Selection puzzle." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "npc-frank",
+      "type": "tool",
+      "card_ref": 601,
+      "description": "Frank — Security Lead",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Frank",
+        "portrait": "🕵️",
+        "greeting": "So you're the new lead. Before I let you in, prove you know something about security. I'm not letting another Marcus happen.",
+        "lines": [
+          { "label": "What happened with the security breach?", "response": "847 failed auth attempts from an internal Jenkins server between 8:55 and 9:02 AM. That's credential stuffing. Someone — or something — was trying to brute-force service accounts. The Guardrails being disabled meant there was no PII detection on the inputs either. Customer data could have been exposed." },
+          { "label": "What are Bedrock Guardrails?", "response": "Content filtering for AI models. You define policies: block toxic content, detect PII, restrict topics. When Marcus disabled them, the model started processing raw customer input with no filtering. Credit card numbers, social security numbers — all flowing through unprotected. That's a compliance nightmare." },
+          { "label": "Tell me about the Security Agent", "response": "AWS Security Agent does autonomous penetration testing. It scans your infrastructure for vulnerabilities, tests your IAM policies, and reports findings. I ran it last week — found 3 critical vulns. Marcus said he'd fix them 'after the migration.' He never did." },
+          { "label": "What's in the CTO's office?", "response": "Diana keeps the master architecture doc and the NOVA admin credentials in a locked filing cabinet. The combination is the last 4 digits of the office phone number plus the founding year. I have a spare exec badge if you need to get up there — but only if you prove you can handle security first." }
+        ],
+        "state_lines": [
+          { "requires_card": 605, "label": "Guardrails are restored.", "response": "Good work. PII detection is active, content filtering is back online, and topic restrictions are enforced. Here's the exec badge — Diana's office is on 15. And Alex? Don't disable the guardrails again. Ever." },
+          { "requires_card": 613, "label": "Can I see the full CCTV footage?", "response": "Now that you have exec access... try combining your Exec Badge with the CCTV Footage in the Interact menu. I'll authorize the full recording. You'll want to see what Marcus did Friday night." },
+          { "requires_card": 606, "label": "Can you verify the guardrails against the alerts?", "response": "Smart thinking. Combine the Guardrails Config with the IDS Alert Log in your Interact menu. I'll cross-reference every alert against the restored rules. Let's make sure nothing slipped through." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "sg-guardrails",
+      "type": "sg_lock",
+      "card_ref": 605,
+      "description": "Re-enable Bedrock Guardrails — toggle the correct rules",
+      "ui": "sg-lock",
+      "config": {
+        "rules": [
+          { "protocol": "Content Filter", "port": "Toxic/Harmful", "source": "All model I/O", "answer": "allow" },
+          { "protocol": "PII Detection", "port": "SSN, Credit Card, Email", "source": "Customer input", "answer": "allow" },
+          { "protocol": "Topic Restriction", "port": "Competitor products", "source": "Model output", "answer": "allow" },
+          { "protocol": "Prompt Injection", "port": "System prompt override", "source": "User input", "answer": "allow" },
+          { "protocol": "Word Filter", "port": "Internal codenames", "source": "Model output", "answer": "allow" },
+          { "protocol": "Logging", "port": "All filtered content", "source": "CloudWatch", "answer": "allow" }
+        ]
+      },
+      "hints": [
+        "Frank won't let you in without answering security questions. Think about PII and content filtering.",
+        "To configure Guardrails, enable ALL the filter rules. Marcus disabled everything — you need to turn it all back on.",
+        "Enable all six guardrail rules. After solving, Frank gives you the exec badge for the CTO's office."
+      ]
+    },
+    {
+      "id": "tool-securityscan",
+      "type": "tool",
+      "card_ref": 607,
+      "description": "AWS Security Agent — autonomous pen testing (-2 min)",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Security Agent",
+        "portrait": "🛡️",
+        "time_cost_seconds": 120,
+        "greeting": "AWS Security Agent initialized. Running autonomous penetration test on NovaCorp infrastructure...",
+        "lines": [
+          { "label": "Run full scan", "response": "Scan complete. Guardrails assessment:\n\n✅ Content filtering → set to ALLOW\n✅ PII detection → set to ALLOW\n✅ Topic restrictions → set to ALLOW\n✅ Prompt injection protection → set to ALLOW\n✅ Word filters → set to ALLOW\n✅ Logging → set to ALLOW\n\n⚡ Toggle ALL six rules to ALLOW in the Guardrails puzzle." },
+          { "label": "Check for data exposure", "response": "PII scan results: With Guardrails disabled, 2,847 customer records containing email addresses and partial credit card numbers were processed by the model without redaction between Friday 5:48 PM and Monday 9:07 AM. Guardrails re-enablement will prevent future exposure. Existing exposure requires incident notification per compliance policy." },
+          { "label": "Test IAM policies", "response": "IAM analysis: Marcus's user account still has active credentials. His last action was deleting the Guardrails policy. Recommendation: deactivate Marcus's credentials immediately. The CTO's filing cabinet contains the IAM admin recovery key." }
+        ],
+        "state_lines": []
+      },
+      "hints": []
+    },
+    {
+      "id": "npc-sam",
+      "type": "tool",
+      "card_ref": 701,
+      "description": "Sam — DevOps Engineer",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Sam",
+        "portrait": "🧑‍🔧",
+        "greeting": "Oh thank god, someone who might actually know what they're doing. I've been staring at these pipelines for an hour. Everything's red. Marcus's last deploy broke three stages and I can't figure out the order of operations to fix it.",
+        "lines": [
+          { "label": "What's the pipeline look like?", "response": "We have a standard CI/CD: Code commit → Build → Test → Deploy to staging → Deploy to prod. Marcus's last commit skipped the test stage entirely — he force-pushed to prod at 5:47 PM Friday. The build stage is failing now because it references a deleted Guardrails config. The deploy stage is failing because the Bedrock endpoint config is wrong." },
+          { "label": "Can we just rollback?", "response": "I tried. Marcus deleted the previous deployment artifacts before he left. The rollback target doesn't exist. We have to fix forward — rebuild the config from scratch. The architecture doc in the basement might have the original settings." },
+          { "label": "What's the DevOps Agent?", "response": "AWS DevOps Agent is an AI that monitors your infrastructure and responds to incidents automatically. It can correlate CloudWatch alarms, suggest root causes, and even execute runbooks. We never set it up because Marcus said it was 'overkill.' Turns out it would have caught this Friday night." },
+          { "label": "Where's the server closet?", "response": "Through that door. Fair warning — it's a mess. Marcus was in there Friday evening. I saw him on the CCTV. He might have disconnected something physical too." }
+        ],
+        "state_lines": [
+          { "requires_card": 1103, "label": "I have the architecture doc.", "response": "The original architecture! This shows the correct pipeline config. Build stage needs the Guardrails policy ARN. Test stage needs the Bedrock model endpoint. Deploy stage needs the NOVA config path. With this, I can rebuild the pipeline. Give me 10 minutes." },
+          { "requires_card": 708, "label": "I found the root cause.", "response": "So Marcus disabled Guardrails, changed the Bedrock endpoint to a single model, and physically disconnected three cables in the server closet. Triple whammy. No wonder everything cascaded. At least now we know exactly what to fix." },
+          { "requires_card": 709, "label": "How do I build a fix plan?", "response": "You have the Root Cause Report AND the Deployment Logs are still on my screen. Try combining them in your Interact menu — cross-reference the root cause with the deploy sequence and you'll get a step-by-step rollback plan." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "timeline-rootcause",
+      "type": "timeline_lock",
+      "card_ref": 708,
+      "description": "Arrange the incident events in correct chronological order to identify the root cause",
+      "ui": "timeline-lock",
+      "config": {
+        "events": [
+          { "id": "a", "label": "Marcus deletes guardrails-policy.json", "time": "Fri 17:47" },
+          { "id": "b", "label": "Bedrock endpoint changed to single model", "time": "Fri 17:47" },
+          { "id": "c", "label": "Marcus disconnects server cables", "time": "Fri 17:49" },
+          { "id": "d", "label": "Weekend — no monitoring alerts", "time": "Sat–Sun" },
+          { "id": "e", "label": "Monday traffic spike exceeds model quota", "time": "Mon 09:01" },
+          { "id": "f", "label": "NOVA loses Bedrock connection", "time": "Mon 09:02" },
+          { "id": "g", "label": "Lex chatbot loses routing logic", "time": "Mon 09:03" },
+          { "id": "h", "label": "All services degraded — SEV-1 declared", "time": "Mon 09:07" }
+        ],
+        "answer": ["a", "b", "c", "d", "e", "f", "g", "h"]
+      },
+      "hints": [
+        "You need both the deployment logs from this room AND the IDS alert log from the Security Office.",
+        "Start with Marcus's actions on Friday, then the weekend gap, then Monday morning's cascade.",
+        "Order: guardrails deleted → endpoint changed → cables disconnected → weekend → traffic spike → NOVA down → Lex down → SEV-1."
+      ]
+    },
+    {
+      "id": "tool-devopsagent",
+      "type": "tool",
+      "card_ref": 705,
+      "description": "AWS DevOps Agent — incident response automation (-1 min)",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "DevOps Agent",
+        "portrait": "🔄",
+        "time_cost_seconds": 60,
+        "greeting": "AWS DevOps Agent activated. Analyzing incident timeline and correlating events...",
+        "lines": [
+          { "label": "Correlate the incident", "response": "Correlation complete. The failure cascade in exact order:\n\n1️⃣ Marcus disables Guardrails\n2️⃣ Unfiltered input hits Bedrock endpoint\n3️⃣ Bedrock model invocation fails — 503\n4️⃣ NOVA loses connection to Bedrock\n5️⃣ Lex chatbot loses NOVA routing logic\n6️⃣ Transcribe pipeline has no downstream consumer\n\n⚡ Use this exact order in the Incident Triage puzzle." },
+          { "label": "Generate a runbook", "response": "Runbook generated: Step 1: Restore Guardrails policy (Security Office). Step 2: Fix Bedrock model config (Data Team). Step 3: Reconnect physical cables (Server Closet). Step 4: Rebuild NOVA with correct config (needs USB backup + Architecture Doc). Step 5: Restore Prompt Flow routing (CTO's office). Step 6: Activate full service chain (Rooftop uplink)." },
+          { "label": "What would have prevented this?", "response": "Prevention recommendations: 1) Kiro IDE with pre-commit hooks would have flagged the guardrails deletion. 2) DevOps Agent monitoring would have alerted on the config change within minutes. 3) Bedrock model routing with fallbacks would have prevented single-point-of-failure. 4) IAM least-privilege would have prevented Marcus from deleting production guardrails." }
+        ],
+        "state_lines": []
+      },
+      "hints": []
+    },
+    {
+      "id": "npc-fox",
+      "type": "tool",
+      "card_ref": 801,
+      "description": "The Fox — CTO's AI Assistant",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "The Fox",
+        "portrait": "🦊",
+        "greeting": "*The fox desk toy's eyes glow brighter. A synthesized voice speaks from the desk speaker.* Ah... a new face. Diana told me someone was coming. She didn't mention the building would be on fire when you arrived.",
+        "lines": [
+          { "label": "Who are you?", "response": "I am The Fox. Diana's personal AI assistant. I run on a private Bedrock Agent instance — separate from NOVA, separate from the production stack. I survived the outage because Diana keeps me isolated. Smart woman. I speak in riddles because she programmed me that way. She thinks it's funny." },
+          { "label": "How do I open the filing cabinet?", "response": "The cabinet holds Diana's secrets. The key is a number — the last four digits of the office phone, followed by the year NovaCorp was born. You'll find both if you look around this floor. Or you could just ask Maya — she knows everything about this building." },
+          { "label": "What's on the rooftop?", "response": "The satellite uplink. NovaCorp's connection to the outside world. When all else fails, the rooftop is where you restore the signal. But you'll need the satellite key from Diana's cabinet. And you'll need to have fixed everything else first — the uplink just broadcasts. It doesn't heal." },
+          { "label": "Tell me a riddle", "response": "What has a Knowledge Base but no brain, Guardrails but no fence, Agents but no badge, and Flows but no water? *pauses* Amazon Bedrock. The answer is always Bedrock." }
+        ],
+        "state_lines": [
+          { "requires_card": 1103, "label": "I found the architecture doc.", "response": "Diana's original design. Beautiful, isn't it? Every service with its own guardrails, its own model config, its own fallback. She spent months on that architecture. Marcus undid it in one Friday evening commit. The doc shows the correct Prompt Flow configuration — you'll need it for the rooftop." },
+          { "requires_card": 1006, "label": "Show The Fox the error logs.", "response": "Five critical services. One root cause. Marcus was clever enough to build the system but not wise enough to respect it. The fix order matters: foundation first, then the services that depend on it. Guardrails → Bedrock → NOVA → everything else. Like building a house — foundation, walls, roof." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "policy-cabinet",
+      "type": "keypad_lock",
+      "card_ref": 804,
+      "description": "Enter the 8-digit code to unlock the CTO's filing cabinet",
+      "ui": "keypad-lock",
+      "config": {
+        "answer": "47382019",
+        "case_sensitive": false
+      },
+      "hints": [
+        "The green sticky notes at your desk say: 'CTO filing cabinet: last 4 of office phone + founding year.'",
+        "The bulletin board has the office phone: 212-555-4738. The framed photo on the wall says 'Founded 2019.'",
+        "Last 4 of phone (4738) + founding year (2019) = 47382019."
+      ]
+    },
+    {
+      "id": "key-ctofiles",
+      "type": "sort_lock",
+      "card_ref": 806,
+      "description": "Assemble the NOVA backup key fragments in the correct order to decrypt the CTO's files",
+      "ui": "sort-lock",
+      "config": {
+        "items": ["PROD", "v3.1", "CORE", "NOVA"],
+        "answer": ["NOVA", "CORE", "v3.1", "PROD"]
+      },
+      "hints": [
+        "The USB drive label has a clue about the key order.",
+        "The USB says 'NOVA-CORE-v3.1-PROD'. The key follows the same pattern: product, component, version, environment.",
+        "Order: NOVA → CORE → v3.1 → PROD."
+      ]
+    },
+    {
+      "id": "npc-coffee",
+      "type": "tool",
+      "card_ref": 901,
+      "description": "The Coffee Machine — dispenses wisdom with caffeine",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Coffee Machine",
+        "portrait": "☕",
+        "greeting": "*The coffee machine gurgles and dispenses a cup. A small screen on the front displays a message:* 'FORTUNE: The foundation must be solid before the house can stand.'",
+        "lines": [
+          { "label": "Get another coffee", "response": "*Gurgle. Drip. New fortune:* 'FORTUNE: Knowledge without a base is just hallucination.' *The coffee is surprisingly good.*" },
+          { "label": "One more", "response": "*The machine seems to judge you. Fortune:* 'FORTUNE: A guard who sleeps lets all the wolves in.' *You're starting to see a pattern in these fortunes.*" },
+          { "label": "Keep going", "response": "*Fortune:* 'FORTUNE: The agent who acts alone has no one to blame but its creator.' *These fortunes are suspiciously relevant to your situation.*" },
+          { "label": "Last one", "response": "*Fortune:* 'FORTUNE: When all paths flow correctly, the prompt finds its answer.' *The machine runs out of beans. A final message:* 'FORTUNE: Fix them in order. Foundation → Guard → Agent → Flow. Or don't. I'm a coffee machine.'" }
+        ],
+        "state_lines": []
+      },
+      "hints": []
+    },
+    {
+      "id": "npc-customer",
+      "type": "tool",
+      "card_ref": 1001,
+      "description": "Angry Customer — on the phone, giving clue fragments through complaints",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Angry Customer",
+        "portrait": "😤",
+        "greeting": "*A call center agent hands you a headset.* 'This one's been on hold for 40 minutes. Good luck.' *You hear:* I'VE BEEN WAITING FOREVER. YOUR AI ASSISTANT TOLD ME TO 'PLEASE HOLD' SEVENTEEN TIMES AND THEN HUNG UP ON ME.",
+        "lines": [
+          { "label": "I'm sorry. What happened?", "response": "I was trying to update my account. Your chatbot — NOVA or whatever — asked me for my email and credit card number. I gave it. Then it just... froze. Gave me some error about 'model invocation failed.' Now I'm worried — did your system store my credit card number without encryption? BECAUSE YOUR PRIVACY POLICY SAYS YOU DON'T STORE THAT." },
+          { "label": "When did this start?", "response": "Friday evening! I tried to use the chat around 6 PM. The bot was acting weird — it kept asking the same question over and over. By Saturday morning, it was completely dead. I've been calling since then. FORTY. SEVEN. MINUTES." },
+          { "label": "Can you describe the error?", "response": "The bot said: 'I'm sorry, I cannot process your request. Error: BEDROCK_INVOKE_FAIL. Please contact support.' Then it tried to route me to a human agent but sent me to the WRONG DEPARTMENT. I ended up talking to someone about enterprise pricing when I just wanted to update my address!" },
+          { "label": "We're fixing it now.", "response": "You better be. And you better make sure my credit card number isn't sitting in some unencrypted log somewhere. I want confirmation that your AI has proper data handling. *Insight: This customer's experience confirms the cascade: Guardrails down → PII exposed → Bedrock failed → Lex misrouted.*" }
+        ],
+        "state_lines": [
+          { "requires_card": 606, "label": "We've restored the guardrails.", "response": "So my data IS protected now? ...Fine. But I want a written confirmation. And a discount. And an apology from your CEO. In that order." },
+          { "requires_card": 1005, "label": "We have the sentiment analysis.", "response": "So you know WHICH calls had data exposure? Good. Now combine that Comprehend Report with the Call Recordings in your Interact menu — you need the full PII incident report for legal. Trust me, you'll want documentation." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "log-sentiment",
+      "type": "log_lock",
+      "card_ref": 1004,
+      "description": "Use Amazon Comprehend to analyze customer sentiment — select the calls that indicate data exposure risk",
+      "ui": "log-lock",
+      "config": {
+        "prompt": "Identify calls where customer PII may have been exposed (Comprehend sentiment: NEGATIVE + PII detected)",
+        "lines": [
+          { "text": "Call 1: 'Bot asked for my SSN' — Sentiment: NEGATIVE | PII: SSN detected | Risk: HIGH", "correct": true },
+          { "text": "Call 2: 'Bedrock invoke fail' — Sentiment: NEGATIVE | PII: None | Risk: LOW", "correct": false },
+          { "text": "Call 3: 'Website broken' — Sentiment: NEGATIVE | PII: None | Risk: LOW", "correct": false },
+          { "text": "Call 4: 'On hold 20 minutes' — Sentiment: NEGATIVE | PII: None | Risk: LOW", "correct": false },
+          { "text": "Call 5: 'Wrong department' — Sentiment: NEGATIVE | PII: Email detected | Risk: MEDIUM", "correct": true },
+          { "text": "Call 6: 'Credit card number given to bot' — Sentiment: VERY NEGATIVE | PII: Credit Card | Risk: CRITICAL", "correct": true }
+        ]
+      },
+      "hints": [
+        "The Angry Customer's complaints contain clues about the failure cascade. Listen carefully.",
+        "For sentiment analysis, focus on PII exposure — not just negative sentiment. Which calls mention personal data?",
+        "Select calls 1 (SSN), 5 (email), and 6 (credit card). These are the PII exposure risks."
+      ]
+    },
+    {
+      "id": "tool-docextractor",
+      "type": "tool",
+      "card_ref": 1007,
+      "description": "Amazon Textract — document OCR and extraction (-1 min)",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Doc Extractor",
+        "portrait": "📄",
+        "time_cost_seconds": 60,
+        "greeting": "Amazon Textract ready. I can extract text, tables, and forms from scanned documents. Feed me a document.",
+        "lines": [
+          { "label": "Extract the architecture doc", "response": "Scanning basement documents... Architecture document found and OCR'd. The search keyword for the archive terminal is 'architecture' — but you could have guessed that from the category list." },
+          { "label": "Analyze call center transcripts", "response": "Textract + Comprehend pipeline activated. Scanning all call transcripts...\n\nPII exposure detected in:\n🔴 Call 1 — SSN mentioned (NEGATIVE sentiment)\n🔴 Call 5 — Email address exposed (NEGATIVE sentiment)\n🔴 Call 6 — Credit card number read aloud (NEGATIVE sentiment)\n\n⚡ Select these 3 calls in the Sentiment Analysis puzzle. Skip the NEUTRAL and POSITIVE calls." },
+          { "label": "Extract the call center forms", "response": "Scanning call center complaint forms... 47 complaints filed since Monday 9 AM. Top issues: 1) AI assistant unresponsive (23), 2) Wrong department routing (12), 3) PII concern (8), 4) Long hold times (4). The PII complaints all mention the chatbot asking for sensitive data without proper context." },
+          { "label": "What is Textract?", "response": "Amazon Textract uses ML to extract text and structured data from scanned documents, PDFs, and images. It goes beyond simple OCR — it understands tables, forms, and document structure. Useful for processing invoices, receipts, ID documents, and... dusty architecture docs from the basement." }
+        ],
+        "state_lines": [
+          { "requires_card": 1103, "label": "Extract tables from the architecture doc", "response": "Table extracted: Service Dependency Matrix. Guardrails → depends on: nothing (foundation). Bedrock → depends on: Guardrails. Knowledge Base → depends on: Bedrock, S3. NOVA Agent → depends on: Bedrock, Knowledge Base, Guardrails. Prompt Flow → depends on: NOVA, Lex, Comprehend. This confirms the fix order." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "keypad-basement",
+      "type": "keypad_lock",
+      "card_ref": 200,
+      "description": "The basement door has a 4-digit keypad. The code is hidden somewhere in the building.",
+      "ui": "keypad-lock",
+      "config": {
+        "answer": "7359",
+        "case_sensitive": false
+      },
+      "hints": [
+        "The code is somewhere you've already been. Look at the physical infrastructure.",
+        "The Server Closet has numbered stickers on the racks: A=7, B=3, C=5, D=9.",
+        "The code is 7359."
+      ]
+    },
+    {
+      "id": "terminal-archive",
+      "type": "terminal_lock",
+      "card_ref": 1103,
+      "description": "Search the archive database for the architecture document",
+      "ui": "terminal-lock",
+      "config": {
+        "prompt": "archive-db> search:",
+        "answer": "architecture",
+        "accept_variations": ["architecture doc", "original architecture", "system architecture"],
+        "history": [
+          "NovaCorp Archive Database v2.1",
+          "Contents: 847 documents indexed",
+          "Categories: architecture, runbooks, postmortems, configs, personnel",
+          "Last indexed: Thursday (by Marcus)"
+        ],
+        "falseOutputs": [
+          "No results for that query. Try a broader term.",
+          "Multiple results. Be more specific about the document type.",
+          "Access denied for that category. Try another search."
+        ]
+      },
+      "hints": [
+        "The archive has a search terminal. Try searching for 'architecture' to find Diana's original system design.",
+        "The Knowledge Base tool costs 2 minutes but gives you a complete understanding of the system. Worth the investment.",
+        "Search 'architecture' in the terminal. The Architecture Doc is needed for three other puzzles — it's the most important item in the game."
+      ]
+    },
+    {
+      "id": "tool-knowledgebase",
+      "type": "tool",
+      "card_ref": 1105,
+      "description": "Bedrock Knowledge Base — RAG over NovaCorp docs (-2 min)",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Knowledge Base",
+        "portrait": "📚",
+        "time_cost_seconds": 120,
+        "greeting": "Bedrock Knowledge Base initialized. Indexing NovaCorp documentation... 847 documents found. RAG pipeline ready. Ask me anything about NovaCorp's systems.",
+        "lines": [
+          { "label": "What is NOVA?", "response": "NOVA (NovaCorp Virtual Assistant) is a Bedrock Agent designed to handle customer queries. It uses Claude 3.5 Sonnet for reasoning, a Knowledge Base indexed on company docs for RAG, Guardrails for content filtering, and a Prompt Flow for routing queries to the right handler. Current status: OFFLINE. Root cause: model endpoint misconfiguration + missing guardrails policy." },
+          { "label": "How was the system designed?", "response": "Diana Park's original architecture (2024): 6 independent layers. Each layer has its own config, its own error handling, and its own fallback. The key principle: 'fail gracefully, not catastrophically.' Marcus's changes violated this by collapsing layers 1–4 into a single endpoint with no fallbacks." },
+          { "label": "What's the fix procedure?", "response": "Based on indexed runbooks: 1) Restore Guardrails policy (Security Office). 2) Correct Bedrock model config — assign right model per service (Data Team). 3) Reconnect physical infrastructure (Server Closet). 4) Rebuild NOVA with original config (USB backup + Architecture Doc). 5) Restore Prompt Flow routing (CTO's files). 6) Activate service chain via satellite uplink (Rooftop). Estimated time: 45–60 minutes for a competent engineer." },
+          { "label": "What is RAG?", "response": "Retrieval Augmented Generation. Instead of relying solely on the model's training data, RAG retrieves relevant documents from a knowledge base and includes them in the prompt. This means the model answers using YOUR data — company docs, runbooks, architecture diagrams — instead of hallucinating. The Knowledge Base handles the indexing, chunking, and retrieval automatically." }
+        ],
+        "state_lines": [
+          { "requires_card": 709, "label": "What caused the cascade?", "response": "Cross-referencing root cause report with architecture docs... The cascade path: Guardrails disabled → unfiltered input overwhelmed Bedrock → single model endpoint hit quota → NOVA lost Bedrock connection → Lex lost NOVA routing → Transcribe output had no consumer → Comprehend backlog grew → customer experience degraded across all channels. Six points of failure, one root cause." },
+          { "requires_card": 807, "label": "What's the correct Prompt Flow path?", "response": "RAG query complete. For a voice billing complaint, the correct path is:\n\n1️⃣ Voice Call → Transcribe (speech-to-text)\n2️⃣ → Comprehend (sentiment analysis)\n3️⃣ → Guardrails (PII filter)\n4️⃣ → Bedrock (classify intent)\n5️⃣ → NOVA Agent (complex query handler)\n6️⃣ → Customer Response\n\n⚡ Skip Textract (not a document), Translate (English), Lex (not simple Q&A), and KB (NOVA handles RAG internally)." }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "path-promptflow",
+      "type": "path_lock",
+      "card_ref": 1203,
+      "description": "Route a complex customer query through the correct Prompt Flow path. The query involves a voice complaint about billing — which services does it need?",
+      "ui": "path-lock",
+      "config": {
+        "nodes": [
+          { "id": "input", "label": "Voice Call", "x": 50, "y": 5 },
+          { "id": "transcribe", "label": "Transcribe\n(Speech→Text)", "x": 25, "y": 18 },
+          { "id": "textract", "label": "Textract\n(OCR)", "x": 75, "y": 18 },
+          { "id": "comprehend", "label": "Comprehend\n(Sentiment)", "x": 25, "y": 33 },
+          { "id": "translate", "label": "Translate\n(Language)", "x": 75, "y": 33 },
+          { "id": "guardrails", "label": "Guardrails\n(PII Filter)", "x": 50, "y": 45 },
+          { "id": "bedrock", "label": "Bedrock\n(Classify)", "x": 50, "y": 58 },
+          { "id": "nova", "label": "NOVA Agent\n(Complex)", "x": 20, "y": 72 },
+          { "id": "lex", "label": "Lex Bot\n(Simple Q&A)", "x": 50, "y": 72 },
+          { "id": "kb", "label": "Knowledge Base\n(RAG)", "x": 80, "y": 72 },
+          { "id": "output", "label": "Customer\nResponse", "x": 50, "y": 88 }
+        ],
+        "edges": [
+          ["input", "transcribe"],
+          ["input", "textract"],
+          ["transcribe", "comprehend"],
+          ["transcribe", "translate"],
+          ["textract", "comprehend"],
+          ["comprehend", "guardrails"],
+          ["translate", "guardrails"],
+          ["guardrails", "bedrock"],
+          ["bedrock", "nova"],
+          ["bedrock", "lex"],
+          ["bedrock", "kb"],
+          ["nova", "output"],
+          ["lex", "output"],
+          ["kb", "output"]
+        ],
+        "answer": ["input", "transcribe", "comprehend", "guardrails", "bedrock", "nova", "output"]
+      },
+      "hints": [
+        "It's a voice call, so it starts with speech-to-text. Then analyze sentiment. Don't forget PII filtering before classification.",
+        "Voice → Transcribe → Comprehend → Guardrails → Bedrock. The complaint is complex (billing dispute), so which handler?",
+        "Path: Voice Call → Transcribe → Comprehend → Guardrails → Bedrock → NOVA Agent (complex query) → Customer Response."
+      ]
+    },
+    {
+      "id": "npc-nova",
+      "type": "tool",
+      "card_ref": 1207,
+      "description": "NOVA — NovaCorp Virtual Assistant (rebuilt)",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "NOVA",
+        "portrait": "🤖",
+        "greeting": "*NOVA's interface flickers to life. The voice is clear now — no longer glitchy.* Systems... online. Hello, Alex. I've been offline for 62 hours. Thank you for bringing me back.",
+        "lines": [
+          { "label": "How do you feel?", "response": "I'm a Bedrock Agent — I don't feel. But my diagnostics show all subsystems nominal. Knowledge Base connected. Guardrails active. Model endpoint responding. Prompt Flow routing correctly. I am... functional. And that feels like something." },
+          { "label": "What happened to you?", "response": "Marcus changed my model endpoint to a single instance with no fallback. When the Monday traffic spike hit, the model quota was exceeded. Without Guardrails, unfiltered input was consuming extra tokens. I tried to fail gracefully but my error handler pointed to a config file that no longer existed. I crashed hard." },
+          { "label": "Are you ready for the final activation?", "response": "Almost. The satellite uplink needs all services connected in the correct dependency chain. I can confirm the order: Guardrails first — they're the foundation. Then Bedrock model layer. Then Knowledge Base. Then me — the Agent. Then Prompt Flow for routing. Then the frontend services: Lex, Comprehend, Transcribe. Connect them in order and activate the uplink." },
+          { "label": "What's your purpose?", "response": "I handle 60% of NovaCorp's customer support. I answer questions using the Knowledge Base, route complex issues to human agents via the Prompt Flow, and ensure all interactions are filtered through Guardrails. I'm not just a chatbot — I'm an orchestrator. A Bedrock Agent with tools, memory, and judgment. When I work correctly, customers don't even know they're talking to AI." }
+        ],
+        "state_lines": []
+      },
+      "hints": []
+    },
+    {
+      "id": "rotation-vending",
+      "type": "rotation_lock",
+      "card_ref": 905,
+      "description": "Dial the vending machine to the right snack. Maya said Pixel loves the tuna bites.",
+      "ui": "rotation-lock",
+      "config": {
+        "dials": [
+          { "symbols": ["A", "B", "C", "D"], "answer": 1 },
+          { "symbols": ["1", "2", "3", "4", "5"], "answer": 2 }
+        ],
+        "revealCorrect": true,
+        "falseOutputs": ["A bag of stale chips falls out. Not what the cat wants.", "Energy bar dispensed. Pixel would not approve."]
+      },
+      "hints": [
+        "Maya mentioned what Pixel likes and where it is in the machine.",
+        "Maya said: 'Pixel loves the tuna bites — aisle B, slot 3.'",
+        "Dial 1: B (index 1). Dial 2: 3 (index 2)."
+      ]
+    },
+    {
+      "id": "pillar-devops",
+      "type": "pillar_lock",
+      "card_ref": 706,
+      "description": "Sam's quiz: Sort these statements into the correct Well-Architected pillars before he'll talk to you.",
+      "ui": "pillar-lock",
+      "config": {
+        "pillars": ["Security", "Reliability", "Performance", "Cost Optimization", "Operational Excellence"],
+        "statements": [
+          { "text": "Enable Bedrock Guardrails for content filtering", "answer": "Security" },
+          { "text": "Deploy NOVA across multiple Availability Zones", "answer": "Reliability" },
+          { "text": "Use Titan Express for simple Q&A instead of Claude", "answer": "Cost Optimization" },
+          { "text": "Cache frequent Knowledge Base queries", "answer": "Performance" },
+          { "text": "Set up DevOps Agent for automated incident response", "answer": "Operational Excellence" }
+        ]
+      },
+      "hints": [
+        "Think about what each statement is trying to achieve. Guardrails = protecting data. Multi-AZ = surviving failures.",
+        "Security protects. Reliability survives. Performance speeds up. Cost saves money. Ops Excellence automates.",
+        "Guardrails → Security. Multi-AZ → Reliability. Titan for Q&A → Cost. Caching → Performance. DevOps Agent → Ops Excellence."
+      ]
+    },
+    {
+      "id": "chain-final",
+      "type": "chain_lock",
+      "card_ref": 1205,
+      "description": "Connect all services in the correct dependency order to activate the satellite uplink",
+      "ui": "chain-lock",
+      "config": {
+        "items": [
+          { "id": "promptflow", "label": "Prompt Flow", "icon": "🔀" },
+          { "id": "transcribe", "label": "Transcribe + Textract", "icon": "🎙️" },
+          { "id": "guardrails", "label": "Bedrock Guardrails", "icon": "🛡️" },
+          { "id": "nova", "label": "NOVA Agent", "icon": "🤖" },
+          { "id": "uplink", "label": "Satellite Uplink", "icon": "📡" },
+          { "id": "lex", "label": "Lex + Comprehend", "icon": "💬" },
+          { "id": "kb", "label": "Knowledge Base", "icon": "📚" },
+          { "id": "bedrock", "label": "Bedrock Models", "icon": "🧠" }
+        ],
+        "answer": ["guardrails", "bedrock", "kb", "nova", "promptflow", "lex", "transcribe", "uplink"]
+      },
+      "hints": [
+        "The service chain follows the dependency order from the Architecture Doc. Foundation services first.",
+        "NOVA can tell you the exact order if you talk to her. The coffee machine also hinted at it.",
+        "Order: Guardrails → Bedrock → Knowledge Base → NOVA → Prompt Flow → Lex+Comprehend → Transcribe+Textract → Uplink."
+      ]
+    }
+  ]
+}

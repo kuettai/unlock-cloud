@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Feeding 5000 Puzzle Tests</title>
+<style>
+:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif}
+body{display:flex;flex-direction:column;align-items:center;padding:24px 16px;gap:32px;overflow-y:auto}
+h3{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+p.desc{font-size:12px;color:#7a8ba8;margin-bottom:8px;text-align:center}
+section{width:100%;max-width:420px}
+.result{margin-top:8px;text-align:center;font-size:14px;color:var(--muted);min-height:20px}
+hr{border:none;border-top:1px solid var(--border);width:100%;max-width:420px}
+</style>
+</head>
+<body>
+  <section>
+    <h3>1. Crowd Counter — Count to 5,000</h3>
+    <p class="desc">Tap groups on the hillside to count them. Hit exactly 5,000.</p>
+    <div id="counter1"></div>
+    <div class="result" id="r1"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>2. Supply Run — Deliver bread & fish to all groups</h3>
+    <p class="desc">Visit all ◆ groups (they turn ✓), then reach ★. Icon changes at each stop!</p>
+    <div id="grid1"></div>
+    <div class="result" id="r2"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>3. Distribution Maze — Carry bread to the groups</h3>
+    <p class="desc">Navigate the hillside. Reach the ★ to complete distribution.</p>
+    <div id="maze1"></div>
+    <div class="result" id="r3"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>4. Offering Table — Find the 5 loaves & 2 fish among the crowd</h3>
+    <p class="desc">Tap items to place on the table. Wrong items bounce back!</p>
+    <div id="keypad1"></div>
+    <div class="result" id="r4"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>5. Break the Bread — Hold to break, watch it multiply</h3>
+    <p class="desc">Hold each item in the green zone. Too quick = nothing. Too long = crumbles!</p>
+    <div id="bread1"></div>
+    <div class="result" id="r5b"></div>
+  </section>
+  <hr>
+  <section>
+    <h3>6. The Sign — Hebrew word-lock (אוֹת = sign)</h3>
+    <p class="desc">Hebrew reads right to left. Enter the 3 letters.</p>
+    <div id="hebrew1"></div>
+    <div class="result" id="r5"></div>
+  </section>
+
+<script src="puzzle/crowd-counter-lock.js"></script>
+<script src="puzzle/maze-lock.js"></script>
+<script src="puzzle/offering-table-lock.js"></script>
+<script src="puzzle/bread-break-lock.js"></script>
+<script src="puzzle/keypad-lock.js"></script>
+<script src="puzzle/word-lock.js"></script>
+<script>
+// 1. Crowd Counter — must select groups totaling 5000
+new CrowdCounterLock(document.getElementById('counter1'), {
+  rows: 5, cols: 6,
+  clusters: [
+    { row: 0, col: 0, count: 800, icon: '👨‍👩‍👦' },
+    { row: 0, col: 3, count: 600, icon: '👥' },
+    { row: 0, col: 5, count: 400, icon: '👥' },
+    { row: 1, col: 1, count: 700, icon: '👨‍👩‍👦' },
+    { row: 1, col: 4, count: 500, icon: '👥' },
+    { row: 2, col: 0, count: 300, icon: '👥' },
+    { row: 2, col: 2, count: 900, icon: '👨‍👩‍👦' },
+    { row: 2, col: 5, count: 200, icon: '👥' },
+    { row: 3, col: 1, count: 450, icon: '👥' },
+    { row: 3, col: 3, count: 650, icon: '👨‍👩‍👦' },
+    { row: 4, col: 0, count: 150, icon: '👥' },
+    { row: 4, col: 2, count: 550, icon: '👥' },
+    { row: 4, col: 4, count: 350, icon: '👨‍👩‍👦' },
+    { row: 4, col: 5, count: 250, icon: '👥' },
+  ],
+  target: 5000,
+  tolerance: 0,
+  onSubmit({ total }) { document.getElementById('r1').textContent = `✅ Counted ${total}!`; },
+  onWrong(msg) { document.getElementById('r1').textContent = '❌ ' + msg; }
+});
+
+// 2. Supply Run Maze — deliver bread & fish to groups, alternating icons
+let fed = 0;
+new MazeLock(document.getElementById('grid1'), {
+  cols: 6, rows: 5,
+  walls: [
+    [0,2,'S'], [0,4,'W'],
+    [1,1,'E'], [1,3,'S'],
+    [2,0,'S'], [2,4,'W'],
+    [3,2,'E'], [3,5,'W'],
+  ],
+  start: { row: 2, col: 3, facing: 'N' },
+  goal: { row: 2, col: 3 },
+  showGoal: true,
+  playerIcon: '🍞',
+  showSteps: true,
+  checkpoints: [
+    { row: 0, col: 0, icon: '👥', nextIcon: '🐟' },
+    { row: 0, col: 5, icon: '👥', nextIcon: '🍞' },
+    { row: 1, col: 2, icon: '👥', nextIcon: '🐟' },
+    { row: 3, col: 0, icon: '👥', nextIcon: '🍞' },
+    { row: 3, col: 4, icon: '👥', nextIcon: '🐟' },
+    { row: 4, col: 2, icon: '👥', nextIcon: '🍞' },
+  ],
+  onCheckpoint({ remaining }) {
+    fed++;
+    document.getElementById('r2').textContent = `🍞🐟 Groups fed: ${fed}/6` + (remaining === 0 ? ' — return to ★!' : '');
+  },
+  onSubmit({ steps }) { document.getElementById('r2').textContent = `✅ All groups fed in ${steps} steps! The bread never ran out.`; }
+});
+
+// 3. Distribution Maze — carry bread across hillside
+new MazeLock(document.getElementById('maze1'), {
+  cols: 5, rows: 4,
+  walls: [
+    [0,1,'S'], [0,3,'W'],
+    [1,0,'E'], [1,2,'S'], [1,4,'W'],
+    [2,1,'E'], [2,3,'W'],
+    [3,2,'W']
+  ],
+  start: { row: 0, col: 2, facing: 'S' },
+  goal: { row: 3, col: 4 },
+  playerIcon: '🍞',
+  showWalls: true,
+  showGoal: true,
+  showSteps: true,
+  onSubmit({ steps }) { document.getElementById('r3').textContent = `✅ Bread delivered in ${steps} steps!`; }
+});
+
+// 4. Offering Table — find the right items among distractors
+new OfferingTableLock(document.getElementById('keypad1'), {
+  items: [
+    { id: 'l1', icon: '🍞', label: 'Barley loaf', correct: true },
+    { id: 'coins', icon: '💰', label: 'Bag of coins', correct: false, response: "Philip said 200 denarii wouldn't be enough." },
+    { id: 'l2', icon: '🍞', label: 'Barley loaf', correct: true },
+    { id: 'water', icon: '🫗', label: 'Water skin', correct: false, response: "Water won't feed the hungry." },
+    { id: 'f1', icon: '🐟', label: 'Small fish', correct: true },
+    { id: 'cloth', icon: '🧣', label: 'Linen cloth', correct: false, response: "You can't eat cloth." },
+    { id: 'l3', icon: '🍞', label: 'Barley loaf', correct: true },
+    { id: 'figs', icon: '🫒', label: 'A few dried figs', correct: false, response: "Barely enough for one person." },
+    { id: 'f2', icon: '🐟', label: 'Small fish', correct: true },
+    { id: 'l4', icon: '🍞', label: 'Barley loaf', correct: true },
+    { id: 'sandal', icon: '👡', label: 'Worn sandal', correct: false, response: "That's not food." },
+    { id: 'l5', icon: '🍞', label: 'Barley loaf', correct: true },
+    { id: 'scroll', icon: '📜', label: 'Torah scroll', correct: false, response: "Man does not live by bread alone... but they still need bread." },
+  ],
+  onSubmit() { document.getElementById('r4').textContent = '✅ Five loaves and two fish — all from one boy\'s basket!'; },
+  onWrong(msg) { document.getElementById('r4').textContent = '❌ ' + (msg || 'Not what we need.'); }
+});
+
+// 5. Break the Bread — hold to break, watch it multiply
+new BreadBreakLock(document.getElementById('bread1'), {
+  items: [
+    { id: 'l1', icon: '🍞', label: 'Loaf 1' },
+    { id: 'l2', icon: '🍞', label: 'Loaf 2' },
+    { id: 'l3', icon: '🍞', label: 'Loaf 3' },
+    { id: 'l4', icon: '🍞', label: 'Loaf 4' },
+    { id: 'l5', icon: '🍞', label: 'Loaf 5' },
+    { id: 'f1', icon: '🐟', label: 'Fish 1' },
+    { id: 'f2', icon: '🐟', label: 'Fish 2' },
+  ],
+  holdMin: 0.4,
+  holdMax: 1.2,
+  multiplier: [10, 50, 200, 800, 2000, 3500, 5000],
+  onSubmit() { document.getElementById('r5b').textContent = '✅ 5,000+ fed from 5 loaves and 2 fish!'; },
+  onCrumble() { document.getElementById('r5b').textContent = '💨 Crumbled! Be more gentle.'; }
+});
+
+// 5. Hebrew word-lock — אות (aleph-vav-tav)
+new WordLock(document.getElementById('hebrew1'), {
+  answer: 'אות',
+  alphabet: 'אבגדהוזחטיכלמנסעפצקרשת',
+  onSubmit(word, correct) {
+    document.getElementById('r5').textContent = correct
+      ? '✅ אות — Sign! "After the people saw the sign..."'
+      : '❌ Not quite. Look for the letters on the hillside.';
+  }
+});
+</script>
+</body>
+</html>

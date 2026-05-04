@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Oil painting style, Galilean hillside at golden hour, pastoral landscape, green grass and blue sky, biblical era, warm golden light, game card art.",
+  "style_prefix_location": "Oil painting style, Galilean hillside overlooking the Sea of Galilee, golden hour sunlight, thousands of people on green grass, biblical era, wide angle, atmospheric, game environment art.",
+  "style_prefix_item": "Oil painting style, single ancient object on warm textured background, golden sunlight, biblical era artifact, centered, clean composition, game inventory art.",
+  "style_prefix_object": "Oil painting style, ancient Galilean character or object, warm pastoral tones, grass and hillside textures, biblical era, close-up detail, golden hour atmosphere, game card art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, modern, sci-fi, futuristic, neon, cyberpunk, technology",
+  "aspect_ratio": "16:9"
+}

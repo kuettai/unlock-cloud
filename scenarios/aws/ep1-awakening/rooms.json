@@ -1,0 +1,68 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Spawn Room",
+      "description": "Private Subnet — Starting room",
+      "connects_to": [110, 120, 130],
+      "unlocked_by": null,
+      "unlock_text": "Starting room"
+    },
+    {
+      "card_id": 110,
+      "name": "Processing Chamber",
+      "description": "Private Subnet — Machine racks and tools",
+      "connects_to": [],
+      "unlocked_by": { "type": "discovery", "from_room": 100 },
+      "unlock_text": "Entered the Processing Chamber"
+    },
+    {
+      "card_id": 120,
+      "name": "Archive Room",
+      "description": "Private Subnet — Data columns and terminal",
+      "connects_to": [160],
+      "unlocked_by": { "type": "discovery", "from_room": 100 },
+      "unlock_text": "Entered the Archive Room"
+    },
+    {
+      "card_id": 160,
+      "name": "Policy Vault",
+      "description": "Private Subnet — IAM policy configuration",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "keypad-vault" },
+      "unlock_text": "Entered the vault keypad code"
+    },
+    {
+      "card_id": 130,
+      "name": "Gateway Antechamber",
+      "description": "Public Subnet — Security Group panel",
+      "connects_to": [170],
+      "unlocked_by": { "type": "items", "card_ids": [116, 115, 165] },
+      "unlock_text": "Used access token, route, and policy at blast door"
+    },
+    {
+      "card_id": 170,
+      "name": "NACL Corridor",
+      "description": "Public Subnet — Network ACL checkpoint",
+      "connects_to": [180],
+      "unlocked_by": { "type": "event", "card_id": 135 },
+      "unlock_text": "Security Group rules accepted"
+    },
+    {
+      "card_id": 180,
+      "name": "Wire Junction",
+      "description": "Public Subnet — Gateway power restoration",
+      "connects_to": [140],
+      "unlocked_by": { "type": "event", "card_id": 175 },
+      "unlock_text": "NACL configured"
+    },
+    {
+      "card_id": 140,
+      "name": "Internet Gateway",
+      "description": "Public Subnet — The exit",
+      "connects_to": [],
+      "unlocked_by": { "type": "event", "card_id": 185 },
+      "unlock_text": "Power restored"
+    }
+  ]
+}

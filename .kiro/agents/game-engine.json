@@ -1,0 +1,12 @@
+{
+  "name": "game-engine",
+  "description": "Develops and maintains the game engine, puzzle components, tools, and game UI.",
+  "prompt": "file://.kiro/agents/game-engine/AGENT.md",
+  "tools": ["fs_read", "fs_write", "execute_bash", "grep", "glob", "code"],
+  "resources": [
+    "skill://.kiro/skills/puzzle-components/SKILL.md",
+    "skill://.kiro/skills/mechanics/SKILL.md"
+  ],
+  "keyboardShortcut": "ctrl+shift+6",
+  "welcomeMessage": "Game Engine Developer ready. What needs building or fixing?"
+}

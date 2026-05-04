@@ -1,0 +1,1037 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Reception",
+      "description": "A sleek lobby with a marble desk, wilting orchid, and a wall-mounted TV cycling NovaCorp marketing slides. The badge reader by the glass doors blinks red when you tap your phone. Behind the desk, Maya is already waving you over. A cat weaves between the potted plants.",
+      "image": "assets/reception.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 101, "label": "Talk to Maya", "puzzle": "npc-maya" },
+        { "card_id": 103, "label": "Notice the cat", "puzzle": "npc-cat" },
+        { "card_id": 107, "label": "Give treats to Pixel", "requires_item": [905], "consumes_item": [905] },
+        { "card_id": 106, "label": "Look at the TV screen" },
+        { "card_id": 200, "label": "Head to your desk", "requires_item": [104] }
+      ],
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "Your Desk",
+      "description": "A standing desk in an open-plan office. Dual monitors — both showing red dashboards. A laptop with a NovaCorp sticker. The desk is covered in sticky notes in three colors: yellow (tasks), pink (warnings), green (passwords). A half-empty energy drink. The previous lead's coffee mug reads \"I SURVIVED LEGACY CODE.\"",
+      "image": "assets/your-desk.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 201, "label": "Open the laptop", "puzzle": "tool-laptop" },
+        { "card_id": 202, "label": "Read the yellow sticky notes" },
+        { "card_id": 203, "label": "Read the pink sticky notes" },
+        { "card_id": 204, "label": "Read the green sticky notes" },
+        { "card_id": 206, "label": "Check the Quick Dashboard", "puzzle": "tool-dashboard" },
+        { "card_id": 300, "label": "Go to the War Room" },
+        { "card_id": 500, "label": "Go to the Data Team Office" },
+        { "card_id": 700, "label": "Go to the DevOps Bullpen" },
+        { "card_id": 900, "label": "Go to the Break Room" },
+        { "card_id": 1100, "label": "Take the stairs to the basement", "puzzle": "keypad-basement" },
+        { "card_id": 600, "label": "Go to the Security Office", "requires_item": [1006] },
+        { "card_id": 800, "label": "Go to the Executive Floor", "requires_item": [613] }
+      ],
+      "visible_to": "all",
+      "room": "your-desk"
+    },
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "War Room",
+      "description": "A glass-walled conference room. Every screen shows red. A massive TV displays the Quick Suite dashboard — all critical services in crimson. Jordan paces by the whiteboard, phone pressed to ear. Coffee cups litter the table. Someone has written \"ROOT CAUSE?\" in red marker on the whiteboard with nothing underneath.",
+      "image": "assets/war-room.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 301, "label": "Talk to Jordan", "puzzle": "npc-jordan" },
+        { "card_id": 302, "label": "Study the incident timeline on the whiteboard" },
+        { "card_id": 303, "label": "Examine the dashboard close-up" },
+        { "card_id": 305, "label": "Triage the incident", "consumes_item": [302, 303], "puzzle": "sort-triage" }
+      ],
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 400,
+      "type": "location",
+      "color": "green",
+      "title": "Server Closet",
+      "description": "A cramped room behind the DevOps bullpen. Server racks line both walls, LEDs blinking in frantic patterns. A rat's nest of ethernet cables spills from an open patch panel. The air conditioning unit whines. A label maker sits on a shelf next to a tangle of unlabeled cables. The room smells like hot plastic.",
+      "image": "assets/server-closet.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 401, "label": "Examine the patch panel" },
+        { "card_id": 403, "label": "Fix the cable connections", "requires_item": [1006], "consumes_item": [401, 404], "puzzle": "wire-cables" },
+        { "card_id": 404, "label": "Read the server rack labels" },
+        { "card_id": 405, "label": "Find the hidden maintenance log" }
+      ],
+      "visible_to": "all",
+      "room": "server-closet"
+    },
+    {
+      "id": 500,
+      "type": "location",
+      "color": "green",
+      "title": "Data Team Office",
+      "description": "Whiteboards cover every wall, filled with model architecture diagrams, loss curves, and scribbled equations. A poster reads \"BEDROCK MODEL ZOO\" with icons for Claude, Titan, Llama, and Mistral. Dr. Priya sits at her desk, staring at a failed training run. Coffee rings stain a printout of model benchmarks.",
+      "image": "assets/data-team.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 501, "label": "Talk to Dr. Priya", "requires_item": [1006, 203], "puzzle": "npc-priya" },
+        { "card_id": 502, "label": "Study the model selection whiteboard" },
+        { "card_id": 503, "label": "Take the model benchmark printout" },
+        { "card_id": 505, "label": "Solve the model selection quiz", "requires_item": [503], "consumes_item": [502, 503], "puzzle": "match-models" },
+        { "card_id": 507, "label": "Use Q Developer", "puzzle": "tool-qdeveloper" }
+      ],
+      "visible_to": "all",
+      "room": "data-team"
+    },
+    {
+      "id": 600,
+      "type": "location",
+      "color": "green",
+      "title": "Security Office",
+      "description": "A locked room with frosted glass. Inside: six CCTV monitors showing different floors, a desk covered in incident reports, and Frank — arms crossed, blocking the filing cabinet. A red light blinks on the intrusion detection console. The room smells like hand sanitizer.",
+      "image": "assets/security-office.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 601, "label": "Talk to Frank", "puzzle": "npc-frank" },
+        { "card_id": 602, "label": "Review the CCTV footage" },
+        { "card_id": 603, "label": "Check the intrusion detection console" },
+        { "card_id": 605, "label": "Configure the Guardrails", "requires_item": [1006], "puzzle": "sg-guardrails" },
+        { "card_id": 607, "label": "Run the Security Scan", "puzzle": "tool-securityscan" },
+        { "card_id": 613, "label": "Get the Exec Badge from Frank", "requires_item": [606], "consumes_item": [104] }
+      ],
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 700,
+      "type": "location",
+      "color": "green",
+      "title": "DevOps Bullpen",
+      "description": "A cluster of standing desks surrounded by monitors showing CI/CD pipelines, all red. Terminal windows scroll error messages. Sam sits in the middle, headphones on, typing furiously. Energy drink cans form a small pyramid. A whiteboard shows a deployment pipeline diagram with \"BROKEN\" written across three stages.",
+      "image": "assets/devops-bullpen.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 706, "label": "Answer Sam's architecture quiz", "puzzle": "pillar-devops" },
+        { "card_id": 701, "label": "Talk to Sam", "requires_item": [706], "puzzle": "npc-sam" },
+        { "card_id": 702, "label": "Examine the CI/CD pipeline diagram" },
+        { "card_id": 703, "label": "Check the deployment logs" },
+        { "card_id": 705, "label": "Use the DevOps Agent", "puzzle": "tool-devopsagent" },
+        { "card_id": 708, "label": "Diagnose the root cause", "requires_item": [703, 603], "consumes_item": [603, 702], "puzzle": "timeline-rootcause" },
+        { "card_id": 400, "label": "Go to the Server Closet" }
+      ],
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 800,
+      "type": "location",
+      "color": "green",
+      "title": "Executive Floor",
+      "description": "The elevator opens onto plush carpet and quiet. Diana Park's corner office has floor-to-ceiling windows overlooking Manhattan. A standing desk with three monitors (all dark). A locked filing cabinet. A fox-shaped desk toy with glowing eyes. The screensaver on one monitor shows a fox running through a digital forest.",
+      "image": "assets/executive-floor.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 801, "label": "Talk to The Fox", "puzzle": "npc-fox" },
+        { "card_id": 802, "label": "Examine the filing cabinet" },
+        { "card_id": 804, "label": "Unlock the filing cabinet", "requires_item": [204], "consumes_item": [204, 904, 802], "puzzle": "policy-cabinet" },
+        { "card_id": 807, "label": "Decrypt the CTO's files", "requires_item": [107], "puzzle": "key-ctofiles" },
+        { "card_id": 808, "label": "Look at the framed photo on the wall" },
+        { "card_id": 1200, "label": "Take the stairs to the Rooftop", "requires_item": [806] }
+      ],
+      "visible_to": "all",
+      "room": "executive-floor"
+    },
+    {
+      "id": 900,
+      "type": "location",
+      "color": "green",
+      "title": "Break Room",
+      "description": "A small kitchen with a coffee machine that looks sentient, a microwave with a \"DO NOT MICROWAVE FISH\" sign, and a round table where two engineers whisper nervously. A vending machine hums. The fridge has a sign: \"Label your food or it WILL be thrown out. — Frank.\" Someone left a newspaper open to the tech section.",
+      "image": "assets/break-room.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 901, "label": "Use the coffee machine", "puzzle": "npc-coffee" },
+        { "card_id": 902, "label": "Listen to the engineers' conversation" },
+        { "card_id": 903, "label": "Read the newspaper" },
+        { "card_id": 904, "label": "Check the bulletin board" },
+        { "card_id": 905, "label": "Use the vending machine", "puzzle": "rotation-vending" },
+        { "card_id": 1000, "label": "Go to the Call Center" }
+      ],
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 1000,
+      "type": "location",
+      "color": "green",
+      "title": "Call Center",
+      "description": "Rows of desks with headsets. Half the agents have given up — heads on desks. The other half are fielding angry calls. A large screen shows the call queue: 47 minutes wait time. One agent waves you over frantically. A recording device blinks red — calls are being recorded but not transcribed.",
+      "image": "assets/call-center.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 1001, "label": "Talk to the Angry Customer", "puzzle": "npc-customer" },
+        { "card_id": 1002, "label": "Listen to the call recordings" },
+        { "card_id": 1004, "label": "Analyze customer sentiment", "requires_item": [1006], "consumes_item": [902, 1002], "puzzle": "log-sentiment" },
+        { "card_id": 1007, "label": "Use the Doc Extractor", "puzzle": "tool-docextractor" }
+      ],
+      "visible_to": "all",
+      "room": "call-center"
+    },
+    {
+      "id": 1100,
+      "type": "location",
+      "color": "green",
+      "title": "Archive Basement",
+      "description": "Two floors below street level. Dusty server racks from NovaCorp's early days line the walls. Filing cabinets overflow with printed architecture diagrams. A single fluorescent tube flickers. The air is cold and smells like old paper and ozone. A whiteboard in the corner has \"ORIGINAL ARCHITECTURE — DO NOT ERASE\" written in red.",
+      "image": "assets/archive-basement.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 1101, "label": "Study the original architecture whiteboard" },
+        { "card_id": 1103, "label": "Search the filing cabinets", "consumes_item": [1104], "puzzle": "terminal-archive" },
+        { "card_id": 1104, "label": "Examine the old servers" },
+        { "card_id": 1105, "label": "Use the Knowledge Base", "puzzle": "tool-knowledgebase" },
+        { "card_id": 1108, "label": "Find the hidden message from Diana" }
+      ],
+      "visible_to": "all",
+      "room": "archive-basement"
+    },
+    {
+      "id": 1200,
+      "type": "location",
+      "color": "green",
+      "title": "Rooftop",
+      "description": "Wind whips across the rooftop. Manhattan stretches in every direction — glass towers catching the morning sun. A satellite dish points skyward, its status light blinking amber. A control console sits beneath a weather-beaten canopy. The console has 8 slots arranged in a chain, each labeled with a service name. A sign reads: \"SATELLITE UPLINK — SERVICE ACTIVATION CHAIN. All services must be connected in dependency order to broadcast.\"",
+      "image": "assets/rooftop.png",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 1201, "label": "Examine the satellite console" },
+        { "card_id": 1203, "label": "Configure the Prompt Flow", "requires_item": [807, 1103, 1316], "puzzle": "path-promptflow" },
+        { "card_id": 1205, "label": "Activate the service chain", "requires_item": [606, 506, 709, 1314, 1203, 1209], "puzzle": "chain-final" },
+        { "card_id": 1207, "label": "Talk to NOVA", "requires_item": [107, 1103, 506, 1313], "puzzle": "npc-nova" }
+      ],
+      "visible_to": "all",
+      "room": "rooftop"
+    },
+    {
+      "id": 202,
+      "type": "object",
+      "color": "blue",
+      "title": "Task Sticky Notes",
+      "description": "\"1. Migrate NOVA to Bedrock Agents ✓ 2. Set up Knowledge Base for docs ✗ 3. Configure Guardrails — URGENT ✗ 4. Fix Prompt Flow for customer routing ✗ 5. Q Developer integration for code review ✗\" Insight: Marcus was halfway through an AI migration. Items 2–5 are incomplete.",
+      "image": "assets/card-stickies.png",
+      "visible_to": "all",
+      "room": "your-desk"
+    },
+    {
+      "id": 203,
+      "type": "object",
+      "color": "blue",
+      "title": "Warning Sticky Notes",
+      "description": "\"DO NOT disable guardrails in prod!! — Priya\" / \"The Lex bot is routing customers to the wrong queue AGAIN\" / \"Frank says the security scan found 3 critical vulns last week — UNPATCHED\" / \"Transcribe pipeline broken — call recordings not processing\"",
+      "image": "assets/card-stickies.png",
+      "visible_to": "all",
+      "room": "your-desk"
+    },
+    {
+      "id": 204,
+      "type": "object",
+      "color": "blue",
+      "title": "Password Sticky Notes",
+      "description": "\"Laptop: Welcome2NovaCorp! / Jenkins: admin/admin (I know, I know) / CTO filing cabinet: last 4 of office phone + founding year / NOVA admin: see USB backup\"",
+      "image": "assets/card-stickies.png",
+      "visible_to": "all",
+      "room": "your-desk"
+    },
+    {
+      "id": 302,
+      "type": "object",
+      "color": "blue",
+      "title": "Incident Timeline Whiteboard",
+      "description": "A partially filled timeline: \"Fri 5:47 PM — Marcus deploys 'final cleanup' / Fri 5:48 PM — Guardrails disabled / Fri 5:49 PM — ??? / Sat–Sun — No monitoring alerts (weekend) / Mon 9:01 AM — Quick Suite stops refreshing / Mon 9:02 AM — NOVA goes offline / Mon 9:07 AM — All services degraded\" Three gaps in the timeline. What happened between 5:49 PM Friday and 9:01 AM Monday?",
+      "image": "assets/card-timeline-wb.png",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 303,
+      "type": "object",
+      "color": "blue",
+      "title": "War Room Dashboard",
+      "description": "Close-up of the dashboard. Six red tiles arranged in a cascade pattern. Each tile has a small number in the corner: Guardrails Disabled (1), Unfiltered Input (2), Bedrock 503 (3), NOVA Offline (4), Lex Misrouting (5), Transcribe Stopped (6). The numbers suggest a failure order.",
+      "image": "assets/card-war-dashboard.png",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 401,
+      "type": "object",
+      "color": "blue",
+      "title": "Patch Panel",
+      "description": "Six cable ports on the left, six service endpoints on the right. Three cables are disconnected and tangled on the floor. Labels on the left: \"BEDROCK-EP\", \"NOVA-CORE\", \"LEX-RT\", \"TRANSCRIBE-IN\", \"COMPREHEND-NLP\", \"TEXTRACT-OCR\". Labels on the right: \"AI-MODEL-TIER\", \"ASSISTANT-TIER\", \"CHAT-TIER\", \"VOICE-TIER\", \"ANALYTICS-TIER\", \"DOCUMENT-TIER\". The disconnected cables are BEDROCK-EP, NOVA-CORE, and LEX-RT.",
+      "image": "assets/card-patch-panel.png",
+      "visible_to": "all",
+      "room": "server-closet"
+    },
+    {
+      "id": 404,
+      "type": "object",
+      "color": "blue",
+      "title": "Server Rack Labels",
+      "description": "Rack A: \"Bedrock Inference — 4x GPU nodes\" / Rack B: \"NOVA Runtime — 2x high-memory\" / Rack C: \"Lex + Comprehend — shared NLP cluster\" / Rack D: \"Transcribe + Textract — media processing\".",
+      "image": "assets/card-rack-labels.png",
+      "visible_to": "all",
+      "room": "server-closet"
+    },
+    {
+      "id": 502,
+      "type": "object",
+      "color": "blue",
+      "title": "Model Selection Whiteboard",
+      "description": "A grid comparing Bedrock models: \"Claude 3.5 Sonnet — Best reasoning, tool use, code. Cost: $$$. / Titan Text Express — Fast, cheap, good for simple Q&A. Cost: $. / Llama 3 70B — Open source, good general purpose. Cost: $$. / Mistral Large — Strong European language support. Cost: $$.\" Below: \"RULE: Match model to task. Don't use a cannon to kill a fly.\"",
+      "image": "assets/card-model-wb.png",
+      "visible_to": "all",
+      "room": "data-team"
+    },
+    {
+      "id": 602,
+      "type": "object",
+      "color": "blue",
+      "title": "CCTV Footage",
+      "description": "Six camera feeds. Camera 3 (server closet) shows Marcus entering at 5:45 PM Friday, spending 4 minutes at the patch panel, then leaving. Camera 5 (executive floor) shows a fox-shaped screensaver on the CTO's monitor. Camera 6 (rooftop) shows a satellite dish with a blinking green light. Cross-card observation: Marcus was in the server closet AND deployed code. He may have physically disconnected something too.",
+      "image": "assets/card-cctv.png",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 603,
+      "type": "object",
+      "color": "blue",
+      "title": "IDS Alert Log",
+      "description": "\"ALERT-001: 847 failed auth attempts — 10.0.47.12 (Jenkins) → service accounts / ALERT-002: Guardrails policy deleted — user: marcus_lee / ALERT-003: Bedrock model endpoint changed — single model, no fallback / ALERT-004: Knowledge Base index corrupted — missing embeddings / ALERT-005: Prompt Flow config — orphaned node references\" Five alerts, five things to fix. This is the full scope of the incident.",
+      "image": "assets/card-logs.png",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 702,
+      "type": "object",
+      "color": "blue",
+      "title": "Pipeline Diagram",
+      "description": "\"Code → [BUILD: ❌ Missing guardrails-policy.json] → [TEST: ❌ Bedrock endpoint 503] → [STAGING: ⏸ Blocked] → [PROD: ❌ Bad config deployed Fri 5:47 PM]\" Below the diagram: \"Last successful full pipeline: Thursday 2:15 PM. Last deploy: Friday 5:47 PM (force-push, skipped tests).\"",
+      "image": "assets/card-pipeline.png",
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 703,
+      "type": "object",
+      "color": "blue",
+      "title": "Deployment Logs",
+      "description": "\"Fri 17:47:02 — marcus_lee force-push to main / Fri 17:47:03 — Build: guardrails-policy.json NOT FOUND (deleted in commit) / Fri 17:47:04 — Test: SKIPPED (--no-verify flag) / Fri 17:47:05 — Deploy: Config pushed to prod / Fri 17:47:06 — Bedrock endpoint updated: single model (anthropic.claude-v2) / Fri 17:47:07 — NOVA config: model_router DISABLED / Fri 17:47:08 — Deploy complete. No rollback artifact saved.\" The deployment logs show the exact sequence of Marcus's destructive changes.",
+      "image": "assets/card-logs.png",
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 802,
+      "type": "object",
+      "color": "blue",
+      "title": "Locked Filing Cabinet",
+      "description": "A heavy steel cabinet with an 8-digit keypad. A small plaque reads: \"D. Park — CTO.\" The password sticky notes mentioned something about the office phone number and a founding year...",
+      "image": "assets/card-filing-cabinet.png",
+      "visible_to": "all",
+      "room": "executive-floor"
+    },
+    {
+      "id": 902,
+      "type": "object",
+      "color": "blue",
+      "title": "Overheard Conversation",
+      "description": "Two engineers whispering: \"...Marcus was talking about Amazon Transcribe the day before he quit. Said the speech-to-text pipeline was processing call recordings but the output wasn't going anywhere because the Comprehend sentiment analysis was backed up...\" / \"...I heard the call center recordings have clues about what customers were experiencing right before the outage. If someone could get Transcribe working again...\" Narrative inference: Transcribe feeds Comprehend. Both need to be restored for the call center data to be useful.",
+      "image": "assets/card-overheard.png",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 904,
+      "type": "object",
+      "color": "blue",
+      "title": "Office Bulletin Board",
+      "description": "Flyers and notices: \"TEAM LUNCH — Friday (cancelled)\" / \"SECURITY AWARENESS TRAINING — Mandatory (Frank)\" / \"NOVA v3.0 Launch Party — Postponed indefinitely\" / \"Lost: Orange tabby cat, answers to 'Pixel', has USB drive on collar — if found, return to Diana's office\" / A small card pinned in the corner: \"NovaCorp Office Phone: 212-555-4738\" Cross-card observation: The phone number's last 4 digits (4738) are part of the filing cabinet code.",
+      "image": "assets/card-bulletin.png",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 905,
+      "type": "item",
+      "color": "red",
+      "title": "Cat Treats",
+      "description": "A small bag of \"Whisker Bites\" from the vending machine. Pixel will love these.",
+      "image": "assets/card-cat-treats.png",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 1002,
+      "type": "object",
+      "color": "blue",
+      "title": "Call Recordings",
+      "description": "Five recorded calls, auto-transcribed (poorly — Transcribe pipeline is degraded): \"Call 1 (Fri 18:02): 'Bot asked for my SSN... that can't be right...' / Call 2 (Fri 18:15): 'The chat keeps saying bedrock invoke fail...' / Call 3 (Sat 09:00): 'Your website is completely broken...' / Call 4 (Mon 09:10): 'I've been on hold for 20 minutes...' / Call 5 (Mon 09:30): 'Your AI told me to contact the WRONG department...'\" The call timestamps show the outage spreading from Friday evening to Monday morning.",
+      "image": "assets/card-recordings.png",
+      "visible_to": "all",
+      "room": "call-center"
+    },
+    {
+      "id": 1101,
+      "type": "object",
+      "color": "blue",
+      "title": "Original Architecture Whiteboard",
+      "description": "A detailed system diagram drawn in Diana's precise handwriting: \"NovaCorp AI Stack (v1.0): Layer 1: Bedrock Guardrails (content filter + PII) / Layer 2: Bedrock Models (Claude for reasoning, Titan for Q&A) / Layer 3: Bedrock Knowledge Base (company docs in S3) / Layer 4: Bedrock Agent — NOVA (orchestration) / Layer 5: Bedrock Prompt Flow (customer routing) / Layer 6: Frontend — Lex (chat), Transcribe (voice), Textract (docs), Comprehend (analysis)\" Below: \"RULE: Each layer is independent. Each layer has its own config. Each layer can fail without taking down the others. —Diana\"",
+      "image": "assets/card-arch-wb.png",
+      "visible_to": "all",
+      "room": "archive-basement"
+    },
+    {
+      "id": 1104,
+      "type": "object",
+      "color": "blue",
+      "title": "Legacy Server Rack",
+      "description": "Old servers with labels: \"NovaCorp v0.1 — 2019\" / \"First Bedrock integration — 2023\" / \"NOVA prototype — 2024.\" A sticky note on the NOVA prototype: \"She works! First successful agent invocation. NOVA answered a customer question using the Knowledge Base. Diana cried. —Marcus, March 2024.\" The rack numbers: 2019, 2023, 2024. Sequential — NovaCorp's evolution.",
+      "image": "assets/card-legacy-rack.png",
+      "visible_to": "all",
+      "room": "archive-basement"
+    },
+    {
+      "id": 1201,
+      "type": "object",
+      "color": "blue",
+      "title": "Satellite Console",
+      "description": "Eight slots in a chain formation. Labels left to right: \"GUARDRAILS → BEDROCK → KNOWLEDGE BASE → AGENT (NOVA) → PROMPT FLOW → LEX → COMPREHEND/TRANSCRIBE → UPLINK.\" Each slot has a status light — all red. Below: \"Insert service configs in dependency order. All prerequisites must be met before activation.\" This is the final puzzle. Every fix you've made feeds into this chain.",
+      "image": "assets/card-satellite-console.png",
+      "visible_to": "all",
+      "room": "rooftop"
+    },
+    {
+      "id": 104,
+      "type": "item",
+      "color": "red",
+      "title": "Temp Badge",
+      "description": "A NovaCorp temporary badge with your photo and \"ALEX CHEN — TEMP\" printed on it. Opens standard office doors.",
+      "image": "assets/card-temp-badge.png",
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 107,
+      "type": "item",
+      "color": "red",
+      "title": "USB Drive (NOVA Backup)",
+      "description": "A small USB drive from Pixel's collar. Label reads: \"NOVA-CORE-v3.1-PROD\". Contains NOVA's original configuration — before Marcus changed it.",
+      "image": "assets/card-usb-drive.png",
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 503,
+      "type": "item",
+      "color": "red",
+      "title": "Model Benchmarks",
+      "description": "Printout with performance scores: \"Task: Complex reasoning → Claude (95), Titan (62), Llama (78), Mistral (74) / Task: Simple Q&A → Claude (90), Titan (88), Llama (82), Mistral (80) / Task: Code generation → Claude (93), Titan (55), Llama (71), Mistral (68) / Task: Multilingual → Claude (88), Titan (70), Llama (75), Mistral (92)\"",
+      "image": "assets/card-benchmarks.png",
+      "visible_to": "all",
+      "room": "data-team"
+    },
+    {
+      "id": 506,
+      "type": "item",
+      "color": "red",
+      "title": "Model Config",
+      "description": "The corrected Bedrock model configuration: NOVA → Claude 3.5 Sonnet (reasoning + tools), Lex Bot → Titan Text Express (simple Q&A), Code Review → Amazon Q Developer, Customer Sentiment → Amazon Comprehend. Each service matched to the right model or dedicated service.",
+      "image": "assets/card-model-config.png",
+      "reveals": [508],
+      "visible_to": "all",
+      "room": "data-team"
+    },
+    {
+      "id": 606,
+      "type": "item",
+      "color": "red",
+      "title": "Guardrails Config",
+      "description": "The restored Bedrock Guardrails configuration: Content filtering (active), PII detection (active), topic restrictions (active), prompt injection protection (active), word filters (active), logging (active). All six guardrail rules re-enabled.",
+      "image": "assets/card-guardrails-config.png",
+      "reveals": [608],
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 613,
+      "type": "item",
+      "color": "red",
+      "title": "Executive Badge",
+      "description": "A silver badge with \"EXECUTIVE ACCESS\" hologram. Frank gave it to you after you proved you understand security. Opens the elevator to the 15th floor.",
+      "image": "assets/card-exec-badge.png",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 706,
+      "type": "event",
+      "color": "yellow",
+      "title": "Architecture Quiz Passed",
+      "description": "Sam looks up from his screen. \"OK, you actually know your stuff. Most people can't tell Security from Reliability. Let's talk.\"",
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 709,
+      "type": "item",
+      "color": "red",
+      "title": "Root Cause Report",
+      "description": "The complete root cause analysis: Marcus's Friday deploy was a triple sabotage — deleted guardrails, broke the model config, and disconnected physical cables. The weekend masked it. Monday morning traffic exposed everything.",
+      "image": "assets/card-root-cause.png",
+      "reveals": [710],
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 806,
+      "type": "item",
+      "color": "red",
+      "title": "Satellite Key",
+      "description": "A small brass key labeled \"ROOFTOP — SATELLITE UPLINK.\" Found in Diana's filing cabinet. Opens the roof access door.",
+      "image": "assets/card-satellite-key.png",
+      "visible_to": "all",
+      "room": "executive-floor"
+    },
+    {
+      "id": 807,
+      "type": "item",
+      "color": "red",
+      "title": "Prompt Flow Config",
+      "description": "The correct Prompt Flow routing configuration: Customer Input → Comprehend (sentiment) → Bedrock (classify) → Lex (route to agent) OR NOVA (complex query) OR Transcribe (voice input). Decrypted from the CTO's files using the NOVA backup key.",
+      "image": "assets/card-promptflow-config.png",
+      "reveals": [808, 806],
+      "visible_to": "all",
+      "room": "executive-floor"
+    },
+    {
+      "id": 1005,
+      "type": "item",
+      "color": "red",
+      "title": "Comprehend Report",
+      "description": "Amazon Comprehend sentiment analysis results: Three calls with PII exposure identified — SSN (Call 1), Email (Call 5), Credit Card (Call 6). Incident report updated with data exposure scope.",
+      "image": "assets/card-comprehend-report.png",
+      "reveals": [1008],
+      "visible_to": "all",
+      "room": "call-center"
+    },
+    {
+      "id": 1006,
+      "type": "item",
+      "color": "red",
+      "title": "Error Logs",
+      "description": "Summary of all critical failures with timestamps: Guardrails DISABLED (since Fri 5:47 PM), Bedrock Endpoint 503 errors (since Mon 9:01 AM), NOVA Assistant offline (since Mon 9:02 AM), Lex Chatbot misrouting (since Mon 8:58 AM), Transcribe Pipeline stopped (since Mon 9:01 AM). Five critical services down.",
+      "image": "assets/card-logs.png",
+      "reveals": [208],
+      "visible_to": "all",
+      "room": "your-desk"
+    },
+    {
+      "id": 1103,
+      "type": "item",
+      "color": "red",
+      "title": "Architecture Doc",
+      "description": "Diana Park's complete original system architecture: 6 independent layers with correct model configs, service dependencies, and Prompt Flow routing. The master reference for rebuilding NovaCorp's AI stack. Needed for model selection, pipeline config, and final activation.",
+      "image": "assets/card-arch-doc.png",
+      "reveals": [1108],
+      "visible_to": "all",
+      "room": "archive-basement"
+    },
+    {
+      "id": 305,
+      "type": "event",
+      "color": "yellow",
+      "title": "Incident Triaged",
+      "description": "Jordan nods. \"Now I can tell the board we understand the problem. Go fix it.\" The failure cascade is clear: Guardrails disabled → unfiltered input → Bedrock 503 → NOVA offline → Lex misrouting → Transcribe stopped.",
+      "reveals": [306],
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 403,
+      "type": "event",
+      "color": "yellow",
+      "title": "Cables Reconnected",
+      "description": "The disconnected LEDs stop blinking red. Three racks hum back to life. Physical layer restored. BEDROCK-EP → AI-MODEL-TIER, NOVA-CORE → ASSISTANT-TIER, LEX-RT → CHAT-TIER.",
+      "reveals": [405],
+      "visible_to": "all",
+      "room": "server-closet"
+    },
+    {
+      "id": 505,
+      "type": "event",
+      "color": "yellow",
+      "title": "Correct Model Selected",
+      "description": "Priya smiles. \"Now you understand the model zoo. Each service needs the right model — or the right dedicated service. Let me update the Bedrock config.\"",
+      "reveals": [506],
+      "visible_to": "all",
+      "room": "data-team"
+    },
+    {
+      "id": 605,
+      "type": "event",
+      "color": "yellow",
+      "title": "Guardrails Restored",
+      "description": "Guardrails restored. The IDS console stops blinking red. Frank nods approvingly. PII detection is active, content filtering is back online, and topic restrictions are enforced.",
+      "reveals": [606],
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 708,
+      "type": "event",
+      "color": "yellow",
+      "title": "Root Cause Found",
+      "description": "The full picture clicks. Marcus's Friday deploy was a triple sabotage: deleted guardrails, broke the model config, and disconnected physical cables. The weekend masked it. Monday morning traffic exposed everything.",
+      "reveals": [709],
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 804,
+      "type": "event",
+      "color": "yellow",
+      "title": "Cabinet Opened",
+      "description": "The cabinet clicks open. Inside: a folder labeled \"NOVA MASTER CONFIG\" and a small brass key labeled \"ROOFTOP — SATELLITE UPLINK.\"",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "executive-floor"
+    },
+    {
+      "id": 1004,
+      "type": "event",
+      "color": "yellow",
+      "title": "Sentiment Analyzed",
+      "description": "Comprehend analysis complete. Three calls with PII exposure identified. Incident report updated. The data confirms: Guardrails being disabled allowed customer PII to flow through unprotected.",
+      "reveals": [1005],
+      "visible_to": "all",
+      "room": "call-center"
+    },
+    {
+      "id": 1203,
+      "type": "item",
+      "color": "red",
+      "title": "Prompt Flow Restored",
+      "description": "Prompt Flow restored. Customer queries now route correctly: sentiment analysis first, then classification, then the right handler. Input → Comprehend → Bedrock → Lex/NOVA/Transcribe → Output.",
+      "reveals": [1208],
+      "visible_to": "all",
+      "room": "rooftop"
+    },
+    {
+      "id": 1205,
+      "type": "event",
+      "color": "yellow",
+      "title": "Systems Restored",
+      "description": "You press ACTIVATE. The satellite dish rotates, locks onto the signal. One by one, the status lights turn green. Guardrails: GREEN. Bedrock: GREEN. Knowledge Base: GREEN. NOVA: GREEN. Prompt Flow: GREEN. Lex: GREEN. Transcribe: GREEN. UPLINK: GREEN. The console reads: ALL SERVICES RESTORED.",
+      "is_ending": true,
+      "consumes": [202, 606, 506, 709, 1103, 107, 1006, 203, 1203, 1209, 1313, 1314, 1316],
+      "reveals": [],
+      "visible_to": "all",
+      "room": "rooftop"
+    },
+    {
+      "id": 1209,
+      "type": "item",
+      "color": "red",
+      "title": "NOVA Rebuilt",
+      "description": "NOVA's systems initialize. The USB drive provides the backup config. The Architecture Doc provides the correct service connections. The Model Config assigns Claude 3.5 Sonnet as the reasoning engine. NOVA is back.",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "rooftop"
+    },
+    {
+      "id": 106,
+      "type": "lore",
+      "color": "purple",
+      "title": "NovaCorp Welcome Video",
+      "description": "\"NovaCorp: Building the Future with AI. Our platform serves 2.3 million users across 40 countries. Powered by Amazon Bedrock, Amazon Q, and a suite of AI services. 'We don't just use AI — we orchestrate it.' — Diana Park, CTO.\" Insight: NovaCorp's stack is built on AWS AI services. The outage is hitting all of them.",
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 208,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: The Resignation",
+      "description": "\"Subject: I'm out. / I tried to tell them. You can't run 15 AI services with no guardrails, no monitoring, and no documentation. The Knowledge Base was supposed to fix onboarding — never finished. The Prompt Flow was supposed to route customer issues — half-built. NOVA was supposed to be our AI backbone — I broke it trying to fix it. / Good luck to whoever sits here next. You'll need it. —Marcus\" Insight: Marcus was overwhelmed. The AI stack is half-migrated. Understanding what he started is key to fixing it.",
+      "visible_to": "all",
+      "room": "your-desk"
+    },
+    {
+      "id": 306,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: Incident Response",
+      "description": "\"NovaCorp Incident Response Protocol: 1. Identify scope (which services?) 2. Establish timeline (when did it start?) 3. Find root cause (what changed?) 4. Fix forward (don't rollback blindly) 5. Post-mortem (what did we learn?) Insight: In AWS, the DevOps Agent can automate steps 1–3. It monitors CloudWatch, correlates events, and suggests root causes. Investing time to set it up pays off during incidents.\"",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 405,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: Physical Infrastructure",
+      "description": "\"Maintenance Log — Last Entry (Marcus, Thursday): 'Moved NOVA to dedicated high-memory nodes. Bedrock inference needs the GPU rack exclusively. Note to self: if Bedrock goes down, NOVA goes down, and if NOVA goes down, Lex routing breaks. Single point of failure. TODO: Add redundancy. Priority: after I quit.' Insight: In AWS, Bedrock Agents can be configured with fallback models and retry logic. A single model failure shouldn't cascade. The Architecture Doc in the basement has the full dependency map.\"",
+      "visible_to": "all",
+      "room": "server-closet"
+    },
+    {
+      "id": 508,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: Foundation Models",
+      "description": "\"Amazon Bedrock provides access to foundation models from AI21, Anthropic, Cohere, Meta, Mistral, Stability AI, and Amazon via a single API. Key principle: choose the right model for the right task. A simple FAQ bot doesn't need the most powerful model. A complex reasoning agent does. Insight: Model selection is a cost-performance tradeoff. Bedrock lets you switch models without changing your application code.\"",
+      "visible_to": "all",
+      "room": "data-team"
+    },
+    {
+      "id": 608,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: Bedrock Guardrails",
+      "description": "\"Bedrock Guardrails: Your AI Safety Net. Configure content filters (block toxic/harmful content), PII detection (automatically redact sensitive data), topic restrictions (keep the model on-topic), and custom word filters. Guardrails sit between the user and the model — they filter both input and output. Insight: Guardrails are not optional in production. They protect your users, your data, and your compliance posture. Marcus learned this the hard way.\"",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 710,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: DevOps Agent & Kiro",
+      "description": "\"Sam's Wishlist: 1) AWS DevOps Agent for automated incident response — correlates CloudWatch alarms, suggests root causes, executes runbooks. 2) Kiro IDE with Steering files so the AI understands our architecture. 3) Pre-commit hooks that check for guardrails config. 4) Automated rollback on failed health checks. Insight: The DevOps Agent and Kiro together create a safety net. The Agent catches runtime issues; Kiro catches them at development time. Marcus had neither.\"",
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 808,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: NovaCorp Founding",
+      "description": "\"A photo of Diana Park and three co-founders in a garage, 2019. Caption: 'Day one. We're going to build an AI platform that actually helps people.' Below: 'NovaCorp — Founded 2019. First customer: 2020. 1M users: 2023. 2.3M users: 2025.' Insight: Amazon Q Business is designed for exactly this — an enterprise AI assistant that connects to your company's data sources. Diana's vision for NOVA was essentially Q Business before Q Business existed. The future is already here.\"",
+      "visible_to": "all",
+      "room": "executive-floor"
+    },
+    {
+      "id": 903,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: AI Industry News",
+      "description": "\"Tech Times — 'The Rise of Agentic AI: How Bedrock Agents, Q Business, and Autonomous Security Are Changing Enterprise IT.' The article describes how companies are moving from simple chatbots to autonomous AI agents that can take actions, query knowledge bases, and orchestrate multi-step workflows. 'The key insight: AI agents need guardrails, knowledge bases, and well-defined prompt flows to be effective. Without these, they're just expensive autocomplete.' Insight: This is exactly what NovaCorp was trying to build — and exactly what Marcus broke. The industry is moving toward agentic AI, and the tools exist to do it right.\"",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 1008,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: Lex & Comprehend",
+      "description": "\"Amazon Lex builds conversational chatbots with natural language understanding. Amazon Comprehend analyzes text for sentiment, entities, key phrases, and PII. Amazon Transcribe converts speech to text. Together, they form the customer interaction pipeline: Voice → Transcribe → Text → Comprehend (analyze) → Lex (respond). Insight: These services are designed to work together. When one breaks, the whole pipeline degrades. Proper error handling and fallbacks at each stage prevent cascading failures.\"",
+      "visible_to": "all",
+      "room": "call-center"
+    },
+    {
+      "id": 1108,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: Diana's Vision",
+      "description": "\"A handwritten note taped behind the whiteboard: 'To whoever finds this: I built NovaCorp's AI stack on a simple principle — every AI service should have guardrails, every agent should have a knowledge base, and every workflow should have a prompt flow. These aren't optional features. They're the foundation. If someone has broken this architecture, the fix is simple: rebuild it layer by layer, bottom up. Start with the guardrails. Always start with the guardrails. —Diana Park, CTO' Insight: Bedrock's power comes from its composability. Guardrails + Knowledge Bases + Agents + Prompt Flows work together as a system. Remove any piece and the whole thing degrades.\"",
+      "visible_to": "all",
+      "room": "archive-basement"
+    },
+    {
+      "id": 1208,
+      "type": "lore",
+      "color": "purple",
+      "title": "Insight: The Cloud Is Real",
+      "description": "\"Manhattan stretches below. Somewhere in those buildings, 2.3 million users are waiting. The 'cloud' isn't abstract — it's real infrastructure serving real people. Every service you just restored — Bedrock, Guardrails, Knowledge Bases, Agents, Prompt Flows, Lex, Comprehend, Transcribe, Textract — they're all running in AWS data centers right now. Insight: The AI services you used today aren't science fiction. They're production tools used by companies like NovaCorp every day. The difference between a good AI stack and a broken one is architecture, guardrails, and respect for dependencies.\"",
+      "visible_to": "all",
+      "room": "rooftop"
+    },
+    {
+      "id": 1310,
+      "type": "event",
+      "color": "yellow",
+      "title": "NOVA Backup Preview",
+      "description": "You plug the USB into the laptop. The screen fills with NOVA's original configuration: model assignments, knowledge base connections, prompt flow routing. This is what the system looked like before Marcus broke it. A goldmine for the rebuild.",
+      "visible_to": "all",
+      "room": "your-desk"
+    },
+    {
+      "id": 1311,
+      "type": "event",
+      "color": "yellow",
+      "title": "Detailed Failure Map",
+      "description": "Cross-referencing the error logs with the dashboard reveals the exact cascade: Guardrails went first (Fri 5:47 PM), then Bedrock (Mon 9:01 AM), then NOVA (9:02), then Lex (9:03). The dashboard's stale data hid the Friday origin. Now you see the full timeline.",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 1312,
+      "type": "event",
+      "color": "yellow",
+      "title": "Optimized Pipeline Plan",
+      "description": "Matching the model benchmarks to the pipeline stages reveals inefficiencies: Marcus had Claude running simple Q&A (overkill) and Titan handling reasoning (underpowered). The correct mapping saves 60% on inference costs and doubles throughput.",
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 1313,
+      "type": "item",
+      "color": "red",
+      "title": "Marcus Sabotage Video",
+      "description": "The CCTV footage from Friday 5:47 PM shows Marcus at his desk. He force-pushes code, then walks to the server closet and yanks three cables. He pauses, looks at the camera, and mouths: 'Good luck.' Then he walks out. This wasn't negligence — it was deliberate.",
+      "consumes": [602],
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 1314,
+      "type": "item",
+      "color": "red",
+      "title": "Rollback Plan",
+      "description": "Cross-referencing the root cause with the deployment logs generates a step-by-step rollback plan: 1) Restore guardrails-policy.json, 2) Revert Bedrock to multi-model config, 3) Reconnect server cables, 4) Rebuild NOVA from USB backup, 5) Restore Prompt Flow routing. You now know exactly what to fix and in what order.",
+      "consumes": [703, 603],
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 1315,
+      "type": "event",
+      "color": "yellow",
+      "title": "Security Audit Report",
+      "description": "All five IDS alerts mapped to guardrail rules: ALERT-001 (auth brute force) → blocked by prompt injection protection. ALERT-002 (guardrails deleted) → now restored. ALERT-003 (single model) → multi-model fallback active. ALERT-004 (KB corrupted) → re-indexed. ALERT-005 (orphaned nodes) → Prompt Flow repaired. Full audit: PASS.",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 1316,
+      "type": "item",
+      "color": "red",
+      "title": "Before/After Comparison",
+      "description": "The original architecture whiteboard shows Diana's clean design: Guardrails → Bedrock (multi-model) → Knowledge Base → NOVA → Prompt Flow → Lex/Transcribe. Marcus's version: no guardrails, single model, no KB, NOVA hardcoded, Prompt Flow broken. The diff is damning. Diana's design was elegant. Marcus gutted it.",
+      "consumes": [1101],
+      "visible_to": "all",
+      "room": "archive-basement"
+    },
+    {
+      "id": 1317,
+      "type": "event",
+      "color": "yellow",
+      "title": "PII Incident Report",
+      "description": "Full data breach scope: 3 customers exposed (SSN, email, credit card). Comprehend flagged them. Call recordings confirm customers read PII aloud to the broken chatbot, which echoed it back without guardrails filtering. Estimated exposure window: 9:02 AM – present. This needs to go to legal.",
+      "consumes": [1005, 1002],
+      "visible_to": "all",
+      "room": "call-center"
+    },
+    {
+      "id": 1318,
+      "type": "event",
+      "color": "yellow",
+      "title": "Complete Incident Timeline",
+      "description": "The whiteboard gaps are filled: Fri 5:48 PM — unfiltered input starts hitting Bedrock. Fri 5:49 PM — Marcus disconnects cables. Sat 2:00 AM — first 503 error (no one notices). Sun 11:00 PM — error rate climbs to 12%. Mon 9:01 AM — Monday traffic spike breaks everything. The weekend was a slow-motion disaster.",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 1301,
+      "type": "penalty",
+      "color": "black",
+      "title": "USB in War Room Display",
+      "description": "You plug the USB into the war room display. The screen flickers and shows NOVA's config — but it's the backup, not the fix. Jordan glares at you.",
+      "penalty_seconds": 300,
+      "returns_items": [107],
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 1302,
+      "type": "penalty",
+      "color": "black",
+      "title": "Error Logs in Satellite",
+      "description": "You try to upload raw error logs to the satellite uplink. The console rejects them: \"SERVICE CONFIGS REQUIRED, NOT DIAGNOSTICS.\" The dish wobbles ominously.",
+      "penalty_seconds": 300,
+      "returns_items": [1006],
+      "visible_to": "all",
+      "room": "rooftop"
+    },
+    {
+      "id": 101,
+      "type": "tool",
+      "color": "orange",
+      "title": "Maya (Receptionist)",
+      "description": "Maya — NovaCorp Receptionist. Warm and helpful. She has your temp badge and knows where everything is.",
+      "reveals": [104],
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 103,
+      "type": "tool",
+      "color": "orange",
+      "title": "Pixel (Office Cat)",
+      "description": "Pixel — Office Cat. An orange tabby with a USB drive dangling from her collar on a carabiner clip.",
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 201,
+      "type": "tool",
+      "color": "orange",
+      "title": "Laptop (Slack/Email)",
+      "description": "Your NovaCorp laptop — Slack, email, and internal tools. Shows messages that update based on timed events.",
+      "visible_to": "all",
+      "room": "your-desk"
+    },
+    {
+      "id": 206,
+      "type": "tool",
+      "color": "orange",
+      "title": "Quick Dashboard",
+      "description": "Amazon Quick Suite — real-time service dashboard. Identify which services are critical to get the Error Logs.",
+      "reveals": [1006],
+      "visible_to": "all",
+      "room": "your-desk"
+    },
+    {
+      "id": 301,
+      "type": "tool",
+      "color": "orange",
+      "title": "Jordan (VP Engineering)",
+      "description": "Jordan — VP of Engineering. Stressed, demanding. Needs a root cause and an ETA for the board.",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 501,
+      "type": "tool",
+      "color": "orange",
+      "title": "Dr. Priya (Data Scientist)",
+      "description": "Dr. Priya — Senior Data Scientist. Knows the ML stack inside and out. Needs error logs before she'll help.",
+      "visible_to": "all",
+      "room": "data-team"
+    },
+    {
+      "id": 507,
+      "type": "tool",
+      "color": "orange",
+      "title": "Q Developer (-1 min)",
+      "description": "Amazon Q Developer — AI coding assistant. Analyzes code, suggests fixes, and explains AWS configurations. Costs 1 minute.",
+      "visible_to": "all",
+      "room": "data-team"
+    },
+    {
+      "id": 601,
+      "type": "tool",
+      "color": "orange",
+      "title": "Frank (Security Lead)",
+      "description": "Frank — Security Lead. Arms crossed, blocking the filing cabinet. Won't let you in without passing a security quiz.",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 607,
+      "type": "tool",
+      "color": "orange",
+      "title": "AWS Security Agent (-2 min)",
+      "description": "AWS Security Agent — autonomous penetration testing. Scans infrastructure for vulnerabilities, tests IAM policies. Costs 2 minutes.",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 701,
+      "type": "tool",
+      "color": "orange",
+      "title": "Sam (DevOps Engineer)",
+      "description": "Sam — DevOps Engineer. Overwhelmed but willing to help. Knows the CI/CD pipelines and can point you to the server closet.",
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 705,
+      "type": "tool",
+      "color": "orange",
+      "title": "AWS DevOps Agent (-1 min)",
+      "description": "AWS DevOps Agent — incident response automation. Correlates events, suggests root causes, generates runbooks. Costs 1 minute.",
+      "visible_to": "all",
+      "room": "devops-bullpen"
+    },
+    {
+      "id": 801,
+      "type": "tool",
+      "color": "orange",
+      "title": "The Fox (CTO's AI)",
+      "description": "The Fox — Diana Park's personal AI assistant. Runs on a private Bedrock Agent instance. Speaks in riddles.",
+      "visible_to": "all",
+      "room": "executive-floor"
+    },
+    {
+      "id": 901,
+      "type": "tool",
+      "color": "orange",
+      "title": "Coffee Machine",
+      "description": "The Coffee Machine — dispenses wisdom with caffeine. Fortune-cookie hints about the fix order.",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 1001,
+      "type": "tool",
+      "color": "orange",
+      "title": "Angry Customer",
+      "description": "Angry Customer — on the phone for 40 minutes. Complaints reveal cascade details and PII exposure.",
+      "visible_to": "all",
+      "room": "call-center"
+    },
+    {
+      "id": 1007,
+      "type": "tool",
+      "color": "orange",
+      "title": "Doc Extractor / Textract (-1 min)",
+      "description": "Amazon Textract — document OCR and extraction. Extracts text, tables, and forms from scanned documents. Costs 1 minute.",
+      "visible_to": "all",
+      "room": "call-center"
+    },
+    {
+      "id": 1105,
+      "type": "tool",
+      "color": "orange",
+      "title": "Knowledge Base / RAG (-2 min)",
+      "description": "Bedrock Knowledge Base — RAG over NovaCorp docs. 847 documents indexed. Complete system overview. Costs 2 minutes.",
+      "visible_to": "all",
+      "room": "archive-basement"
+    },
+    {
+      "id": 1207,
+      "type": "tool",
+      "color": "orange",
+      "title": "NOVA (Rebuilt)",
+      "description": "NOVA — NovaCorp Virtual Assistant (rebuilt). A Bedrock Agent with tools, memory, and judgment. Confirms the service chain order for final activation.",
+      "reveals": [1209],
+      "visible_to": "all",
+      "room": "rooftop"
+    }
+  ]
+}

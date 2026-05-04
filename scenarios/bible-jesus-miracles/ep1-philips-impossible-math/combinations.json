@@ -1,0 +1,60 @@
+{
+  "combinations": [
+    {
+      "card_a": 102,
+      "card_b": 101,
+      "result_card": 112,
+      "type": "item_object",
+      "description": "Combine Philip's Calculation with the Vast Crowd count"
+    },
+    {
+      "card_a": 103,
+      "card_b": 122,
+      "result_card": 130,
+      "type": "item_object",
+      "description": "Ask the merchant about the distant markets"
+    },
+    {
+      "card_a": 102,
+      "card_b": 123,
+      "result_card": 128,
+      "type": "item_object",
+      "description": "Argue with Judas over the numbers"
+    },
+    {
+      "card_a": 143,
+      "card_b": 141,
+      "result_card": 152,
+      "type": "item_object",
+      "description": "Show the boy's trust to Andrew"
+    },
+    {
+      "card_a": 155,
+      "card_b": 174,
+      "result_card": 175,
+      "type": "item_item",
+      "description": "The offering and the arranged crowd — both tasks complete"
+    },
+    {
+      "card_a": 182,
+      "card_b": 181,
+      "result_card": 193,
+      "type": "item_object",
+      "description": "Distribute from the endless basket while the teacher breaks bread"
+    },
+    {
+      "card_a": 219,
+      "card_b": 204,
+      "result_card": 999,
+      "type": "item_object",
+      "description": "The sign understood — the investigation is complete"
+    },
+    {
+      "card_a": 102,
+      "card_b": 202,
+      "result_card": 215,
+      "type": "item_object",
+      "description": "Try to make the numbers work with twelve baskets"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "timed_events": [
+    {
+      "id": "mid-event",
+      "trigger_at_remaining_seconds": 900,
+      "message": "The sun drops lower. The crowd grows restless. Hungry faces turn toward the disciples.",
+      "type": "narrative",
+      "narrative_key": "mid_event"
+    },
+    {
+      "id": "urgency-warning",
+      "trigger_at_remaining_seconds": 300,
+      "message": "The sun is almost gone. Five thousand hungry people and I still have no answer. I must finish this now.",
+      "voice": "philip",
+      "type": "alert",
+      "narrative_key": "urgency"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "crowd-counted",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "crowd-counter",
+      "card_id": 113,
+      "message": "Five thousand men. At least. Plus women and children — the true number could be ten thousand or more.",
+      "type": "room_unlock",
+      "unlocks_room": 120,
+      "once": true
+    },
+    {
+      "id": "denarii-calculated",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "denarii-math",
+      "card_id": 133,
+      "message": "200 denarii. Eight months' wages. And even that wouldn't be enough — just 'a little' for each person.",
+      "type": "room_unlock",
+      "unlocks_room": 140,
+      "once": true
+    },
+    {
+      "id": "denarii-calculated-arrangement",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "denarii-math",
+      "card_id": 133,
+      "message": "The teacher says: 'Have the people sit down.'",
+      "type": "room_unlock",
+      "unlocks_room": 160,
+      "once": true
+    },
+    {
+      "id": "offering-gathered",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "offering-table",
+      "card_id": 153,
+      "message": "Five loaves and two fish. Andrew's question echoes: 'What are these among so many?'",
+      "type": "discovery",
+      "once": true
+    },
+    {
+      "id": "crowd-arranged",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "arrangement-maze",
+      "card_id": 173,
+      "message": "The crowd is seated. Groups of fifty. Groups of a hundred. The hillside is organized like a feast.",
+      "type": "discovery",
+      "once": true
+    },
+    {
+      "id": "both-tasks-complete",
+      "trigger": "combination",
+      "card_id": 175,
+      "message": "The food is gathered. The crowd is seated. Everything is ready. The teacher takes the basket from the boy.",
+      "type": "room_unlock",
+      "unlocks_room": 180,
+      "once": true
+    },
+    {
+      "id": "miracle-witnessed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "bread-break",
+      "card_id": 195,
+      "message": "5,000 fed. From five loaves and two fish. The basket never emptied. The bread was always warm.",
+      "type": "room_unlock",
+      "unlocks_room": 200,
+      "once": true
+    },
+    {
+      "id": "prophet-declared",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "prophet-word",
+      "card_id": 218,
+      "message": "The crowd declares: 'This is truly the prophet who comes into the world.'",
+      "type": "discovery",
+      "once": true
+    },
+    {
+      "id": "hebrew-sign-solved",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "hebrew-sign",
+      "card_id": 222,
+      "message": "אות — Sign. The feeding of the five thousand was not just a meal. It was a sign.",
+      "type": "discovery",
+      "once": true
+    },
+    {
+      "id": "investigation-complete",
+      "trigger": "combination",
+      "card_id": 999,
+      "message": "Five loaves. Two fish. Five thousand fed. Twelve baskets left over. The math doesn't work. It never did. And now you understand — it was never supposed to.",
+      "type": "ending",
+      "once": true
+    }
+  ]
+}

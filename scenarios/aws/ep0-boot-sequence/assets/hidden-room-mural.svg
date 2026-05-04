@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" style="background:#0a0e17">
+  <!-- Circuit grid lines -->
+  <g stroke="#1e2a45" stroke-width="1" fill="none">
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="100" y1="0" x2="100" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="500"/>
+    <line x1="300" y1="0" x2="300" y2="500"/>
+    <line x1="400" y1="0" x2="400" y2="500"/>
+    <line x1="500" y1="0" x2="500" y2="500"/>
+    <line x1="600" y1="0" x2="600" y2="500"/>
+    <line x1="700" y1="0" x2="700" y2="500"/>
+  </g>
+
+  <!-- Circuit traces -->
+  <g stroke="#22c55e" stroke-width="2" fill="none" opacity="0.3">
+    <polyline points="50,250 150,250 200,180 350,180 400,250 500,250"/>
+    <polyline points="300,100 300,180"/>
+    <polyline points="500,250 550,320 700,320"/>
+    <polyline points="100,400 250,400 300,350 450,350 500,400 650,400"/>
+    <polyline points="150,50 150,150 250,150"/>
+    <polyline points="600,80 600,180 700,180 700,280"/>
+    <polyline points="50,350 150,350 150,300 250,300"/>
+  </g>
+
+  <!-- Nodes (circuit junctions) -->
+  <g fill="#3b82f6" opacity="0.5">
+    <circle cx="150" cy="250" r="5"/>
+    <circle cx="300" cy="180" r="5"/>
+    <circle cx="400" cy="250" r="5"/>
+    <circle cx="500" cy="250" r="5"/>
+    <circle cx="550" cy="320" r="5"/>
+    <circle cx="300" cy="350" r="5"/>
+    <circle cx="500" cy="400" r="5"/>
+    <circle cx="150" cy="150" r="5"/>
+    <circle cx="600" cy="180" r="5"/>
+    <circle cx="700" cy="280" r="5"/>
+    <circle cx="150" cy="350" r="5"/>
+  </g>
+
+  <!-- Data flow particles -->
+  <g fill="#22c55e" opacity="0.6">
+    <circle cx="220" cy="180" r="3"><animate attributeName="cx" from="200" to="350" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="580" cy="320" r="3"><animate attributeName="cx" from="550" to="700" dur="2.5s" repeatCount="indefinite"/></circle>
+    <circle cx="350" cy="400" r="3"><animate attributeName="cx" from="300" to="500" dur="2s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- Decorative chip shapes -->
+  <g fill="none" stroke="#1e2a45" stroke-width="1.5">
+    <rect x="370" y="120" width="60" height="40" rx="4"/>
+    <line x1="370" y1="130" x2="360" y2="130"/>
+    <line x1="370" y1="140" x2="360" y2="140"/>
+    <line x1="370" y1="150" x2="360" y2="150"/>
+    <line x1="430" y1="130" x2="440" y2="130"/>
+    <line x1="430" y1="140" x2="440" y2="140"/>
+    <line x1="430" y1="150" x2="440" y2="150"/>
+  </g>
+  <g fill="none" stroke="#1e2a45" stroke-width="1.5">
+    <rect x="120" y="380" width="50" height="35" rx="4"/>
+    <line x1="120" y1="390" x2="110" y2="390"/>
+    <line x1="120" y1="400" x2="110" y2="400"/>
+    <line x1="170" y1="390" x2="180" y2="390"/>
+    <line x1="170" y1="400" x2="180" y2="400"/>
+  </g>
+
+  <!-- HIDDEN "42" — embedded in circuit traces, subtle -->
+  <!-- The "4" made from circuit lines -->
+  <g stroke="#1e2a45" stroke-width="2" fill="none">
+    <!-- 4: vertical down, horizontal right, then full vertical -->
+    <polyline points="580,195 580,215 600,215"/>
+    <line x1="600" y1="190" x2="600" y2="225"/>
+  </g>
+  <!-- The "2" made from circuit lines -->
+  <g stroke="#1e2a45" stroke-width="2" fill="none">
+    <polyline points="610,195 625,195 625,210 610,210 610,225 625,225"/>
+  </g>
+</svg>

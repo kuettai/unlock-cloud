@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Digital illustration, Tron-style, glowing cyan wireframe, dark void background, geometric, holographic, game card art.",
+  "style_prefix_location": "Digital illustration, Tron-style interior, glowing cyan wireframe walls, dark void background, geometric grid floor, data streams, minimal sci-fi, wide angle.",
+  "style_prefix_item": "Digital illustration, glowing cyan wireframe object on black background, Tron-style, geometric, holographic, floating, clean.",
+  "style_prefix_object": "Digital illustration, Tron-style interactive terminal, glowing cyan edges, dark background, geometric, holographic interface, close-up.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, realistic photo",
+  "aspect_ratio": "16:9"
+}

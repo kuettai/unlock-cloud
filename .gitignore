@@ -1,0 +1,15 @@
+# Assets (served from CloudFront/S3 in production)
+*.png
+*.wav
+*.mp3
+*.zip
+
+# Dependencies
+node_modules/
+
+# Secrets
+*.pem
+
+# Temp and test output
+tmp/
+test-results/

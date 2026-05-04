@@ -1,0 +1,88 @@
+{
+  "timed_events": [
+    {
+      "id": "mid-event",
+      "trigger_at_remaining_seconds": 900,
+      "message": "The hour grows late. Guests are beginning to leave.",
+      "type": "narrative",
+      "narrative_key": "mid_event"
+    },
+    {
+      "id": "urgency-warning",
+      "trigger_at_remaining_seconds": 300,
+      "message": "Dawn approaches. The servants will scatter. I must finish this now.",
+      "voice": "matthias",
+      "type": "alert"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "ezra-confesses",
+      "trigger": "event_card",
+      "card_id": 109,
+      "message": "Ezra admits he doesn't know where the wine came from. The servants know something.",
+      "type": "room_unlock",
+      "unlocks_room": 120,
+      "once": true
+    },
+    {
+      "id": "servant-testimony",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "witness-wires",
+      "card_id": 131,
+      "message": "The servants' testimonies match. They filled the jars with water, and drew out wine.",
+      "type": "room_unlock",
+      "unlocks_room": 140,
+      "once": true
+    },
+    {
+      "id": "jar-examination",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "jar-volume",
+      "card_id": 149,
+      "message": "120 gallons minimum. No merchant could smuggle that volume into a wedding unnoticed.",
+      "type": "room_unlock",
+      "unlocks_room": 160,
+      "once": true
+    },
+    {
+      "id": "merchant-eliminated",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "merchant-eliminate",
+      "card_id": 169,
+      "message": "Every rational explanation eliminated. The wine came from nowhere — or from somewhere beyond your understanding.",
+      "type": "room_unlock",
+      "unlocks_room": 180,
+      "once": true
+    },
+    {
+      "id": "miriam-testimony",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "miriam-word",
+      "card_id": 191,
+      "message": "Mary places a hand on your arm. 'Go speak to his followers. They are in the eastern corner.'",
+      "type": "room_unlock",
+      "unlocks_room": 200,
+      "once": true
+    },
+    {
+      "id": "disciple-witness",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "first-sign",
+      "card_id": 211,
+      "message": "The disciples' account matches the servants' testimony perfectly. Independent witnesses. The same story.",
+      "type": "room_unlock",
+      "unlocks_room": 220,
+      "once": true
+    },
+    {
+      "id": "investigation-complete",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "final-conclusion",
+      "card_id": 999,
+      "message": "Water became wine. The mystery is solved — not with an answer, but with wonder.",
+      "type": "ending",
+      "once": true
+    }
+  ]
+}

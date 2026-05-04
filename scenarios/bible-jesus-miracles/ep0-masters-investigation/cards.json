@@ -1,0 +1,858 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "The Head Table",
+      "description": "The head table of the wedding feast. Fine linen, clay lamps flickering, the remnants of a magnificent meal. Before you sits a cup of wine — the most extraordinary wine you have ever tasted. The bridegroom dances with his bride, oblivious. Your chief steward Ezra hovers nervously nearby. Servants whisper near the far wall, glancing toward a group of out-of-town guests in the eastern corner.",
+      "image": "assets/head-table.png",
+      "discoveries": [
+        {
+          "card_id": 101,
+          "label": "Examine the cup of wine"
+        },
+        {
+          "card_id": 102,
+          "label": "Look at the wedding feast supplies"
+        },
+        {
+          "card_id": 103,
+          "label": "Confront Ezra with the evidence",
+          "puzzle": "npc-ezra",
+          "requires_item": 102,
+          "consumes_item": 102
+        }
+      ],
+      "visible_to": "all",
+      "room": "head-table"
+    },
+    {
+      "id": 101,
+      "type": "item",
+      "color": "red",
+      "title": "The Extraordinary Cup",
+      "description": "A cup of wine unlike anything you have ever tasted. Rich, deep, layered with impossible complexity.",
+      "image": "assets/card-extraordinary-cup.png",
+      "visible_to": "all",
+      "room": "head-table"
+    },
+    {
+      "id": 102,
+      "type": "object",
+      "color": "blue",
+      "title": "Wine Ledger",
+      "description": "The official record of wine purchased for the wedding. Every jar accounted for — or so you thought.",
+      "image": "assets/card-wine-ledger.png",
+      "visible_to": "all",
+      "room": "head-table"
+    },
+    {
+      "id": 103,
+      "type": "object",
+      "color": "blue",
+      "title": "Ezra (NPC)",
+      "description": "Your chief steward. He hovers nervously, avoiding your gaze.",
+      "image": "assets/card-ezra.png",
+      "puzzle_ref": "npc-ezra",
+      "visible_to": "all",
+      "room": "head-table"
+    },
+    {
+      "id": 108,
+      "type": "event",
+      "color": "yellow",
+      "title": "This wine is not on the ledger.",
+      "description": "You cross-reference the cup with the ledger. This wine does not match any purchase. It is not on the record.",
+      "reveals": [
+        300
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "head-table"
+    },
+    {
+      "id": 109,
+      "type": "event",
+      "color": "yellow",
+      "title": "Ezra confesses.",
+      "description": "Ezra admits he doesn't know where the wine came from. He directs you to the servants by the far wall.",
+      "reveals": [
+        120,
+        300
+      ],
+      "consumes": [
+        103
+      ],
+      "visible_to": "all",
+      "room": "head-table"
+    },
+    {
+      "id": 120,
+      "type": "location",
+      "color": "green",
+      "title": "The Servants' Corner",
+      "description": "Three servants huddle near the far wall of the courtyard, whispering among themselves. They fall silent when they see you approach. Amos, the eldest, stands protectively in front of the other two — Tobiah and Reuben. Oil lamps cast long shadows across their worried faces.",
+      "image": "assets/servants-corner.png",
+      "discoveries": [
+        {
+          "card_id": 121,
+          "label": "Approach the three servants",
+          "puzzle": "npc-servants"
+        },
+        {
+          "card_id": 122,
+          "label": "Notice Reuben glancing toward the eastern corner"
+        },
+        {
+          "card_id": 123,
+          "label": "Examine the servants' water-stained hands"
+        },
+        {
+          "card_id": 131,
+          "label": "Piece together the servants' testimony",
+          "puzzle": "witness-wires",
+          "requires_item": 122,
+          "consumes_item": 122
+        }
+      ],
+      "visible_to": "all",
+      "room": "servants-corner"
+    },
+    {
+      "id": 121,
+      "type": "object",
+      "color": "blue",
+      "title": "The Servants (NPC)",
+      "description": "Amos, Tobiah, and Reuben — three servants who were handling the water jars tonight.",
+      "image": "assets/card-servants.png",
+      "puzzle_ref": "npc-servants",
+      "visible_to": "all",
+      "room": "servants-corner"
+    },
+    {
+      "id": 122,
+      "type": "item",
+      "color": "red",
+      "title": "Reuben's Glance",
+      "description": "You notice Reuben's eyes dart toward the eastern corner of the courtyard — toward the out-of-town guests — then quickly away. Whoever told the servants to fill the jars is over there.",
+      "image": "assets/card-reubens-glance.png",
+      "visible_to": "all",
+      "room": "servants-corner"
+    },
+    {
+      "id": 123,
+      "type": "item",
+      "color": "red",
+      "title": "Water-Stained Hands",
+      "description": "The servants' hands are still damp. They've been carrying water recently — lots of it.",
+      "image": "assets/card-water-stained-hands.png",
+      "visible_to": "all",
+      "room": "servants-corner"
+    },
+    {
+      "id": 131,
+      "type": "event",
+      "color": "yellow",
+      "title": "Servant Testimony confirmed.",
+      "description": "The servants' testimonies match. They filled the jars with water, and drew out wine. Two leads to follow: the stone jars by the entrance, and the wine merchant down the street. Open the Map to choose.",
+      "reveals": [
+        140,
+        160,
+        301,
+        302,
+        303
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "servants-corner"
+    },
+    {
+      "id": 140,
+      "type": "location",
+      "color": "green",
+      "title": "The Stone Jars",
+      "description": "Six massive stone jars stand at the entrance of the courtyard, used for ceremonial purification. Each holds two to three metretes (1 metretes ≈ 10 gallons). You peer into the nearest jar. Dark liquid. You dip a finger and taste. Wine. The same impossible wine. The jars are solid stone — no hidden compartments, no false bottoms. The ground beneath is dry. No pipes, no channels.",
+      "image": "assets/stone-jars.png",
+      "discoveries": [
+        {
+          "card_id": 141,
+          "label": "Inspect the six stone jars closely"
+        },
+        {
+          "card_id": 142,
+          "label": "Taste the liquid in the nearest jar"
+        },
+        {
+          "card_id": 143,
+          "label": "Check the well where water was drawn"
+        },
+        {
+          "card_id": 144,
+          "label": "Examine the ground beneath the jars"
+        },
+        {
+          "card_id": 149,
+          "label": "Calculate the total volume of the jars",
+          "puzzle": "jar-volume",
+          "requires_item": 142
+        },
+        {
+          "card_id": 146,
+          "label": "Fill the six stone jars to the brim",
+          "puzzle": "fill-the-jars",
+          "requires_item": 123,
+          "consumes_item": 123
+        },
+        {
+          "card_id": 168,
+          "label": "Cross the dark courtyard to find Mary",
+          "puzzle": "courtyard-maze",
+          "requires_item": [
+            149,
+            169
+          ],
+          "consumes_item": 144
+        }
+      ],
+      "puzzle_ref": "hidden-jars",
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 141,
+      "type": "object",
+      "color": "blue",
+      "title": "The Six Stone Jars",
+      "description": "Massive stone vessels used for Jewish ceremonial purification. Solid stone, no false bottoms, no hidden compartments.",
+      "image": "assets/card-six-jars.png",
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 142,
+      "type": "item",
+      "color": "red",
+      "title": "Jar Wine Sample",
+      "description": "A sample of the wine from the stone jars. Identical to the extraordinary cup — rich, deep, impossible.",
+      "image": "assets/card-jar-wine-sample.png",
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 143,
+      "type": "object",
+      "color": "blue",
+      "title": "The Courtyard Well",
+      "description": "The well from which the servants drew the water. Plain, clean, ordinary water.",
+      "image": "assets/card-courtyard-well.png",
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 144,
+      "type": "item",
+      "color": "red",
+      "title": "Dry Ground Evidence",
+      "description": "The ground beneath and around the jars is completely dry. No spills, no hidden pipes, no channels.",
+      "image": "assets/card-dry-ground.png",
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 145,
+      "type": "penalty",
+      "color": "black",
+      "title": "Hidden wine skins? — wrong theory",
+      "description": "Maybe the servants hid wine skins inside the jars before filling them with water? But the volume... and the taste... no. This theory doesn't hold.",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 146,
+      "type": "item",
+      "color": "red",
+      "title": "Jar Count Clue",
+      "description": "Six jars, each holding 20-30 gallons. The volume alone rules out smuggling.",
+      "image": "assets/card-jar-count.png",
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 147,
+      "type": "event",
+      "color": "yellow",
+      "title": "Solid stone. No mechanism.",
+      "description": "Solid stone. Dry ground. No mechanism. No trick. The physical evidence rules out any hidden device.",
+      "reveals": [],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 148,
+      "type": "event",
+      "color": "yellow",
+      "title": "Water from the well. Wine from the jars.",
+      "description": "You taste the well water. Plain, clean, ordinary. Then the jar wine. Extraordinary. Same source — impossible results.",
+      "reveals": [
+        305
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 149,
+      "type": "event",
+      "color": "yellow",
+      "title": "Jar Examination complete.",
+      "description": "120 gallons minimum. No merchant could smuggle that volume into a wedding unnoticed.",
+      "reveals": [
+        304
+      ],
+      "consumes": [
+        146
+      ],
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 160,
+      "type": "location",
+      "color": "green",
+      "title": "Joachim's Shop",
+      "description": "A small wine merchant's shop, two streets from the wedding. Old Joachim is closing up for the night. Shelves of clay jars line the walls, each labeled with origin and vintage. The smell of aged oak and grape must fills the air. Joachim squints at you in the lamplight.",
+      "image": "assets/joachims-shop.png",
+      "discoveries": [
+        {
+          "card_id": 161,
+          "label": "Speak with Joachim the wine merchant",
+          "puzzle": "npc-joachim"
+        },
+        {
+          "card_id": 162,
+          "label": "Examine the shop's delivery records"
+        },
+        {
+          "card_id": 163,
+          "label": "Inspect the wine jars on the shelves"
+        },
+        {
+          "card_id": 169,
+          "label": "Eliminate the merchant theory",
+          "puzzle": "merchant-eliminate",
+          "requires_item": [
+            162,
+            142
+          ],
+          "consumes_item": [
+            162,
+            142
+          ]
+        }
+      ],
+      "visible_to": "all",
+      "room": "joachims-shop"
+    },
+    {
+      "id": 161,
+      "type": "object",
+      "color": "blue",
+      "title": "Joachim (NPC)",
+      "description": "The only wine merchant in Cana. Old, honest, and puzzled by your late-night visit.",
+      "image": "assets/card-joachim.png",
+      "puzzle_ref": "npc-joachim",
+      "visible_to": "all",
+      "room": "joachims-shop"
+    },
+    {
+      "id": 162,
+      "type": "item",
+      "color": "red",
+      "title": "Delivery Records",
+      "description": "Joachim's meticulous records of every wine delivery. Three jars of Galilean red for this wedding. Nothing more.",
+      "image": "assets/card-delivery-records.png",
+      "visible_to": "all",
+      "room": "joachims-shop"
+    },
+    {
+      "id": 163,
+      "type": "object",
+      "color": "blue",
+      "title": "Joachim's Wine Stock",
+      "description": "Shelves of clay jars, each labeled with origin and vintage. Good wine, but nothing extraordinary.",
+      "image": "assets/card-wine-stock.png",
+      "visible_to": "all",
+      "room": "joachims-shop"
+    },
+    {
+      "id": 165,
+      "type": "penalty",
+      "color": "black",
+      "title": "You accuse Joachim. — wrong theory",
+      "description": "You accuse Joachim of hiding a secret delivery. He is deeply offended. 'I have been honest with you for twenty years, Matthias!' You've wasted time on a dead end.",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "joachims-shop"
+    },
+    {
+      "id": 167,
+      "type": "event",
+      "color": "yellow",
+      "title": "Three jars. That's all.",
+      "description": "Three jars of Galilean red. That's all. The records confirm it — no extra wine was delivered.",
+      "reveals": [],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "joachims-shop"
+    },
+    {
+      "id": 168,
+      "type": "event",
+      "color": "yellow",
+      "title": "You crossed the courtyard in darkness.",
+      "description": "Navigating by lamplight alone, you made it across the courtyard. You find Mary near the bride's family.",
+      "reveals": [
+        180
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 169,
+      "type": "event",
+      "color": "yellow",
+      "title": "Merchant theory eliminated.",
+      "description": "Every rational explanation eliminated. The wine came from nowhere — or from somewhere beyond your understanding.",
+      "reveals": [
+        306
+      ],
+      "consumes": [
+        162
+      ],
+      "visible_to": "all",
+      "room": "joachims-shop"
+    },
+    {
+      "id": 180,
+      "type": "location",
+      "color": "green",
+      "title": "The Bride's Family Area",
+      "description": "Near the bride's family, you find an older woman — modest in dress but carrying herself with quiet authority. Mary, from Nazareth. The mother of one of the guests. She looks at you with calm, steady eyes as you approach. Around her, the bride's relatives laugh and celebrate, unaware of your investigation.",
+      "image": "assets/brides-family-area.png",
+      "discoveries": [
+        {
+          "card_id": 181,
+          "label": "Speak with Mary",
+          "puzzle": "npc-miriam"
+        },
+        {
+          "card_id": 182,
+          "label": "Observe Mary's quiet confidence"
+        },
+        {
+          "card_id": 191,
+          "label": "Answer Mary's question: 'They have no ____'",
+          "puzzle": "miriam-word",
+          "requires_item": 182,
+          "consumes_item": 182
+        }
+      ],
+      "visible_to": "all",
+      "room": "brides-family"
+    },
+    {
+      "id": 181,
+      "type": "object",
+      "color": "blue",
+      "title": "Mary (NPC)",
+      "description": "An older woman from Nazareth. Modest in dress, but carrying herself with quiet authority and a knowing calm.",
+      "image": "assets/card-miriam.png",
+      "puzzle_ref": "npc-miriam",
+      "visible_to": "all",
+      "room": "brides-family"
+    },
+    {
+      "id": 182,
+      "type": "item",
+      "color": "red",
+      "title": "Mary's Knowing Smile",
+      "description": "Mary smiles — a small, private smile. She knows more than she's saying.",
+      "image": "assets/card-miriams-smile.png",
+      "visible_to": "all",
+      "room": "brides-family"
+    },
+    {
+      "id": 191,
+      "type": "event",
+      "color": "yellow",
+      "title": "Mary's Testimony.",
+      "description": "Mary places a hand on your arm. 'Go speak to his followers. They are in the eastern corner. They saw everything.'",
+      "reveals": [
+        200,
+        307,
+        308,
+        309
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "brides-family"
+    },
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "The Eastern Corner",
+      "description": "A group of men — perhaps a dozen — sit together in the eastern corner of the courtyard. They are not wealthy, not scholars. Fishermen, by the look of their hands. Among them sits a man you cannot quite see clearly in the lamplight — quieter than the rest, listening more than speaking. Simon, the broad-shouldered one, looks up as you approach.",
+      "image": "assets/eastern-corner.png",
+      "discoveries": [
+        {
+          "card_id": 201,
+          "label": "Speak with Simon and Andrew",
+          "puzzle": "npc-fishermen"
+        },
+        {
+          "card_id": 202,
+          "label": "Observe the teacher in the lamplight"
+        },
+        {
+          "card_id": 203,
+          "label": "Notice the wonder on the disciples' faces"
+        },
+        {
+          "card_id": 211,
+          "label": "Order the events of the miracle",
+          "puzzle": "first-sign",
+          "requires_item": 202,
+          "consumes_item": 202
+        }
+      ],
+      "visible_to": "all",
+      "room": "eastern-corner"
+    },
+    {
+      "id": 201,
+      "type": "object",
+      "color": "blue",
+      "title": "Simon & Andrew (NPC)",
+      "description": "Two fishermen from Capernaum and Bethsaida. They followed their teacher to this wedding three days ago.",
+      "image": "assets/card-simon-andrew.png",
+      "puzzle_ref": "npc-fishermen",
+      "visible_to": "all",
+      "room": "eastern-corner"
+    },
+    {
+      "id": 202,
+      "type": "item",
+      "color": "red",
+      "title": "Glimpse of the Teacher",
+      "description": "In the flickering lamplight, you catch a glimpse of the man they follow. Quiet. Watchful. Unremarkable — and yet every eye in the group turns to him.",
+      "image": "assets/card-glimpse-teacher.png",
+      "visible_to": "all",
+      "room": "eastern-corner"
+    },
+    {
+      "id": 203,
+      "type": "item",
+      "color": "red",
+      "title": "Disciples' Awe",
+      "description": "The wonder on their faces is unmistakable. These men have seen something tonight that changed them.",
+      "image": "assets/card-disciples-awe.png",
+      "visible_to": "all",
+      "room": "eastern-corner"
+    },
+    {
+      "id": 210,
+      "type": "lore",
+      "color": "gold",
+      "title": "Kavod — כָּבוֹד",
+      "description": "Glory. The Hebrew word the disciples used. 'He revealed his kavod — his glory.' This was not a trick or a show. It was a revelation of who he truly was.",
+      "visible_to": "all",
+      "room": "eastern-corner"
+    },
+    {
+      "id": 211,
+      "type": "event",
+      "color": "yellow",
+      "title": "Disciple Witness confirmed.",
+      "description": "The disciples' account matches the servants' testimony perfectly. Independent witnesses. The same story.",
+      "reveals": [
+        220,
+        310,
+        311
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "eastern-corner"
+    },
+    {
+      "id": 220,
+      "type": "location",
+      "color": "green",
+      "title": "The Well",
+      "description": "The courtyard is thinning. The hour is late. You stand alone by the six stone jars, retracing everything. The well stands nearby — the source of the water that became wine. A stone bench beside the entrance invites you to sit and lay out the evidence like a man arranging a feast table. Stars shine overhead. The last guests stumble home singing.",
+      "image": "assets/the-well.png",
+      "discoveries": [
+        {
+          "card_id": 221,
+          "label": "Draw water from the well one last time"
+        },
+        {
+          "card_id": 222,
+          "label": "Taste the jar wine one final time"
+        },
+        {
+          "card_id": 223,
+          "label": "Sit on the stone bench and review the evidence"
+        },
+        {
+          "card_id": 225,
+          "label": "Retrace your investigation steps",
+          "puzzle": "investigation-timeline",
+          "requires_item": [
+            221,
+            222
+          ],
+          "consumes_item": [
+            221,
+            222
+          ]
+        },
+        {
+          "card_id": 228,
+          "label": "Answer the final question: What went into the jars?",
+          "puzzle": "final-conclusion",
+          "requires_item": 225,
+          "consumes_item": 225
+        },
+        {
+          "card_id": 999,
+          "label": "What was revealed? Enter the Hebrew word from the wall.",
+          "puzzle": "kavod-word",
+          "requires_item": 228,
+          "consumes_item": 203
+        }
+      ],
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 221,
+      "type": "item",
+      "color": "red",
+      "title": "Well Water (still water)",
+      "description": "You draw fresh water from the well. Plain, clean, ordinary. Just water.",
+      "image": "assets/card-well-water.png",
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 222,
+      "type": "item",
+      "color": "red",
+      "title": "Final Wine Taste",
+      "description": "One last taste of the impossible wine. Still extraordinary. Still unexplainable.",
+      "image": "assets/card-final-wine.png",
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 223,
+      "type": "object",
+      "color": "blue",
+      "title": "The Evidence Table",
+      "description": "The stone bench becomes your evidence table. Lay out everything you've gathered and draw your conclusion.",
+      "image": "assets/card-evidence-table.png",
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 224,
+      "type": "event",
+      "color": "yellow",
+      "title": "Water. Wine. Same jars.",
+      "description": "Water. Wine. The same jars. The same well. You have eliminated every explanation you know. What remains is the one you don't.",
+      "reveals": [
+        312
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 225,
+      "type": "item",
+      "color": "red",
+      "title": "Complete Evidence Chain",
+      "description": "Every piece of evidence, every testimony, every physical examination — laid out in order. The investigation is complete.",
+      "image": "assets/card-evidence-chain.png",
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 226,
+      "type": "event",
+      "color": "yellow",
+      "title": "The testimony is consistent.",
+      "description": "You lay out every piece of evidence. The testimony is consistent. The physical evidence rules out fraud. What happened tonight was not a trick.",
+      "reveals": [],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 227,
+      "type": "penalty",
+      "color": "black",
+      "title": "Could the witnesses be mistaken?",
+      "description": "You wonder if the witnesses could simply be mistaken — caught up in the moment. But the servants told the same story independently. And the jars don't lie.",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 228,
+      "type": "event",
+      "color": "yellow",
+      "title": "Water became wine.",
+      "description": "You have your answer — water went in, wine came out. But the disciples said something more. They spoke of glory. You remember the writing on the wall near Mary... what did it say?",
+      "reveals": [
+        210,
+        312
+      ],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 999,
+      "type": "event",
+      "color": "yellow",
+      "title": "Investigation complete.",
+      "description": "Water became wine. The servants saw it. The mother believed it. The fishermen call it the first sign. What you witnessed tonight was not a trick — it was a sign. And signs point to something greater.",
+      "is_ending": true,
+      "visible_to": "all",
+      "room": "the-well"
+    },
+    {
+      "id": 300,
+      "type": "lore",
+      "color": "gold",
+      "title": "Everyone serves the good wine first...",
+      "description": "\"Everyone serves the good wine first, and when people have drunk freely, then the poor wine. But you have kept the good wine until now.\" — John 2:10 (WEB)\"",
+      "visible_to": "all",
+      "room": "head-table"
+    },
+    {
+      "id": 301,
+      "type": "lore",
+      "color": "gold",
+      "title": "Fill the water pots with water...",
+      "description": "\"Jesus said to them, 'Fill the water pots with water.' And they filled them up to the brim. And he said to them, 'Now draw some out, and take it to the ruler of the feast.'\" — John 2:7-8 (WEB)\"",
+      "visible_to": "all",
+      "room": "servants-corner"
+    },
+    {
+      "id": 302,
+      "type": "lore",
+      "color": "gold",
+      "title": "Whatever he says to you, do it.",
+      "description": "\"His mother said to the servants, 'Whatever he says to you, do it.'\" — John 2:5 (WEB)\"",
+      "visible_to": "all",
+      "room": "servants-corner"
+    },
+    {
+      "id": 303,
+      "type": "lore",
+      "color": "gold",
+      "title": "The servants who had drawn the water knew.",
+      "description": "\"The servants who had drawn the water knew.\" — John 2:9 (WEB)\"",
+      "visible_to": "all",
+      "room": "servants-corner"
+    },
+    {
+      "id": 304,
+      "type": "lore",
+      "color": "gold",
+      "title": "Six water pots of stone...",
+      "description": "\"Now there were six water pots of stone set there after the Jews' custom of purifying, containing two or three metretes apiece.\" — John 2:6 (WEB)\"",
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 305,
+      "type": "lore",
+      "color": "gold",
+      "title": "The ruler of the feast... didn't know where it came from.",
+      "description": "\"When the ruler of the feast tasted the water now become wine, and didn't know where it came from (but the servants who had drawn the water knew)...\" — John 2:9 (WEB)\"",
+      "visible_to": "all",
+      "room": "stone-jars"
+    },
+    {
+      "id": 306,
+      "type": "lore",
+      "color": "gold",
+      "title": "When the wine ran out...",
+      "description": "\"When the wine ran out, Jesus' mother said to him, 'They have no wine.'\" — John 2:3 (WEB)\"",
+      "visible_to": "all",
+      "room": "joachims-shop"
+    },
+    {
+      "id": 307,
+      "type": "lore",
+      "color": "gold",
+      "title": "Jesus' mother was there.",
+      "description": "\"On the third day, there was a wedding in Cana of Galilee. Jesus' mother was there.\" — John 2:1 (WEB)\"",
+      "visible_to": "all",
+      "room": "brides-family"
+    },
+    {
+      "id": 308,
+      "type": "lore",
+      "color": "gold",
+      "title": "They have no wine.",
+      "description": "\"Jesus' mother said to him, 'They have no wine.'\" — John 2:3 (WEB)\"",
+      "visible_to": "all",
+      "room": "brides-family"
+    },
+    {
+      "id": 309,
+      "type": "lore",
+      "color": "gold",
+      "title": "My hour has not yet come.",
+      "description": "\"Jesus said to her, 'Woman, what does that have to do with you and me? My hour has not yet come.'\" — John 2:4 (WEB)\"",
+      "visible_to": "all",
+      "room": "brides-family"
+    },
+    {
+      "id": 310,
+      "type": "lore",
+      "color": "gold",
+      "title": "Jesus also was invited, with his disciples...",
+      "description": "\"Jesus also was invited, with his disciples, to the marriage.\" — John 2:2 (WEB)\"",
+      "visible_to": "all",
+      "room": "eastern-corner"
+    },
+    {
+      "id": 311,
+      "type": "lore",
+      "color": "gold",
+      "title": "This beginning of his signs...",
+      "description": "\"This beginning of his signs Jesus did in Cana of Galilee, and revealed his glory; and his disciples believed in him.\" — John 2:11 (WEB)\"",
+      "visible_to": "all",
+      "room": "eastern-corner"
+    },
+    {
+      "id": 312,
+      "type": "lore",
+      "color": "gold",
+      "title": "The water now become wine.",
+      "description": "\"When the ruler of the feast tasted the water now become wine...\" — John 2:9 (WEB)\"",
+      "visible_to": "all",
+      "room": "the-well"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "blueprint-developer",
+  "description": "Converts story concepts into detailed scenario blueprints with rooms, puzzles, cards, and dependencies.",
+  "prompt": "file://.kiro/agents/blueprint-developer/AGENT.md",
+  "tools": ["fs_read", "fs_write", "grep", "glob", "code"],
+  "resources": [
+    "skill://.kiro/skills/scenario-blueprint/SKILL.md",
+    "skill://.kiro/skills/mechanics/SKILL.md",
+    "skill://.kiro/skills/puzzle-components/SKILL.md"
+  ],
+  "keyboardShortcut": "ctrl+shift+2",
+  "welcomeMessage": "Blueprint Developer ready. Hand me a story concept and I'll design the full scenario."
+}
