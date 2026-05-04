@@ -58,6 +58,9 @@ h1{font-size:22px;font-weight:700;text-align:center;margin-bottom:4px}
 
 <script>
 const BASE = '../scenarios';
+const ASSET_BASE = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+  ? BASE
+  : 'https://d37w3py52wsl8r.cloudfront.net/scenarios';
 let categories = [];
 
 async function init() {
@@ -115,7 +118,7 @@ async function showEpisodes(catId) {
       `<span class="scenario-tag">${m.players?.min || 1}-${m.players?.max || 6} players</span>`,
     ];
     return `<div class="scenario-card" onclick="play('${m._cat}','${m._id}')">
-      <img class="scenario-cover" src="${BASE}/${m._cat}/${m._id}/assets/cover.png" alt="${m.title}" onerror="this.style.display='none'">
+      <img class="scenario-cover" src="${ASSET_BASE}/${m._cat}/${m._id}/assets/cover.png" alt="${m.title}" onerror="this.style.display='none'">
       <div class="scenario-body">
       <div class="scenario-ep">${m.episode}</div>
       <div class="scenario-info">

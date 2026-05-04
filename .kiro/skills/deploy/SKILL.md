@@ -17,20 +17,28 @@ description: Guide for deploying the Unlock the Cloud app to the EC2 instance. U
 
 ## Deploy Process (SSM + S3)
 
-### Step 1: Sync local files to S3 staging
+### Step 1: Sync code (non-asset files) to S3 staging
 
 ```
 aws s3 sync app s3://kuettai-ap-southeast-1-ssm/unlock-cloud/app/ --delete --region ap-southeast-1
-aws s3 sync scenarios s3://kuettai-ap-southeast-1-ssm/unlock-cloud/scenarios/ --delete --region ap-southeast-1
+aws s3 sync scenarios s3://kuettai-ap-southeast-1-ssm/unlock-cloud/scenarios/ --delete --exclude "*.png" --exclude "*.wav" --exclude "*.mp3" --exclude "*.svg" --region ap-southeast-1
 ```
 
-### Step 2: Pull from S3 to nginx via SSM
+### Step 2: Pull code from S3 to nginx via SSM
 
 ```
-aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-040574f44ac216631" --parameters commands='["aws s3 sync s3://kuettai-ap-southeast-1-ssm/unlock-cloud/app/ /usr/share/nginx/html/app/ --delete --region ap-southeast-1 && aws s3 sync s3://kuettai-ap-southeast-1-ssm/unlock-cloud/scenarios/ /usr/share/nginx/html/scenarios/ --delete --region ap-southeast-1 && chmod -R 755 /usr/share/nginx/html/app /usr/share/nginx/html/scenarios"]' --region ap-southeast-1
+aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-040574f44ac216631" --parameters commands='["aws s3 sync s3://kuettai-ap-southeast-1-ssm/unlock-cloud/app/ /usr/share/nginx/html/app/ --delete --region ap-southeast-1 && aws s3 sync s3://kuettai-ap-southeast-1-ssm/unlock-cloud/scenarios/ /usr/share/nginx/html/scenarios/ --delete --exclude \"*.png\" --exclude \"*.wav\" --exclude \"*.mp3\" --exclude \"*.svg\" --region ap-southeast-1 && chmod -R 755 /usr/share/nginx/html/app /usr/share/nginx/html/scenarios"]' --region ap-southeast-1
 ```
 
-### Step 3: Check command status
+### Step 3: Deploy assets to S3 (served via CloudFront)
+
+Only needed when assets change (new images, new voice files):
+
+```
+aws s3 sync scenarios s3://kuettai-unlock-asset/scenarios/ --exclude "*" --include "*.png" --include "*.wav" --include "*.mp3" --include "*.svg" --region ap-southeast-1
+```
+
+### Step 4: Check command status
 
 ```
 aws ssm get-command-invocation --command-id "<COMMAND_ID>" --instance-id "i-040574f44ac216631" --region ap-southeast-1
@@ -38,10 +46,18 @@ aws ssm get-command-invocation --command-id "<COMMAND_ID>" --instance-id "i-0405
 
 Wait for `"Status": "Success"`.
 
-### Step 4: Verify
+### Step 5: Verify
 
 - Home page: http://18.138.232.101/app/home.html
 - Check new/changed episodes load correctly
+- Assets should load from CloudFront: https://d37w3py52wsl8r.cloudfront.net/
+
+## Asset Architecture
+
+- **Code/JSON** → S3 staging → SSM pull → nginx on EC2
+- **Assets (png/wav/mp3/svg)** → S3 `kuettai-unlock-asset` → CloudFront `d37w3py52wsl8r.cloudfront.net`
+- **CloudFront OAI:** EY9ZQ0C4X57N2 (bucket remains private, only CloudFront can read)
+- **Game engine** uses `ASSET_BASE` variable: local paths in dev, CloudFront URL in production
 
 ## Run Commands via SSM
 

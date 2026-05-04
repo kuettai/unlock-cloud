@@ -418,6 +418,9 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
 <script src="puzzle/pillar-lock.js"></script>
 <script>
 const SCENARIO_BASE = new URLSearchParams(location.search).get('scenario') || '../scenarios/aws/ep0-boot-sequence';
+const ASSET_BASE = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+  ? SCENARIO_BASE
+  : 'https://d37w3py52wsl8r.cloudfront.net/' + SCENARIO_BASE.replace(/^\.\.\//, '');
 const engine = new GameEngine(SCENARIO_BASE);
 window.engine = engine;
 let combineMode = false;
@@ -459,7 +462,7 @@ let currentNarrativeKey = null; // 'intro' or 'ending_success'
 
 function playVoice(file) {
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-  currentAudio = new Audio(`${SCENARIO_BASE}/assets/voice/${file}`);
+  currentAudio = new Audio(`${ASSET_BASE}/assets/voice/${file}`);
   currentAudio.play().catch(() => {});
   document.getElementById('nar-play-btn').classList.add('playing');
   currentAudio.onended = () => {
@@ -545,7 +548,7 @@ function renderIntro() {
   const segments = intro.segments || [{ text: (intro.text || []).join(' ') }];
   el.innerHTML = segments.map(s => `<p>${s.text || (s.ssml || '').replace(/<[^>]+>/g, '')}</p>`).join('');
   document.querySelector('#intro-screen h2').textContent = `Episode ${engine.meta.episode}: ${engine.meta.title}`;
-  document.getElementById('intro-cover').src = `${SCENARIO_BASE}/assets/cover.png`;
+  document.getElementById('intro-cover').src = `${ASSET_BASE}/assets/cover.png`;
   document.getElementById('intro-cover').alt = engine.meta.title;
   document.getElementById('start-btn').textContent = engine.meta.start_button || 'Start';
 }
@@ -590,7 +593,7 @@ function renderGame() {
 
   // Center room
   if (room) {
-    let img = room.image ? `<img class="room-img" src="${SCENARIO_BASE}/${room.image}" alt="${room.title}" onerror="this.style.display='none'">` : '';
+    let img = room.image ? `<img class="room-img" src="${ASSET_BASE}/${room.image}" alt="${room.title}" onerror="this.style.display='none'">` : '';
     let extra = '';
     if (room.hidden_elements && !engine.solvedPuzzles.has(room.puzzle_ref)) {
       const hp = engine.puzzles[room.puzzle_ref] || {};
@@ -628,7 +631,7 @@ function renderGame() {
       }
       let roomHtml = banners;
       if (room.image) {
-        img = `<img class="room-img" src="${SCENARIO_BASE}/${room.image}" alt="${room.title}" onload="this.parentElement.style.opacity=1" onerror="this.style.display='none';this.parentElement.style.opacity=1">`;
+        img = `<img class="room-img" src="${ASSET_BASE}/${room.image}" alt="${room.title}" onload="this.parentElement.style.opacity=1" onerror="this.style.display='none';this.parentElement.style.opacity=1">`;
         roomHtml += `<div class="room-card" style="opacity:0;transition:opacity 1.5s ease">${img}<div class="room-title">${room.title}</div><div class="room-desc">${room.description}</div>${extra}</div>`;
       } else {
         roomHtml += `<div class="room-card room-fadein">${img}<div class="room-title">${room.title}</div><div class="room-desc">${room.description}</div>${extra}</div>`;
@@ -688,7 +691,7 @@ function renderCard(card, selectable) {
   const cls = `card ${card.color} ${selectable ? 'selectable' : ''} ${selected ? 'selected' : ''} ${dimmed ? 'dimmed' : ''}`;
   const onclick = selectable ? `onclick="toggleSelect(${card.id})"` : '';
   const flavor = card.flavor_text ? `<div class="card-flavor">${card.flavor_text}</div>` : '';
-  const img = card.image ? `<img style="width:100%;max-height:60px;object-fit:contain;border-radius:6px;margin-bottom:8px" src="${SCENARIO_BASE}/${card.image}" onerror="this.style.display='none'">` : '';
+  const img = card.image ? `<img style="width:100%;max-height:60px;object-fit:contain;border-radius:6px;margin-bottom:8px" src="${ASSET_BASE}/${card.image}" onerror="this.style.display='none'">` : '';
   return `<div class="${cls}" ${onclick}>${img}<div class="card-header"><span class="card-title">${card.title}</span><span class="card-id">#${card.id}</span></div><div class="card-desc">${card.description}</div>${flavor}</div>`;
 }
 
@@ -1261,7 +1264,7 @@ function showDiscoverPopup(card) {
   lastPopupCard = card;
   const popup = document.getElementById('discover-popup');
   const img = document.getElementById('popup-img');
-  if (card.image) { img.src = `${SCENARIO_BASE}/${card.image}`; img.style.display = ''; }
+  if (card.image) { img.src = `${ASSET_BASE}/${card.image}`; img.style.display = ''; }
   else { img.style.display = 'none'; }
   document.getElementById('popup-type').textContent = card.type === 'item' ? 'Item Found' : card.type === 'object' ? 'Object Found' : card.type === 'lore' ? (engine.meta.lore_label || 'Memory Fragment') : card.type === 'event' ? 'Event' : 'Discovered';
   document.getElementById('popup-type').className = `popup-type ${card.color}`;
@@ -1644,7 +1647,7 @@ function showEndScreen() {
   const endImg = document.getElementById('end-bg');
   const timedOut = engine._timerExpired || engine.getRemainingSeconds() < 0;
   const succeeded = engine.completed && !timedOut;
-  const imgUrl = `${SCENARIO_BASE}/assets/${succeeded ? 'ending-success' : 'ending-failure'}.png`;
+  const imgUrl = `${ASSET_BASE}/assets/${succeeded ? 'ending-success' : 'ending-failure'}.png`;
   document.getElementById('end-screen').style.backgroundImage = `linear-gradient(to bottom, rgba(10,14,23,0) 0%, rgba(10,14,23,.4) 20%, rgba(10,14,23,.85) 35%, rgba(10,14,23,1) 45%), url('${imgUrl}')`;
 
   if (succeeded) {

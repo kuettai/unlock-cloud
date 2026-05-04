@@ -2,15 +2,15 @@
 
 ## Tasks
 
-- [ ] 1. Create .gitignore (exclude: *.png, *.wav, *.mp3, *.zip, tmp/, node_modules/, test-results/)
-- [ ] 2. Initialize git repo, initial commit
-- [ ] 3. Create S3 bucket for assets (or reuse existing)
-- [ ] 4. Upload all assets to S3 with proper folder structure
-- [ ] 5. Create CloudFront distribution pointing to S3
-- [ ] 6. Update game engine to load assets from CloudFront URL in production, local path in dev
-- [ ] 7. Update deploy process: code → nginx via SSM, assets → S3 directly
-- [ ] 8. Test locally (assets from local folder) and production (assets from CloudFront)
-- [ ] 9. Update deploy agent and skills with new architecture
+- [x] 1. Create .gitignore (exclude: *.png, *.wav, *.mp3, *.zip, tmp/, node_modules/, test-results/)
+- [x] 2. Initialize git repo, initial commit
+- [x] 3. Create S3 bucket for assets (kuettai-unlock-asset)
+- [x] 4. Upload all assets to S3 with proper folder structure
+- [x] 5. Create CloudFront distribution pointing to S3 (d37w3py52wsl8r.cloudfront.net, OAI EY9ZQ0C4X57N2)
+- [x] 6. Update game engine to load assets from CloudFront URL in production, local path in dev
+- [x] 7. Update deploy process: code → nginx via SSM, assets → S3 directly
+- [x] 8. Test locally (assets from local folder) and production (assets from CloudFront)
+- [x] 9. Update deploy agent and skills with new architecture
 
 ## Architecture
 
@@ -30,9 +30,9 @@ Production: app/ + scenarios/ (code/JSON only) → nginx on EC2 (18.138.232.101)
 
 ```js
 // In index.html
-const ASSET_BASE = location.hostname === 'localhost'
-  ? ''  // local: relative path works
-  : 'https://dXXXXX.cloudfront.net';  // prod: CDN
+const ASSET_BASE = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+  ? SCENARIO_BASE  // local: relative path works
+  : 'https://d37w3py52wsl8r.cloudfront.net/' + SCENARIO_BASE.replace(/^\.\.\//, '');  // prod: CDN
 ```
 
 All `<img src>` and `<audio src>` prefix with ASSET_BASE.
