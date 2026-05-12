@@ -1,5 +1,5 @@
 /**
- * Unlock the Cloud — Happy Path Tests
+ * Re:Solve — Happy Path Tests
  * Simulates a successful playthrough of each episode using the game engine directly.
  * Run: node --test tests/happy-path.test.js
  */

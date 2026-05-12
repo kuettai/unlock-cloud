@@ -1,0 +1,49 @@
+{
+  "rooms": [
+    {
+      "card_id": 1,
+      "name": "Back Door",
+      "description": "The car park behind the church hall — dark, empty, one door",
+      "connects_to": [10],
+      "unlocked_by": null,
+      "unlock_text": "You pull into the empty car park. No other cars. Just you.",
+      "map_pos": [200, 560]
+    },
+    {
+      "card_id": 10,
+      "name": "Store Room",
+      "description": "The back door of Café 153 — shelves of supplies, cold and dark",
+      "connects_to": [20],
+      "unlocked_by": { "type": "puzzle_solved", "puzzle_id": "door-code" },
+      "unlock_text": "The keypad beeps green. The door clicks open. Cold air and coffee beans.",
+      "map_pos": [40, 380]
+    },
+    {
+      "card_id": 20,
+      "name": "Brew Station",
+      "description": "The espresso machine and grinder — the heart of the café",
+      "connects_to": [30],
+      "unlocked_by": { "type": "puzzle_solved", "puzzle_id": "stock" },
+      "unlock_text": "You carry supplies to the brew station. The machine is cold.",
+      "map_pos": [200, 280]
+    },
+    {
+      "card_id": 30,
+      "name": "Service Counter",
+      "description": "The front counter — chalkboard, cups, POS, syrups",
+      "connects_to": [40],
+      "unlocked_by": { "type": "puzzle_solved", "puzzle_id": "grinder" },
+      "unlock_text": "The machine is dialed in. Time to set up the counter.",
+      "map_pos": [380, 380]
+    },
+    {
+      "card_id": 40,
+      "name": "The Floor",
+      "description": "The gathering area — tables, chairs, morning sunlight",
+      "connects_to": [],
+      "unlocked_by": { "type": "event", "card_id": 43 },
+      "unlock_text": "Everything's ready behind the counter. Time to set up the floor.",
+      "map_pos": [200, 60]
+    }
+  ]
+}

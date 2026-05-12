@@ -173,6 +173,80 @@ Walls specified per cell side; reciprocals auto-generated. Outer boundary implic
 
 ## Bible-Themed Locks
 
+### Grinder Lock (`grinder-lock.js`)
+Espresso calibration — 3 sliders, pull shot, timer animation. Formula-based extraction time.
+```js
+new GrinderLock(el, {
+  config: { sliders: [{id,label,sub,min,max,default}], formula: '10+grind*2.5-dose*0.8+yield*1.2', randomRange: 0.5, target: {min:25,max:26}, feedback: {fast,slow,perfect}, managerNote: '...' },
+  onSubmit() { }, onWrong(msg) { }
+});
+```
+
+### Stock Memory Lock (`stock-memory-lock.js`)
+Memorize checklist (timed), then grab items from shelf. Bad items to avoid.
+```js
+new StockMemoryLock(el, {
+  config: { memorizeSeconds: 5, checklist: [{id,label,need}], shelf: {rows,itemsPerRow,badItems}, allowReview: true, reviewSeconds: 5 },
+  onSubmit() { }, onWrong(msg) { }
+});
+```
+
+### Spelling Lock (`spelling-lock.js`)
+Tap scrambled letters to spell words. Supports random pool selection.
+```js
+new SpellingLock(el, {
+  config: { pool: ['WORD1','WORD2',...], pickCount: 3, sequential: true, scrambleLetters: true },
+  onSubmit() { }, onWrong(msg) { }
+});
+```
+
+### Evidence Lock (`evidence-lock.js`)
+Step-by-step number deduction with narrative. Hints after N failed attempts.
+```js
+new EvidenceLock(el, {
+  config: { steps: [{type,narrative,detail,prompt,answer,hint}], hintsAfterAttempts: 2 },
+  onSubmit() { }, onWrong(msg) { }
+});
+```
+
+### Milk Jug Lock (`milk-jug-lock.js`)
+Multi-mechanic deduction: shelf tap, timeline choice, card elimination, number input.
+```js
+new MilkJugLock(el, {
+  config: { jugDisplay: {jugs:[{name,batch,time}]}, steps: [{type:'shelf_tap'|'choice'|'card_elimination'|'number_input', ...}] },
+  onSubmit() { }, onWrong(msg) { }
+});
+```
+
+### Cascade Lock (`cascade-lock.js`)
+Multi-step realization with visual progression (cup glow). Manual continue on final reveal.
+```js
+new CascadeLock(el, {
+  config: { cupNames: [...], pauseBetweenSteps: 3000, steps: [{question,options,answer,wrong,after}], onComplete: {scene,emojis,text,subtext} },
+  onSubmit() { }, onWrong(msg) { }
+});
+```
+
+### Dial Lock (`dial-lock.js`)
+Vertical swipeable number dials with handle. Supports reward animation (net fill + revelation text).
+```js
+new DialLock(el, {
+  config: { dials: [{label,min,max,answer}], title, subtitle, falseOutputs: [...], reward: {type:'net_fill',total:153,emoji,revelation:{hebrew,greek,english,verse}} },
+  onSubmit() { }, onWrong(msg) { }
+});
+```
+
+### Café Order Lock (`cafe-order-lock.js`)
+Persistent drink-making tool. Queue timer, sentiment, auto-complete (Manager helps). Pauses during other puzzles, stops after 8 served.
+```js
+new CafeOrderLock(el, {
+  config: { recipes: {'Drink Name': {cup:'hot'|'cold', ingredients:[...]}}, queueInterval: 20000, autoCompleteChance: 0.2, maxQueue: 4 },
+  onServed(totalServed) { }
+});
+```
+Static methods: `CafeOrderLock.getPending()`, `CafeOrderLock.getServed()`, `CafeOrderLock.isRushOver()`, `CafeOrderLock.isPaused()`.
+State persisted to `localStorage('cafe_order_state')`.
+
 ### Crowd Counter Lock (`crowd-counter-lock.js`)
 Tap groups on a grid to count them. Must reach exact target.
 ```js
@@ -486,6 +560,8 @@ Both tools and NPCs appear in the 🔧 Tools screen, grouped by room. NPCs show 
 - `app/puzzle-test-3.html` — AWS-themed locks (tag, arch, log, policy, cost, dns, key, az)
 - `app/puzzle-test-4.html` — AWS deep-dive locks (sg, cidr, waf, task, chain, lifecycle, query, alarm, timeline, pillar)
 - `app/puzzle-test-maze.html` — maze lock (grid navigation with turn/forward controls)
+- `app/puzzle-test-ep153.html` — EP153 café locks (grinder, stock memory, spelling, evidence, milk jug, cascade, dial, café orders)
+- `app/maps-test.html` — isometric 2.5D map view prototype
 
 ## Conventions
 

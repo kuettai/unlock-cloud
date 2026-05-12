@@ -339,7 +339,7 @@
       "title": "The Crowd Groups",
       "description": "The crowd must be organized into groups of fifties and hundreds. Navigate the hillside and visit each group to seat them.",
       "image": "assets/card-crowd-groups.png",
-      "puzzle_ref": "arrangement-maze",
+      "puzzle_ref": "crowd-seating",
       "visible_to": "all",
       "room": "the-arrangement"
     },
@@ -533,7 +533,7 @@
       "color": "blue",
       "title": "Hidden Baskets",
       "description": "The teacher said to gather the leftovers. Look carefully at the hillside — how many baskets did the disciples collect?",
-      "image": "assets/card-hidden-baskets.png",
+      "image": "assets/card-hidden-basket.png",
       "visible_to": "all",
       "room": "the-hillside-after"
     },

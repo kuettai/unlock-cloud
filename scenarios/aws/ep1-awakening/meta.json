@@ -8,7 +8,7 @@
     "tier": 1,
     "label": "Initiate"
   },
-  "duration_minutes": 30,
+  "duration_minutes": 60,
   "players": {
     "min": 2,
     "max": 6,

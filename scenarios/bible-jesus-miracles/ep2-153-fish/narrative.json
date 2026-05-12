@@ -1,0 +1,190 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Story narrator — warm, intimate, present-tense" },
+    "you": { "voice_id": "Matthew", "role": "Player inner thoughts — anxious, determined, awed" }
+  },
+  "intro": {
+    "segments": [
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='90%'>Sunday morning. <break time='400ms'/> Six forty-five. <break time='300ms'/> Your phone lights up on the nightstand. <break time='400ms'/> One message. <break time='200ms'/> Then another. <break time='200ms'/> Then another.</prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='88%'>Sick. <break time='300ms'/> Family emergency. <break time='300ms'/> Can't make it. <break time='400ms'/> Sorry. <break time='200ms'/> Sorry. <break time='200ms'/> <emphasis level='moderate'>Sorry.</emphasis></prosody>",
+        "pause_after_ms": 1200
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='92%'>I stare at the screen. <break time='300ms'/> Four messages. <break time='200ms'/> Four cancellations. <break time='400ms'/> That's everyone. <break time='500ms'/> That's the entire team.</prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='88%' volume='+2dB'>It's just me. <break time='400ms'/> Service starts in forty-five minutes <break time='300ms'/> and it is <prosody rate='82%' volume='+4dB'>just me</prosody>.</prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='90%'>You drive through empty streets. <break time='300ms'/> The café sits behind the church hall <break time='200ms'/> — dark windows, locked door. <break time='400ms'/> You pull into the car park. <break time='300ms'/> No other cars.</prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='88%'>The back door key is cold in your hand. <break time='300ms'/> You turn it. <break time='200ms'/> The store room smells like coffee beans and cardboard. <break time='400ms'/> Dark. <break time='200ms'/> Still. <break time='300ms'/> Waiting.</prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='85%'>Forty-five minutes. <break time='300ms'/> Setup, calibrate, stock, open, serve, close. <break time='400ms'/> All of it. <break time='300ms'/> Alone. <break time='600ms'/> <prosody rate='82%' volume='+2dB'>Okay.</prosody> <break time='400ms'/> Okay. I can do this.</prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='90%'>Lord, <break time='300ms'/> help me get through this.</prosody>",
+        "pause_after_ms": 0
+      }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "time_remaining": 900,
+    "segments": [
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='95%'>The rush hits like a wave. <break time='300ms'/> Faces at the counter, <break time='200ms'/> orders stacking, <break time='200ms'/> the machine hissing, <break time='200ms'/> milk frothing, <break time='200ms'/> cups sliding.</prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='98%'>Flat white, cap, long black, iced latte <break time='200ms'/> — keep moving, keep moving, <emphasis level='moderate'>keep moving</emphasis>.</prosody>",
+        "pause_after_ms": 600
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='90%'>You hear the steam wand hiss. <break time='400ms'/> But both your hands are on the portafilter. <break time='500ms'/> You glance sideways. <break time='300ms'/> Nothing. <break time='200ms'/> No one.</prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='92%'>A cup appears on the serve counter. <break time='300ms'/> Flat white, <break time='200ms'/> name written on the side. <break time='400ms'/> Did I make that? <break time='500ms'/> I must have. <break time='300ms'/> I must have.</prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='88%'>A customer says <prosody rate='85%' volume='+2dB'>\"thanks!\"</prosody> <break time='200ms'/> — but you haven't served them yet. <break time='400ms'/> Have you? <break time='300ms'/> The rush is a blur. <break time='300ms'/> Keep going.</prosody>",
+        "pause_after_ms": 600
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='95%'>For a moment <break time='200ms'/> — just a moment <break time='200ms'/> — I smell fresh coffee from <emphasis level='moderate'>behind</emphasis> me. <break time='300ms'/> But I'm facing the machine. <break time='400ms'/> No time to think. Next order.</prosody>",
+        "pause_after_ms": 0
+      }
+    ],
+    "audio": null
+  },
+  "urgency": {
+    "time_remaining": 300,
+    "segments": [
+      {
+        "voice": "narrator",
+        "ssml": "<prosody rate='92%'>The last customers linger. <break time='300ms'/> The queue is almost clear. <break time='400ms'/> Your hands are shaking from the espresso you drank two hours ago <break time='200ms'/> — or maybe from everything else.</prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='88%' volume='+2dB'>Almost done. <break time='300ms'/> Almost done. <break time='400ms'/> But something's wrong. <break time='300ms'/> The counter says seventeen drinks served. <break time='500ms'/> <prosody rate='82%' volume='+4dB'>Seventeen?</prosody></prosody>",
+        "pause_after_ms": 1000
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='85%'>I count backward in my head. <break time='300ms'/> I remember the flat whites. <break time='200ms'/> The caps. <break time='200ms'/> The long blacks. <break time='400ms'/> I count thirteen. <break time='300ms'/> Maybe fourteen. <break time='500ms'/> Not seventeen. <break time='400ms'/> <prosody rate='80%'>Where did the other drinks come from?</prosody></prosody>",
+        "pause_after_ms": 800
+      },
+      {
+        "voice": "you",
+        "ssml": "<prosody rate='92%'>No time. <break time='200ms'/> Close it out. <break time='200ms'/> Count later. <break time='300ms'/> <emphasis level='strong'>Finish this.</emphasis></prosody>",
+        "pause_after_ms": 0
+      }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='85%'>The café is empty now. <break time='400ms'/> Silent. <break time='400ms'/> Sunlight falls through the windows in long golden bars. <break time='500ms'/> You stand in the store room, <break time='300ms'/> holding a milk jug you never took from the shelf.</prosody>",
+          "pause_after_ms": 1200
+        },
+        {
+          "voice": "you",
+          "ssml": "<prosody rate='82%'>Twenty-one shots on the counter. <break time='400ms'/> Twenty-five cups used. <break time='400ms'/> Three milk jugs empty <break time='300ms'/> — but I only took two. <break time='600ms'/> The math doesn't work. <break time='400ms'/> Unless someone else was here.</prosody>",
+          "pause_after_ms": 1200
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='85%'>In the corner of the gathering area, <break time='300ms'/> a table you never served. <break time='400ms'/> Four cups. <break time='300ms'/> Still warm. <break time='500ms'/> Names written on the sides in handwriting that isn't yours. <break time='600ms'/> <prosody rate='80%' volume='+2dB'>Simon. <break time='300ms'/> Thomas. <break time='300ms'/> Nathanael. <break time='300ms'/> James.</prosody></prosody>",
+          "pause_after_ms": 1500
+        },
+        {
+          "voice": "you",
+          "ssml": "<prosody rate='80%'>I know those names. <break time='500ms'/> The disciples. <break time='300ms'/> The ones who were there <break time='200ms'/> that morning on the shore. <break time='500ms'/> When they fished all night and caught nothing. <break time='400ms'/> When He appeared at dawn <break time='300ms'/> with breakfast already cooking on the fire.</prosody>",
+          "pause_after_ms": 1200
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='82%'>One hundred and fifty-three fish. <break time='500ms'/> The net didn't break. <break time='600ms'/> <prosody rate='78%' volume='+4dB'>And neither did you.</prosody></prosody>",
+          "pause_after_ms": 1500
+        },
+        {
+          "voice": "you",
+          "ssml": "<prosody rate='78%'><break time='300ms'/> He was here. <break time='500ms'/> The whole time. <break time='600ms'/> Pulling shots when my hands were full. <break time='400ms'/> Serving people I couldn't reach. <break time='400ms'/> Getting milk from the shelf when I wasn't looking. <break time='600ms'/> <prosody rate='75%' volume='+4dB'>He was here and I never saw him.</prosody></prosody>",
+          "pause_after_ms": 1500
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='80%'>You weren't alone. <break time='400ms'/> Not during setup. <break time='300ms'/> Not during the rush. <break time='300ms'/> Not during closing. <break time='600ms'/> The Manager was on shift the entire time.</prosody>",
+          "pause_after_ms": 1200
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='78%' volume='+2dB'>\"Cast your net on the right side.\" <break time='600ms'/> <prosody rate='75%'>And the net filled. <break time='400ms'/> One hundred and fifty-three. <break time='400ms'/> And it did not break.</prosody></prosody>",
+          "pause_after_ms": 1500
+        },
+        {
+          "voice": "you",
+          "ssml": "<prosody rate='78%'>I set the jug down gently. <break time='400ms'/> I look around the empty café. <break time='500ms'/> The tables. <break time='300ms'/> The chairs. <break time='300ms'/> The sunlight. <break time='600ms'/> This isn't just a café. <break time='500ms'/> <prosody rate='75%' volume='+4dB'>This is the shore.</prosody> <break time='800ms'/> And breakfast was already ready.</prosody>",
+          "pause_after_ms": 1500
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='75%' volume='+2dB'>Ego eimi. <break time='600ms'/> Ani Elohim. <break time='800ms'/> <prosody rate='72%' volume='+4dB'>I AM God.</prosody> <break time='800ms'/> Before Abraham was, <break time='400ms'/> I AM. <break time='600ms'/> Before the café opened, <break time='400ms'/> He was already there.</prosody>",
+          "pause_after_ms": 0
+        }
+      ],
+      "audio": null
+    },
+    "failure": {
+      "segments": [
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='88%'>Time runs out. <break time='400ms'/> The café closes. <break time='400ms'/> You slump against the counter, exhausted. <break time='300ms'/> You didn't finish everything. <break time='400ms'/> But somehow <break time='300ms'/> — somehow <break time='300ms'/> — the customers were served.</prosody>",
+          "pause_after_ms": 1000
+        },
+        {
+          "voice": "you",
+          "ssml": "<prosody rate='85%'>I look at the drink counter. <break time='300ms'/> The number is higher than it should be. <break time='400ms'/> I look at the cups in the wash. <break time='300ms'/> More than I remember making. <break time='500ms'/> I look at the corner table <break time='300ms'/> — four cups I didn't serve, <break time='200ms'/> names I didn't write.</prosody>",
+          "pause_after_ms": 1000
+        },
+        {
+          "voice": "narrator",
+          "ssml": "<prosody rate='85%'>You didn't finish the count. <break time='300ms'/> You didn't solve the mystery. <break time='500ms'/> But as you lock the back door, <break time='300ms'/> you notice something. <break time='400ms'/> The faintest smell of charcoal and bread. <break time='500ms'/> <prosody rate='80%' volume='+2dB'>Someone was here.</prosody> <break time='400ms'/> You just didn't see who.</prosody>",
+          "pause_after_ms": 0
+        }
+      ],
+      "audio": null
+    }
+  }
+}

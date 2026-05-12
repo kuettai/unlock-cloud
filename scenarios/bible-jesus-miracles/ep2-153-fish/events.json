@@ -1,0 +1,112 @@
+{
+  "timed_events": [
+    {
+      "id": "mid-event",
+      "time_remaining": 900,
+      "message": "The shot counter says 21. But I only pulled 14...",
+      "type": "narrative",
+      "narrative_key": "mid_event"
+    },
+    {
+      "id": "urgency-warning",
+      "time_remaining": 300,
+      "message": "Almost done. But something's wrong. The counter says seventeen drinks served. Seventeen?",
+      "type": "alert",
+      "narrative_key": "urgency"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "stock-gathered",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "stock",
+      "card_id": 12,
+      "message": "Supplies gathered. Time to set up the machine.",
+      "type": "room_unlock",
+      "unlocks_room": 20,
+      "once": true
+    },
+    {
+      "id": "grinder-dialed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "grinder",
+      "card_id": 23,
+      "message": "The machine is dialed in. Time to set up the counter.",
+      "type": "room_unlock",
+      "unlocks_room": 30,
+      "once": true
+    },
+    {
+      "id": "counter-ready",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "chalkboard",
+      "card_id": 43,
+      "message": "Everything's ready behind the counter. Time to set up the floor.",
+      "type": "room_unlock",
+      "unlocks_room": 40,
+      "requires": ["stock", "chalkboard"],
+      "once": true
+    },
+    {
+      "id": "act3-begins",
+      "trigger": "card_discovered",
+      "card_id": 43,
+      "message": "The rush is over. The café is quiet. Time to close.",
+      "type": "act_transition",
+      "act": 3,
+      "once": true
+    },
+    {
+      "id": "cups-found",
+      "trigger": "card_discovered",
+      "card_id": 82,
+      "message": "Four cups with names. You bring them back to the counter to reconcile.",
+      "type": "room_unlock",
+      "unlocks_room": 30,
+      "act": 3,
+      "once": true
+    },
+    {
+      "id": "evidence-complete",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "cups",
+      "card_id": 80,
+      "message": "The cups don't lie. Check the machine.",
+      "type": "room_unlock",
+      "unlocks_room": 20,
+      "act": 3,
+      "once": true
+    },
+    {
+      "id": "milk-mystery-solved",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "milk-jug",
+      "card_id": 76,
+      "message": "The shots confirm it. Someone used supplies. Check the store room.",
+      "type": "room_unlock",
+      "unlocks_room": 10,
+      "act": 3,
+      "once": true
+    },
+    {
+      "id": "names-understood",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "names",
+      "card_id": 73,
+      "message": "You understand now. Return to the floor.",
+      "type": "room_unlock",
+      "unlocks_room": 40,
+      "act": 4,
+      "once": true
+    },
+    {
+      "id": "safe-opened",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "safe",
+      "card_id": 999,
+      "message": "The safe opens. The net fills. 153. You were never alone.",
+      "type": "ending",
+      "once": true
+    }
+  ]
+}

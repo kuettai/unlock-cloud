@@ -12,6 +12,12 @@
         "tiles": ["1","2","3","4","5","6","7","8","9"],
         "revealCorrect": true
       },
+      "challenge": {
+        "config": {
+          "tiles": ["13","27","34","41","56","62","78","85","99"],
+          "revealCorrect": false
+        }
+      },
       "hints": [
         "Tap two tiles to swap them. The numbers should read 1-9, left to right, top to bottom.",
         "Start from the top-left. Which number belongs there?",
@@ -29,6 +35,13 @@
         "mode": "flash",
         "flashMs": 400,
         "gapMs": 200
+      },
+      "challenge": {
+        "config": {
+          "sequence": [0, 1, 2, 5, 8, 7, 6],
+          "flashMs": 250,
+          "gapMs": 150
+        }
       },
       "hints": [
         "Watch the pattern carefully. It traces a shape.",
@@ -56,6 +69,26 @@
         "solution": { "power": "energy", "data": "signal", "ground": "drain" },
         "falseOutputs": ["Sparks fly... wrong connection.", "The device hums but nothing happens."]
       },
+      "challenge": {
+        "config": {
+          "wires": [
+            { "id": "power", "color": "#22c55e", "label": "PWR" },
+            { "id": "data", "color": "#3b82f6", "label": "DAT" },
+            { "id": "ground", "color": "#7a8ba8", "label": "GND" },
+            { "id": "clock", "color": "#eab308", "label": "CLK" },
+            { "id": "reset", "color": "#ef4444", "label": "RST" }
+          ],
+          "sockets": [
+            { "id": "energy", "label": "V+" },
+            { "id": "signal", "label": "I/O" },
+            { "id": "drain", "label": "V−" },
+            { "id": "sync", "label": "SYNC" },
+            { "id": "init", "label": "INIT" },
+            { "id": "null", "label": "NULL" }
+          ],
+          "solution": { "power": "energy", "data": "signal", "ground": "drain", "clock": "sync", "reset": "init" }
+        }
+      },
       "hints": [
         "Match each wire to the socket that makes sense. Power goes to energy.",
         "Power → Energy Port, Data → Signal Port. What's left?",
@@ -71,6 +104,18 @@
       "config": {
         "answer": "GO",
         "showReference": true
+      },
+      "challenge": {
+        "description": "Tap the morse code for 'BOOT' to activate the terminal",
+        "config": {
+          "answer": "BOOT",
+          "showReference": false
+        },
+        "hints": [
+          "You need to tap morse code for BOOT. Short tap = dot, long tap = dash.",
+          "B is dash-dot-dot-dot (-...). O is dash-dash-dash (---). T is dash (-).",
+          "Tap: -... (pause) --- (pause) --- (pause) -"
+        ]
       },
       "hints": [
         "You need to tap morse code. Short tap = dot, long tap = dash.",
@@ -88,6 +133,9 @@
         "value": 42
       },
       "auto_hint_after_seconds": 180,
+      "challenge": {
+        "auto_hint_after_seconds": 9999
+      },
       "hints": [
         "The mural isn't just decoration.",
         "Look for a number hidden in the circuit pattern.",
@@ -113,6 +161,15 @@
         "type": "text",
         "value": "locknu",
         "case_sensitive": false
+      },
+      "challenge": {
+        "input": "cmVib290",
+        "solution": {
+          "type": "text",
+          "value": "booter",
+          "case_sensitive": false
+        },
+        "wrong_answer_message": "Incorrect. Did you rearrange the letters using the EXIT CODE color order?"
       },
       "tools_available": ["base64_decoder"],
       "puzzle_ui": "word_lock",

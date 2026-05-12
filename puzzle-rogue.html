@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roguelike Puzzle Prototypes — EP3 King's Errand</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; }
+header { background: #16213e; padding: 1rem 2rem; border-bottom: 2px solid #0f3460; }
+header h1 { font-size: 1.4rem; color: #e94560; }
+header p { font-size: 0.85rem; color: #aaa; margin-top: 0.3rem; }
+nav { display: flex; gap: 0.5rem; padding: 1rem 2rem; background: #16213e; flex-wrap: wrap; }
+nav button { padding: 0.6rem 1.2rem; border: 2px solid #0f3460; background: #1a1a2e; color: #eee; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+nav button:hover { border-color: #e94560; }
+nav button.active { background: #e94560; border-color: #e94560; color: #fff; }
+.panel { display: none; padding: 2rem; max-width: 900px; margin: 0 auto; }
+.panel.active { display: block; }
+.panel h2 { color: #e94560; margin-bottom: 0.3rem; }
+.panel .subtitle { color: #aaa; font-size: 0.85rem; margin-bottom: 1.5rem; }
+.btn { padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+.btn-primary { background: #e94560; color: #fff; }
+.btn-primary:hover { background: #d63851; }
+.btn-secondary { background: #0f3460; color: #eee; }
+.btn-secondary:hover { background: #1a4a8a; }
+.btn-danger { background: #c0392b; color: #fff; }
+.btn-danger:hover { background: #a93226; }
+.result { margin-top: 1rem; padding: 1rem; border-radius: 6px; font-weight: bold; }
+.result.win { background: #1e4d2b; color: #2ecc71; border: 1px solid #2ecc71; }
+.result.lose { background: #4d1e1e; color: #e74c3c; border: 1px solid #e74c3c; }
+.result.info { background: #1e3a4d; color: #3498db; border: 1px solid #3498db; }
+</style>
+</head>
+<body>
+<header>
+<h1>🎲 Roguelike Puzzle Prototypes</h1>
+<p>EP3 — The King's Errand — Testing alternative mechanics to replace "arrange the sequence" puzzles</p>
+</header>
+<nav>
+<button class="active" onclick="showPanel('balatro')">🃏 Champion Equipment</button>
+<button onclick="showPanel('spire')">⚔️ Deck Battle</button>
+<button onclick="showPanel('prompt')">📝 Prompt Engineering</button>
+<button onclick="showPanel('toolcall')">🔧 Tool Invocation</button>
+<button onclick="showPanel('imgprompt')">🎨 Image Prompt</button>
+<button onclick="showPanel('cafe')">☕ Café Orders</button>
+</nav>
+
+<div id="balatro" class="panel active">
+<h2>🃏 Champion's Equipment Rack — Blind Build</h2>
+<p class="subtitle">Balatro-inspired. Equip, enable/disable, and reorder gear blindly. Effects hidden until unlocked via quests. Deploy every 30s for a tier impression.</p>
+<p style="margin-bottom:1rem;color:#ccc;">Arrange the Champion's equipment. You can't see the stats — only the item names. Enable/disable slots and reorder to find the best setup. Complete quests to upgrade cursed gear into powerful equipment.</p>
+
+<div style="display:flex;gap:1rem;margin:1rem 0;flex-wrap:wrap;">
+  <div style="flex:1;min-width:200px;padding:0.8rem;background:#2a2a4e;border-radius:8px;">
+    <div style="font-size:0.8rem;color:#aaa;">Quests Completed</div>
+    <div id="eq-quests" style="font-size:1.2rem;font-weight:bold;color:#f39c12;">0 / 7</div>
+  </div>
+  <div style="flex:1;min-width:200px;padding:0.8rem;background:#2a2a4e;border-radius:8px;">
+    <div style="font-size:0.8rem;color:#aaa;">Last Impression</div>
+    <div id="eq-impression" style="font-size:1.2rem;font-weight:bold;color:#888;">Not yet deployed</div>
+  </div>
+  <div style="flex:1;min-width:200px;padding:0.8rem;background:#2a2a4e;border-radius:8px;">
+    <div style="font-size:0.8rem;color:#aaa;">Deploy Cooldown</div>
+    <div id="eq-cooldown" style="font-size:1.2rem;font-weight:bold;color:#2ecc71;">Ready</div>
+  </div>
+</div>
+
+<div id="eq-slots" style="display:flex;flex-direction:column;gap:0.5rem;margin:1rem 0;"></div>
+
+<div style="text-align:center;margin-top:1rem;">
+  <button class="btn btn-primary" id="eq-deploy-btn" onclick="deployEquip()">⚡ Deploy Champion</button>
+  <button class="btn btn-secondary" onclick="resetEquip()">↺ Reset</button>
+</div>
+<div id="eq-result"></div>
+
+<div style="margin-top:1.5rem;">
+  <h3 style="color:#f39c12;margin-bottom:0.5rem;">🏰 Quest Board <span style="font-size:0.75rem;color:#aaa;">(toggle to simulate completing quests)</span></h3>
+  <div id="eq-quest-board" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.5rem;"></div>
+</div>
+
+<div style="margin-top:1rem;">
+  <h3 style="color:#3498db;margin-bottom:0.5rem;">👁️ Observability <span style="font-size:0.75rem;color:#aaa;">(Herald's Ledger)</span></h3>
+  <label style="font-size:0.85rem;cursor:pointer;"><input type="checkbox" id="eq-observe" onchange="renderEquip()"> Enable Observability (reveals score numbers)</label>
+</div>
+
+<script>
+(function(){
+  const equipment = [
+    {id:'weapon', slot:'Weapon', base:{name:'🗡️ Wooden Stick', effect:2, type:'flat'}, upgraded:{name:'🐉 Dragon Lance', effect:2, type:'mult'}, quest:'Bazaar Recruitment', questDesc:'Pick the right model ally'},
+    {id:'armor', slot:'Armor', base:{name:'🛡️ Broken Heavy Armor', effect:3, type:'div'}, upgraded:{name:'🧥 Light Armor', effect:4, type:'flat'}, quest:'Gate Wiring', questDesc:'Wire MCP conduits correctly'},
+    {id:'boots', slot:'Boots', base:{name:'👢 Rusty Greaves', effect:3, type:'neg'}, upgraded:{name:'🥾 Windwalker Boots', effect:6, type:'flat'}, quest:'Trade Negotiation', questDesc:'Secure the trade agreement'},
+    {id:'helm', slot:'Helm', base:{name:'⛑️ Cracked Visor', effect:1, type:'neg'}, upgraded:{name:'👑 Crown of Clarity', effect:1.5, type:'mult'}, quest:"King's Seal", questDesc:'Write the Cedar policy'},
+    {id:'ring', slot:'Ring', base:{name:'💍 Cursed Band', effect:2, type:'div'}, upgraded:{name:'💎 Ring of Focus', effect:8, type:'flat'}, quest:'Feast Menu', questDesc:'Sort the recipe scrolls'},
+    {id:'cloak', slot:'Cloak', base:{name:'🧣 Tattered Cloak', effect:1, type:'flat'}, upgraded:{name:'🦅 Cloak of Soaring', effect:1.3, type:'mult'}, quest:'Code of Honor', questDesc:'Configure guardrails'},
+    {id:'amulet', slot:'Amulet', base:{name:'📿 Dull Pendant', effect:0, type:'flat'}, upgraded:{name:'🔮 Amulet of Insight', effect:5, type:'flat'}, quest:'Chronicle Report', questDesc:'Reconstruct the timeline'},
+  ];
+
+  let state = equipment.map(e => ({...e, enabled: true, questDone: false}));
+  let order = [0,1,2,3,4,5,6];
+  let cooldown = 0;
+  let dragIdx = null;
+
+  function getItem(s) { return s.questDone ? s.upgraded : s.base; }
+
+  function applyEffect(score, item) {
+    if (item.type === 'flat') return score + item.effect;
+    if (item.type === 'mult') return Math.floor(score * item.effect);
+    if (item.type === 'neg') return score - item.effect;
+    if (item.type === 'div') return Math.floor(score / item.effect);
+    return score;
+  }
+
+  function calcScore() {
+    let s = 10;
+    order.forEach(i => {
+      if (state[i].enabled) s = applyEffect(s, getItem(state[i]));
+    });
+    return Math.max(0, s);
+  }
+
+  function getTier(score) {
+    if (score >= 100) return {icon:'🦅', text:'Soars', color:'#f39c12', desc:'"The Champion blazes through every task. Sir Cedric actually smiles."'};
+    if (score >= 65) return {icon:'🏃', text:'Strides', color:'#2ecc71', desc:'"The Champion moves with purpose. Sir Cedric nods."'};
+    if (score >= 30) return {icon:'🚶', text:'Walks', color:'#3498db', desc:'"The Champion moves steadily. Adequate, but uninspired."'};
+    if (score >= 10) return {icon:'🦵', text:'Stumbles', color:'#e67e22', desc:'"The Champion lurches forward, barely functional."'};
+    return {icon:'💀', text:'Collapses', color:'#e74c3c', desc:'"The Champion takes one step and crumbles to dust."'};
+  }
+
+  function renderEquip() {
+    const observe = document.getElementById('eq-observe').checked;
+    const slots = document.getElementById('eq-slots');
+    slots.innerHTML = order.map((idx,pos) => {
+      const s = state[idx];
+      const item = getItem(s);
+      const enabled = s.enabled;
+      const bg = enabled ? '#2a2a4e' : '#1a1a1a';
+      const border = enabled ? '1px solid #444' : '1px solid #333';
+      const opacity = enabled ? '1' : '0.4';
+
+      let effectText = '???';
+      let effectColor = '#666';
+      if (observe) {
+        if (item.type === 'flat') { effectText = '+' + item.effect; effectColor = '#2ecc71'; }
+        else if (item.type === 'mult') { effectText = '×' + item.effect; effectColor = '#e94560'; }
+        else if (item.type === 'neg') { effectText = '−' + item.effect; effectColor = '#e74c3c'; }
+        else if (item.type === 'div') { effectText = '÷' + item.effect; effectColor = '#e74c3c'; }
+      }
+
+      return `<div draggable="true" ondragstart="eqDragStart(${pos})" ondragover="event.preventDefault()" ondrop="eqDrop(${pos})" style="display:flex;align-items:center;gap:0.8rem;padding:0.7rem 1rem;background:${bg};border:${border};border-radius:6px;cursor:grab;opacity:${opacity};">
+        <span style="color:#888;font-size:0.75rem;width:16px;">${pos+1}</span>
+        <span style="flex:1;font-size:0.9rem;">${item.name}</span>
+        <span style="color:${effectColor};font-weight:bold;font-size:0.85rem;min-width:40px;text-align:center;">${effectText}</span>
+        <button onclick="toggleSlot(${idx})" class="btn" style="font-size:0.7rem;padding:0.3rem 0.5rem;background:${enabled?'#0f3460':'#333'};color:${enabled?'#2ecc71':'#888'};">${enabled?'ON':'OFF'}</button>
+      </div>`;
+    }).join('');
+
+    // Quest count
+    const done = state.filter(s=>s.questDone).length;
+    document.getElementById('eq-quests').textContent = done + ' / 7';
+
+    // Quest board
+    const board = document.getElementById('eq-quest-board');
+    board.innerHTML = state.map((s,i) => {
+      return `<label style="display:flex;align-items:center;gap:0.5rem;padding:0.4rem 0.6rem;background:${s.questDone?'#1e4d2b':'#2a2a4e'};border:1px solid ${s.questDone?'#2ecc71':'#444'};border-radius:4px;cursor:pointer;font-size:0.8rem;">
+        <input type="checkbox" ${s.questDone?'checked':''} onchange="toggleQuest(${i})">
+        <span style="color:${s.questDone?'#2ecc71':'#aaa'};">${s.quest}</span>
+      </label>`;
+    }).join('');
+  }
+
+  window.eqDragStart = function(pos) { dragIdx = pos; };
+  window.eqDrop = function(pos) {
+    if (dragIdx === null) return;
+    const item = order.splice(dragIdx, 1)[0];
+    order.splice(pos, 0, item);
+    dragIdx = null;
+    renderEquip();
+  };
+
+  window.toggleSlot = function(idx) { state[idx].enabled = !state[idx].enabled; renderEquip(); };
+  window.toggleQuest = function(idx) { state[idx].questDone = !state[idx].questDone; renderEquip(); };
+
+  window.deployEquip = function() {
+    if (cooldown > 0) return;
+    const score = calcScore();
+    const tier = getTier(score);
+    const observe = document.getElementById('eq-observe').checked;
+
+    document.getElementById('eq-impression').innerHTML = `<span style="color:${tier.color}">${tier.icon} ${tier.text}</span>`;
+
+    const res = document.getElementById('eq-result');
+    res.className = 'result ' + (score >= 60 ? 'win' : score >= 35 ? 'info' : 'lose');
+    res.innerHTML = `${tier.icon} <em>${tier.desc}</em>${observe ? '<br><span style="font-size:0.8rem;color:#aaa;">Score: ' + score + '</span>' : ''}`;
+
+    // Start cooldown
+    cooldown = 30;
+    const btn = document.getElementById('eq-deploy-btn');
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    const cdEl = document.getElementById('eq-cooldown');
+    const tick = setInterval(() => {
+      cooldown--;
+      cdEl.textContent = cooldown + 's';
+      cdEl.style.color = '#e94560';
+      if (cooldown <= 0) {
+        clearInterval(tick);
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        cdEl.textContent = 'Ready';
+        cdEl.style.color = '#2ecc71';
+      }
+    }, 1000);
+  };
+
+  window.resetEquip = function() {
+    state = equipment.map(e => ({...e, enabled: true, questDone: false}));
+    order = [0,1,2,3,4,5,6];
+    document.getElementById('eq-result').innerHTML = '';
+    document.getElementById('eq-impression').textContent = 'Not yet deployed';
+    document.getElementById('eq-observe').checked = false;
+    renderEquip();
+  };
+
+  renderEquip();
+})();
+</script>
+</div>
+<div id="spire" class="panel">
+<h2>⚔️ Persuasion Deck Battle</h2>
+<p class="subtitle">STS-inspired. Draw 4, play 2. Persuasion damages conviction. Composure blocks gold loss. Merchant escalates each turn. Shuffle when deck runs out.</p>
+
+<div style="display:flex;gap:0.8rem;margin:1rem 0;flex-wrap:wrap;">
+  <div style="flex:1;min-width:100px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">💰 Gold (HP)</div>
+    <div id="db-gold" style="font-size:1.2rem;font-weight:bold;color:#f39c12;">80</div>
+  </div>
+  <div style="flex:1;min-width:100px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">💬 Conviction</div>
+    <div id="db-conv" style="font-size:1.2rem;font-weight:bold;color:#2ecc71;">0 / 10</div>
+  </div>
+  <div style="flex:1;min-width:100px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">🃏 Turn</div>
+    <div id="db-turn" style="font-size:1.2rem;font-weight:bold;color:#3498db;">1</div>
+  </div>
+  <div style="flex:1;min-width:100px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">🛡️ Composure</div>
+    <div id="db-block" style="font-size:1.2rem;font-weight:bold;color:#9b59b6;">0</div>
+  </div>
+</div>
+
+<div id="db-merchant-select" style="display:flex;gap:0.5rem;margin:1rem 0;flex-wrap:wrap;"></div>
+<div id="db-merchant" style="margin:0.5rem 0;"></div>
+<div id="db-hand" style="margin:1rem 0;"></div>
+<div id="db-actions" style="margin:0.5rem 0;text-align:center;"></div>
+<div id="db-log" style="margin:0.5rem 0;font-size:0.8rem;color:#888;max-height:80px;overflow-y:auto;"></div>
+<div id="db-result"></div>
+
+<div style="margin-top:1.5rem;">
+  <h3 style="color:#f39c12;margin-bottom:0.5rem;">🏰 Quest Cards <span style="font-size:0.75rem;color:#aaa;">(toggle to add cards to deck)</span></h3>
+  <div id="db-quests" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.5rem;"></div>
+  <div style="margin-top:0.5rem;text-align:center;"><button class="btn btn-secondary" onclick="dbReset()">↺ Reset Game</button></div>
+</div>
+
+<script>
+(function(){
+  // --- CARD DATA ---
+  const baseCards = [
+    {id:'greet1', name:'📜 Formal Greeting', type:'persuasion', value:2, always:true},
+    {id:'greet2', name:'📜 Formal Greeting', type:'persuasion', value:2, always:true},
+    {id:'deflect1', name:'🛡️ Polite Deflection', type:'composure', value:2, always:true},
+    {id:'deflect2', name:'🛡️ Polite Deflection', type:'composure', value:2, always:true},
+    {id:'scout', name:'🥾 Scout\'s Confidence', type:'persuasion', value:3, always:true},
+    {id:'gatekn', name:'🛡️ Gate Knowledge', type:'composure', value:3, always:true},
+  ];
+  const questCards = [
+    {id:'tongue', name:'👯 Tongue of Babel', type:'persuasion', value:6, quest:'tongue', questLabel:'Nova Sonic NPC'},
+    {id:'seal', name:'👑 Royal Authority', type:'persuasion', value:5, quest:'seal', questLabel:"King's Seal"},
+    {id:'insight', name:'💎 Gift of Insight', type:'both', value:3, quest:'chronicle', questLabel:'Chronicle Report'},
+    {id:'lance', name:'🐉 Dragon Lance', type:'persuasion', value:4, quest:'bazaar', questLabel:'Bazaar Recruit'},
+    {id:'poise', name:'🧥 Diplomatic Poise', type:'composure', value:5, quest:'honor', questLabel:'Code of Honor'},
+    {id:'retreat', name:'🥾 Swift Retreat', type:'composure', value:4, quest:'recipe', questLabel:'Recipe Sort'},
+  ];
+
+  const merchants = [
+    { name:'🧔 Spice Trader', difficulty:'Easy', conviction:8, pattern:[
+      {attack:2, block:0, text:'"Greetings, friend."'},
+      {attack:5, block:1, text:'"Show me coin."'},
+      {attack:3, block:3, text:'"I\'m not sure..."'},
+    ]},
+    { name:'👳 Silk Merchant', difficulty:'Medium', conviction:10, pattern:[
+      {attack:3, block:3, text:'"Prove yourself."'},
+      {attack:7, block:1, text:'"Time is money!"'},
+      {attack:4, block:2, text:'"Interesting..."'},
+    ]},
+    { name:'🧨 Fireworks Master', difficulty:'Hard', conviction:12, pattern:[
+      {attack:8, block:0, text:'"Pay upfront!"'},
+      {attack:2, block:5, text:'"Not convinced."'},
+      {attack:6, block:2, text:'"Tick tock..."'},
+    ]},
+  ];
+
+  let currentMerchant = 0;
+
+  let gold, conviction, turn, hand, drawPile, discardPile, played, composure, quests, log, gameOver;
+
+  function init() {
+    gold = 80; conviction = 0; turn = 1; composure = 0; gameOver = false;
+    played = []; log = [];
+    quests = new Set();
+    buildDeck();
+    drawHand();
+    renderAll();
+  }
+
+  function buildDeck() {
+    const cards = [...baseCards];
+    questCards.forEach(c => { if (quests.has(c.quest)) cards.push(c); });
+    drawPile = shuffle([...cards]);
+    discardPile = [];
+  }
+
+  function shuffle(arr) { for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
+
+  function drawHand() {
+    hand = []; played = []; composure = 0;
+    for (let i = 0; i < 4; i++) {
+      if (drawPile.length === 0) { drawPile = shuffle([...discardPile]); discardPile = []; }
+      if (drawPile.length > 0) hand.push(drawPile.pop());
+    }
+  }
+
+  function getIntent() {
+    const m = merchants[currentMerchant];
+    return m.pattern[(turn - 1) % m.pattern.length];
+  }
+  function getConvictionTarget() { return merchants[currentMerchant].conviction; }
+
+  // --- RENDER ---
+  function renderMerchantSelect() {
+    const el = document.getElementById('db-merchant-select');
+    el.innerHTML = merchants.map((m, i) => {
+      const active = i === currentMerchant;
+      const colors = ['#2ecc71','#f39c12','#e74c3c'];
+      return `<button onclick="dbSelectMerchant(${i})" style="padding:0.5rem 0.8rem;border:2px solid ${active?colors[i]:'#444'};background:${active?'#2a2a4e':'#1a1a2e'};color:${active?colors[i]:'#888'};border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:${active?'bold':'normal'};">
+        ${m.name} <span style="font-size:0.7rem;">(${m.difficulty})</span>
+      </button>`;
+    }).join('');
+  }
+
+  function renderAll() {
+    document.getElementById('db-gold').textContent = gold;
+    document.getElementById('db-gold').style.color = gold <= 15 ? '#e74c3c' : '#f39c12';
+    document.getElementById('db-conv').textContent = conviction + ' / ' + getConvictionTarget();
+    document.getElementById('db-turn').textContent = turn;
+    document.getElementById('db-block').textContent = composure;
+    renderMerchantSelect();
+    renderMerchant();
+    renderHand();
+    renderActions();
+    renderLog();
+    renderQuests();
+  }
+
+  function renderMerchant() {
+    const el = document.getElementById('db-merchant');
+    if (gameOver) { el.innerHTML = ''; return; }
+    const intent = getIntent();
+    const target = getConvictionTarget();
+    // Conviction bar
+    const pct = Math.min(100, (conviction / target) * 100);
+    // Preview: what will happen if you end turn now
+    let prevPersuasion = 0;
+    played.forEach(i => { const c = hand[i]; if (c.type === 'persuasion' || c.type === 'both') prevPersuasion += c.value; });
+    const prevConv = Math.max(0, prevPersuasion - intent.block);
+    const prevLoss = Math.max(0, intent.attack - composure);
+
+    el.innerHTML = `<div style="background:#3d1f1f;border:1px solid #e74c3c;border-radius:8px;padding:0.8rem;">
+      <div style="display:flex;align-items:center;gap:0.8rem;">
+        <span style="font-size:2rem;">${merchants[currentMerchant].name.slice(0,2)}</span>
+        <div style="flex:1;">
+          <div style="font-weight:bold;color:#eee;">${merchants[currentMerchant].name}</div>
+          <div style="font-size:0.85rem;color:#aaa;margin-top:0.2rem;">${intent.text}</div>
+        </div>
+        <div style="text-align:right;font-size:0.8rem;">
+          <div style="color:#e74c3c;">⚔️ Drains: <strong>${intent.attack}g</strong></div>
+          <div style="color:#9b59b6;">🛡️ Resists: <strong>${intent.block}</strong></div>
+        </div>
+      </div>
+      <div style="margin-top:0.6rem;">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#aaa;"><span>Conviction ${conviction}/${target}</span><span>${target-conviction} more to win</span></div>
+        <div style="height:8px;background:#333;border-radius:4px;overflow:hidden;margin-top:3px;">
+          <div style="height:100%;background:#2ecc71;width:${pct}%;transition:width .3s;"></div>
+        </div>
+      </div>
+      ${played.length > 0 ? `<div style="margin-top:0.5rem;padding:0.4rem 0.6rem;background:#1a1a2e;border-radius:4px;font-size:0.75rem;color:#ccc;">
+        Preview: 🗣️${prevPersuasion} − 🛡️${intent.block} = <span style="color:#2ecc71;">+${prevConv} conviction</span> | ⚔️${intent.attack} − 🛡️${composure} = <span style="color:#e74c3c;">−${prevLoss}g</span>
+      </div>` : ''}
+    </div>`;
+  }
+
+  function renderHand() {
+    const el = document.getElementById('db-hand');
+    if (gameOver) { el.innerHTML = ''; return; }
+    const canPlay = played.length < 2;
+    el.innerHTML = `<div style="font-size:0.8rem;color:#aaa;margin-bottom:0.5rem;">🃏 Hand (play ${2 - played.length} more) | Deck: ${drawPile.length} | Discard: ${discardPile.length}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+      ${hand.map((c,i) => {
+        const isPlayed = played.includes(i);
+        const color = c.type==='persuasion'?'#2ecc71':c.type==='composure'?'#9b59b6':'#f39c12';
+        const border = isPlayed ? '#666' : color;
+        const opacity = isPlayed ? '0.3' : '1';
+        const typeLabel = c.type === 'both' ? '🗣️+🛡️' : (c.type === 'persuasion' ? '🗣️' : '🛡️');
+        return `<div onclick="${canPlay && !isPlayed ? 'dbPlayCard('+i+')' : ''}" style="padding:0.6rem 0.8rem;background:#1a1a2e;border:2px solid ${border};border-radius:8px;cursor:${canPlay&&!isPlayed?'pointer':'default'};min-width:110px;opacity:${opacity};transition:all .15s;">
+          <div style="font-size:0.85rem;font-weight:bold;">${c.name}</div>
+          <div style="font-size:0.75rem;color:${color};margin-top:0.2rem;">${typeLabel} ${c.type==='both'?c.value+'+'+c.value:c.value}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  function renderActions() {
+    const el = document.getElementById('db-actions');
+    if (gameOver) { el.innerHTML = ''; return; }
+    if (played.length >= 2) {
+      el.innerHTML = `<button class="btn btn-primary" onclick="dbEndTurn()">⚡ End Turn</button>`;
+    } else {
+      el.innerHTML = `<button class="btn btn-secondary" onclick="dbEndTurn()">⏭️ End Turn Early (${played.length}/2 played)</button>
+        <button class="btn btn-secondary" onclick="dbWalkAway()" style="margin-left:0.5rem;">🚪 Walk Away</button>`;
+    }
+  }
+
+  function renderLog() {
+    const el = document.getElementById('db-log');
+    el.innerHTML = log.slice(-4).map(l => `<div>${l}</div>`).join('');
+  }
+
+  function renderQuests() {
+    document.getElementById('db-quests').innerHTML = questCards.map(c => {
+      const done = quests.has(c.quest);
+      return `<label style="display:flex;align-items:center;gap:0.5rem;padding:0.4rem 0.6rem;background:${done?'#1e4d2b':'#2a2a4e'};border:1px solid ${done?'#2ecc71':'#444'};border-radius:4px;cursor:pointer;font-size:0.78rem;">
+        <input type="checkbox" ${done?'checked':''} onchange="dbToggleQuest('${c.quest}')">
+        <span style="color:${done?'#2ecc71':'#aaa'};">${c.questLabel} → ${c.name}</span>
+      </label>`;
+    }).join('');
+  }
+
+  // --- ACTIONS ---
+  window.dbPlayCard = function(i) {
+    if (played.length >= 2 || played.includes(i)) return;
+    played.push(i);
+    const card = hand[i];
+    if (card.type === 'composure' || card.type === 'both') composure += card.value;
+    document.getElementById('db-block').textContent = composure;
+    renderMerchant();
+    renderHand();
+    renderActions();
+  };
+
+  window.dbEndTurn = function() {
+    const intent = getIntent();
+    let persuasion = 0;
+    played.forEach(i => {
+      const c = hand[i];
+      if (c.type === 'persuasion' || c.type === 'both') persuasion += c.value;
+    });
+
+    // Resolve persuasion vs merchant block
+    const convGain = Math.max(0, persuasion - intent.block);
+    conviction = Math.min(getConvictionTarget(), conviction + convGain);
+
+    // Resolve merchant attack vs composure
+    const goldLoss = Math.max(0, intent.attack - composure);
+    gold -= goldLoss;
+
+    log.push(`Turn ${turn}: 🗣️${persuasion} vs 🛡️${intent.block} → +${convGain} conviction | ⚔️${intent.attack} vs 🛡️${composure} → −${goldLoss}g`);
+
+    // Discard played cards
+    hand.forEach(c => discardPile.push(c));
+    hand = [];
+
+    // Check win/lose
+    if (conviction >= getConvictionTarget()) {
+      gameOver = true;
+      const res = document.getElementById('db-result');
+      res.className = 'result win';
+      res.innerHTML = `✅ <strong>CONVINCED!</strong> The merchant extends his hand. Trade agreement secured!<br><span style="font-size:0.85rem;">Gold remaining: ${gold} (saved for Bazaar)</span>`;
+      renderAll();
+      return;
+    }
+    if (gold <= 0) {
+      gold = 0; gameOver = true;
+      const res = document.getElementById('db-result');
+      res.className = 'result lose';
+      res.innerHTML = `❌ <strong>BANKRUPT!</strong> The merchants took everything. You stumble back to the castle empty-handed.`;
+      renderAll();
+      return;
+    }
+
+    turn++;
+    drawHand();
+    renderAll();
+  };
+
+  window.dbWalkAway = function() {
+    gameOver = true;
+    const res = document.getElementById('db-result');
+    res.className = 'result info';
+    res.innerHTML = `🚪 You bow and leave. Gold: ${gold}. Come back with a stronger deck.<br><button class="btn btn-secondary" onclick="dbReset()" style="margin-top:0.5rem;">↺ Try Again</button>`;
+    renderAll();
+  };
+
+  window.dbToggleQuest = function(q) {
+    if (quests.has(q)) quests.delete(q); else quests.add(q);
+    // Rebuild deck on next reset
+    renderQuests();
+  };
+
+  window.dbSelectMerchant = function(i) {
+    currentMerchant = i;
+    dbReset();
+  };
+
+  window.dbReset = function() {
+    document.getElementById('db-result').innerHTML = '';
+    document.getElementById('db-result').className = 'result';
+    buildDeck();
+    gold = 80; conviction = 0; turn = 1; composure = 0; gameOver = false;
+    played = []; log = [];
+    drawHand();
+    renderAll();
+  };
+
+  init();
+})();
+</script>
+</div>
+
+
+<div id="prompt" class="panel">
+<h2>📝 Prompt Engineering</h2>
+<p class="subtitle">Replaces Recipe Sort. Write the right prompt for your Bazaar ally to find the feast menu.</p>
+<div style="background:#2a2a4e;border-radius:8px;padding:1rem;margin-bottom:1rem;">
+  <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem;"><span style="font-size:1.5rem;">🧙</span><div><strong>Anthropic Scholar</strong><br><span style="font-size:0.8rem;color:#aaa;">Waiting for instructions...</span></div></div>
+  <div id="pr-response" style="min-height:50px;padding:0.8rem;background:#1a1a2e;border-radius:6px;font-size:0.85rem;color:#aaa;font-style:italic;">Give me a prompt and I'll search the archive.</div>
+</div>
+<div style="font-size:0.8rem;color:#aaa;margin-bottom:0.5rem;">Construct your prompt (tap fragments):</div>
+<div id="pr-fragments" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.8rem;"></div>
+<div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.5rem;">
+  <div id="pr-built" style="flex:1;min-height:36px;padding:0.5rem;background:#1a1a2e;border:1px solid #444;border-radius:6px;font-size:0.85rem;color:#eee;"></div>
+  <button class="btn btn-secondary" onclick="prClear()">✕</button>
+</div>
+<div style="text-align:center;"><button class="btn btn-primary" onclick="prSubmit()">🔍 Send to Scholar</button></div>
+<div id="pr-result"></div>
+<script>
+(function(){
+  const fragments=[{id:'find',text:'Find',type:'action'},{id:'list',text:'List all',type:'action'},{id:'feast',text:'the feast menu',type:'what'},{id:'recipes',text:'recipes',type:'what'},{id:'scrolls',text:'all scrolls',type:'what'},{id:'archive',text:'in the recipe archive',type:'where'},{id:'kitchen',text:'in the kitchen',type:'where'},{id:'order',text:'sorted by course order',type:'format'},{id:'alpha',text:'sorted alphabetically',type:'format'},{id:'courses',text:'(appetizer, soup, main, dessert, drinks)',type:'detail'},{id:'cheap',text:'under 10 gold each',type:'detail'}];
+  let selected=[];
+  const answers=[{required:['find','feast','archive','order'],tier:'gold',response:'✅ PERFECT! Scholar finds the feast menu — courses in proper order.'},{required:['find','feast','archive','courses'],tier:'gold',response:'✅ PERFECT! Scholar identifies the 5-course menu by matching course types.'},{required:['find','feast','archive'],tier:'silver',response:'🥈 GOOD. Finds the menu but unsorted. You arrange courses yourself.'},{required:['find','feast'],tier:'bronze',response:'🥉 PARTIAL. Searches broadly — returns 3 possible menus.'},{required:['list','scrolls','archive'],tier:'fail',response:'❌ Returns ALL 200 scrolls. "You said list all." Too vague!'},{required:['find','recipes','kitchen'],tier:'fail',response:'❌ Searches kitchen counters. "Found a sticky note about porridge."'}];
+  function render(){const colors={action:'#3498db',what:'#2ecc71',where:'#f39c12',format:'#9b59b6',detail:'#e74c3c'};document.getElementById('pr-fragments').innerHTML=fragments.map(f=>{const a=selected.includes(f.id);return`<button onclick="prToggle('${f.id}')" style="padding:0.4rem 0.6rem;border:2px solid ${a?colors[f.type]:'#444'};background:${a?'#2a2a4e':'#1a1a2e'};color:${a?colors[f.type]:'#888'};border-radius:6px;cursor:pointer;font-size:0.8rem;">${f.text}</button>`;}).join('');document.getElementById('pr-built').textContent=selected.map(id=>fragments.find(f=>f.id===id).text).join(' ')||'(tap fragments to build prompt)';}
+  window.prToggle=function(id){if(selected.includes(id))selected=selected.filter(x=>x!==id);else selected.push(id);render();};
+  window.prClear=function(){selected=[];document.getElementById('pr-result').innerHTML='';document.getElementById('pr-response').textContent='Give me a prompt and I\'ll search the archive.';document.getElementById('pr-response').style.color='#aaa';render();};
+  window.prSubmit=function(){if(!selected.length)return;const match=answers.find(a=>a.required.every(r=>selected.includes(r)));const res=document.getElementById('pr-response'),result=document.getElementById('pr-result');if(match){res.textContent=match.response;res.style.color=match.tier==='gold'?'#2ecc71':match.tier==='silver'?'#3498db':match.tier==='bronze'?'#f39c12':'#e74c3c';result.className='result '+(match.tier==='gold'?'win':match.tier==='fail'?'lose':'info');result.textContent=match.tier==='gold'?'🎯 Gold tier! Specific action + target + location + format.':match.tier==='fail'?'💀 Failed — too vague or misdirected.':'⚡ '+match.tier+' tier. Works but not optimal.';}else{res.textContent='❌ Scholar confused. "I don\'t understand."';res.style.color='#e74c3c';result.className='result lose';result.textContent='Need: action + what + where.';}};
+  render();
+})();
+</script>
+</div>
+
+<div id="toolcall" class="panel">
+<h2>🔧 The Artificer's Booking Run</h2>
+<p class="subtitle">Watch the Artificer attempt each booking live. When he fails, fix the parameter before he retries.</p>
+<div id="tc3-scene" style="margin-bottom:1rem;"></div>
+<div id="tc3-fix" style="margin-bottom:1rem;"></div>
+<div id="tc3-log" style="max-height:200px;overflow-y:auto;font-size:0.78rem;color:#888;"></div>
+<div id="tc3-result"></div>
+<script>
+(function(){
+  const calls=[
+    {fn:'book_large_venue',params:{performer:'fire-breathers',budget:'100'},broken:'budget',answer:'50',
+     narrate:'"Right then! Main Stage first. Fire-breathers — GRAND! Budget... 100 gold should cover it!"',
+     fail:'"WHAT?! REJECTED! The King\'s Seal says 50 max?! I didn\'t read the fine print! Steward — fix the budget!"',
+     success:'"HA! 50 gold! Fire-breathers are BOOKED! The crowd will love it!"'},
+    {fn:'book_intimate_venue',params:{performer:'sir-reginald',budget:'30'},broken:'performer',answer:'bard',
+     narrate:'"Next — Tavern Corner. Intimate setting. I\'ll book Sir Reginald — he\'s the best bard in the realm!"',
+     fail:'"FORBIDDEN?! Cedar policy DENIES Sir Reginald?! He\'s the King\'s personal bard! Blast! Who else plays taverns, Steward?"',
+     success:'"A wandering bard! Perfect for the tavern. Intimate, acoustic, lovely."'},
+    {fn:'book_safe_venue',params:{performer:'royal-choir',budget:'25'},broken:'performer',answer:'jugglers',
+     narrate:'"Children\'s Area now. The Royal Choir would be educational, yes? Kids love singing!"',
+     fail:'"MISMATCH! The choir REFUSES to play a children\'s tent! They demand the Grand Finale stage! I need something... safer. Fun. Steward?"',
+     success:'"Jugglers! Of COURSE! Kids love jugglers! Safe, colorful, perfect!"'},
+    {fn:'book_grand_venue',params:{performer:'jugglers',budget:'50'},broken:'performer',answer:'royal-choir',
+     narrate:'"Last one — the Grand Finale! I\'ll put the jugglers here — big finish with balls in the air!"',
+     fail:'"MISMATCH AGAIN! Jugglers on the GRAND stage?! The venue demands gravitas! Something... MAJESTIC. What closes a festival, Steward?"',
+     success:'"The ROYAL CHOIR! Of course! Nothing less for the Grand Finale! *wipes oil from cheek* We did it, Steward!"'},
+  ];
+
+  const performerOpts=['fire-breathers','bard','jugglers','royal-choir','sir-reginald'];
+  const budgetOpts=['25','30','50','100'];
+  let step=0, phase='narrate', fixVal='', log=[];
+
+  function render(){
+    if(step>=calls.length){
+      document.getElementById('tc3-scene').innerHTML=`<div style="background:#1e4d2b;border:1px solid #2ecc71;border-radius:8px;padding:1rem;text-align:center;"><span style="font-size:2rem;">🔧✅</span><br><strong style="color:#2ecc71;">All 4 venues booked!</strong><br><span style="font-size:0.85rem;color:#aaa;">The Artificer bows with a flourish, oil dripping from his sleeve.</span></div>`;
+      document.getElementById('tc3-fix').innerHTML='';
+      document.getElementById('tc3-result').className='result win';
+      document.getElementById('tc3-result').textContent='✅ All tool calls fixed and executed! The festival has performers!';
+      return;
+    }
+    const c=calls[step];
+    const portrait=`<div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem;"><span style="font-size:1.8rem;">🔧</span><div><strong>The Artificer</strong><br><span style="font-size:0.75rem;color:#aaa;">Booking ${step+1}/4</span></div></div>`;
+
+    if(phase==='narrate'){
+      document.getElementById('tc3-scene').innerHTML=`<div style="background:#2a2a4e;border:1px solid #444;border-radius:8px;padding:1rem;">${portrait}<div style="font-size:0.9rem;color:#eee;font-style:italic;margin-bottom:0.8rem;">${c.narrate}</div><div style="font-family:monospace;font-size:0.8rem;background:#1a1a2e;padding:0.6rem;border-radius:4px;color:#3498db;">${c.fn}(<span style="color:#aaa;">performer:</span> <span style="color:#f39c12;">"${c.params.performer}"</span>, <span style="color:#aaa;">budget:</span> <span style="color:#f39c12;">${c.params.budget}</span>)</div></div>`;
+      document.getElementById('tc3-fix').innerHTML=`<div style="text-align:center;"><button class="btn btn-primary" onclick="tc3Execute()">⚡ Let him try</button></div>`;
+    } else if(phase==='fail'){
+      document.getElementById('tc3-scene').innerHTML=`<div style="background:#4d1e1e;border:1px solid #e74c3c;border-radius:8px;padding:1rem;">${portrait}<div style="font-size:0.9rem;color:#e74c3c;font-style:italic;margin-bottom:0.8rem;">${c.fail}</div><div style="font-family:monospace;font-size:0.8rem;background:#1a1a2e;padding:0.6rem;border-radius:4px;"><span style="color:#e74c3c;">❌ ${c.fn}(</span><span style="color:#aaa;">${c.broken}:</span> <span style="color:#e74c3c;text-decoration:line-through;">"${c.params[c.broken]}"</span> <span style="color:#f39c12;">← FIX</span><span style="color:#e74c3c;">)</span></div></div>`;
+      const opts=c.broken==='performer'?performerOpts:budgetOpts;
+      document.getElementById('tc3-fix').innerHTML=`<div style="display:flex;gap:0.5rem;align-items:center;justify-content:center;flex-wrap:wrap;"><span style="font-size:0.85rem;color:#aaa;">New ${c.broken}:</span>${opts.filter(o=>o!==c.params[c.broken]).map(o=>`<button onclick="tc3Pick('${o}')" class="btn btn-secondary" style="font-size:0.8rem;font-family:monospace;">${o}</button>`).join('')}</div>`;
+    } else if(phase==='success'){
+      document.getElementById('tc3-scene').innerHTML=`<div style="background:#1e4d2b;border:1px solid #2ecc71;border-radius:8px;padding:1rem;">${portrait}<div style="font-size:0.9rem;color:#2ecc71;font-style:italic;margin-bottom:0.8rem;">${c.success}</div><div style="font-family:monospace;font-size:0.8rem;background:#1a1a2e;padding:0.6rem;border-radius:4px;color:#2ecc71;">✅ ${c.fn}(performer: "${c.answer}", budget: ${c.broken==='budget'?c.answer:c.params.budget})</div></div>`;
+      document.getElementById('tc3-fix').innerHTML=`<div style="text-align:center;"><button class="btn btn-primary" onclick="tc3Next()">→ Next venue</button></div>`;
+    }
+    document.getElementById('tc3-log').innerHTML=log.map(l=>`<div>${l}</div>`).join('');
+  }
+
+  window.tc3Execute=function(){phase='fail';log.push(`<span style="color:#e74c3c;">❌ ${calls[step].fn} — FAILED</span>`);render();};
+  window.tc3Pick=function(val){
+    if(val===calls[step].answer){phase='success';log.push(`<span style="color:#2ecc71;">✅ ${calls[step].fn} — fixed & executed</span>`);}
+    else{log.push(`<span style="color:#f39c12;">⚠️ ${calls[step].fn}(${calls[step].broken}: "${val}") — still wrong</span>`);}
+    render();
+  };
+  window.tc3Next=function(){step++;phase='narrate';render();};
+  window.tc3Reset=function(){step=0;phase='narrate';log=[];document.getElementById('tc3-result').innerHTML='';document.getElementById('tc3-result').className='result';render();};
+
+  render();
+  const wrap=document.getElementById('toolcall');
+  const rb=document.createElement('div');rb.style.cssText='text-align:center;margin-top:0.5rem;';
+  rb.innerHTML='<button class="btn btn-secondary" onclick="tc3Reset()">↺ Reset</button>';
+  wrap.appendChild(rb);
+})();
+</script>
+</div>
+
+<div id="imgprompt" class="panel">
+<h2>🎨 Image Prompt Builder v2</h2>
+<p class="subtitle">Iterative image generation. Submit a prompt → see what the Painter generates → refine until it matches the noble's vision.</p>
+<div id="ip2-commission" style="margin-bottom:0.8rem;"></div>
+<div id="ip2-canvas" style="margin-bottom:0.8rem;"></div>
+<div id="ip2-prompt-area" style="margin-bottom:0.8rem;"></div>
+<div id="ip2-history" style="margin-bottom:0.5rem;"></div>
+<div id="ip2-result"></div>
+<script>
+(function(){
+  const commissions=[
+    {noble:'Lord Ashford',target:{color:'crimson',material:'oak',style:'bold'},desc:'"I want something DIGNIFIED. My house color. Strong wood. None of that flimsy stuff."',feedback:{color:{emerald:'Too green! That\'s BIRCH\'s color!',gold:'Gold? I\'m not the shared row!',purple:'Purple?! I\'m not royalty... well, I AM, but crimson is my color!',blue:'Blue? Do I look like a sailor?'},material:{willow:'Willow bends in the wind! I need STRENGTH!',iron:'Cold and impersonal. I\'m a noble, not a blacksmith.',marble:'Too heavy. This is a market stall, not a palace.',silk:'Silk tears! Oak endures, like House Ashford.'},style:{elegant:'Elegant is Birch\'s word. I want BOLD.',neutral:'Neutral?! I have OPINIONS!',ornate:'Too fussy. Bold and simple.',rustic:'I\'m not a farmer!'}}},
+    {noble:'Lady Birch',target:{color:'emerald',material:'willow',style:'elegant'},desc:'"Flowing. Refined. My emerald silk catches the afternoon light beautifully. Willow-woven signs — organic, graceful."',feedback:{color:{crimson:'Crimson?! That brute Ashford\'s color! NEVER!',gold:'Gold is for the shared row. I deserve distinction.',purple:'Close... but no. Emerald is MY signature.',blue:'Too cold. Emerald has warmth.'},material:{oak:'Oak is brutish! Ashford\'s taste, not mine.',iron:'Iron is for the shared row. I need grace.',marble:'Too rigid. Willow FLOWS.',silk:'Silk for the canopy yes, but signage needs willow weave.'},style:{traditional:'Traditional is Ashford\'s word. I am MODERN.',neutral:'I refuse to be neutral! I have taste!',ornate:'Ornate is trying too hard. Elegance is effortless.',rustic:'*fans herself* Absolutely not.'}}},
+    {noble:'Shared Row',target:{color:'gold',material:'iron',style:'neutral'},desc:'"Neither crimson nor emerald. Neither oak nor willow. Gold for shared prosperity. Iron — strong and impartial. Keep it neutral."',feedback:{color:{crimson:'Ashford will claim it as his! Must be neutral.',emerald:'Birch will claim it! Must be neutral.',purple:'Too distinctive. Gold is the diplomatic choice.',blue:'Unusual... but gold signals shared prosperity.'},material:{oak:'Ashford\'s material. Birch will object.',willow:'Birch\'s material. Ashford will object.',marble:'Too expensive for a shared row.',silk:'Too delicate for heavy foot traffic.'},style:{traditional:'Favors Ashford\'s sensibility.',elegant:'Favors Birch\'s sensibility.',ornate:'Both will argue about whose ornate it is.',rustic:'Both nobles would be insulted.'}}}
+  ];
+
+  let current=0, attempts=[], promptState={color:'',material:'',style:''};
+  const options={color:['crimson','emerald','gold','purple','blue'],material:['oak','willow','iron','marble','silk'],style:['bold','elegant','neutral','ornate','rustic']};
+
+  function render(){
+    const c=commissions[current];
+    // Commission tabs
+    document.getElementById('ip2-commission').innerHTML=`<div style="display:flex;gap:0.4rem;margin-bottom:0.6rem;">${commissions.map((cm,i)=>{const done=attempts.filter(a=>a.idx===i&&a.correct).length>0;return`<button onclick="ip2Sel(${i})" style="padding:0.4rem 0.6rem;border:2px solid ${i===current?'#e94560':done?'#2ecc71':'#444'};background:${i===current?'#2a2a4e':'#1a1a2e'};color:${done?'#2ecc71':'#eee'};border-radius:6px;cursor:pointer;font-size:0.75rem;">${done?'✅ ':''}${cm.noble}</button>`;}).join('')}</div>
+    <div style="background:#3d1f1f;border:1px solid #e74c3c;border-radius:8px;padding:0.7rem;"><strong>${c.noble}</strong><br><span style="font-size:0.83rem;color:#aaa;">${c.desc}</span></div>`;
+
+    // Canvas - shows "generated" result
+    const lastAttempt=attempts.filter(a=>a.idx===current).slice(-1)[0];
+    let canvas='<div style="padding:2rem;text-align:center;color:#666;font-style:italic;">No design generated yet. Write a prompt below.</div>';
+    if(lastAttempt){
+      const bg=lastAttempt.correct?'#1e4d2b':'#2a2a4e';
+      const border=lastAttempt.correct?'#2ecc71':'#f39c12';
+      canvas=`<div style="text-align:center;padding:1rem;">
+        <div style="font-size:3rem;margin-bottom:0.5rem;">${lastAttempt.correct?'🎨✅':'🎨❌'}</div>
+        <div style="font-size:0.9rem;color:#eee;margin-bottom:0.5rem;">"${lastAttempt.color} + ${lastAttempt.material} + ${lastAttempt.style}"</div>
+        <div style="font-size:0.85rem;color:${lastAttempt.correct?'#2ecc71':'#f39c12'};font-style:italic;">${lastAttempt.feedback}</div>
+      </div>`;
+    }
+    document.getElementById('ip2-canvas').innerHTML=`<div style="background:#1a1a2e;border:2px solid ${lastAttempt?.correct?'#2ecc71':'#444'};border-radius:8px;min-height:100px;">${canvas}</div>`;
+
+    // Prompt builder
+    document.getElementById('ip2-prompt-area').innerHTML=Object.entries(options).map(([key,opts])=>`<div style="margin-bottom:0.4rem;"><span style="font-size:0.7rem;color:#888;text-transform:uppercase;">${key}:</span><div style="display:flex;gap:0.3rem;flex-wrap:wrap;margin-top:0.2rem;">${opts.map(o=>`<button onclick="ip2Set('${key}','${o}')" style="padding:0.25rem 0.5rem;border:2px solid ${promptState[key]===o?'#e94560':'#444'};background:${promptState[key]===o?'#2a2a4e':'#1a1a2e'};color:${promptState[key]===o?'#eee':'#888'};border-radius:4px;cursor:pointer;font-size:0.75rem;">${o}</button>`).join('')}</div></div>`).join('')+`<div style="text-align:center;margin-top:0.6rem;"><button class="btn btn-primary" onclick="ip2Generate()">🎨 Generate</button></div>`;
+
+    // History
+    const hist=attempts.filter(a=>a.idx===current);
+    document.getElementById('ip2-history').innerHTML=hist.length?`<div style="font-size:0.75rem;color:#888;">Attempts: ${hist.length}/5 ${hist.length>=5&&!hist.some(a=>a.correct)?'<span style="color:#e74c3c;">— Max attempts reached!</span>':''}</div><div style="display:flex;gap:0.3rem;margin-top:0.3rem;">${hist.map(h=>`<span style="padding:0.2rem 0.4rem;background:${h.correct?'#1e4d2b':'#4d1e1e'};border-radius:3px;font-size:0.7rem;">${h.correct?'✅':'❌'}</span>`).join('')}</div>`:'';
+
+    // Final result
+    const allDone=commissions.every((_,i)=>attempts.some(a=>a.idx===i&&a.correct));
+    document.getElementById('ip2-result').innerHTML=allDone?'<div class="result win">✅ All 3 designs approved! The Court Painter unveils the canvases. Festival stalls are ready!</div>':'';
+  }
+
+  window.ip2Sel=function(i){current=i;promptState={color:'',material:'',style:''};render();};
+  window.ip2Set=function(k,v){promptState[k]=v;render();};
+  window.ip2Generate=function(){
+    if(!promptState.color||!promptState.material||!promptState.style)return;
+    const c=commissions[current];
+    const correct=promptState.color===c.target.color&&promptState.material===c.target.material&&promptState.style===c.target.style;
+    let feedback='';
+    if(correct){feedback='The noble nods approvingly. "PERFECT. Exactly what I envisioned."';}
+    else{
+      const wrong=Object.keys(c.target).find(k=>promptState[k]!==c.target[k]);
+      feedback=c.feedback[wrong]?.[promptState[wrong]]||'"Hmm... not quite right. Try again."';
+    }
+    attempts.push({idx:current,color:promptState.color,material:promptState.material,style:promptState.style,correct,feedback});
+    render();
+  };
+
+  render();
+})();
+</script>
+</div>
+
+
+<div id="cafe" class="panel">
+<h2>☕ Café Orders</h2>
+<p class="subtitle">Recurring distractor. Customers order drinks every 60s. Pick cup, add ingredients in order, serve. Ignore = unhappy customers.</p>
+
+<div style="display:flex;gap:1rem;margin:1rem 0;flex-wrap:wrap;">
+  <div style="flex:1;min-width:120px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">Sentiment</div>
+    <div id="cafe-sentiment" style="font-size:1.5rem;">😊</div>
+  </div>
+  <div style="flex:1;min-width:120px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">Served</div>
+    <div id="cafe-served" style="font-size:1.2rem;font-weight:bold;color:#2ecc71;">0</div>
+  </div>
+  <div style="flex:1;min-width:120px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">Waiting</div>
+    <div id="cafe-waiting" style="font-size:1.2rem;font-weight:bold;color:#f39c12;">0</div>
+  </div>
+</div>
+
+<div style="margin-bottom:0.8rem;text-align:right;"><button onclick="document.getElementById('cafe-menu').style.display=document.getElementById('cafe-menu').style.display==='none'?'block':'none'" style="padding:0.4rem 0.8rem;background:#2a2a4e;border:1px solid #444;border-radius:4px;color:#f39c12;cursor:pointer;font-size:0.8rem;">📖 Menu / Recipes</button></div>
+<div id="cafe-menu" style="display:none;background:#2a2a4e;border:1px solid #444;border-radius:8px;padding:0.8rem;margin-bottom:1rem;max-height:300px;overflow-y:auto;">
+<div style="font-size:0.8rem;font-weight:bold;color:#f39c12;margin-bottom:0.5rem;">☕ Recipe Book</div>
+<table style="width:100%;font-size:0.75rem;border-collapse:collapse;">
+<tr style="color:#aaa;border-bottom:1px solid #444;"><th style="text-align:left;padding:4px;">Drink</th><th style="text-align:left;padding:4px;">Cup</th><th style="text-align:left;padding:4px;">Ingredients (in order)</th></tr>
+<tr><td style="padding:4px;">Hot Americano</td><td style="padding:4px;">☕ Hot</td><td style="padding:4px;">Espresso → Hot Water</td></tr>
+<tr><td style="padding:4px;">Iced Americano</td><td style="padding:4px;">🧊 Cold</td><td style="padding:4px;">Ice → Espresso → Cold Water</td></tr>
+<tr><td style="padding:4px;">Hot Latte</td><td style="padding:4px;">☕ Hot</td><td style="padding:4px;">Espresso → Steamed Milk</td></tr>
+<tr><td style="padding:4px;">Iced Latte</td><td style="padding:4px;">🧊 Cold</td><td style="padding:4px;">Ice → Espresso → Milk → Syrup</td></tr>
+<tr><td style="padding:4px;">Matcha Latte</td><td style="padding:4px;">🧊 Cold</td><td style="padding:4px;">Ice → Matcha → Milk</td></tr>
+<tr><td style="padding:4px;">Hot Tea</td><td style="padding:4px;">☕ Hot</td><td style="padding:4px;">Tea Bag → Hot Water</td></tr>
+<tr><td style="padding:4px;">Butterfly Pea Soda</td><td style="padding:4px;">🧊 Cold</td><td style="padding:4px;">Ice → Nata De Coco → Butterfly Pea → Soda Water → Lemon</td></tr>
+<tr><td style="padding:4px;">Hot Chocolate</td><td style="padding:4px;">☕ Hot</td><td style="padding:4px;">Cocoa → Hot Milk → Whipped Cream</td></tr>
+<tr><td style="padding:4px;">Iced Chocolate</td><td style="padding:4px;">🧊 Cold</td><td style="padding:4px;">Ice → Cocoa → Milk → Chocolate Syrup</td></tr>
+</table>
+</div>
+<div id="cafe-order" style="margin-bottom:1rem;"></div>
+<div id="cafe-workspace" style="margin-bottom:1rem;"></div>
+<div id="cafe-result" style="min-height:20px;text-align:center;font-size:0.85rem;"></div>
+
+<script>
+(function(){
+  const recipes = {
+    'Hot Americano':      {cup:'hot', ingredients:['Espresso','Hot Water']},
+    'Iced Americano':     {cup:'cold', ingredients:['Ice','Espresso','Cold Water']},
+    'Hot Latte':          {cup:'hot', ingredients:['Espresso','Steamed Milk']},
+    'Iced Latte':         {cup:'cold', ingredients:['Ice','Espresso','Milk','Syrup']},
+    'Matcha Latte':       {cup:'cold', ingredients:['Ice','Matcha','Milk']},
+    'Hot Tea':            {cup:'hot', ingredients:['Tea Bag','Hot Water']},
+    'Butterfly Pea Soda': {cup:'cold', ingredients:['Ice','Nata De Coco','Butterfly Pea','Soda Water','Lemon']},
+    'Hot Chocolate':      {cup:'hot', ingredients:['Cocoa','Hot Milk','Whipped Cream']},
+    'Iced Chocolate':     {cup:'cold', ingredients:['Ice','Cocoa','Milk','Chocolate Syrup']},
+  };
+
+  const allIngredients = ['Ice','Espresso','Hot Water','Cold Water','Steamed Milk','Milk','Syrup','Matcha','Tea Bag','Butterfly Pea','Soda Water','Lemon','Cocoa','Hot Milk','Whipped Cream','Chocolate Syrup'];
+  const drinkNames = Object.keys(recipes);
+
+  let queue = [], served = 0, sentiment = 100, chosenCup = null, addedIngredients = [];
+  let orderInterval = null;
+
+  function randomDrink() { return drinkNames[Math.floor(Math.random() * drinkNames.length)]; }
+
+  function addOrder() {
+    if (queue.length >= 4) { sentiment = Math.max(0, sentiment - 15); render(); return; }
+    queue.push({drink: randomDrink(), time: Date.now()});
+    render();
+  }
+
+  function getSentimentEmoji() {
+    if (sentiment >= 80) return '😊';
+    if (sentiment >= 60) return '😐';
+    if (sentiment >= 40) return '😤';
+    return '😡';
+  }
+
+  function render() {
+    document.getElementById('cafe-sentiment').textContent = getSentimentEmoji();
+    document.getElementById('cafe-served').textContent = served;
+    document.getElementById('cafe-waiting').textContent = queue.length;
+
+    // Current order
+    const orderEl = document.getElementById('cafe-order');
+    if (queue.length === 0) {
+      orderEl.innerHTML = '<div style="text-align:center;padding:1rem;color:#666;font-style:italic;">No orders yet... waiting for customers.</div>';
+      document.getElementById('cafe-workspace').innerHTML = '';
+      return;
+    }
+    const current = queue[0];
+    const recipe = recipes[current.drink];
+    const waitSec = Math.floor((Date.now() - current.time) / 1000);
+    orderEl.innerHTML = `<div style="background:#3d2a1f;border:1px solid #f39c12;border-radius:8px;padding:0.8rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><strong style="color:#f39c12;">Order: ${current.drink}</strong></div>
+        <div style="font-size:0.75rem;color:${waitSec>30?'#e74c3c':'#aaa'};">⏱️ ${waitSec}s</div>
+      </div>
+      ${queue.length > 1 ? `<div style="font-size:0.75rem;color:#888;margin-top:0.3rem;">+${queue.length-1} more in queue</div>` : ''}
+    </div>`;
+
+    // Workspace
+    const ws = document.getElementById('cafe-workspace');
+    let html = '';
+
+    // Cup selection
+    html += `<div style="margin-bottom:0.8rem;"><div style="font-size:0.75rem;color:#aaa;margin-bottom:0.3rem;">1. Choose cup:</div><div style="display:flex;gap:0.5rem;">
+      <button onclick="cafeCup('hot')" style="padding:0.5rem 1rem;border:2px solid ${chosenCup==='hot'?'#e74c3c':'#444'};background:${chosenCup==='hot'?'#3d1f1f':'#1a1a2e'};color:#eee;border-radius:6px;cursor:pointer;font-size:0.85rem;">☕ Hot Cup</button>
+      <button onclick="cafeCup('cold')" style="padding:0.5rem 1rem;border:2px solid ${chosenCup==='cold'?'#3498db':'#444'};background:${chosenCup==='cold'?'#1f2a3d':'#1a1a2e'};color:#eee;border-radius:6px;cursor:pointer;font-size:0.85rem;">🧊 Cold Cup</button>
+    </div></div>`;
+
+    // Added ingredients - visual cup
+    const cupColors = {'Ice':'#e0f4ff','Nata De Coco':'#f5f0e0','Espresso':'#3d1f0a','Hot Water':'#f5e6d3','Cold Water':'#d4eaf7','Steamed Milk':'#fff8f0','Milk':'#fff','Syrup':'#c8860a','Matcha':'#7ab648','Tea Bag':'#a0522d','Butterfly Pea':'#4a3ab5','Soda Water':'#e8f8ff','Lemon':'#fff44f','Cocoa':'#5c3317','Hot Milk':'#fff8f0','Whipped Cream':'#fffef5','Chocolate Syrup':'#2c1810'};
+    const totalSlots = 5;
+    const layers = addedIngredients.map(ing => `<div style="flex:1;background:${cupColors[ing]||'#888'};"></div>`).join('');
+    const emptySlots = Math.max(0, totalSlots - addedIngredients.length);
+    const empty = Array(emptySlots).fill('<div style="flex:1;border-top:1px dashed #333;"></div>').join('');
+
+    html += `<div style="margin-bottom:0.8rem;"><div style="font-size:0.75rem;color:#aaa;margin-bottom:0.3rem;">2. Your cup:</div>
+      <div style="display:flex;justify-content:center;align-items:flex-end;gap:1rem;">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          ${!chosenCup?'<div style="font-size:0.7rem;color:#555;margin-bottom:0.3rem;">Pick a cup ↑</div>':''}
+          <div style="width:80px;height:140px;border:3px solid ${chosenCup==='hot'?'#e74c3c':chosenCup==='cold'?'#3498db':'#555'};border-top:none;border-radius:0 0 12px 12px;background:#0a0e17;display:flex;flex-direction:column-reverse;overflow:hidden;">
+            ${layers}${empty}
+          </div>
+          <div style="font-size:0.7rem;color:#888;margin-top:0.3rem;">${addedIngredients.length}/5 layers</div>
+        </div>
+        <div style="font-size:0.75rem;color:#888;">
+          ${addedIngredients.length ? [...addedIngredients].reverse().map((ing,i) => `<div><span style="display:inline-block;width:10px;height:10px;background:${cupColors[ing]||'#888'};border-radius:2px;margin-right:4px;"></span>${ing}</div>`).join('') : '<div style="color:#555;">Empty</div>'}
+          ${addedIngredients.length ? `<button onclick="cafeUndo()" style="margin-top:0.3rem;padding:0.2rem 0.5rem;background:#4d1e1e;border:1px solid #e74c3c;border-radius:4px;color:#e74c3c;cursor:pointer;font-size:0.7rem;">↩ Undo</button>` : ''}
+        </div>
+      </div>
+    </div>`;
+
+    // Ingredient buttons - categorized columns
+    const ingredientGroups = [
+      {label:'🧊 Base', items:['Ice','Nata De Coco']},
+      {label:'💧 Water', items:['Hot Water','Cold Water','Soda Water']},
+      {label:'☕ Coffee', items:['Espresso']},
+      {label:'🍵 Tea', items:['Tea Bag','Matcha','Butterfly Pea']},
+      {label:'🥛 Dairy', items:['Steamed Milk','Milk','Hot Milk','Whipped Cream']},
+      {label:'🍫 Extras', items:['Syrup','Cocoa','Chocolate Syrup','Lemon']},
+    ];
+    html += `<div style="margin-bottom:0.8rem;"><div style="font-size:0.75rem;color:#aaa;margin-bottom:0.3rem;">3. Tap to add ingredient:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+        ${ingredientGroups.map(g => `<div style="background:#1a1a2e;border:1px solid #333;border-radius:6px;padding:0.4rem;"><div style="font-size:0.7rem;color:#666;margin-bottom:0.3rem;">${g.label}</div>${g.items.map(ing => `<button onclick="cafeAdd('${ing}')" style="display:block;width:100%;padding:0.3rem 0.5rem;margin-bottom:0.2rem;background:#2a2a4e;border:1px solid #444;border-radius:4px;color:#eee;cursor:pointer;font-size:0.73rem;text-align:left;border-left:3px solid ${cupColors[ing]||'#888'};">${ing}</button>`).join('')}</div>`).join('')}
+      </div>
+    </div>`;
+
+    // Serve button
+    html += `<div style="text-align:center;"><button onclick="cafeServe()" class="btn btn-primary" style="padding:0.6rem 2rem;">🍽️ Serve</button> <button onclick="cafeReset()" class="btn btn-secondary">↺ Clear</button></div>`;
+
+    ws.innerHTML = html;
+  }
+
+  window.cafeCup = function(type) { chosenCup = type; render(); };
+  window.cafeAdd = function(ing) { if (addedIngredients.length < 5) { addedIngredients.push(ing); render(); } };
+  window.cafeUndo = function() { addedIngredients.pop(); render(); };
+  window.cafeReset = function() { chosenCup = null; addedIngredients = []; document.getElementById('cafe-result').innerHTML = ''; render(); };
+
+  window.cafeServe = function() {
+    if (!queue.length) return;
+    const current = queue[0];
+    const recipe = recipes[current.drink];
+    const res = document.getElementById('cafe-result');
+
+    if (!chosenCup) { res.innerHTML = '<span style="color:#e74c3c;">Pick a cup first!</span>'; return; }
+    if (chosenCup !== recipe.cup) { res.innerHTML = `<span style="color:#e74c3c;">Wrong cup! ${current.drink} needs a ${recipe.cup} cup.</span>`; return; }
+    if (addedIngredients.length < 5) { res.innerHTML = '<span style="color:#e74c3c;">Fill the cup! (need 5 layers)</span>'; return; }
+
+    // Check required ingredients appear in order (extras/duplicates OK)
+    let searchFrom = 0;
+    let valid = true;
+    for (const req of recipe.ingredients) {
+      const idx = addedIngredients.indexOf(req, searchFrom);
+      if (idx === -1) { valid = false; break; }
+      searchFrom = idx + 1;
+    }
+    if (!valid) {
+      res.innerHTML = `<span style="color:#e74c3c;">Missing ingredient or wrong order! Check the recipe.</span>`;
+      return;
+    }
+
+    // Success!
+    queue.shift();
+    served++;
+    sentiment = Math.min(100, sentiment + 10);
+    chosenCup = null;
+    addedIngredients = [];
+    res.innerHTML = `<span style="color:#2ecc71;">✅ ${current.drink} served! Customer happy.</span>`;
+    setTimeout(() => { res.innerHTML = ''; render(); }, 1500);
+    render();
+  };
+
+  // Decay sentiment for waiting orders
+  setInterval(() => {
+    if (queue.length > 0) { sentiment = Math.max(0, sentiment - queue.length * 2); render(); }
+  }, 5000);
+
+  // New order every 15s for prototype (60s in real game)
+  addOrder();
+  orderInterval = setInterval(addOrder, 15000);
+  render();
+})();
+</script>
+</div>
+
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => {
+    if (b.onclick && b.onclick.toString().includes(id)) b.classList.add('active');
+  });
+}
+</script>
+</body>
+</html>

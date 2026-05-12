@@ -54,6 +54,9 @@
       "color": "green",
       "title": "Combination Room",
       "description": "A room with two tables. On the left table: a device. On the right table: a power cell. A door ahead is shut. The screen reads: \"Diagnostic Test 2b: Wrong combinations have consequences.\"",
+      "challenge": {
+        "description": "A room with two tables. On the left table: a device with many ports. On the right table: a power cell. A door ahead is shut. The screen reads: \"Diagnostic Test 2b: Wrong combinations have consequences.\"<br><br>A faded schematic is taped to the wall:<br>PWR → V+<br>DAT → I/O<br>GND → V−<br>CLK → SYNC<br>RST → INIT<br><span style=\"color:var(--red)\">NULL → ✕ (decoy)</span>"
+      },
       "image": "assets/combination-room.png",
       "reveals": [],
       "discoveries": [
@@ -177,6 +180,9 @@
       "color": "red",
       "title": "Data Fragment",
       "description": "A piece of encrypted data. It reads: dW5sb2Nr",
+      "challenge": {
+        "description": "A piece of encrypted data. It reads: cmVib290"
+      },
       "image": "assets/card-data-fragment.png",
       "image_prompt": "A glowing holographic data shard, fractured crystal with encrypted symbols floating around it, neon blue light",
       "visible_to": "all",
@@ -190,6 +196,9 @@
       "title": "Code Room",
       "short_description": "The final room. A terminal with a text input. Decode and reorder to escape.",
       "description": "The final room. A terminal with a text input. The screen reads: \"Diagnostic Test 4: Decode and reorder.\"<br><br>A reference chart on the wall shows:<br>\"Base64 is an encoding format. Use the decoder tool below.\"<br><br>Below it, a color key labels each decoded letter by position:<br>🟢 1st &nbsp; ⬜ 2nd &nbsp; 🟣 3rd &nbsp; 🩷 4th &nbsp; 🔴 5th &nbsp; 🔵 6th<br><br>The EXIT CODE sequence on the terminal reads:<br>🟣 🩷 🔴 🔵 ⬜ 🟢<br><br>Rearrange the decoded letters in the EXIT CODE color order to find the answer.",
+      "challenge": {
+        "description": "The final room. A terminal with a text input. The screen reads: \"Diagnostic Test 4: Decode and reorder.\"<br><br>A reference chart on the wall shows:<br>\"Base64 is an encoding format. Use the decoder tool below.\"<br><br>Below it, a color key labels each decoded letter by position:<br>🟢 1st &nbsp; ⬜ 2nd &nbsp; 🟣 3rd &nbsp; 🩷 4th &nbsp; 🔴 5th &nbsp; 🔵 6th<br><br>The EXIT CODE sequence on the terminal reads:<br>🟣 🩷 🔴 🔵 ⬜ 🟢<br><br>Rearrange the decoded letters in the EXIT CODE color order to find the answer."
+      },
       "image": "assets/code-room.png",
       "reveals": [],
       "discoveries": [

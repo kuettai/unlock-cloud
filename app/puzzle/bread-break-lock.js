@@ -34,6 +34,8 @@ class BreadBreakLock {
     this.holdMin = opts.holdMin || 0.4;
     this.holdMax = opts.holdMax || 1.2;
     this.multiplier = opts.multiplier || [2, 10, 100, 1000, 5000];
+    this.randomizeHold = opts.randomizeHold || false;
+    this._holdRange = this.holdMax - this.holdMin;
     this.onSubmit = opts.onSubmit || (() => {});
     this.onCrumble = opts.onCrumble || null;
     this.breaks = 0;
@@ -75,6 +77,8 @@ class BreadBreakLock {
     maxMark.className = 'bblk-mark bblk-mark-max';
     maxMark.style.left = `${(this.holdMax / (this.holdMax * 1.3)) * 100}%`;
     barWrap.appendChild(maxMark);
+    this._minMark = minMark;
+    this._maxMark = maxMark;
     wrap.appendChild(barWrap);
 
     // Items row
@@ -179,6 +183,14 @@ class BreadBreakLock {
 
     this.barFill.style.width = '0%';
     this.statusEl.textContent = `✅ ${this.items[idx].label} broken! (${this.breaks}/${this.items.length})`;
+
+    // Randomize timing for next item
+    if (this.randomizeHold) {
+      this.holdMin = 0.3 + Math.random() * 0.7;
+      this.holdMax = this.holdMin + this._holdRange;
+      this._minMark.style.left = `${(this.holdMin / (this.holdMax * 1.3)) * 100}%`;
+      this._maxMark.style.left = `${(this.holdMax / (this.holdMax * 1.3)) * 100}%`;
+    }
 
     // Check win
     if (this.items.every(i => i.broken)) {

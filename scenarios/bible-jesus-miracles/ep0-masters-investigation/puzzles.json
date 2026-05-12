@@ -124,6 +124,27 @@
           "The servants' stories don't match. Something is off..."
         ]
       },
+      "challenge": {
+        "config": {
+          "wires": [
+            { "id": "testimony-water", "color": "#3b82f6", "label": "From the water pots" },
+            { "id": "testimony-woman", "color": "#22c55e", "label": "'Do whatever he tells you'" },
+            { "id": "testimony-filled", "color": "#a855f7", "label": "Filled to the brim" },
+            { "id": "testimony-eastern", "color": "#eab308", "label": "Pointed toward the eastern corner" }
+          ],
+          "sockets": [
+            { "id": "tobiah", "label": "Tobiah" },
+            { "id": "reuben", "label": "Reuben" },
+            { "id": "amos", "label": "Amos" },
+            { "id": "ezra", "label": "Ezra" }
+          ],
+          "solution": {
+            "testimony-water": "tobiah",
+            "testimony-woman": "reuben",
+            "testimony-filled": "amos"
+          }
+        }
+      },
       "hints": [
         "Listen carefully to each servant's words during the conversation. Who said what?",
         "Tobiah spoke about the water pots first. Reuben mentioned the woman. Amos confirmed they filled the jars.",
@@ -154,8 +175,8 @@
       "ui": "jar-fill-lock",
       "config": {
         "mode": "timing",
-        "pourSpeed": 1.8,
-        "tolerance": 0.2,
+        "pourSpeed": 1.5,
+        "tolerance": 0.3,
         "spillMessage": "Water spilled! The servants were more careful than you...",
         "jars": [
           {
@@ -191,6 +212,12 @@
         ]
       },
       "success_card": 146,
+      "challenge": {
+        "config": {
+          "pourSpeed": 1.8,
+          "tolerance": 0.2
+        }
+      },
       "hints": [
         "Hold down on each jar to pour water. Release when the water reaches the brim line.",
         "The larger jars (I, III, VI) hold 3 metretes. The smaller ones (II, IV, V) hold 2. Pour carefully.",
@@ -210,6 +237,11 @@
           "That's the maximum. What's the minimum volume?",
           "That's the number of jars, not the total volume."
         ]
+      },
+      "challenge": {
+        "config": {
+          "falseOutputs": []
+        }
       },
       "success_card": 149,
       "hints": [
@@ -242,7 +274,13 @@
             "Wine from another town",
             "No delivery records exist"
           ]
-        ]
+        ],
+        "revealed": true
+      },
+      "challenge": {
+        "config": {
+          "revealed": false
+        }
       },
       "success_card": 169,
       "hints": [
@@ -329,66 +367,19 @@
         "cols": 5,
         "rows": 4,
         "walls": [
-          [
-            0,
-            1,
-            "S"
-          ],
-          [
-            0,
-            3,
-            "W"
-          ],
-          [
-            0,
-            3,
-            "S"
-          ],
-          [
-            1,
-            0,
-            "E"
-          ],
-          [
-            1,
-            2,
-            "S"
-          ],
-          [
-            1,
-            3,
-            "E"
-          ],
-          [
-            2,
-            1,
-            "E"
-          ],
-          [
-            2,
-            2,
-            "W"
-          ],
-          [
-            2,
-            4,
-            "W"
-          ],
-          [
-            3,
-            1,
-            "W"
-          ]
+          [0, 1, "S"],
+          [0, 3, "W"],
+          [0, 3, "S"],
+          [1, 0, "E"],
+          [1, 2, "S"],
+          [1, 3, "E"],
+          [2, 1, "E"],
+          [2, 2, "W"],
+          [2, 4, "W"],
+          [3, 1, "W"]
         ],
-        "start": {
-          "row": 0,
-          "col": 0,
-          "facing": "E"
-        },
-        "goal": {
-          "row": 3,
-          "col": 4
-        },
+        "start": { "row": 0, "col": 0, "facing": "E" },
+        "goal": { "row": 3, "col": 4 },
         "showWalls": false,
         "showGoal": false,
         "fallOnBump": true,
@@ -396,6 +387,34 @@
         "showSteps": true,
         "bumpMessage": "You stumble into a table in the dark! Back to the shop entrance...",
         "bumpPenalty": 10
+      },
+      "challenge": {
+        "config": {
+          "cols": 6,
+          "rows": 5,
+          "walls": [
+            [0, 1, "S"],
+            [0, 3, "W"],
+            [0, 3, "S"],
+            [0, 5, "S"],
+            [1, 0, "E"],
+            [1, 2, "S"],
+            [1, 3, "E"],
+            [1, 4, "S"],
+            [2, 1, "E"],
+            [2, 2, "W"],
+            [2, 4, "W"],
+            [2, 5, "W"],
+            [3, 0, "S"],
+            [3, 1, "W"],
+            [3, 3, "S"],
+            [3, 4, "E"],
+            [4, 2, "W"]
+          ],
+          "start": { "row": 0, "col": 0, "facing": "E" },
+          "goal": { "row": 4, "col": 5 },
+          "bumpPenalty": 15
+        }
       },
       "success_card": 168,
       "hints": [
@@ -414,6 +433,9 @@
         "solution": "WINE",
         "max_length": 4,
         "case_sensitive": false
+      },
+      "challenge": {
+        "description": "What did Mary tell her son was missing at the wedding?"
       },
       "success_card": 191,
       "hints": [
@@ -478,87 +500,56 @@
     },
     {
       "id": "first-sign",
-      "type": "sort_lock",
+      "type": "witness_lock",
       "card_ref": 200,
-      "description": "Order the events of the miracle as the disciples witnessed them",
-      "ui": "sort-lock",
+      "description": "Match the disciples' testimonies to the correct moments of the miracle",
+      "ui": "witness-lock",
       "config": {
-        "answer": [
+        "testimonies": [
+          { "id": "t1", "who": "Simon", "quote": "\"I saw Mary whisper to him. He seemed reluctant at first.\"", "moment": "Mary told her son and he said his hour had not come" },
+          { "id": "t2", "who": "Andrew", "quote": "\"The servants filled those huge jars — all six, to the very brim!\"", "moment": "Servants filled six stone jars with water" },
+          { "id": "t3", "who": "Simon", "quote": "\"She just told them: do whatever he says. Such confidence!\"", "moment": "Mary told the servants to obey him" },
+          { "id": "t4", "who": "Andrew", "quote": "\"He simply said: draw some out, take it to the master of the feast.\"", "moment": "He commanded them to draw out and serve" },
+          { "id": "t5", "who": "Simon", "quote": "\"The look on Matthias's face when he tasted it — pure shock!\"", "moment": "The ruler of the feast tasted and was astonished" },
+          { "id": "t6", "who": "Andrew", "quote": "\"Everyone was talking — the wine had run out, the feast was ruined!\"", "moment": "The wine ran out at the wedding" }
+        ],
+        "moments": [
           "The wine ran out at the wedding",
-          "Mary told her son, 'They have no wine'",
-          "He said, 'My hour has not yet come'",
-          "Mary told the servants, 'Do whatever he tells you'",
-          "He told the servants to fill the jars with water",
-          "The servants filled six stone jars to the brim",
-          "He said, 'Draw some out and take it to the ruler'",
-          "Matthias tasted the wine and was astonished"
+          "Mary told her son and he said his hour had not come",
+          "Mary told the servants to obey him",
+          "Servants filled six stone jars with water",
+          "He commanded them to draw out and serve",
+          "The ruler of the feast tasted and was astonished"
         ]
       },
       "success_card": 211,
       "hints": [
-        "Think about the sequence of events. What happened first — the problem, or the solution?",
-        "The wine ran out → Mary told her son → He hesitated → She told the servants to obey → He gave instructions → They filled the jars → They drew out wine → You tasted it.",
-        "Order: wine ran out, Mary spoke to son, 'my hour has not yet come', 'do whatever he tells you', fill jars, filled to brim, draw some out, Matthias tasted."
+        "Read each quote carefully — what specific action is the disciple describing?",
+        "Simon saw Mary speak, the servants obey, and Matthias react. Andrew saw the crisis, the filling, and the command.",
+        "Match: 'reluctant' = Mary told son, 'filled jars' = servants filled, 'do whatever' = Mary told servants, 'draw some out' = his command, 'shock' = tasting, 'wine ran out' = the crisis."
       ]
     },
     {
       "id": "investigation-timeline",
-      "type": "timeline_lock",
+      "type": "evidence_board_lock",
       "card_ref": 220,
-      "description": "Arrange Matthias's investigation steps in order, matching each to its key finding",
-      "ui": "timeline-lock",
+      "description": "Connect each investigation step to its key finding",
+      "ui": "evidence-board-lock",
       "config": {
-        "events": [
-          {
-            "id": "a",
-            "label": "Tasted the extraordinary wine",
-            "time": "1"
-          },
-          {
-            "id": "b",
-            "label": "Questioned Ezra the steward",
-            "time": "2"
-          },
-          {
-            "id": "c",
-            "label": "Interviewed the three servants",
-            "time": "3"
-          },
-          {
-            "id": "d",
-            "label": "Examined the six stone jars",
-            "time": "4"
-          },
-          {
-            "id": "e",
-            "label": "Visited Joachim the merchant",
-            "time": "5"
-          },
-          {
-            "id": "f",
-            "label": "Spoke with Mary the mother",
-            "time": "6"
-          },
-          {
-            "id": "g",
-            "label": "Met Simon and the disciples",
-            "time": "7"
-          }
-        ],
-        "answer": [
-          "a",
-          "b",
-          "c",
-          "d",
-          "e",
-          "f",
-          "g"
+        "connections": [
+          { "step": "Tasted the extraordinary wine", "finding": "This wine is impossibly good — better than what was served first", "icon": "🍷" },
+          { "step": "Questioned Ezra the steward", "finding": "Ezra confirmed the wine ran out — he never ordered more", "icon": "📋" },
+          { "step": "Interviewed the three servants", "finding": "They only carried water — they saw it change in the jars", "icon": "👥" },
+          { "step": "Examined the six stone jars", "finding": "Jars held 120 gallons total — all now contain wine, not water", "icon": "🏺" },
+          { "step": "Visited Joachim the merchant", "finding": "No wine was purchased or delivered — his records prove it", "icon": "📦" },
+          { "step": "Spoke with Mary the mother", "finding": "She saw the teacher speak quietly to the servants before they drew", "icon": "👰" },
+          { "step": "Met Simon and the disciples", "finding": "They witnessed every step — water in, wine out, no trick", "icon": "👁️" }
         ]
       },
       "hints": [
-        "Retrace your steps through the investigation. Where did you start?",
-        "You tasted the wine, then questioned Ezra, then the servants, then the jars, then the merchant, then Mary, then the disciples.",
-        "Order: wine → Ezra → servants → jars → Joachim → Mary → Simon & Andrew."
+        "Think about what each step would logically reveal. What would examining jars tell you?",
+        "Tasting = quality. Ezra = no order placed. Servants = they carried water. Jars = volume. Joachim = no purchase. Mary = she saw him speak. Disciples = eyewitnesses.",
+        "Match each step to the finding that ONLY that step could reveal."
       ]
     },
     {

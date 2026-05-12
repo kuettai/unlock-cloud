@@ -19,6 +19,7 @@ class SgLock {
   constructor(container, opts = {}) {
     this.container = container;
     this.rules = opts.rules || [];
+    this.headers = opts.headers || null;
     this.onSubmit = opts.onSubmit || (() => {});
     this.states = this.rules.map(() => 'deny');
     this._render();
@@ -31,10 +32,13 @@ class SgLock {
 
     const table = document.createElement('div');
     table.className = 'sglk-table';
+    const headers = this.headers || ['Protocol','Port','Source','Action'];
+    const numCols = headers.length;
+    const gridCols = `repeat(${numCols},1fr)`;
     // Header
     const hdr = document.createElement('div');
     hdr.className = 'sglk-row sglk-hdr';
-    const headers = ['Protocol','Port','Source','Action'];
+    hdr.style.gridTemplateColumns = gridCols;
     headers.forEach(h => { const c = document.createElement('div'); c.className = 'sglk-cell'; c.textContent = h; hdr.appendChild(c); });
     table.appendChild(hdr);
 
@@ -53,7 +57,8 @@ class SgLock {
       }
       const row = document.createElement('div');
       row.className = 'sglk-row';
-      [r.protocol, r.port, r.source].forEach(v => { const c = document.createElement('div'); c.className = 'sglk-cell'; c.textContent = v; row.appendChild(c); });
+      row.style.gridTemplateColumns = gridCols;
+      [r.protocol, r.port, r.source].filter(v => v !== '').forEach(v => { const c = document.createElement('div'); c.className = 'sglk-cell'; c.textContent = v; row.appendChild(c); });
       const toggle = document.createElement('div');
       toggle.className = 'sglk-cell';
       const btn = document.createElement('button');
@@ -106,7 +111,7 @@ class SgLock {
     s.textContent = `
 .sglk{display:flex;flex-direction:column;gap:12px;padding:16px 0;max-width:400px;margin:0 auto}
 .sglk-table{border:1px solid var(--border,#1e2a45);border-radius:8px;overflow:hidden}
-.sglk-row{display:grid;grid-template-columns:1fr 1fr 2fr 1fr;gap:1px;background:var(--border,#1e2a45)}
+.sglk-row{display:grid;gap:1px;background:var(--border,#1e2a45)}
 .sglk-hdr{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted,#7a8ba8)}
 .sglk-cell{background:var(--surface,#141b2d);padding:8px;font-size:12px;color:var(--muted,#7a8ba8);display:flex;align-items:center}
 .sglk-toggle{padding:4px 10px;border:none;border-radius:4px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:all .15s}

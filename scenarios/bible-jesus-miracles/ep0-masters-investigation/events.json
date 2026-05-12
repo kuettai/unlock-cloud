@@ -2,14 +2,14 @@
   "timed_events": [
     {
       "id": "mid-event",
-      "trigger_at_remaining_seconds": 900,
+      "time_remaining": 900,
       "message": "The hour grows late. Guests are beginning to leave.",
       "type": "narrative",
       "narrative_key": "mid_event"
     },
     {
       "id": "urgency-warning",
-      "trigger_at_remaining_seconds": 300,
+      "time_remaining": 300,
       "message": "Dawn approaches. The servants will scatter. I must finish this now.",
       "voice": "matthias",
       "type": "alert"

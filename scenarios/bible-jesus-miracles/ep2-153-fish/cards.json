@@ -1,0 +1,574 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "type": "location",
+      "color": "green",
+      "title": "Back Door",
+      "description": "The car park behind the church hall. Empty. Dark. Your headlights sweep across the back wall — a single metal door with a keypad lock. A hook beside the door frame. A laminated note taped to the wall, faded but readable.",
+      "image": "assets/back-door.png",
+      "discoveries": [
+        { "card_id": 2, "label": "Grab the key from the hook" },
+        { "card_id": 3, "label": "Read the note on the wall" },
+        { "card_id": 10, "label": "Enter the door code", "requires_item": 2, "puzzle": "door-code" }
+      ],
+      "room": "back-door"
+    },
+    {
+      "id": 2,
+      "type": "item",
+      "color": "red",
+      "title": "Store Room Key",
+      "description": "A brass key on a faded lanyard. Written on the tag: \"Café 153 — Back Door\". Cold in your hand.",
+      "image": "assets/card-key.png",
+      "room": "back-door"
+    },
+    {
+      "id": 3,
+      "type": "object",
+      "color": "blue",
+      "title": "Door Code Note",
+      "description": "A laminated note taped beside the keypad, slightly peeling. The Manager's handwriting. Some kind of entry code — look closely at the image.",
+      "image": "assets/card-door-note.png",
+      "room": "back-door"
+    },
+    {
+      "id": 10,
+      "type": "location",
+      "color": "green",
+      "title": "Store Room",
+      "description": "The back door of Café 153. Shelves line the walls — milk jugs, coffee beans, cup sleeves, syrups, matcha powder. A clipboard hangs by the door with today's prep checklist. You need to grab what you need for the day. Two hands. No help.",
+      "image": "assets/store-room.png",
+      "discoveries": [
+        { "card_id": 11, "label": "Check the prep checklist" },
+        { "card_id": 12, "label": "Grab supplies from the shelves", "puzzle": "stock" },
+        { "card_id": 13, "label": "Notice the milk jug batch labels" }
+      ],
+      "act": 1,
+      "room": "store-room"
+    },
+    {
+      "id": 11,
+      "type": "object",
+      "color": "blue",
+      "title": "Prep Checklist",
+      "description": "DAILY PREP — Sunday\n────────────────────\n☐ Milk: 2 jugs (full-cream)\n☐ Beans: 1 bag (house blend)\n☐ Cups: 1 sleeve (25 cups)\n☐ Ice: 72 cubes (1 tray = 18)\n☐ Syrups: 3 bottles (vanilla, caramel, hazelnut)\n☐ Matcha: 1 tin\n────────────────────\n\"His mercies are new every morning\" — Lam 3:23",
+      "image": "assets/card-checklist.png",
+      "reveals": [300],
+      "room": "store-room"
+    },
+    {
+      "id": 12,
+      "type": "item",
+      "color": "red",
+      "title": "Supply Run Complete",
+      "description": "All supplies gathered: 2 milk jugs, 1 bag of beans, 1 sleeve of cups, ice, syrups, matcha. Ready to set up the brew station.",
+      "image": "assets/card-supplies.png",
+      "puzzle_ref": "stock",
+      "reveals": [20],
+      "room": "store-room"
+    },
+    {
+      "id": 13,
+      "type": "object",
+      "color": "blue",
+      "title": "Milk Jug Labels",
+      "description": "Each jug has a batch sticker. The two you grab read: \"Batch A-1\" and \"Batch B-2\". Behind them on the shelf, you notice others: \"Batch C-3\", \"Batch D-4\", \"Batch E-5\". Five jugs total on the shelf. You only need two.",
+      "image": "assets/card-jug-labels.png",
+      "room": "store-room"
+    },
+    {
+      "id": 20,
+      "type": "location",
+      "color": "green",
+      "title": "Brew Station",
+      "description": "The espresso machine is cold. You flip the power switch — it hums to life. The grinder sits beside it with a yellow sticky note from the Manager. A shot counter on the machine reads 000. You need to calibrate before you can serve.",
+      "image": "assets/brew-station.png",
+      "discoveries": [
+        { "card_id": 21, "label": "Read the Manager's sticky note" },
+        { "card_id": 22, "label": "Check the shot counter" },
+        { "card_id": 23, "label": "Calibrate the grinder", "puzzle": "grinder" },
+        { "card_id": 74, "label": "Check the shot counter again", "requires_item": 80, "consumes_item": 80 },
+        { "card_id": 76, "label": "Investigate the third milk jug", "requires_item": 74, "puzzle": "milk-jug" }
+      ],
+      "act": 1,
+      "room": "brew-station"
+    },
+    {
+      "id": 21,
+      "type": "object",
+      "color": "blue",
+      "title": "Manager's Note",
+      "description": "A yellow post-it, slightly rotated, stuck to the grinder:\n\nSour/fast? Grind finer (↑).\nBitter/slow? Grind coarser (↓).\nDose: keep it mid-range — 5 is our sweet spot.\nYield: short keeps it punchy — try 4.\nSweet spot is 25-26s. Not a second more.\n— M\n\nHe knew you'd be alone today. He left instructions.",
+      "image": "assets/card-manager-note.png",
+      "room": "brew-station"
+    },
+    {
+      "id": 22,
+      "type": "object",
+      "color": "blue",
+      "title": "Shot Counter (000)",
+      "description": "The digital display reads 000. Fresh start. You notice it flickers briefly to \"1\" then back to 000 as the machine warms up. A ghost in the system? Or a calibration test already logged?",
+      "image": "assets/card-shot-counter.png",
+      "room": "brew-station"
+    },
+    {
+      "id": 23,
+      "type": "item",
+      "color": "red",
+      "title": "Grinder Dialed In",
+      "description": "Golden crema. Balanced. Perfect. ~26 seconds. The machine is ready to serve.",
+      "image": "assets/card-grinder-done.png",
+      "puzzle_ref": "grinder",
+      "reveals": [30, 301],
+      "room": "brew-station"
+    },
+    {
+      "id": 30,
+      "type": "location",
+      "color": "green",
+      "title": "Service Counter",
+      "description": "The counter is bare. The chalkboard is blank. Cup sleeves need stacking, syrups need arranging, the POS needs switching on. You write today's specials on the board — three drinks the Manager suggested last week.",
+      "image": "assets/service-counter.png",
+      "discoveries": [
+        { "card_id": 31, "label": "Write the chalkboard specials", "puzzle": "chalkboard" },
+        { "card_id": 32, "label": "Stack the cups and arrange syrups" },
+        { "card_id": 33, "label": "Switch on the POS" },
+        { "card_id": 34, "label": "Count the ice cubes" },
+        { "card_id": 77, "label": "Count the cash", "requires_item": 82 },
+        { "card_id": 78, "label": "Count the cups in the wash", "requires_item": 82 },
+        { "card_id": 80, "label": "Work through the evidence", "requires_item": 78, "puzzle": "cups" }
+      ],
+      "act": 1,
+      "room": "service-counter"
+    },
+    {
+      "id": 31,
+      "type": "item",
+      "color": "red",
+      "title": "Chalkboard Ready",
+      "description": "MOCHA • LATTE • MATCHA — today's specials, written in your best chalk lettering. The board looks inviting.",
+      "image": "assets/card-chalkboard.png",
+      "puzzle_ref": "chalkboard",
+      "reveals": [40, 303],
+      "room": "service-counter"
+    },
+    {
+      "id": 32,
+      "type": "object",
+      "color": "blue",
+      "title": "Counter Setup",
+      "description": "Cups stacked: one full sleeve (25). Syrups lined up: vanilla, caramel, hazelnut. Matcha powder in the tin. Everything in its place.",
+      "image": "assets/card-counter-setup.png",
+      "room": "service-counter"
+    },
+    {
+      "id": 33,
+      "type": "object",
+      "color": "blue",
+      "title": "POS Starting Balance ($0)",
+      "description": "Register reads $0.00. Zero transactions. The day hasn't started yet.",
+      "image": "assets/card-pos.png",
+      "room": "service-counter"
+    },
+    {
+      "id": 34,
+      "type": "object",
+      "color": "blue",
+      "title": "Ice Count (72 cubes)",
+      "description": "4 trays × 18 cubes = 72 cubes in the container. Ready for cold drinks.",
+      "image": "assets/card-ice-count.png",
+      "room": "service-counter"
+    },
+    {
+      "id": 40,
+      "type": "location",
+      "color": "green",
+      "title": "The Floor",
+      "description": "The gathering area. Tables and chairs in morning sunlight. You set up table numbers, straighten chairs, wipe surfaces. The room is empty and quiet. You take a breath. You're ready. You're alone, but you're ready.",
+      "image": "assets/the-floor.png",
+      "discoveries": [
+        { "card_id": 41, "label": "Set up the tables" },
+        { "card_id": 42, "label": "Notice table 5 in the corner" },
+        { "card_id": 43, "label": "Flip the sign to OPEN", "consumes_item": [2, 12, 23, 31, 11, 13, 21, 22, 32, 33, 34, 41] },
+        { "card_id": 44, "label": "☕ Serve customers", "requires_item": 43, "puzzle": "cafe-orders" },
+        { "card_id": 82, "label": "Clear the tables — find mystery cups", "requires_item": 45 },
+        { "card_id": 83, "label": "Read the names on the cups", "requires_item": 82 },
+        { "card_id": 73, "label": "Think about the names", "requires_item": [83, 76], "consumes_item": [76, 77, 78, 79, 74, 75, 70, 71, 72], "puzzle": "names" },
+        { "card_id": 90, "label": "Open the cash safe", "requires_item": [73, 45], "consumes_item": [73, 45], "puzzle": "safe" }
+      ],
+      "act": 1,
+      "room": "the-floor"
+    },
+    {
+      "id": 41,
+      "type": "object",
+      "color": "blue",
+      "title": "Tables Ready",
+      "description": "Eight tables, each with a small numbered stand. All clean. All empty. No cups anywhere. Remember this.",
+      "image": "assets/card-tables.png",
+      "room": "the-floor"
+    },
+    {
+      "id": 42,
+      "type": "object",
+      "color": "blue",
+      "title": "Corner Table (#5)",
+      "description": "Table 5, tucked in the corner by the window. Sunlight falls across it. The table number stand reads \"5\". Something about this spot feels... set apart.",
+      "image": "assets/card-corner-table.png",
+      "reveals": [306],
+      "room": "the-floor"
+    },
+    {
+      "id": 43,
+      "type": "event",
+      "color": "yellow",
+      "title": "Café Open",
+      "description": "You flip the sign. \"Lord, help me get through this.\" The first customer walks in. The rush begins.",
+      "reveals": [44],
+      "consumes": [],
+      "room": "the-floor"
+    },
+    {
+      "id": 44,
+      "type": "object",
+      "color": "blue",
+      "title": "Café Orders",
+      "description": "The rush is on. Customers are ordering drinks. Pick cup, add ingredients in order, serve. Don't let them wait too long.",
+      "puzzle_ref": "cafe-orders",
+      "room": "the-floor"
+    },
+    {
+      "id": 45,
+      "type": "item",
+      "color": "red",
+      "title": "Drinks Served",
+      "description": "You've served at least 4 drinks. The rush is manageable. But something feels off — did you really make all of those?",
+      "reveals": [81],
+      "room": "the-floor"
+    },
+    {
+      "id": 70,
+      "type": "object",
+      "color": "blue",
+      "title": "The Third Jug",
+      "description": "Batch C-3. Empty. Rinsed. Someone took this jug from the shelf, used it during service, rinsed it, and put it back. Someone who knew where things were. Someone who had the store room code.",
+      "image": "assets/card-third-jug.png",
+      "act": 3,
+      "room": "store-room"
+    },
+    {
+      "id": 71,
+      "type": "object",
+      "color": "blue",
+      "title": "Bean Bag Evidence",
+      "description": "The bag is lighter than it should be. 21 shots = ~210g of beans. But the bag feels closer to 280-300g used. That's 28-30 shots worth. More than the machine counter shows for YOUR shots.",
+      "image": "assets/card-beans.png",
+      "act": 3,
+      "room": "store-room"
+    },
+    {
+      "id": 72,
+      "type": "object",
+      "color": "blue",
+      "title": "Cup Sleeve (Empty)",
+      "description": "You took one sleeve this morning: 25 cups. The sleeve is completely empty. 21 cups in the wash + 4 on the corner table = 25. Every single cup was used. Exactly.",
+      "image": "assets/card-empty-sleeve.png",
+      "act": 3,
+      "room": "store-room"
+    },
+    {
+      "id": 73,
+      "type": "item",
+      "color": "red",
+      "title": "The Names on the Cups",
+      "description": "Simon. Thomas. Nathanael. James. Disciples of Jesus. They were at the breakfast on the shore. They cast the net on the right side — 153 fish. And breakfast was already waiting: bread and fish on a charcoal fire.",
+      "image": "assets/card-names-solved.png",
+      "puzzle_ref": "names",
+      "reveals": [90, 91, 308],
+      "act": 3,
+      "room": "store-room"
+    },
+    {
+      "id": 74,
+      "type": "object",
+      "color": "blue",
+      "title": "Shot Counter (21)",
+      "description": "The machine says 21 shots pulled today. From the order tickets: 13 coffee drinks = 13 shots. Plus your calibration shot = 14. Even adding the 4 mystery cups (if coffee) = 18 max. The counter says 21. 3 unexplained shots.",
+      "image": "assets/card-shot-21.png",
+      "reveals": [302],
+      "act": 3,
+      "room": "brew-station"
+    },
+    {
+      "id": 75,
+      "type": "object",
+      "color": "blue",
+      "title": "Portafilter Evidence",
+      "description": "21 used portafilters in the sink. Matching the counter. But your hands only held 14 of them. Someone else was at this machine. During the rush. Behind you.",
+      "image": "assets/card-portafilters.png",
+      "act": 3,
+      "room": "brew-station"
+    },
+    {
+      "id": 76,
+      "type": "item",
+      "color": "red",
+      "title": "Milk Jug Mystery Solved",
+      "description": "A third jug. Batch C-3. Used during the rush by someone with the store room code. 8 drinks from that jug. Someone worked a full shift beside you.",
+      "image": "assets/card-milk-solved.png",
+      "puzzle_ref": "milk-jug",
+      "reveals": [70, 71, 72],
+      "act": 3,
+      "room": "brew-station"
+    },
+    {
+      "id": 77,
+      "type": "object",
+      "color": "blue",
+      "title": "Cash Reconciliation ($89)",
+      "description": "Cash: $89.00. Receipts: 17. POS total: $89.00. Everything matches perfectly. No theft. No error. The money is clean.",
+      "image": "assets/card-cash.png",
+      "reveals": [305],
+      "act": 3,
+      "room": "service-counter"
+    },
+    {
+      "id": 78,
+      "type": "object",
+      "color": "blue",
+      "title": "Cup Count (21 washed)",
+      "description": "Hot cups in wash: 15. Cold cups: 6. Total washed: 21. But only 17 drinks sold. 4 extra cups in the wash — served but never charged.",
+      "image": "assets/card-cup-count.png",
+      "reveals": [79],
+      "act": 3,
+      "room": "service-counter"
+    },
+    {
+      "id": 79,
+      "type": "object",
+      "color": "blue",
+      "title": "Order Ticket Breakdown",
+      "description": "From the 17 order tickets:\nLattes (3) = 3 shots\nCappuccinos (3) = 3 shots\nFlat White (1) = 1 shot\nLong Blacks (2) = 2 shots\nMocha (1) = 1 shot\nIced Latte (1) = 1 shot\nIced Long Black (2) = 2 shots\nMatcha/Butterfly Pea (4) = 0 shots\n\nTotal coffee drinks: 13 = 13 shots from your orders.",
+      "image": "assets/card-tickets.png",
+      "act": 3,
+      "room": "service-counter"
+    },
+    {
+      "id": 80,
+      "type": "item",
+      "color": "red",
+      "title": "Evidence Complete",
+      "description": "Seven extra shots. Eight phantom drinks. The machine doesn't lie. Someone was here.",
+      "image": "assets/card-evidence.png",
+      "puzzle_ref": "cups",
+      "reveals": [74, 75, 304],
+      "act": 3,
+      "room": "service-counter"
+    },
+    {
+      "id": 81,
+      "type": "object",
+      "color": "blue",
+      "title": "Tables Cleared",
+      "description": "Seven tables clean. Customers bussed their own today. Only table 5 has cups left.",
+      "image": "assets/card-tables-cleared.png",
+      "act": 3,
+      "room": "the-floor"
+    },
+    {
+      "id": 82,
+      "type": "item",
+      "color": "red",
+      "title": "Four Mystery Cups",
+      "description": "Four cups on table 5. Still warm. You didn't serve this table. You don't remember anyone sitting here. But the cups are real. The coffee is real. Someone sat here and was served.",
+      "image": "assets/card-mystery-cup.png",
+      "reveals": [307],
+      "act": 3,
+      "room": "the-floor"
+    },
+    {
+      "id": 83,
+      "type": "object",
+      "color": "blue",
+      "title": "Cup Names",
+      "description": "Written in neat handwriting — not yours:\n\"Simon\" — Long Black\n\"Thomas\" — Flat White\n\"Nathanael\" — Cappuccino\n\"James\" — Latte\n\nYou know these names. You've read them before. But where?",
+      "image": "assets/card-cup-names.png",
+      "act": 3,
+      "room": "the-floor"
+    },
+    {
+      "id": 84,
+      "type": "event",
+      "color": "yellow",
+      "title": "Cup Math Confirmed",
+      "description": "21 in the wash + 4 on the table = 25. Only 17 sold. 8 drinks appeared from nowhere.",
+      "reveals": [],
+      "consumes": [],
+      "act": 3,
+      "room": "service-counter"
+    },
+    {
+      "id": 85,
+      "type": "event",
+      "color": "yellow",
+      "title": "Shot Discrepancy",
+      "description": "The machine pulled 21 shots. You only made 14. Seven shots — someone else's hands.",
+      "reveals": [],
+      "consumes": [],
+      "act": 3,
+      "room": "brew-station"
+    },
+    {
+      "id": 86,
+      "type": "event",
+      "color": "yellow",
+      "title": "Supply Discrepancy",
+      "description": "A third jug. Extra beans. Someone restocked mid-shift without you noticing.",
+      "reveals": [],
+      "consumes": [],
+      "act": 3,
+      "room": "store-room"
+    },
+    {
+      "id": 87,
+      "type": "event",
+      "color": "yellow",
+      "title": "Full Picture",
+      "description": "Cups. Shots. Milk. Beans. Every piece of evidence says the same thing: you weren't alone.",
+      "reveals": [],
+      "consumes": [],
+      "act": 3,
+      "room": "store-room"
+    },
+    {
+      "id": 90,
+      "type": "object",
+      "color": "blue",
+      "title": "The Cash Safe",
+      "description": "A small floor safe behind the counter. Three-dial combination lock. The Manager sets the code daily. You've never needed it — he always does closing. But today you're 'alone.'",
+      "image": "assets/card-safe.png",
+      "puzzle_ref": "safe",
+      "act": 4,
+      "room": "the-floor"
+    },
+    {
+      "id": 91,
+      "type": "object",
+      "color": "blue",
+      "title": "Manager's Final Note",
+      "description": "Tucked under the safe, a folded card:\n\nToday's code — you already saw it.\nThe machine. The table. The jug.\n\nYou were never alone.\n— The Manager",
+      "image": "assets/card-final-note.png",
+      "act": 4,
+      "room": "the-floor"
+    },
+    {
+      "id": 92,
+      "type": "event",
+      "color": "yellow",
+      "title": "The Code Hint",
+      "description": "The machine (1). The table (5). The jug (3). You already have the answer.",
+      "reveals": [],
+      "consumes": [],
+      "act": 4,
+      "room": "the-floor"
+    },
+    {
+      "id": 999,
+      "type": "event",
+      "color": "yellow",
+      "title": "The Net Holds — 153",
+      "description": "The safe opens. Inside — a single card. 'Well done. You were never alone.' One hundred and fifty-three fish. The net didn't break. And neither did you.",
+      "is_ending": true,
+      "reveals": [309],
+      "consumes": [],
+      "room": "the-floor"
+    },
+    {
+      "id": 300,
+      "type": "lore",
+      "color": "gold",
+      "title": "Lamentations 3:22-23",
+      "description": "\"The steadfast love of the Lord never ceases; his mercies never come to an end; they are new every morning; great is your faithfulness.\"",
+      "room": "store-room"
+    },
+    {
+      "id": 301,
+      "type": "lore",
+      "color": "gold",
+      "title": "John 21:6",
+      "description": "\"He said to them, 'Cast the net on the right side of the boat, and you will find some.' So they cast it, and now they were not able to haul it in, because of the quantity of fish.\"",
+      "room": "brew-station"
+    },
+    {
+      "id": 302,
+      "type": "lore",
+      "color": "gold",
+      "title": "Manager's Schedule",
+      "description": "\"I don't clock in on Sundays. But I'm always here. — M\"",
+      "act": 3,
+      "room": "brew-station"
+    },
+    {
+      "id": 303,
+      "type": "lore",
+      "color": "gold",
+      "title": "Proverbs 16:3",
+      "description": "\"Commit your work to the Lord, and your plans will be established.\"",
+      "room": "service-counter"
+    },
+    {
+      "id": 304,
+      "type": "lore",
+      "color": "gold",
+      "title": "Mystery Receipt",
+      "description": "A receipt with no timestamp, no order number. Just a handwritten note: \"On the house. — J\"",
+      "act": 3,
+      "room": "service-counter"
+    },
+    {
+      "id": 305,
+      "type": "lore",
+      "color": "gold",
+      "title": "John 21:12",
+      "description": "\"Jesus said to them, 'Come and have breakfast.' None of the disciples dared ask him, 'Who are you?' They knew it was the Lord.\"",
+      "act": 3,
+      "room": "service-counter"
+    },
+    {
+      "id": 306,
+      "type": "lore",
+      "color": "gold",
+      "title": "John 21:4",
+      "description": "\"Early in the morning, Jesus stood on the shore, but the disciples did not realize that it was Jesus.\"",
+      "room": "the-floor"
+    },
+    {
+      "id": 307,
+      "type": "lore",
+      "color": "gold",
+      "title": "The Shore",
+      "description": "A simple charcoal drawing on the wall near table 5: a beach, a fire, bread, fish. No artist signature. You've never noticed it before. Was it always there?",
+      "act": 3,
+      "room": "the-floor"
+    },
+    {
+      "id": 308,
+      "type": "lore",
+      "color": "gold",
+      "title": "John 21:11",
+      "description": "\"Simon Peter climbed back into the boat and dragged the net ashore. It was full of large fish, 153, but even with so many the net was not torn.\"",
+      "act": 4,
+      "room": "the-floor"
+    },
+    {
+      "id": 309,
+      "type": "lore",
+      "color": "gold",
+      "title": "The Miracle of 153",
+      "description": "153 is the 17th triangular number. 1+2+3+...+17 = 153. There were 17 orders today. The net holds everything together — and does not break.",
+      "act": 4,
+      "room": "the-floor"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# Unlock the Cloud
+# Re:Solve
 
 An escape room card game that teaches through immersive storytelling. Currently features **Miracles of Jesus** — a Bible-based puzzle adventure.
 

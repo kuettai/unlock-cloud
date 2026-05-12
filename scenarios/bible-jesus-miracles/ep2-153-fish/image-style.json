@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Warm modern café interior, cozy church café aesthetic, morning golden light through windows, warm wood tones, espresso machine, coffee equipment, soft shadows, inviting atmosphere, game card art.",
+  "style_prefix_location": "Warm modern café interior, wide angle, morning sunlight streaming through windows, warm wood counters and shelving, espresso machine and grinder, chalkboard menu, cozy church café, atmospheric, game environment art.",
+  "style_prefix_item": "Single café object on warm wood surface, soft morning light, shallow depth of field, modern coffee equipment or supply item, clean composition, game inventory art.",
+  "style_prefix_object": "Close-up detail of café object or evidence, warm tones, morning light, wood and ceramic textures, modern church café setting, game card art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, ancient, biblical robes, outdoor, nature, sci-fi, futuristic, neon, cyberpunk",
+  "aspect_ratio": "16:9"
+}

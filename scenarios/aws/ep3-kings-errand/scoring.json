@@ -1,0 +1,22 @@
+{
+  "base_score": 50,
+  "time_bonus_per_minute": 1,
+  "hint_penalty": -3,
+  "wrong_combination_penalty": -3,
+  "lore_bonus": 3,
+  "lore_ids": [106, 206, 506, 607, 807, 407, 1006],
+  "all_lore_bonus": 5,
+  "nova_bonus": {
+    "description": "All 4 Nova Company NPCs consulted (Clerk + Tongue + Artificer + Painter)",
+    "npc_ids": ["npc-novaclerk", "npc-tongue", "npc-artificer", "npc-painter"],
+    "bonus": 3
+  },
+  "remaining_gold_bonus_per_gold": 1,
+  "stars": [
+    { "min": 90, "stars": 5 },
+    { "min": 75, "stars": 4 },
+    { "min": 60, "stars": 3 },
+    { "min": 45, "stars": 2 },
+    { "min": 0, "stars": 1 }
+  ]
+}

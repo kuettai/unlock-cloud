@@ -10,7 +10,8 @@ description: Guide for deploying the Unlock the Cloud app to the EC2 instance. U
 - **Instance:** i-040574f44ac216631 (t3.micro, Amazon Linux 2023)
 - **Region:** ap-southeast-1
 - **IP:** 18.138.232.101
-- **URL:** http://18.138.232.101/app/index.html
+- **Hostname:** ec2-18-138-232-101.ap-southeast-1.compute.amazonaws.com
+- **URL:** http://ec2-18-138-232-101.ap-southeast-1.compute.amazonaws.com/app/index.html
 - **S3 Staging:** s3://kuettai-ap-southeast-1-ssm/unlock-cloud/
 - **Web server:** nginx, files served from /usr/share/nginx/html/
 - **Access:** AWS Systems Manager (SSM) — no SSH, port 22 is closed
@@ -30,13 +31,24 @@ aws s3 sync scenarios s3://kuettai-ap-southeast-1-ssm/unlock-cloud/scenarios/ --
 aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-040574f44ac216631" --parameters commands='["aws s3 sync s3://kuettai-ap-southeast-1-ssm/unlock-cloud/app/ /usr/share/nginx/html/app/ --delete --region ap-southeast-1 && aws s3 sync s3://kuettai-ap-southeast-1-ssm/unlock-cloud/scenarios/ /usr/share/nginx/html/scenarios/ --delete --exclude \"*.png\" --exclude \"*.wav\" --exclude \"*.mp3\" --exclude \"*.svg\" --region ap-southeast-1 && chmod -R 755 /usr/share/nginx/html/app /usr/share/nginx/html/scenarios"]' --region ap-southeast-1
 ```
 
-### Step 3: Deploy assets to S3 (served via CloudFront)
+### Step 3: Deploy scenarios to S3 (served via CloudFront)
 
-Only needed when assets change (new images, new voice files):
+Only needed when scenarios change (new images, voice files, or JSON data):
 
 ```
-aws s3 sync scenarios s3://kuettai-unlock-asset/scenarios/ --exclude "*" --include "*.png" --include "*.wav" --include "*.mp3" --include "*.svg" --region ap-southeast-1
+python tools/resize_images.py
+aws s3 sync scenarios s3://kuettai-unlock-asset/scenarios/ --exclude "*" --include "*.png" --include "*.wav" --include "*.mp3" --include "*.svg" --include "*.json" --region ap-southeast-1
 ```
+
+This syncs both assets AND JSON data files to CloudFront. The game engine loads everything from CloudFront in production.
+
+### Step 4: Verify assets on CloudFront
+
+```
+curl -s -o /dev/null -w "%{http_code}" https://d37w3py52wsl8r.cloudfront.net/scenarios/<category>/<episode>/assets/cover.png
+```
+
+Should return `200`. If `403`, check S3 bucket policy or OAI.
 
 ### Step 4: Check command status
 
@@ -48,7 +60,7 @@ Wait for `"Status": "Success"`.
 
 ### Step 5: Verify
 
-- Home page: http://18.138.232.101/app/home.html
+- Home page: http://ec2-18-138-232-101.ap-southeast-1.compute.amazonaws.com/app/home.html
 - Check new/changed episodes load correctly
 - Assets should load from CloudFront: https://d37w3py52wsl8r.cloudfront.net/
 

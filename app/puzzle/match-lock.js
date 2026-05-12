@@ -21,6 +21,7 @@ class MatchLock {
     this.container = container;
     this.pairs = opts.pairs || [];
     this.cols = opts.cols || 4;
+    this.revealed = opts.revealed || false;
     this.onSubmit = opts.onSubmit || (() => {});
     this.cards = this._buildCards();
     this.flipped = [];
@@ -72,6 +73,7 @@ class MatchLock {
       el.addEventListener('click', () => this._flip(i));
       this.grid.appendChild(el);
       this.cellEls.push(el);
+      if (this.revealed) el.classList.add('mtchlk-flipped');
     });
 
     wrap.appendChild(this.grid);

@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Unlock the Cloud</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+<title>Re:Solve</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -148,6 +149,50 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
 .map-branch .map-branch-col{display:flex;align-items:center;border-left:none;border-top:2px solid var(--border);padding:8px 0 0 0}
 .map-branch .map-branch-col:first-child{border-top:none;padding-top:0}
 
+/* Isometric map */
+.iso-container{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;overflow:auto;padding:20px}
+.iso-floor{width:500px;height:600px;transform:rotateX(55deg) rotateZ(45deg);transform-style:preserve-3d;position:relative;margin:0 auto;perspective:800px}
+.iso-tile{position:absolute;width:120px;height:120px;border:2px solid #1e2a45;border-radius:8px;background:#141b2d;cursor:pointer;transition:all 0.3s;overflow:visible;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:8px;transform-style:preserve-3d}
+.iso-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;border-radius:6px}
+.iso-tile.current{border-color:#3b82f6;box-shadow:0 0 20px rgba(59,130,246,0.4)}
+.iso-tile.current img{opacity:0.7}
+.iso-tile.explored{border-color:#22c55e}
+.iso-tile.explored img{opacity:0.5}
+.iso-tile.locked{border-color:#333;opacity:0.3;cursor:default;filter:grayscale(1)}
+.iso-tile:active:not(.locked){transform:translateZ(8px);border-color:#f39c12;box-shadow:0 4px 16px rgba(243,156,18,0.3)}
+.iso-tile.selected{transform:translateZ(8px);border-color:#f39c12 !important;box-shadow:0 4px 16px rgba(243,156,18,0.4) !important}
+.iso-tile .iso-label{position:absolute;bottom:-40px;left:50%;z-index:4;font-size:12px;font-weight:700;color:#fff;text-align:center;background:rgba(10,14,23,0.95);padding:4px 10px;border-radius:4px;border:1px solid #555;transform:rotateZ(-45deg) rotateX(-55deg) translateZ(20px);white-space:nowrap;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.8))}
+.iso-tile .iso-badge{position:absolute;top:6px;right:6px;z-index:2;background:#e94560;color:#fff;font-size:16px;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.iso-tile .iso-pin{position:absolute;top:30%;left:30%;z-index:3;display:flex;flex-direction:column;align-items:center;transform:rotateZ(-45deg) rotateX(-55deg);animation:iso-bounce 1.5s ease infinite;filter:drop-shadow(0 6px 4px rgba(0,0,0,0.5))}
+.iso-pin-head{width:16px;height:16px;background:#e94560;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #fff}
+.iso-pin-stick{width:3px;height:36px;background:#888;border-radius:0 0 2px 2px;margin-top:-2px}
+@keyframes iso-bounce{0%,100%{transform:rotateZ(-45deg) rotateX(-55deg) translateY(0)}50%{transform:rotateZ(-45deg) rotateX(-55deg) translateY(-8px)}}
+.iso-connector{position:absolute;background:#1e2a45;height:3px;z-index:0;transform-origin:0 50%}
+.iso-connector.active{background:#22c55e}
+.iso-connector.current-line{background:#3b82f6}
+.iso-info{width:360px;min-height:50px;background:#141b2d;border:1px solid #1e2a45;border-radius:10px;padding:12px 16px;text-align:center;margin-top:12px}
+.vox-floor{width:600px;height:820px;position:relative;margin:0 auto;padding-bottom:80px}
+.vox-tile{position:absolute;width:200px;height:200px;border:none;background:transparent;cursor:pointer;transition:all 0.3s;overflow:visible;padding:0}
+.vox-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.vox-tile.current{filter:drop-shadow(0 0 8px rgba(59,130,246,0.6))}
+.vox-tile.explored{filter:drop-shadow(0 0 6px rgba(34,197,94,0.4))}
+.vox-tile.explored img{opacity:0.85}
+.vox-tile.locked{opacity:0.3;cursor:default;filter:grayscale(1)}
+.vox-tile:active:not(.locked){transform:scale(1.08);filter:drop-shadow(0 0 12px rgba(243,156,18,0.5))}
+.vox-tile.selected{transform:scale(1.08);filter:drop-shadow(0 0 12px rgba(243,156,18,0.6)) !important}
+.vox-tile .iso-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:4;font-size:12px;font-weight:700;color:#fff;text-align:center;background:rgba(10,14,23,0.95);padding:4px 10px;border-radius:4px;border:1px solid #555;white-space:nowrap;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.8))}
+.vox-tile .iso-badge{position:absolute;top:30%;right:10%;z-index:2;background:#e94560;color:#fff;font-size:16px;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.vox-tile .iso-pin{position:absolute;top:20%;left:40%;z-index:3;font-size:28px;animation:vox-bounce 1.5s ease infinite;filter:drop-shadow(0 4px 3px rgba(0,0,0,0.5))}
+@keyframes vox-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.vox-connector{position:absolute;background:#1e2a45;height:3px;z-index:0;transform-origin:0 50%}
+.vox-connector.active{background:#22c55e}
+.vox-connector.current-line{background:#3b82f6}
+.iso-info-name{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.iso-info-status{font-size:12px;color:#888;margin-bottom:4px}
+.iso-info-unlock{font-size:11px;color:#666;font-style:italic;margin-bottom:8px}
+.iso-info-actions{font-size:12px;color:#f39c12;margin-bottom:8px}
+.iso-info-btn{padding:8px 20px;border:none;border-radius:6px;background:#3b82f6;color:#fff;font-size:13px;font-weight:600;cursor:pointer}
+
 /* ===== Tools screen ===== */
 #tools-screen{display:none;flex-direction:column;flex:1;overflow:hidden}
 #tools-screen.active{display:flex}
@@ -178,7 +223,7 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
 .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .card-title{font-weight:700;font-size:14px}
 .card-id{font-size:11px;color:var(--muted);background:var(--surface);padding:2px 8px;border-radius:99px}
-.card-desc{font-size:13px;line-height:1.5;color:var(--muted)}
+.card-desc{font-size:13px;line-height:1.5;color:var(--muted);white-space:pre-line}
 .card-flavor{font-size:12px;font-style:italic;color:var(--accent);margin-top:6px}
 .card.selectable{cursor:pointer;border-style:dashed}
 .card.selected{border-style:solid;box-shadow:0 0 12px rgba(59,130,246,.3)}
@@ -195,7 +240,7 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
 .popup-card .popup-type.red{color:var(--red)}
 .popup-card .popup-type.blue{color:var(--blue)}
 .popup-card .popup-title{font-size:18px;font-weight:700;margin-bottom:8px}
-.popup-card .popup-desc{font-size:14px;line-height:1.6;color:var(--muted);margin-bottom:6px}
+.popup-card .popup-desc{font-size:14px;line-height:1.6;color:var(--muted);margin-bottom:6px;white-space:pre-line}
 .popup-card .popup-flavor{font-size:12px;font-style:italic;color:var(--accent);margin-bottom:16px}
 .popup-card .btn{width:100%}
 
@@ -233,6 +278,17 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
 .tab-btn.red-tab .badge{background:var(--red)}
 .tab-btn.blue-tab .badge{background:var(--blue)}
 
+/* Room unlock notification */
+.room-unlock-bar{position:fixed;top:0;left:0;right:0;z-index:50;background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(234,179,8,.1));border-bottom:1px solid var(--green);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;transform:translateY(-100%);animation:slide-down .4s ease forwards}
+.room-unlock-bar .unlock-icon{font-size:20px}
+.room-unlock-bar .unlock-text{flex:1;font-size:13px;font-weight:600;color:var(--green)}
+.room-unlock-bar .unlock-sub{font-size:11px;color:var(--muted)}
+.room-unlock-bar.dismiss{animation:slide-up .3s ease forwards}
+@keyframes slide-down{to{transform:translateY(0)}}
+@keyframes slide-up{to{transform:translateY(-100%)}}
+.tab-btn .badge-map{position:absolute;top:-6px;right:-6px;background:var(--green);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;padding:0 4px;display:flex;align-items:center;justify-content:center;animation:badge-pulse 1.5s ease infinite}
+@keyframes badge-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+
 /* Puzzle inputs */
 .code-entry{display:flex;gap:8px;margin-top:12px}
 .code-entry input{flex:1;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;font-family:monospace}
@@ -268,7 +324,8 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
 <body>
 <div id="app">
   <header>
-    <h1>Unlock the Cloud</h1>
+    <h1>Re:Solve</h1>
+    <span id="guest-badge" style="display:none;font-size:11px;background:var(--yellow);color:var(--bg);padding:2px 8px;border-radius:4px;font-weight:700">GUEST</span>
     <div id="timer" style="visibility:hidden">10:00</div>
   </header>
 
@@ -287,7 +344,13 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
       <div id="intro-content">
         <h2>Episode 0: Boot Sequence</h2>
         <div id="intro-text"></div>
+        <input id="player-name-input" type="text" placeholder="Enter your name..." maxlength="24" autocomplete="off" style="width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;margin-bottom:12px;text-align:center">
         <button id="start-btn" class="btn btn-primary btn-full" onclick="startGame()">Start</button>
+        <div id="waiting-state" style="display:none;text-align:center;padding:16px 0">
+          <div style="font-size:14px;color:var(--green);margin-bottom:8px">✓ You're all set!</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.6">The game will begin once the host starts the event.</div>
+          <div style="margin-top:12px;font-size:20px" id="waiting-spinner">⏳</div>
+        </div>
         <button class="btn btn-full" style="margin-top:12px;background:rgba(20,27,45,.8);border:1px solid var(--border);color:var(--muted)" onclick="location.href='home.html'">← Back to Episodes</button>
       </div>
     </div>
@@ -306,6 +369,7 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
       <p id="end-message" style="color:var(--muted);font-size:14px;line-height:1.6"></p>
       <div id="end-lore" style="text-align:left"></div>
       <div id="end-map" style="text-align:left"></div>
+      <div style="margin:20px 0 12px;font-size:11px;color:var(--muted);opacity:.7">👻 Crafted with <a href="https://kiro.dev" target="_blank" style="color:var(--muted);text-decoration:underline">Kiro</a></div>
       <div><button class="btn btn-primary" style="width:100%" onclick="resetGame()">Play Again</button></div>
       </div>
     </div>
@@ -354,7 +418,7 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
   <div id="bottom-bar">
     <button class="tab-btn" id="btn-map" onclick="openMap()">🗺️ Map</button>
     <button class="tab-btn" id="btn-combine-mode" onclick="enterCombineMode()">🎒 Interact <span class="badge" id="badge-interact" style="display:none">0</span></button>
-    <button class="tab-btn" id="btn-tools" onclick="openTools()">🔧 Tools</button>
+    <button class="tab-btn" id="btn-tools" onclick="openTools()">🔧 Tools <span class="badge" id="badge-cafe" style="display:none;background:#f39c12">0</span></button>
     <button class="tab-btn" onclick="useHint()">💡 Hints</button>
   </div>
 </div>
@@ -365,7 +429,7 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
     <h3 id="puzzle-popup-title"></h3>
     <div id="puzzle-mount"></div>
     <div id="puzzle-hint-box" class="hint-box" style="display:none"></div>
-    <button class="btn btn-hint btn-full" style="margin-top:12px" onclick="usePuzzleHint()">Hint</button>
+    <button id="puzzle-hint-btn" class="btn btn-hint btn-full" style="margin-top:12px" onclick="usePuzzleHint()">Hint</button>
   </div>
 </div>
 
@@ -416,13 +480,58 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
 <script src="puzzle/chain-lock.js"></script>
 <script src="puzzle/key-lock.js"></script>
 <script src="puzzle/pillar-lock.js"></script>
+<script src="puzzle/rank-lock.js"></script>
+<script src="puzzle/scroll-lock.js"></script>
+<script src="puzzle/bazaar-lock.js"></script>
+<script src="puzzle/deck-battle-lock.js"></script>
+<script src="puzzle/equipment-rack-lock.js"></script>
+<script src="puzzle/arch-lock.js"></script>
+<script src="puzzle/prompt-lock.js"></script>
+<script src="puzzle/booking-run-lock.js"></script>
+<script src="puzzle/image-prompt-lock.js"></script>
+<script src="puzzle/witness-lock.js"></script>
+<script src="puzzle/evidence-board-lock.js"></script>
+<script src="puzzle/grinder-lock.js"></script>
+<script src="puzzle/stock-memory-lock.js"></script>
+<script src="puzzle/spelling-lock.js"></script>
+<script src="puzzle/evidence-lock.js"></script>
+<script src="puzzle/milk-jug-lock.js"></script>
+<script src="puzzle/cascade-lock.js"></script>
+<script src="puzzle/cafe-order-lock.js"></script>
+<script src="puzzle/dial-lock.js"></script>
 <script>
-const SCENARIO_BASE = new URLSearchParams(location.search).get('scenario') || '../scenarios/aws/ep0-boot-sequence';
+const _params = new URLSearchParams(location.search);
+let SCENARIO_BASE = _params.get('scenario') || null;
+const EVENT_ID = _params.get('game_id') || _params.get('event') || null;
+const _gmParam = _params.get('gameMode');
+if (_gmParam) localStorage.setItem('gameMode', _gmParam);
+
+// Resolve scenario from game_id if not in URL (requires backend scenario_id support)
+if (!SCENARIO_BASE && EVENT_ID) {
+  try {
+    const _xhr = new XMLHttpRequest();
+    _xhr.open('GET', `https://9ean11i2e8.execute-api.ap-southeast-5.amazonaws.com/prod/games/${EVENT_ID}`, false);
+    _xhr.send();
+    if (_xhr.status === 200) {
+      const _gd = JSON.parse(_xhr.responseText);
+      if (_gd.scenario_id) SCENARIO_BASE = '../scenarios/' + _gd.scenario_id;
+    }
+  } catch {}
+}
+if (!SCENARIO_BASE) SCENARIO_BASE = '../scenarios/aws/ep0-boot-sequence';
+
 const ASSET_BASE = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
   ? SCENARIO_BASE
   : 'https://d37w3py52wsl8r.cloudfront.net/' + SCENARIO_BASE.replace(/^\.\.\//, '');
-const engine = new GameEngine(SCENARIO_BASE);
+const engine = new GameEngine(ASSET_BASE);
 window.engine = engine;
+const leaderboard = new LeaderboardClient();
+const GUEST_MODE = new URLSearchParams(location.search).get('mode') === 'guest';
+engine.onLeaderboardEvent = (event, payload) => {
+  if (GUEST_MODE) return;
+  leaderboard.push(event, payload);
+  if (event === 'game_complete') leaderboard.flush().then(res => { if (res && res.timer) engine.syncTimer(res.timer); });
+};
 let combineMode = false;
 let selectedCards = [];
 
@@ -517,9 +626,19 @@ const ADMIN = new URLSearchParams(location.search).get('admin') === 'true';
 (async () => {
   await engine.load();
   engine.onUpdate = () => { renderGame(); renderAdmin(); };
+  window._cafeOrderBadgeUpdate = () => {
+    const pending = typeof CafeOrderLock !== 'undefined' ? CafeOrderLock.getPending() : 0;
+    setBadge('badge-cafe', pending);
+  };
+  if (GUEST_MODE) {
+    document.getElementById('player-name-input').style.display = 'none';
+    document.getElementById('guest-badge').style.display = '';
+  }
   initAdmin();
   if (engine.restoreState() && engine.startTime && !engine.finished) {
+    if (!GUEST_MODE && engine.uuid) { leaderboard.gameId = EVENT_ID; leaderboard.uuid = engine.uuid; leaderboard.startPeriodicFlush(10000); }
     showScreen('game-screen');
+    document.getElementById('timer').style.visibility = 'visible';
     lastKnownRoomCount = engine.unlockedRooms.length;
     timerInterval = setInterval(updateTimer, 1000);
     setNarrative('intro');
@@ -533,6 +652,12 @@ const ADMIN = new URLSearchParams(location.search).get('admin') === 'true';
     showScreen('intro-screen');
     playVoice('intro.wav');
   }
+
+  // Prevent Back button from leaving the game
+  history.pushState(null, '', location.href);
+  window.addEventListener('popstate', () => {
+    history.pushState(null, '', location.href);
+  });
 })();
 
 function showScreen(id) {
@@ -553,7 +678,43 @@ function renderIntro() {
   document.getElementById('start-btn').textContent = engine.meta.start_button || 'Start';
 }
 
-function startGame() {
+async function startGame() {
+  const nameInput = document.getElementById('player-name-input');
+  const playerName = (nameInput.value || '').trim();
+  if (!GUEST_MODE && !playerName) { showToast('Please enter your name.', true); return; }
+  engine.playerName = playerName || 'Anonymous';
+
+  if (!GUEST_MODE) {
+    document.getElementById('start-btn').disabled = true;
+    const reg = await leaderboard.register(playerName, engine.meta.id, EVENT_ID);
+    if (reg && reg._rejected && reg.gameState === 'FULL') {
+      document.getElementById('start-btn').disabled = false;
+      document.getElementById('guest-badge').style.display = '';
+      showToast('Event is full. Starting as guest — your score won\'t appear on the leaderboard.', true);
+      // Fall through as guest — skip all leaderboard interaction
+    } else if (!reg || !reg.uuid) {
+      document.getElementById('start-btn').disabled = false;
+      if (EVENT_ID) {
+        showToast('Could not connect to server. Try again.', true);
+        return;
+      }
+      // No event — just start as guest silently
+    } else {
+      engine.uuid = reg.uuid;
+      leaderboard.uuid = reg.uuid;
+
+      // Check if event is ready to start (only for event-based play)
+      if (!reg.ready && EVENT_ID) {
+        document.getElementById('start-btn').style.display = 'none';
+        document.getElementById('player-name-input').style.display = 'none';
+        document.getElementById('waiting-state').style.display = 'block';
+        await pollUntilReady();
+      }
+      if (reg.timer) engine.syncTimer(reg.timer);
+      leaderboard.startPeriodicFlush(10000);
+    }
+  }
+
   engine.clearSave();
   showScreen('game-screen');
   engine.start();
@@ -564,8 +725,28 @@ function startGame() {
   renderGame();
 }
 
+async function pollUntilReady() {
+  while (true) {
+    await new Promise(r => setTimeout(r, 3000));
+    const res = await leaderboard.status();
+    if (res && res.ready) {
+      if (res.timer) engine.syncTimer(res.timer);
+      return;
+    }
+  }
+}
+
 function updateTimer() {
-  const remaining = engine.getRemainingSeconds();
+  let remaining;
+  if (engine.serverTimer && engine.serverTimerAt) {
+    // Parse server timer "MM:SS" and subtract local elapsed since last sync
+    const parts = engine.serverTimer.split(':');
+    const serverSecs = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    const localElapsed = Math.floor((Date.now() - engine.serverTimerAt) / 1000);
+    remaining = serverSecs - localElapsed;
+  } else {
+    remaining = engine.getRemainingSeconds();
+  }
   const abs = Math.abs(remaining);
   const m = Math.floor(abs / 60);
   const s = abs % 60;
@@ -655,10 +836,15 @@ function renderGame() {
   // Interact badge (items + objects count)
   setBadge('badge-interact', items.length + objects.length);
 
-  // Glow map button when new rooms unlock
+  // Notify when new rooms unlock
   const roomCount = engine.unlockedRooms.length;
   if (roomCount > lastKnownRoomCount && lastKnownRoomCount > 0) {
-    document.getElementById('btn-map').classList.add('glow');
+    const newRooms = engine.unlockedRooms.slice(lastKnownRoomCount);
+    newRooms.forEach(cardId => {
+      const roomDef = engine.rooms.find(r => r.card_id === cardId);
+      const card = engine.cards[cardId];
+      showRoomUnlock(roomDef?.name || card?.title || 'Unknown Area');
+    });
   }
   lastKnownRoomCount = roomCount;
 
@@ -879,7 +1065,7 @@ function discover(cardId, puzzleId) {
   }
   const prevInv = [...engine.inventory];
   const card = engine.discoverCard(cardId);
-  if (!card) return;
+  if (!card) { renderGame(); return; }
   const consumed = prevInv.filter(id => !engine.inventory.includes(id));
   if (consumed.length) {
     const names = consumed.map(id => engine.cards[id]?.title || '').filter(Boolean).join(', ');
@@ -902,25 +1088,31 @@ function showPuzzlePopup(puzzleId, awardCardId) {
   const mount = document.getElementById('puzzle-mount');
   document.getElementById('puzzle-popup-title').textContent = puzzle.description;
   document.getElementById('puzzle-hint-box').style.display = 'none';
-  document.querySelector('#puzzle-popup .btn-hint').style.display = puzzle.type === 'tool' ? 'none' : '';
+  document.getElementById('puzzle-hint-btn').style.display = puzzle.type === 'tool' ? 'none' : '';
   mount.innerHTML = '';
 
   const onSolve = () => {
     popup.classList.remove('open');
     engine.solvedPuzzles.add(puzzleId);
+    if (engine.onLeaderboardEvent) engine.onLeaderboardEvent('puzzle_solved', { puzzleId });
     SFX.solve();
+    const successCard = puzzle.success_card || awardCardId;
+    if (successCard !== awardCardId) engine.discoverCard(awardCardId);
     const prevInv = [...engine.inventory];
-    const card = engine.discoverCard(awardCardId);
+    const card = engine.discoverCard(successCard);
     const consumed = prevInv.filter(id => !engine.inventory.includes(id));
     if (consumed.length) {
       const names = consumed.map(id => engine.cards[id]?.title || '').filter(Boolean).join(', ');
       if (names) setTimeout(() => showToast(`Used: ${names}`, false), 300);
     }
-    if (card) showDiscoverPopup(card);
+    if (!card && engine.cards[successCard]?.is_ending) {
+      engine.finished = true; engine.completed = true; engine.endTime = Date.now();
+    }
+    if (card && !card.is_ending) showDiscoverPopup(card);
     renderGame();
   };
   const onFail = (msg) => { SFX.wrong(); showToast(msg || 'Wrong. Try again.', true); };
-  const cfg = puzzle.config || {};
+  const cfg = engine.getPuzzleConfig(puzzleId);
 
   if (puzzle.ui === 'sequence-lock') {
     new SequenceLock(mount, {
@@ -1114,6 +1306,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
   } else if (puzzle.ui === 'sg-lock') {
     new SgLock(mount, {
       rules: cfg.rules,
+      headers: cfg.headers || null,
       onSubmit(correct) { correct ? onSolve() : onFail('Rules rejected. Check the reference sheet.'); }
     });
   } else if (puzzle.ui === 'policy-lock') {
@@ -1255,6 +1448,167 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     closeBtn.onclick = () => popup.classList.remove('open');
     wrap.appendChild(closeBtn);
     mount.appendChild(wrap);
+  } else if (puzzle.ui === 'bazaar-lock') {
+    new BazaarLock(mount, {
+      budget: cfg.budget || 100,
+      stalls: (cfg.stalls || []).map(s => ({ id: s.id, label: s.name || s.label, icon: s.icon, specialty: s.specialty, cost: s.cost })),
+      quests: (cfg.quests || []).map(q => ({
+        id: q.label || q.id,
+        label: q.label,
+        accepts: Object.entries(q.results || {}).filter(([,v]) => v.tier !== 'fail').map(([stall, v]) => ({
+          stall, tier: v.tier, reward: v.reward || v.message, msg: v.message
+        })),
+        failMsg: Object.entries(q.results || {}).filter(([,v]) => v.tier === 'fail').map(([,v]) => v.message)[0] || 'This merchant cannot handle this task.'
+      })),
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'scroll-lock') {
+    new ScrollLock(mount, {
+      title: cfg.title || 'Royal Decree',
+      clauses: (cfg.clauses || []).map(c => ({
+        text: c.text,
+        blank: { options: c.options, answer: c.answer }
+      })),
+      constraints: cfg.constraints || [],
+      falseOutputs: cfg.falseOutputs || ['The decree is flawed.'],
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'rank-lock') {
+    new RankLock(mount, {
+      slots: cfg.slots || [],
+      badges: cfg.badges || [],
+      extraBadges: cfg.extraBadges || [],
+      ranks: cfg.ranks || ['Soldier', 'Champion'],
+      falseOutputs: cfg.falseOutputs || [],
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'deck-battle-lock') {
+    new DeckBattleLock(mount, {
+      merchant: cfg.merchant,
+      startingDeck: cfg.startingDeck || [],
+      gold: cfg.gold || 80,
+      onSubmit() { onSolve(); },
+      onWalkAway() { popup.classList.remove('open'); }
+    });
+  } else if (puzzle.ui === 'equipment-rack-lock') {
+    const upgradedQuests = (cfg.slots || []).filter(s => engine.solvedPuzzles.has(s.quest)).map(s => s.quest);
+    new EquipmentRackLock(mount, {
+      slots: cfg.slots || [],
+      upgradedQuests: upgradedQuests,
+      observability: cfg.observability || false,
+      cooldown: cfg.cooldown || 30,
+      tiers: cfg.tiers,
+      target: cfg.target || 'strides',
+      onSubmit() { onSolve(); },
+      onDeploy() {}
+    });
+  } else if (puzzle.ui === 'arch-lock') {
+    new ArchLock(mount, {
+      zones: cfg.zones || [],
+      services: cfg.services || [],
+      solution: cfg.solution || {},
+      onSubmit(correct) { correct ? onSolve() : onFail('Wrong assignment. Try again.'); }
+    });
+  } else if (puzzle.ui === 'prompt-lock') {
+    new PromptLock(mount, {
+      npc: cfg.npc,
+      fragments: cfg.fragments || [],
+      answers: cfg.answers || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'booking-run-lock') {
+    new BookingRunLock(mount, {
+      npc: cfg.npc,
+      calls: cfg.calls || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'image-prompt-lock') {
+    new ImagePromptLock(mount, {
+      commissions: cfg.commissions || [],
+      options: cfg.options || {},
+      maxAttempts: cfg.maxAttempts || 5,
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'witness-lock') {
+    new WitnessLock(mount, {
+      testimonies: cfg.testimonies || [],
+      moments: cfg.moments || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'evidence-board-lock') {
+    new EvidenceBoardLock(mount, {
+      connections: cfg.connections || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'grinder-lock') {
+    new GrinderLock(mount, {
+      config: cfg,
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'stock-memory-lock') {
+    new StockMemoryLock(mount, {
+      config: cfg,
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'spelling-lock') {
+    new SpellingLock(mount, {
+      config: cfg,
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'evidence-lock') {
+    new EvidenceLock(mount, {
+      config: cfg,
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'milk-jug-lock') {
+    new MilkJugLock(mount, {
+      config: cfg,
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'cascade-lock') {
+    new CascadeLock(mount, {
+      config: cfg,
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'dial-lock') {
+    new DialLock(mount, {
+      config: cfg,
+      onSubmit() {
+        popup.classList.remove('open');
+        engine.solvedPuzzles.add(puzzleId);
+        if (engine.onLeaderboardEvent) engine.onLeaderboardEvent('puzzle_solved', { puzzleId });
+        const savedUpdate = engine.onUpdate;
+        engine.onUpdate = null;
+        const successCard = puzzle.success_card || awardCardId;
+        if (successCard !== awardCardId) engine.discoverCard(awardCardId);
+        engine.discoverCard(successCard);
+        if (engine.cards[successCard]?.is_ending) {
+          engine.finished = true; engine.completed = true; engine.endTime = Date.now();
+        }
+        engine.onUpdate = savedUpdate;
+        renderGame();
+      },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (puzzle.ui === 'cafe-order-lock') {
+    new CafeOrderLock(mount, {
+      config: cfg,
+      onServed(total) {
+        if (total >= 4 && !engine.visibleCards.has(45)) {
+          engine.revealCard(45);
+          renderGame();
+        }
+      }
+    });
   }
 
   popup.classList.add('open');
@@ -1335,6 +1689,27 @@ function showRoomBanner(title) {
   setTimeout(() => el.remove(), 2200);
 }
 
+let newRoomCount = 0;
+function showRoomUnlock(roomName) {
+  // Badge on map button
+  newRoomCount++;
+  const btn = document.getElementById('btn-map');
+  let badge = btn.querySelector('.badge-map');
+  if (!badge) { badge = document.createElement('span'); badge.className = 'badge-map'; btn.appendChild(badge); }
+  badge.textContent = newRoomCount;
+  btn.classList.add('glow');
+
+  // Slide-down bar
+  const existing = document.querySelector('.room-unlock-bar');
+  if (existing) existing.remove();
+  const bar = document.createElement('div');
+  bar.className = 'room-unlock-bar';
+  bar.innerHTML = `<span class="unlock-icon">🔓</span><div><div class="unlock-text">${roomName}</div><div class="unlock-sub">New area unlocked — tap to view map</div></div>`;
+  bar.addEventListener('click', () => { bar.classList.add('dismiss'); setTimeout(() => bar.remove(), 300); openMap(); });
+  document.body.appendChild(bar);
+  setTimeout(() => { if (bar.parentNode) { bar.classList.add('dismiss'); setTimeout(() => bar.remove(), 300); } }, 4000);
+}
+
 function renderTools() {
   const el = document.getElementById('tools-list');
   const tools = Object.values(engine.puzzles).filter(p => p.type === 'tool');
@@ -1370,6 +1745,9 @@ function renderTools() {
 // --- Map ---
 function openMap() {
   document.getElementById('btn-map').classList.remove('glow');
+  const mapBadge = document.querySelector('#btn-map .badge-map');
+  if (mapBadge) mapBadge.remove();
+  newRoomCount = 0;
   document.getElementById('main').style.display = 'none';
   document.getElementById('bottom-bar').style.display = 'none';
   document.getElementById('map-screen').classList.add('active');
@@ -1393,7 +1771,149 @@ function renderMap() {
   const unlocked = new Set(engine.unlockedRooms);
   if (!roomDefs.length) { el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">No rooms discovered yet.</p>'; return; }
 
-  // Build tree from root (first room)
+  // Check if rooms have map_pos (isometric) or fallback to list
+  const hasPositions = roomDefs.some(r => r.map_pos);
+  if (!hasPositions) { renderMapList(el, roomDefs, unlocked); return; }
+
+  // Voxel map style — flat layout with pre-rendered isometric images
+  if (engine.meta.map_style === 'voxel') { renderMapVoxel(el, roomDefs, unlocked); return; }
+
+  let selectedMapRoom = null;
+  let html = '<div class="iso-container"><div class="iso-floor" id="iso-floor"></div><div class="iso-info" id="iso-info"><div style="color:#666;font-size:13px">Tap a room to see details</div></div></div>';
+  el.innerHTML = html;
+
+  const floor = document.getElementById('iso-floor');
+  const S = 1.4; // scale factor for spacing
+
+  // Draw connectors
+  roomDefs.forEach(r => {
+    if (!r.map_pos) return;
+    (r.connects_to || []).forEach(cid => {
+      const target = roomDefs.find(t => t.card_id === cid);
+      if (!target || !target.map_pos) return;
+      const x1 = r.map_pos[0] * S + 60, y1 = r.map_pos[1] * S + 60;
+      const x2 = target.map_pos[0] * S + 60, y2 = target.map_pos[1] * S + 60;
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.sqrt(dx * dx + dy * dy);
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      const div = document.createElement('div');
+      div.className = 'iso-connector';
+      if (unlocked.has(r.card_id) && unlocked.has(cid)) div.classList.add('active');
+      if (r.card_id === engine.currentRoom || cid === engine.currentRoom) div.classList.add('current-line');
+      div.style.cssText = `left:${x1}px;top:${y1}px;width:${len}px;transform:rotate(${angle}deg)`;
+      floor.appendChild(div);
+    });
+  });
+
+  // Draw tiles
+  roomDefs.forEach(r => {
+    if (!r.map_pos) return;
+    const id = r.card_id;
+    const card = engine.cards[id];
+    const isUnlocked = unlocked.has(id);
+    const isCurrent = id === engine.currentRoom;
+    const discoveries = card?.discoveries || [];
+    const undone = discoveries.filter(d => {
+      if (d.puzzle) { const p = engine.puzzles[d.puzzle]; if (p && (p.type === 'tool' || p.ui === 'npc-dialog')) return false; }
+      return !engine.discoveredCards.has(d.card_id) && !engine.consumedCards.has(d.card_id);
+    });
+    const remaining = undone.length;
+    const state = !isUnlocked ? 'locked' : isCurrent ? 'current' : 'explored';
+
+    const tile = document.createElement('div');
+    tile.className = `iso-tile ${state}`;
+    tile.style.left = r.map_pos[0] * S + 'px';
+    tile.style.top = r.map_pos[1] * S + 'px';
+    tile.dataset.id = id;
+
+    const imgSrc = card?.image ? `${ASSET_BASE}/${card.image}` : '';
+    tile.innerHTML = `${imgSrc ? `<img src="${imgSrc}" onerror="this.style.display='none'">` : ''}${isCurrent ? '<div class="iso-pin"><div class="iso-pin-head"></div><div class="iso-pin-stick"></div></div>' : ''}${remaining > 0 && isUnlocked ? `<div class="iso-badge">${remaining}</div>` : ''}<div class="iso-label">${r.name}</div>`;
+
+    tile.addEventListener('click', () => {
+      if (!isUnlocked) return;
+      if (selectedMapRoom === id) { goToRoom(id); return; }
+      selectedMapRoom = id;
+      floor.querySelectorAll('.iso-tile').forEach(t => t.classList.remove('selected'));
+      tile.classList.add('selected');
+      const status = isCurrent ? '📍 You are here' : remaining > 0 ? `⚠️ ${remaining} action${remaining > 1 ? 's' : ''} remaining` : '✅ Explored';
+      const info = document.getElementById('iso-info');
+      info.innerHTML = `<div class="iso-info-name">${r.name}</div><div class="iso-info-status">${status}</div>${r.unlock_text ? `<div class="iso-info-unlock">${r.unlock_text}</div>` : ''}${!isCurrent ? `<button class="iso-info-btn" onclick="goToRoom(${id})">Go Here</button>` : ''}`;
+    });
+
+    floor.appendChild(tile);
+  });
+}
+
+// Voxel map — flat layout with pre-rendered isometric voxel images
+function renderMapVoxel(el, roomDefs, unlocked) {
+  let selectedMapRoom = null;
+  const mapDir = ASSET_BASE + '/25maps';
+  el.innerHTML = '<div class="iso-container"><div class="vox-floor" id="iso-floor"></div></div><div class="iso-info" id="iso-info" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:90%;max-width:360px;z-index:10"><div style="color:#666;font-size:13px">Tap a room to see details</div></div>';
+  const floor = document.getElementById('iso-floor');
+
+  // Connectors
+  roomDefs.forEach(r => {
+    if (!r.map_pos) return;
+    (r.connects_to || []).forEach(cid => {
+      const target = roomDefs.find(t => t.card_id === cid);
+      if (!target || !target.map_pos) return;
+      const x1 = r.map_pos[0] + 100, y1 = r.map_pos[1] + 100;
+      const x2 = target.map_pos[0] + 100, y2 = target.map_pos[1] + 100;
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.sqrt(dx * dx + dy * dy);
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      const div = document.createElement('div');
+      div.className = 'vox-connector';
+      if (unlocked.has(r.card_id) && unlocked.has(cid)) div.classList.add('active');
+      if (r.card_id === engine.currentRoom || cid === engine.currentRoom) div.classList.add('current-line');
+      div.style.cssText = `left:${x1}px;top:${y1}px;width:${len}px;transform:rotate(${angle}deg)`;
+      floor.appendChild(div);
+    });
+  });
+
+  // Tiles
+  roomDefs.forEach(r => {
+    if (!r.map_pos) return;
+    const id = r.card_id;
+    const card = engine.cards[id];
+    const isUnlocked = unlocked.has(id);
+    const isCurrent = id === engine.currentRoom;
+    const discoveries = card?.discoveries || [];
+    const undone = discoveries.filter(d => {
+      if (d.puzzle) { const p = engine.puzzles[d.puzzle]; if (p && (p.type === 'tool' || p.ui === 'npc-dialog')) return false; }
+      return !engine.discoveredCards.has(d.card_id) && !engine.consumedCards.has(d.card_id);
+    });
+    const remaining = undone.length;
+    const state = !isUnlocked ? 'locked' : isCurrent ? 'current' : 'explored';
+
+    const tile = document.createElement('div');
+    tile.className = `vox-tile ${state}`;
+    tile.style.left = r.map_pos[0] + 'px';
+    tile.style.top = r.map_pos[1] + 'px';
+    tile.dataset.id = id;
+
+    // Use 25maps/<name>.png based on room name
+    const slug = r.name.toLowerCase().replace(/\s+/g, '-');
+    const imgSrc = `${mapDir}/${slug}.png`;
+    tile.innerHTML = `<img src="${imgSrc}" onerror="this.style.display='none'">${isCurrent ? '<div class="iso-pin">📍</div>' : ''}${remaining > 0 && isUnlocked ? `<div class="iso-badge">${remaining}</div>` : ''}<div class="iso-label">${r.name}</div>`;
+
+    tile.addEventListener('click', () => {
+      if (!isUnlocked) return;
+      if (selectedMapRoom === id) { goToRoom(id); return; }
+      selectedMapRoom = id;
+      floor.querySelectorAll('.vox-tile').forEach(t => t.classList.remove('selected'));
+      tile.classList.add('selected');
+      const status = isCurrent ? '📍 You are here' : remaining > 0 ? `⚠️ ${remaining} action${remaining > 1 ? 's' : ''} remaining` : '✅ Explored';
+      const info = document.getElementById('iso-info');
+      info.innerHTML = `<div class="iso-info-name">${r.name}</div><div class="iso-info-status">${status}</div>${r.unlock_text ? `<div class="iso-info-unlock">${r.unlock_text}</div>` : ''}${!isCurrent ? `<button class="iso-info-btn" onclick="goToRoom(${id})">Go Here</button>` : ''}`;
+    });
+
+    floor.appendChild(tile);
+  });
+}
+
+// Fallback list-based map for episodes without map_pos
+function renderMapList(el, roomDefs, unlocked) {
   const rendered = new Set();
   function renderNode(roomDef) {
     if (!roomDef) return '';
@@ -1403,57 +1923,25 @@ function renderMap() {
     const card = engine.cards[id];
     const isUnlocked = unlocked.has(id);
     if (!isUnlocked) return '';
-
     const isCurrent = id === engine.currentRoom;
-    const hasPuzzle = card?.puzzle_ref && !engine.solvedPuzzles.has(card.puzzle_ref);
     const discoveries = (card?.discoveries || []);
     const undone = discoveries.filter(d => {
-      if (d.card_id === -1 && d.puzzle) { const p = engine.puzzles[d.puzzle]; if (p && p.type === 'tool') return false; }
+      if (d.puzzle) { const p = engine.puzzles[d.puzzle]; if (p && (p.type === 'tool' || p.ui === 'npc-dialog')) return false; }
       return !engine.discoveredCards.has(d.card_id) && !engine.consumedCards.has(d.card_id);
     });
     const remaining = undone.length;
     const hasRemaining = remaining > 0;
-
     const cls = `map-room ${isCurrent ? 'current' : ''} ${hasRemaining ? 'unsolved' : ''}`;
     const status = isCurrent ? 'You are here' : hasRemaining ? `${remaining} action${remaining > 1 ? 's' : ''} remaining` : 'Explored';
     const badge = hasRemaining ? `<span class="map-badge">${remaining}</span>` : '';
     const unlock = roomDef.unlock_text ? `<div class="room-unlock">Unlocked: ${roomDef.unlock_text}</div>` : '';
-    const onclick = `onclick="goToRoom(${id})"`;
-
-    let html = `<div class="map-node">`;
-    html += `<div class="${cls}" ${onclick}><div class="room-dot"></div><div class="room-info"><div class="room-name">${roomDef.name}${badge}</div><div class="room-status">${status}</div>${unlock}</div></div>`;
-
-    // Children
+    let html = `<div class="map-node"><div class="${cls}" onclick="goToRoom(${id})"><div class="room-dot"></div><div class="room-info"><div class="room-name">${roomDef.name}${badge}</div><div class="room-status">${status}</div>${unlock}</div></div>`;
     const children = (roomDef.connects_to || []).map(cid => roomDefs.find(r => r.card_id === cid)).filter(Boolean);
-    if (children.length === 1) {
-      html += `<div class="map-connector"><span class="line">→</span></div>`;
-      html += renderNode(children[0]);
-    } else if (children.length > 1) {
-      html += `<div class="map-connector"><span class="line">→</span></div>`;
-      html += `<div class="map-branch">`;
-      children.forEach(child => {
-        html += `<div class="map-branch-col">${renderNode(child)}</div>`;
-      });
-      html += `</div>`;
-      // Find merge point — room that both branches lead to
-      const grandchildren = children.flatMap(c => (c.connects_to || []).map(gid => roomDefs.find(r => r.card_id === gid)).filter(Boolean));
-      const seen = new Set();
-      const mergePoints = grandchildren.filter(gc => { if (seen.has(gc.card_id)) return true; seen.add(gc.card_id); return false; });
-      if (mergePoints.length === 0 && grandchildren.length > 0) {
-        // No merge — render remaining children
-        const rendered = new Set(children.map(c => c.card_id));
-        grandchildren.filter(gc => !rendered.has(gc.card_id)).forEach(gc => {
-          html += `<div class="map-connector"><span class="line">→</span></div>`;
-          html += renderNode(gc);
-        });
-      }
-    }
-
+    if (children.length === 1) { html += `<div class="map-connector"><span class="line">→</span></div>${renderNode(children[0])}`; }
+    else if (children.length > 1) { html += `<div class="map-connector"><span class="line">→</span></div><div class="map-branch">${children.map(c => `<div class="map-branch-col">${renderNode(c)}</div>`).join('')}</div>`; }
     html += `</div>`;
     return html;
   }
-
-  // Find root (unlocked_by === null)
   const root = roomDefs.find(r => r.unlocked_by === null);
   el.innerHTML = root ? renderNode(root) : '<p style="color:var(--muted);text-align:center">No map data.</p>';
 }
@@ -1467,6 +1955,8 @@ function goToRoom(id) {
 function resetGame() {
   if (!confirm('Reset the game? All progress will be lost.')) return;
   engine.clearSave();
+  try { localStorage.removeItem('cafe_order_state'); } catch {}
+  if (CafeOrderLock) CafeOrderLock._state = null;
   clearInterval(timerInterval);
   stopVoice();
   location.reload();
@@ -1658,7 +2148,7 @@ function showEndScreen() {
     const ending = engine.narrative.ending?.success;
     if (ending) {
       const segments = ending.segments || [{ text: (ending.text || []).join(' ') }];
-      document.getElementById('end-message').innerHTML = segments.map(s => s.text || (s.ssml || '').replace(/<[^>]+>/g, '')).join(' ');
+      document.getElementById('end-message').innerHTML = segments.map(s => s.text || (s.ssml || '').replace(/<[^>]+>/g, '')).join('<br><br>');
     }
   } else {
     document.getElementById('end-title').textContent = timedOut ? 'Overtime' : "Time's Up";
@@ -1667,7 +2157,7 @@ function showEndScreen() {
       setNarrative('ending_failure');
       playVoice('ending_failure.wav');
       const segments = failEnding.segments || [{ text: (failEnding.text || []).join(' ') }];
-      document.getElementById('end-message').innerHTML = segments.map(s => s.text || (s.ssml || '').replace(/<[^>]+>/g, '')).join(' ');
+      document.getElementById('end-message').innerHTML = segments.map(s => s.text || (s.ssml || '').replace(/<[^>]+>/g, '')).join('<br><br>');
     } else {
       document.getElementById('end-message').textContent = timedOut ? 'You finished, but time had already run out.' : 'Try again.';
     }

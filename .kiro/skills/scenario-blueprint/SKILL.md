@@ -77,7 +77,7 @@ Given a completed blueprint, generate these files in `scenarios/<category>/<epis
 | `meta.json` | Meta |
 | `narrative.json` | Narrative (voices + segments with pause/emphasis) |
 | `cards.json` | Card Index + Room Details (discoveries, hidden_elements, puzzle_ref, reveals, consumes) |
-| `rooms.json` | Room Graph (card_id, connects_to, unlocked_by, unlock_text) |
+| `rooms.json` | Room Graph (card_id, connects_to, unlocked_by, unlock_text, map_pos) |
 | `combinations.json` | Room Details → Combinations tables |
 | `puzzles.json` | Room Details → Puzzle definitions |
 | `events.json` | Timed events from Room Graph + triggered events |
@@ -86,6 +86,23 @@ Given a completed blueprint, generate these files in `scenarios/<category>/<epis
 After generating JSON, run:
 - `python tools/narrative_to_voice.py scenarios/<category>/<episode-id>` — generate voice audio
 - `python tools/cards_to_images.py scenarios/<category>/<episode-id>` — generate card artwork
+
+## Folder Structure
+
+### Isometric Map Layout
+
+Rooms can define `map_pos: [x, y]` in `rooms.json` for a 2.5D isometric map view. If present, the map renders as tilted tiles with room images; otherwise falls back to a list view.
+
+Coordinate space: 400×480px grid, tiles are 120×120px. Position is top-left corner of each tile.
+
+Example layout for a café:
+```json
+{ "card_id": 1, "name": "Back Door", "map_pos": [140, 380] }
+{ "card_id": 10, "name": "Store Room", "map_pos": [60, 280] }
+{ "card_id": 20, "name": "Brew Station", "map_pos": [140, 180] }
+{ "card_id": 30, "name": "Service Counter", "map_pos": [220, 280] }
+{ "card_id": 40, "name": "The Floor", "map_pos": [140, 60] }
+```
 
 ## Folder Structure
 

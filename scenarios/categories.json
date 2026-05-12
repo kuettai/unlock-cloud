@@ -5,7 +5,7 @@
     "subtitle": "Cloud infrastructure, AI services, and security",
     "icon": "☁️",
     "color": "#f97316",
-    "episodes": 3,
+    "episodes": 4,
     "description": "From VPC networking to Generative AI — learn AWS by escaping."
   },
   {
@@ -14,7 +14,7 @@
     "subtitle": "Witness and unravel the miracles of Christ",
     "icon": "✝️",
     "color": "#a855f7",
-    "episodes": 2,
+    "episodes": 3,
     "description": "Walk through the miracles of Jesus — discover, solve, and learn the stories that changed the world."
   }
 ]

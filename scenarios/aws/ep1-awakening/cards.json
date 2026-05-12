@@ -25,6 +25,9 @@
       "color": "blue",
       "title": "System Logs Screen",
       "description": "The system logs contain key data values: VPC ID vpc-0f8c3a and gateway ID igw-abc123. One line keeps flickering in and out — a DEBUG entry with a password hash: 6e6574776f726b. A status line reads: \"DATA LINK active on blue channel.\"",
+      "challenge": {
+        "description": "The system logs contain key data values: VPC ID vpc-0f8c3a and gateway ID igw-abc123. One line keeps flickering in and out — a DEBUG entry with a password hash: 70726f746f636f6c. A status line reads: \"DATA LINK active on blue channel.\""
+      },
       "image": "assets/card-system-logs.png",
       "reveals": [105],
       "visible_to": "all",
@@ -172,11 +175,6 @@
       "title": "Security Group Blueprint",
       "description": "A partial rule set: Inbound: Allow | TCP | Port ??? | Source: 10.0.0.0/16. The port number is corrupted. Strange line fragments are scattered across the card where the port should be.",
       "image": "assets/card-sg-blueprint.png",
-      "overlay_with": {
-        "card_id": 133,
-        "result_image": "assets/overlay-sg-port.png",
-        "reveal_hint": "When overlaid with the Port Reference Card, the scattered fragments on the blueprint align with the port list — the corrupted port lines up perfectly with 443 (HTTPS)."
-      },
       "visible_to": "all",
       "room": "archive-room"
     },
@@ -191,7 +189,7 @@
       "discoveries": [
         { "card_id": -1, "label": "Listen to the wall speaker", "puzzle": "audio-intercept" },
         { "card_id": 133, "label": "Pick up the card on the floor" },
-        { "card_id": 135, "label": "Configure the Security Group panel", "requires_item": [125, 133], "puzzle": "slider-sg" }
+        { "card_id": 135, "label": "Configure the Security Group panel", "requires_item": [125, 133], "puzzle": "sg-config" }
       ],
       "visible_to": "all",
       "room": "gateway-antechamber"
@@ -203,11 +201,6 @@
       "title": "Port Reference Card",
       "description": "A reference card listing common ports: HTTP=80, HTTPS=443, SSH=22, RDP=3389. The card has alignment marks along the edges.",
       "image": "assets/card-port-ref.png",
-      "overlay_with": {
-        "card_id": 125,
-        "result_image": "assets/overlay-sg-port.png",
-        "reveal_hint": "When overlaid with the Security Group Blueprint, the corrupted port aligns with 443 (HTTPS)."
-      },
       "visible_to": "all",
       "room": "gateway-antechamber"
     },
@@ -341,6 +334,7 @@
       "reveals": [],
       "discoveries": [
         { "card_id": 171, "label": "Examine the NACL control panel" },
+        { "card_id": 173, "label": "Read the comparison chart on the wall" },
         { "card_id": 175, "label": "Configure the NACL rules", "requires_item": [162], "puzzle": "nacl-sg-lock" }
       ],
       "visible_to": "all",
@@ -371,7 +365,7 @@
       "color": "yellow",
       "title": "NACL configured.",
       "description": "The corridor lights turn green. Both inbound and outbound rules are accepted. The path ahead opens to a junction of severed cables.",
-      "reveals": [180, 173],
+      "reveals": [180],
       "consumes": [162, 171],
       "visible_to": "all",
       "room": "nacl-corridor"
@@ -385,6 +379,7 @@
       "image": "assets/wire-junction.png",
       "reveals": [],
       "discoveries": [
+        { "card_id": 183, "label": "Read the maintenance log on the wall" },
         { "card_id": 185, "label": "Reconnect the power cables", "puzzle": "wire-junction" }
       ],
       "visible_to": "all",
@@ -405,7 +400,7 @@
       "color": "yellow",
       "title": "Power restored.",
       "description": "The cables lock into place. Power surges through the junction. The gateway ahead hums to life — its console is now active.",
-      "reveals": [140, 183],
+      "reveals": [140],
       "visible_to": "all",
       "room": "wire-junction"
     }

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>EP3 Puzzle Tests — The King's Errand</title>
+<style>
+:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--accent:#3b82f6}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif}
+body{display:flex;flex-direction:column;align-items:center;padding:24px 16px;gap:32px;overflow-y:auto}
+h2{font-size:16px;color:#d4a853;font-family:Georgia,serif;letter-spacing:1px}
+h3{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+section{width:100%;max-width:420px}
+.result{margin-top:8px;text-align:center;font-size:14px;color:var(--muted);min-height:20px}
+hr{border:none;border-top:1px solid var(--border);width:100%;max-width:420px}
+</style>
+</head>
+<body>
+  <h2>⚔️ The King's Errand — New Puzzle Locks</h2>
+
+  <section>
+    <h3>Rank Lock — Equip the Champion</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Drag badges to the knight's slots. Decoys: Sword & Longbow don't belong.</p>
+    <div id="rank-lock"></div>
+    <div class="result" id="rank-result"></div>
+  </section>
+  <hr>
+
+  <section>
+    <h3>Scroll Lock — The King's Seal (Cedar Policy)</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Fill in the decree blanks. Choosing "dismiss" disables "forbidden" in clause 3.</p>
+    <div id="scroll-lock"></div>
+    <div class="result" id="scroll-result"></div>
+  </section>
+  <hr>
+
+  <section>
+    <h3>Bazaar Lock — Hire Runners (Budget: 100g)</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Drag quests to stalls. 🥇 = bonus hint in later puzzles. 🥈 = normal. 🥉 = harder variant. Gold saved → bonus score.</p>
+    <div id="bazaar-lock"></div>
+    <div class="result" id="bazaar-result"></div>
+  </section>
+
+<script src="puzzle/rank-lock.js"></script>
+<script src="puzzle/scroll-lock.js"></script>
+<script src="puzzle/bazaar-lock.js"></script>
+<script>
+// --- Rank Lock ---
+new RankLock(document.getElementById('rank-lock'), {
+  slots: [
+    { id: 'model', label: 'Mind', icon: '🧠', x: 50, y: 8 },
+    { id: 'guardrails', label: 'Chest', icon: '🛡️', x: 50, y: 32 },
+    { id: 'gateway', label: 'L.Hand', icon: '🚪', x: 18, y: 50 },
+    { id: 'policy', label: 'R.Hand', icon: '📜', x: 82, y: 50 },
+    { id: 'memory', label: 'Belt', icon: '💎', x: 50, y: 60 }
+  ],
+  badges: [
+    { id: 'claude', label: 'Claude', icon: '🧠', slot: 'model' },
+    { id: 'honor', label: 'Code of Honor', icon: '🛡️', slot: 'guardrails' },
+    { id: 'mcp', label: 'MCP Gateway', icon: '🚪', slot: 'gateway' },
+    { id: 'cedar', label: "King's Seal", icon: '📜', slot: 'policy' },
+    { id: 'crystal', label: 'Memory Crystal', icon: '💎', slot: 'memory' }
+  ],
+  extraBadges: [
+    { id: 'sword', label: 'Sharp Sword', icon: '⚔️' },
+    { id: 'bow', label: 'Longbow', icon: '🏹' }
+  ],
+  ranks: ['Soldier', 'Scout', 'Marshal', 'Chronicler', 'Champion'],
+  falseOutputs: [
+    'Sir Cedric frowns. "A sword? This isn\'t a jousting tournament."',
+    'The knight stumbles. Some badges are misplaced.'
+  ],
+  onSubmit() { document.getElementById('rank-result').textContent = '🏆 Champion promoted!'; },
+  onWrong(msg) { document.getElementById('rank-result').textContent = msg; }
+});
+
+// --- Scroll Lock ---
+new ScrollLock(document.getElementById('scroll-lock'), {
+  title: "The King's Seal",
+  clauses: [
+    { text: 'By royal decree, the bearer may ___ performers at any venue in the realm.', blank: { options: ['book', 'dismiss', 'audition', 'challenge'], answer: 'book' } },
+    { text: 'The cost per act shall not exceed ___ gold pieces.', blank: { options: ['25', '50', '100', 'unlimited'], answer: '50' } },
+    { text: 'The bearer is ___ from hiring the King\'s personal bard.', blank: { options: ['permitted', 'forbidden', 'encouraged'], answer: 'forbidden' } },
+    { text: 'All bookings must be recorded in the ___.', blank: { options: ["Herald's Ledger", "King's Diary", "Tavern Guestbook"], answer: "Herald's Ledger" } }
+  ],
+  constraints: [
+    { if: { clause: 0, value: 'dismiss' }, then: { clause: 2, disable: ['forbidden'] } }
+  ],
+  falseOutputs: [
+    'The wax seal cracks — the decree contradicts itself!',
+    'The royal scribe shakes his head. "This won\'t hold up in court."'
+  ],
+  onSubmit() { document.getElementById('scroll-result').textContent = '🔏 Decree sealed!'; },
+  onWrong(msg) { document.getElementById('scroll-result').textContent = msg; }
+});
+
+// --- Bazaar Lock ---
+new BazaarLock(document.getElementById('bazaar-lock'), {
+  budget: 100,
+  stalls: [
+    { id: 'claude', label: 'Anthropic Pavilion', icon: '🧙', specialty: 'Reasoning', cost: 40 },
+    { id: 'nova', label: 'Nova Company', icon: '⚒️', specialty: 'Versatile', cost: 25 },
+    { id: 'llama', label: 'Meta Tent', icon: '💪', specialty: 'General', cost: 15 },
+    { id: 'deepseek', label: 'DeepSeek Caravan', icon: '🔢', specialty: 'Code & Math', cost: 20 }
+  ],
+  quests: [
+    { id: 'search', label: 'Search recipe archives',
+      accepts: [
+        { stall: 'claude', tier: 'gold', reward: '🛡️ War Shield', msg: 'Flawless research — every recipe found!' },
+        { stall: 'nova', tier: 'silver', reward: '⚔️ Iron Shield', msg: 'Good search, missed a few rare recipes.' },
+        { stall: 'llama', tier: 'bronze', reward: '🪵 Wooden Shield', msg: 'Found the basics. The exotic dishes are missing.' }
+      ],
+      failMsg: 'The mathematician stares at the scrolls and starts calculating their weight.' },
+    { id: 'calculate', label: 'Calculate supply costs',
+      accepts: [
+        { stall: 'deepseek', tier: 'gold', reward: '💎 Royal Abacus', msg: 'Precise to the last copper!' },
+        { stall: 'claude', tier: 'silver', reward: '🔢 Fine Abacus', msg: 'Eloquent and accurate, but pricey.' },
+        { stall: 'nova', tier: 'silver', reward: '🔢 Iron Abacus', msg: 'Close enough for government work.' }
+      ],
+      failMsg: 'The warrior arm-wrestles the ledger. The numbers don\'t budge.' },
+    { id: 'announce', label: 'Draft festival announcement',
+      accepts: [
+        { stall: 'claude', tier: 'gold', reward: '📯 Golden Herald Horn', msg: 'A proclamation for the ages!' },
+        { stall: 'nova', tier: 'gold', reward: '📯 Golden Herald Horn', msg: 'Clear, compelling, well-structured.' },
+        { stall: 'llama', tier: 'silver', reward: '📢 Silver Megaphone', msg: 'Gets the job done, a bit rough.' }
+      ],
+      failMsg: 'The caravan produces a beautiful equation. Nobody understands it.' },
+    { id: 'carry', label: 'Carry heavy supplies',
+      accepts: [
+        { stall: 'llama', tier: 'gold', reward: '💪 Hercules Belt', msg: 'Carried everything in one trip!' },
+        { stall: 'nova', tier: 'silver', reward: '🎒 Sturdy Pack', msg: 'Two trips, but got it done.' }
+      ],
+      failMsg: 'The scholar tries to lift a barrel and falls over dramatically.' }
+  ],
+  onSubmit({ spent, remaining, rewards }) {
+    const tiers = rewards.map(r => r.tier);
+    const golds = tiers.filter(t => t === 'gold').length;
+    document.getElementById('bazaar-result').textContent =
+      `🤝 Done! ${golds}/${rewards.length} gold-tier rewards. ${remaining}g saved for bonus!`;
+  },
+  onWrong(msg) { document.getElementById('bazaar-result').textContent = msg; }
+});
+</script>
+</body>
+</html>
