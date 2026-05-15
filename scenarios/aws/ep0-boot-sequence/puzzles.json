@@ -9,12 +9,32 @@
       "config": {
         "cols": 3,
         "rows": 3,
-        "tiles": ["1","2","3","4","5","6","7","8","9"],
+        "tiles": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
         "revealCorrect": true
       },
       "challenge": {
         "config": {
-          "tiles": ["13","27","34","41","56","62","78","85","99"],
+          "tiles": [
+            "13",
+            "27",
+            "34",
+            "41",
+            "56",
+            "62",
+            "78",
+            "85",
+            "99"
+          ],
           "revealCorrect": false
         }
       },
@@ -22,7 +42,8 @@
         "Tap two tiles to swap them. The numbers should read 1-9, left to right, top to bottom.",
         "Start from the top-left. Which number belongs there?",
         "Row 1: 1 2 3 / Row 2: 4 5 6 / Row 3: 7 8 9"
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "seq-grid",
@@ -31,14 +52,28 @@
       "description": "Memorize and replay the flashing pattern on the 3x3 grid",
       "ui": "sequence-lock",
       "config": {
-        "sequence": [0, 1, 2, 5, 8],
+        "sequence": [
+          0,
+          1,
+          2,
+          5,
+          8
+        ],
         "mode": "flash",
         "flashMs": 400,
         "gapMs": 200
       },
       "challenge": {
         "config": {
-          "sequence": [0, 1, 2, 5, 8, 7, 6],
+          "sequence": [
+            0,
+            1,
+            2,
+            5,
+            8,
+            7,
+            6
+          ],
           "flashMs": 250,
           "gapMs": 150
         }
@@ -47,7 +82,8 @@
         "Watch the pattern carefully. It traces a shape.",
         "The pattern goes: top-left, top-center, top-right, middle-right, bottom-right.",
         "Tap cells in order: 0, 1, 2, 5, 8 (an L-shape from top-left to bottom-right)."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "wire-device",
@@ -57,43 +93,116 @@
       "ui": "wire-lock",
       "config": {
         "wires": [
-          { "id": "power", "color": "#22c55e", "label": "Power" },
-          { "id": "data", "color": "#3b82f6", "label": "Data" },
-          { "id": "ground", "color": "#7a8ba8", "label": "Ground" }
+          {
+            "id": "power",
+            "color": "#22c55e",
+            "label": "Power"
+          },
+          {
+            "id": "data",
+            "color": "#3b82f6",
+            "label": "Data"
+          },
+          {
+            "id": "ground",
+            "color": "#7a8ba8",
+            "label": "Ground"
+          }
         ],
         "sockets": [
-          { "id": "energy", "label": "Energy Port" },
-          { "id": "signal", "label": "Signal Port" },
-          { "id": "drain", "label": "Drain Port" }
+          {
+            "id": "energy",
+            "label": "Energy Port"
+          },
+          {
+            "id": "signal",
+            "label": "Signal Port"
+          },
+          {
+            "id": "drain",
+            "label": "Drain Port"
+          }
         ],
-        "solution": { "power": "energy", "data": "signal", "ground": "drain" },
-        "falseOutputs": ["Sparks fly... wrong connection.", "The device hums but nothing happens."]
+        "solution": {
+          "power": "energy",
+          "data": "signal",
+          "ground": "drain"
+        },
+        "falseOutputs": [
+          "Sparks fly... wrong connection.",
+          "The device hums but nothing happens."
+        ]
       },
       "challenge": {
         "config": {
           "wires": [
-            { "id": "power", "color": "#22c55e", "label": "PWR" },
-            { "id": "data", "color": "#3b82f6", "label": "DAT" },
-            { "id": "ground", "color": "#7a8ba8", "label": "GND" },
-            { "id": "clock", "color": "#eab308", "label": "CLK" },
-            { "id": "reset", "color": "#ef4444", "label": "RST" }
+            {
+              "id": "power",
+              "color": "#22c55e",
+              "label": "PWR"
+            },
+            {
+              "id": "data",
+              "color": "#3b82f6",
+              "label": "DAT"
+            },
+            {
+              "id": "ground",
+              "color": "#7a8ba8",
+              "label": "GND"
+            },
+            {
+              "id": "clock",
+              "color": "#eab308",
+              "label": "CLK"
+            },
+            {
+              "id": "reset",
+              "color": "#ef4444",
+              "label": "RST"
+            }
           ],
           "sockets": [
-            { "id": "energy", "label": "V+" },
-            { "id": "signal", "label": "I/O" },
-            { "id": "drain", "label": "V−" },
-            { "id": "sync", "label": "SYNC" },
-            { "id": "init", "label": "INIT" },
-            { "id": "null", "label": "NULL" }
+            {
+              "id": "energy",
+              "label": "V+"
+            },
+            {
+              "id": "signal",
+              "label": "I/O"
+            },
+            {
+              "id": "drain",
+              "label": "V−"
+            },
+            {
+              "id": "sync",
+              "label": "SYNC"
+            },
+            {
+              "id": "init",
+              "label": "INIT"
+            },
+            {
+              "id": "null",
+              "label": "NULL"
+            }
           ],
-          "solution": { "power": "energy", "data": "signal", "ground": "drain", "clock": "sync", "reset": "init" }
+          "solution": {
+            "power": "energy",
+            "data": "signal",
+            "ground": "drain",
+            "clock": "sync",
+            "reset": "init"
+          }
         }
       },
       "hints": [
         "Match each wire to the socket that makes sense. Power goes to energy.",
         "Power → Energy Port, Data → Signal Port. What's left?",
         "Power → Energy, Data → Signal, Ground → Drain."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "morse-go",
@@ -121,7 +230,8 @@
         "You need to tap morse code. Short tap = dot, long tap = dash.",
         "G is dash-dash-dot (--.). O is dash-dash-dash (---).",
         "Tap: long long short (pause) long long long."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "hidden-mural",
@@ -140,7 +250,8 @@
         "The mural isn't just decoration.",
         "Look for a number hidden in the circuit pattern.",
         "The number is 42. Look at card 42."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "b64-tool",
@@ -149,7 +260,8 @@
       "description": "Base64 Decoder",
       "ui": "base64-decoder",
       "config": {},
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "base64-decode",
@@ -171,7 +283,9 @@
         },
         "wrong_answer_message": "Incorrect. Did you rearrange the letters using the EXIT CODE color order?"
       },
-      "tools_available": ["base64_decoder"],
+      "tools_available": [
+        "base64_decoder"
+      ],
       "puzzle_ui": "word_lock",
       "penalty_on_wrong": false,
       "wrong_answer_message": "Incorrect. Did you rearrange the letters using the EXIT CODE color order?",
@@ -180,7 +294,9 @@
         "First decode the Base64 text. Then look at the color key and the EXIT CODE sequence.",
         "The decoded text is 'unlock'. Each letter has a color by position: u=Green, n=White, l=Purple, o=Pink, c=Red, k=Blue. Now follow the EXIT CODE color order.",
         "EXIT CODE order: Purple Pink Red Blue White Green = l o c k n u. The answer is 'locknu'."
-      ]
+      ],
+      "mandatory": true,
+      "isFinal": true
     }
   ]
 }

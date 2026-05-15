@@ -540,6 +540,7 @@ Both tools and NPCs appear in the 🔧 Tools screen, grouped by room. NPCs show 
 
 | Option | Locks | Description |
 |---|---|---|
+| `mandatory` | all | `true`: required for progression (tracked by backend). `false`: optional (NPCs, tools, audio). **Always include this field.** |
 | `revealCorrect` | slider, rotation, binary, jigsaw | `true`: per-input green feedback. `false`: all-or-nothing. |
 | `falseOutputs` | wire, slider, rotation, binary, keypad, terminal | Misleading messages on wrong attempts. |
 | `onWrong(msg)` | wire, slider, rotation, binary, keypad, terminal | Callback with false output on failure. |
@@ -580,3 +581,12 @@ Both tools and NPCs appear in the 🔧 Tools screen, grouped by room. NPCs show 
 5. Add `revealCorrect` option if the puzzle has per-input feedback.
 6. Add to the appropriate test page for testing.
 7. Update this skill file.
+
+## Puzzle → Card Consumption
+
+When a puzzle is solved, the engine calls `discoverCard(successCard)`. If that discovery has `consumes_item`, those items are removed. If the revealed card has `consumes`, those cards are removed.
+
+When wiring a puzzle into `cards.json`, always decide:
+- **What items did the player spend to attempt this puzzle?** → put them in `consumes_item` on the discovery entry
+- **What items does solving this puzzle "use up"?** → put them in `consumes` on the result/success card
+- **Is the puzzle's prerequisite item reusable?** (e.g., a reference sheet needed to solve the puzzle but not destroyed) → use `requires_item` only, no `consumes_item`

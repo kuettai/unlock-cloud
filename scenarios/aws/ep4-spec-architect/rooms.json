@@ -1,0 +1,49 @@
+{
+  "rooms": [
+    {
+      "card_id": 1,
+      "name": "The Desk",
+      "description": "Your new desk — a dormant golem, scattered documents, and a blinking message",
+      "connects_to": [10],
+      "unlocked_by": null,
+      "unlock_text": "You sit at the architect's desk.",
+      "map_pos": [140, 360]
+    },
+    {
+      "card_id": 10,
+      "name": "The Drafting Hall",
+      "description": "Drafting tables, a client screen, and a scroll frame waiting for structured specs",
+      "connects_to": [30],
+      "unlocked_by": { "type": "item", "card_id": 3 },
+      "unlock_text": "You enter the Drafting Hall. Blueprints cover every surface.",
+      "map_pos": [140, 240]
+    },
+    {
+      "card_id": 30,
+      "name": "The Golem Workshop",
+      "description": "Circular chamber — the golem sits connected to conduit pipes, document shelves line the walls",
+      "connects_to": [50],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "spec-requirements" },
+      "unlock_text": "The specs are done. Time to configure the golem.",
+      "map_pos": [140, 120]
+    },
+    {
+      "card_id": 50,
+      "name": "The Build Yard",
+      "description": "Open construction yard — the golem glows blue, a blueprint frame shows architecture layers",
+      "connects_to": [70],
+      "unlocked_by": { "type": "puzzles", "puzzle_ids": ["context-memory", "wire-mcp"] },
+      "unlock_text": "The golem awakens. The Build Yard doors open.",
+      "map_pos": [0, 120]
+    },
+    {
+      "card_id": 70,
+      "name": "The Launch Tower",
+      "description": "Top floor — panoramic window, deployment console, and the golem at the controls",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "path-codebase" },
+      "unlock_text": "The elevator rises to the Launch Tower.",
+      "map_pos": [280, 120]
+    }
+  ]
+}

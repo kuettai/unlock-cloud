@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Digital illustration, modern-fantasy tech guild aesthetic, warm golden light mixed with cool blue holographics, clean lines, muted stone/wood backgrounds with vivid accent colors (blue, green, gold), game card art.",
+  "style_prefix_location": "Digital illustration, modern-fantasy tech guild interior, warm golden light mixed with cool blue holographics, clean lines, wide angle, game environment art.",
+  "style_prefix_item": "Digital illustration, single glowing object on dark stone surface, modern-fantasy tech aesthetic, clean icon style, blue/gold accent lighting, game inventory art.",
+  "style_prefix_object": "Digital illustration, interactive element or character portrait, modern-fantasy tech guild aesthetic, warm lighting, close-up detail, game card art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, realistic photo",
+  "aspect_ratio": "16:9"
+}

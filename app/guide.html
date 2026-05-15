@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Facilitator Guide — re:Solve</title>
+<style>
+:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--accent:#3b82f6;--green:#22c55e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;padding:16px;max-width:600px;margin:0 auto}
+h1{font-size:18px;margin-bottom:4px}
+.subtitle{color:var(--muted);font-size:13px;margin-bottom:20px}
+.episode-select{width:100%;padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:14px;margin-bottom:20px}
+.puzzle-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px}
+.puzzle-title{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.puzzle-type{font-size:11px;color:var(--muted);margin-bottom:8px}
+.puzzle-answer{font-size:13px;color:var(--green);background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);border-radius:4px;padding:8px;font-family:'Courier New',monospace;white-space:pre-wrap}
+.puzzle-hints{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+.room-header{font-size:15px;font-weight:700;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.mode-btn{padding:8px 20px;font-size:13px;font-weight:600;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
+.mode-btn:first-child{border-radius:6px 0 0 6px}
+.mode-btn:last-child{border-radius:0 6px 6px 0}
+.mode-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+</style>
+</head>
+<body>
+<h1>🔑 Facilitator Answer Guide</h1>
+<p class="subtitle">Step-by-step solutions for all puzzles</p>
+<select class="episode-select" id="ep-select" onchange="loadEpisode(this.value)">
+  <option value="">Select an episode...</option>
+</select>
+<div style="display:flex;gap:0;margin-bottom:20px">
+  <button class="mode-btn active" id="mode-normal" onclick="setGuideMode('normal')">Normal</button>
+  <button class="mode-btn" id="mode-challenge" onclick="setGuideMode('challenge')">Challenge</button>
+</div>
+<div id="guide-content"></div>
+
+<script>
+const BASE = '../scenarios';
+const ASSET_BASE = location.hostname === 'localhost' || location.hostname === '127.0.0.1' ? BASE : 'https://beta.re-solve.cloud/scenarios';
+let guideMode = 'normal';
+
+function setGuideMode(mode) {
+  guideMode = mode;
+  document.getElementById('mode-normal').classList.toggle('active', mode === 'normal');
+  document.getElementById('mode-challenge').classList.toggle('active', mode === 'challenge');
+  const path = document.getElementById('ep-select').value;
+  if (path) loadEpisode(path);
+}
+
+async function init() {
+  const cats = await (await fetch(`${BASE}/categories.json`)).json();
+  const select = document.getElementById('ep-select');
+  for (const cat of cats) {
+    const list = await (await fetch(`${BASE}/${cat.id}/index.json`)).json();
+    for (const id of list) {
+      try {
+        const meta = await (await fetch(`${BASE}/${cat.id}/${id}/meta.json`)).json();
+        const opt = document.createElement('option');
+        opt.value = `${cat.id}/${id}`;
+        opt.textContent = `${cat.title} — EP${meta.episode}: ${meta.title}`;
+        select.appendChild(opt);
+      } catch {}
+    }
+  }
+}
+
+async function loadEpisode(path) {
+  if (!path) { document.getElementById('guide-content').innerHTML = ''; return; }
+  const content = document.getElementById('guide-content');
+  content.innerHTML = '<div style="color:var(--muted);padding:20px;text-align:center">Loading...</div>';
+
+  const [puzzles, cards, rooms] = await Promise.all([
+    (await fetch(`${BASE}/${path}/puzzles.json`)).json(),
+    (await fetch(`${BASE}/${path}/cards.json`)).json(),
+    (await fetch(`${BASE}/${path}/rooms.json`)).json()
+  ]);
+
+  const puzzleList = (puzzles.puzzles || puzzles).map(p => {
+    if (guideMode === 'challenge' && p.challenge) {
+      const merged = { ...p, config: { ...p.config, ...(p.challenge.config || {}) } };
+      if (p.challenge.description) merged.description = p.challenge.description;
+      if (p.challenge.hints) merged.hints = p.challenge.hints;
+      return merged;
+    }
+    return p;
+  });
+  const cardList = cards.cards || cards;
+  const roomList = rooms.rooms || rooms;
+
+  // Group puzzles by room
+  const roomMap = {};
+  roomList.forEach(r => { roomMap[r.card_id] = r.name; });
+
+  let html = '';
+  for (const room of roomList) {
+    const roomCard = cardList.find(c => c.id === room.card_id);
+    if (!roomCard || !roomCard.discoveries) continue;
+    const roomPuzzles = roomCard.discoveries.filter(d => d.puzzle).map(d => {
+      return puzzleList.find(p => p.id === d.puzzle);
+    }).filter(Boolean);
+    // Also find puzzles referenced via puzzle_ref on cards in this room
+    cardList.filter(c => c.room === (roomCard.room || '') && c.puzzle_ref).forEach(c => {
+      const p = puzzleList.find(px => px.id === c.puzzle_ref);
+      if (p && !roomPuzzles.find(rp => rp.id === p.id)) roomPuzzles.push(p);
+    });
+    if (!roomPuzzles.length) continue;
+
+    html += `<div class="room-header">🚪 ${room.name}</div>`;
+    for (const p of roomPuzzles) {
+      if (p.type === 'tool' && p.ui === 'npc-dialog') continue; // skip NPCs
+      html += renderPuzzle(p);
+    }
+  }
+  content.innerHTML = html || '<div style="color:var(--muted);padding:20px;text-align:center">No puzzles found.</div>';
+
+  // Show any puzzles not matched to a room
+  const shown = new Set();
+  content.querySelectorAll('.puzzle-card').forEach(el => {
+    const id = el.querySelector('.puzzle-type')?.textContent.match(/ID: (.+)/)?.[1];
+    if (id) shown.add(id);
+  });
+  const unmatched = puzzleList.filter(p => !shown.has(p.id) && !(p.type === 'tool' && p.ui === 'npc-dialog'));
+  if (unmatched.length) {
+    let extra = '<div class="room-header">📦 Other Puzzles</div>';
+    unmatched.forEach(p => { extra += renderPuzzle(p); });
+    content.innerHTML += extra;
+  }
+}
+
+function renderPuzzle(p) {
+  const cfg = p.config || {};
+  let answer = '';
+
+  if (p.ui === 'sort-lock') {
+    answer = (cfg.answer || []).map((a, i) => `${i + 1}. ${a}`).join('\n');
+  } else if (p.ui === 'spec-lock') {
+    answer = (cfg.rounds || []).map((r, i) => {
+      const specs = r.spec.map(s => `  ${s.label}: ${s.answer}`).join('\n');
+      return `Round ${i + 1}: "${r.vibe}"\n${specs}`;
+    }).join('\n\n');
+  } else if (p.ui === 'context-lock') {
+    const req = (cfg.documents || []).filter(d => d.status === 'required');
+    answer = `Load: ${req.map(d => d.label).join(' + ')}\nReject: ${(cfg.documents || []).filter(d => d.status === 'poison').map(d => d.label).join(', ')}`;
+  } else if (p.ui === 'wire-lock') {
+    answer = Object.entries(cfg.solution || {}).map(([w, s]) => `${w} → ${s}`).join('\n');
+  } else if (p.ui === 'terminal-lock') {
+    answer = cfg.answer || '';
+  } else if (p.ui === 'blueprint-lock') {
+    const byLayer = {};
+    (cfg.components || []).forEach(c => { (byLayer[c.layer] = byLayer[c.layer] || []).push(c.label); });
+    answer = (cfg.layers || []).map(l => `${l.icon} ${l.label}: ${(byLayer[l.id] || []).join(', ')}`).join('\n');
+  } else if (p.ui === 'path-lock') {
+    answer = (cfg.answer || []).join(' → ');
+  } else if (p.ui === 'match-lock') {
+    answer = (cfg.pairs || []).map(pair => `${pair[0]} ↔ ${pair[1]}`).join('\n');
+  } else if (p.ui === 'timeline-lock') {
+    answer = (cfg.answer || cfg.events || []).map((a, i) => {
+      const label = typeof a === 'string' ? (cfg.events || []).find(e => e.id === a)?.label || a : a.label;
+      return `${i + 1}. ${label}`;
+    }).join('\n');
+  } else if (p.ui === 'log-lock') {
+    answer = (cfg.lines || []).filter(l => l.correct).map(l => `→ ${l.text}`).join('\n');
+  } else if (p.ui === 'defuse-lock') {
+    answer = (cfg.tasks || []).map(t => {
+      if (t.type === 'toggle') return `${t.label}: ${t.answer ? 'ON ✅' : 'OFF ❌'}`;
+      return `${t.label}: "${t.answer}"`;
+    }).join('\n');
+  } else if (p.ui === 'pipe-lock') {
+    answer = 'Rotate pipes to connect source → sink';
+  } else if (p.ui === 'keypad-lock') {
+    answer = cfg.answer || cfg.solution || '';
+  } else if (p.type === 'hidden_element') {
+    const sol = p.solution || cfg.solution || {};
+    answer = sol.value || 'unknown';
+  } else if (p.type === 'code_entry') {
+    const sol = p.solution || cfg.solution || {};
+    answer = sol.value || cfg.answer || cfg.solution || '';
+  } else if (p.ui === 'word-lock') {
+    answer = cfg.answer || cfg.solution || '';
+  } else if (p.ui === 'sequence-lock') {
+    answer = `Sequence: ${(cfg.sequence || []).join(' → ')}`;
+  } else if (p.ui === 'slider-lock') {
+    answer = (cfg.sliders || []).map(s => `${s.label}: ${s.answer}`).join('\n');
+  } else if (p.ui === 'morse-lock') {
+    answer = cfg.answer || '';
+  } else if (p.ui === 'jigsaw-lock') {
+    answer = `Arrange tiles: ${(cfg.tiles || []).join(', ')}`;
+  } else if (p.ui === 'binary-lock') {
+    answer = `Binary: ${cfg.answer} (decimal: ${parseInt(cfg.answer, 2)})`;
+  } else if (p.ui === 'rotation-lock') {
+    answer = (cfg.dials || []).map((d, i) => `Dial ${i + 1}: position ${d.answer}`).join('\n');
+  } else if (p.ui === 'sg-lock') {
+    answer = (cfg.rules || []).map(r => `${r.protocol} ${r.port} ${r.source}: ${r.answer}`).join('\n');
+  } else if (p.ui === 'policy-lock') {
+    answer = (cfg.blanks || []).map(b => `${b.placeholder}: ${b.answer}`).join('\n');
+  } else if (p.ui === 'pillar-lock') {
+    answer = (cfg.statements || []).map(s => `"${s.text}" → ${s.answer}`).join('\n');
+  } else if (p.ui === 'scroll-lock') {
+    answer = (cfg.clauses || []).map(c => `${c.blank?.answer || c.answer || ''}`).join(', ');
+  } else if (p.ui === 'bazaar-lock') {
+    answer = (cfg.quests || []).map(q => `${q.label || q.id}: best → ${(q.accepts || [])[0]?.stall || '?'}`).join('\n');
+  } else if (p.ui === 'crowd-counter-lock') {
+    answer = `Target: ${cfg.target}`;
+  } else if (p.ui === 'grinder-lock') {
+    answer = (cfg.sliders || []).map(s => `${s.label}: see manager note`).join('\n') + `\nTarget: ${cfg.target?.min}-${cfg.target?.max}s`;
+  } else if (p.ui === 'spelling-lock') {
+    answer = `Spell: ${(cfg.pool || []).slice(0, cfg.pickCount || 3).join(', ')}`;
+  } else if (p.ui === 'evidence-lock') {
+    answer = (cfg.steps || []).map((s, i) => `${i + 1}. ${s.prompt} → ${s.answer}`).join('\n');
+  } else if (p.ui === 'dial-lock') {
+    answer = (cfg.dials || []).map(d => `${d.label}: ${d.answer}`).join(', ');
+  } else if (p.ui === 'offering-table-lock') {
+    answer = `Correct: ${(cfg.items || []).filter(i => i.correct).map(i => i.label).join(', ')}`;
+  } else if (p.ui === 'maze-lock') {
+    answer = `Navigate from start to goal (${cfg.cols}x${cfg.rows} grid)`;
+  } else if (p.ui === 'chain-lock') {
+    answer = (cfg.answer || []).join(' → ');
+  } else {
+    // Smart fallback: try common answer fields
+    const a = cfg.answer || cfg.solution || p.solution?.value || null;
+    if (a) answer = typeof a === 'string' ? a : JSON.stringify(a, null, 2);
+    else answer = 'Refer to puzzle config';
+  }
+
+  const hints = (p.hints || []).map((h, i) => `  ${i + 1}. ${h}`).join('\n');
+
+  return `<div class="puzzle-card">
+    <div class="puzzle-title">${p.description || p.id}</div>
+    <div class="puzzle-type">${p.ui} • ID: ${p.id}</div>
+    <div class="puzzle-answer">${escHtml(answer)}</div>
+    ${hints ? `<div class="puzzle-hints"><strong>Hints:</strong>\n${escHtml(hints)}</div>` : ''}
+  </div>`;
+}
+
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+init();
+</script>
+</body>
+</html>

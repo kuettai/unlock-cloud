@@ -1,4 +1,4 @@
-/* Re:Solve — Game Engine */
+/* re:Solve — Game Engine */
 
 class GameEngine {
   constructor(scenarioPath) {
@@ -216,6 +216,7 @@ class GameEngine {
     const match = card.hidden_elements.find(h => h.value === number);
     if (match) {
       this.solvedPuzzles.add(card.puzzle_ref);
+      if (this.onLeaderboardEvent) this.onLeaderboardEvent('puzzle_solved', { puzzleId: card.puzzle_ref });
       return this.discoverCard(number);
     }
     return false;

@@ -1,0 +1,56 @@
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--accent:#3b82f6;--green:#22c55e;--yellow:#eab308}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif}
+
+.container{max-width:600px;margin:0 auto;padding:24px 16px;position:relative;z-index:1}
+
+.kiro-bg{position:fixed;top:20px;left:10px;width:280px;height:336px;opacity:0;pointer-events:none;z-index:0;transition:opacity 1.5s ease}
+.kiro-bg.visible{opacity:0.04}
+h1{font-size:22px;font-weight:700;text-align:center;margin-bottom:4px}
+.subtitle{text-align:center;color:var(--muted);font-size:14px;margin-bottom:32px}
+
+/* Category cards */
+.cat-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px}
+.cat-card:hover{border-color:var(--accent)}
+.cat-card:active{opacity:.7}
+.cat-icon{font-size:40px;min-width:50px;text-align:center}
+.cat-info{flex:1}
+.cat-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.cat-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px}
+.cat-meta{font-size:11px;color:var(--muted)}
+
+/* Back button */
+.back-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:8px 16px;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:20px;display:none}
+.back-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Scenario cards */
+.scenario-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;cursor:pointer;transition:all .2s;position:relative}
+.scenario-card:hover{border-color:var(--accent)}
+.scenario-card:active{opacity:.7}
+.scenario-cover{width:100%;aspect-ratio:2/3;object-fit:cover;display:block}
+.scenario-body{position:absolute;bottom:0;left:0;right:0;display:flex;gap:14px;align-items:center;padding:16px;background:linear-gradient(to bottom,transparent,rgba(10,14,23,.85) 30%,rgba(10,14,23,1) 50%)}
+.scenario-ep{font-size:28px;font-weight:800;color:var(--accent);min-width:48px;text-align:center}
+.scenario-info{flex:1}
+.scenario-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.scenario-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.scenario-meta{display:flex;gap:8px;flex-wrap:wrap}
+.scenario-tag{font-size:11px;padding:3px 8px;border-radius:4px;background:var(--bg);color:var(--muted);border:1px solid var(--border)}
+.scenario-tag.diff-tutorial{color:var(--green);border-color:var(--green)}
+.scenario-tag.diff-initiate{color:var(--yellow);border-color:var(--yellow)}
+.scenario-tag.diff-practitioner{color:#f97316;border-color:#f97316}
+.scenario-tag.diff-architect{color:var(--accent);border-color:var(--accent)}
+.resume-badge{font-size:11px;color:var(--green);background:rgba(34,197,94,.1);padding:3px 8px;border-radius:4px;white-space:nowrap}
+
+.loading{text-align:center;color:var(--muted);padding:40px}
+
+.mode-toggle{display:flex;justify-content:center;gap:0;margin-bottom:24px}
+.mode-btn{padding:8px 20px;font-size:13px;font-weight:600;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .2s}
+.mode-btn:first-child{border-radius:6px 0 0 6px}
+.mode-btn:last-child{border-radius:0 6px 6px 0}
+.mode-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.kiro-peek{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;align-items:flex-end;gap:6px;cursor:pointer;z-index:30;animation:peek-up 1s ease 2s both}
+.kiro-ghost{font-size:22px;animation:ghost-bob 2s ease-in-out infinite;display:inline-block}
+.kiro-text{font-size:11px;color:var(--muted);letter-spacing:0.5px;padding-bottom:4px;overflow:hidden;white-space:nowrap;border-right:1px solid var(--muted);animation:blink-caret .7s step-end infinite}
+@keyframes peek-up{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}
+@keyframes ghost-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes blink-caret{50%{border-color:transparent}}

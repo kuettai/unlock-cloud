@@ -1,0 +1,48 @@
+{
+  "id": "ep4-spec-architect",
+  "title": "The Spec Architect",
+  "episode": 4,
+  "arc": "AI Unit",
+  "description": "Your first day as architect at the Builders' Guild. The previous architect quit, a demanding client demo is in 40 minutes, and your golem has no context. Write specs, configure the golem, build the architecture, and deploy before Lord Ashford's deadline.",
+  "difficulty": {
+    "tier": 2,
+    "label": "Practitioner"
+  },
+  "duration_minutes": 40,
+  "players": {
+    "min": 1,
+    "max": 4,
+    "recommended": 2
+  },
+  "aws_topics": [
+    "Kiro CLI",
+    "Spec-Driven Development",
+    "Custom Agents",
+    "Context Management",
+    "MCP Servers",
+    "CDK Deployment",
+    "Playwright Testing",
+    "React/Next.js",
+    "Lambda",
+    "DynamoDB",
+    "CloudFront"
+  ],
+  "mechanics_taught": [
+    "spec-lock",
+    "context-lock",
+    "blueprint-lock",
+    "wire-lock",
+    "terminal-lock",
+    "path-lock",
+    "timeline-lock",
+    "chain-lock",
+    "pipe-lock",
+    "log-lock",
+    "sort-lock",
+    "defuse-lock",
+    "npc-dialog",
+    "timed-events",
+    "lore-fragments"
+  ],
+  "version": "0.1"
+}

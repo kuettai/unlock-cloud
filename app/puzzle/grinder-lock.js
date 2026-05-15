@@ -43,7 +43,7 @@ class GrinderLock {
   _calcTime() {
     const g = this.vals[0], d = this.vals[1], y = this.vals[2];
     const rand = (Math.random() * 2 - 1) * (this.cfg.randomRange || 1);
-    return Math.round(10 + g * 2.5 - d * 0.8 + y * 1.2 + rand);
+    return Math.round(35 - g * 2 + d * 0.8 + y * 1.2 + rand);
   }
   _render() {
     const note = this.cfg.managerNote || '';

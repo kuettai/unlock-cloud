@@ -33,7 +33,8 @@
           }
         ]
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "npc-servants",
@@ -74,7 +75,8 @@
           }
         ]
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "witness-wires",
@@ -127,16 +129,44 @@
       "challenge": {
         "config": {
           "wires": [
-            { "id": "testimony-water", "color": "#3b82f6", "label": "From the water pots" },
-            { "id": "testimony-woman", "color": "#22c55e", "label": "'Do whatever he tells you'" },
-            { "id": "testimony-filled", "color": "#a855f7", "label": "Filled to the brim" },
-            { "id": "testimony-eastern", "color": "#eab308", "label": "Pointed toward the eastern corner" }
+            {
+              "id": "testimony-water",
+              "color": "#3b82f6",
+              "label": "From the water pots"
+            },
+            {
+              "id": "testimony-woman",
+              "color": "#22c55e",
+              "label": "'Do whatever he tells you'"
+            },
+            {
+              "id": "testimony-filled",
+              "color": "#a855f7",
+              "label": "Filled to the brim"
+            },
+            {
+              "id": "testimony-eastern",
+              "color": "#eab308",
+              "label": "Pointed toward the eastern corner"
+            }
           ],
           "sockets": [
-            { "id": "tobiah", "label": "Tobiah" },
-            { "id": "reuben", "label": "Reuben" },
-            { "id": "amos", "label": "Amos" },
-            { "id": "ezra", "label": "Ezra" }
+            {
+              "id": "tobiah",
+              "label": "Tobiah"
+            },
+            {
+              "id": "reuben",
+              "label": "Reuben"
+            },
+            {
+              "id": "amos",
+              "label": "Amos"
+            },
+            {
+              "id": "ezra",
+              "label": "Ezra"
+            }
           ],
           "solution": {
             "testimony-water": "tobiah",
@@ -149,7 +179,8 @@
         "Listen carefully to each servant's words during the conversation. Who said what?",
         "Tobiah spoke about the water pots first. Reuben mentioned the woman. Amos confirmed they filled the jars.",
         "Connect: 'water pots' → Tobiah, 'woman's instruction' → Reuben, 'filled to the brim' → Amos."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "hidden-jars",
@@ -165,7 +196,8 @@
         "The jars themselves hold a clue. Look at the stone carefully.",
         "Count the jars — but also look for a number hidden in the artwork.",
         "The number 6 is hidden in the stone grain pattern. Look at card #146."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "fill-the-jars",
@@ -222,7 +254,8 @@
         "Hold down on each jar to pour water. Release when the water reaches the brim line.",
         "The larger jars (I, III, VI) hold 3 metretes. The smaller ones (II, IV, V) hold 2. Pour carefully.",
         "Hold longer for big jars, shorter for small ones. Release right at the dashed line."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "jar-volume",
@@ -248,7 +281,8 @@
         "The Bible says each jar holds two to three metretes. A metrete is about 10 gallons.",
         "Six jars × two metretes minimum × 10 gallons = ?",
         "6 × 2 × 10 = 120. Enter 120."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "merchant-eliminate",
@@ -287,7 +321,8 @@
         "Each wrong theory has a specific piece of evidence that disproves it. Think about what you've learned.",
         "The volume rules out smuggling. Joachim's monopoly rules out a second order. The bridegroom's confusion rules out a gift.",
         "Smuggled → 120 gallons. Second order → only merchant. Gift → bridegroom confused. Other town → no records."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "npc-joachim",
@@ -319,7 +354,8 @@
         ],
         "state_lines": []
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "npc-miriam",
@@ -355,7 +391,8 @@
         ],
         "state_lines": []
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "courtyard-maze",
@@ -367,19 +404,66 @@
         "cols": 5,
         "rows": 4,
         "walls": [
-          [0, 1, "S"],
-          [0, 3, "W"],
-          [0, 3, "S"],
-          [1, 0, "E"],
-          [1, 2, "S"],
-          [1, 3, "E"],
-          [2, 1, "E"],
-          [2, 2, "W"],
-          [2, 4, "W"],
-          [3, 1, "W"]
+          [
+            0,
+            1,
+            "S"
+          ],
+          [
+            0,
+            3,
+            "W"
+          ],
+          [
+            0,
+            3,
+            "S"
+          ],
+          [
+            1,
+            0,
+            "E"
+          ],
+          [
+            1,
+            2,
+            "S"
+          ],
+          [
+            1,
+            3,
+            "E"
+          ],
+          [
+            2,
+            1,
+            "E"
+          ],
+          [
+            2,
+            2,
+            "W"
+          ],
+          [
+            2,
+            4,
+            "W"
+          ],
+          [
+            3,
+            1,
+            "W"
+          ]
         ],
-        "start": { "row": 0, "col": 0, "facing": "E" },
-        "goal": { "row": 3, "col": 4 },
+        "start": {
+          "row": 0,
+          "col": 0,
+          "facing": "E"
+        },
+        "goal": {
+          "row": 3,
+          "col": 4
+        },
         "showWalls": false,
         "showGoal": false,
         "fallOnBump": true,
@@ -393,26 +477,101 @@
           "cols": 6,
           "rows": 5,
           "walls": [
-            [0, 1, "S"],
-            [0, 3, "W"],
-            [0, 3, "S"],
-            [0, 5, "S"],
-            [1, 0, "E"],
-            [1, 2, "S"],
-            [1, 3, "E"],
-            [1, 4, "S"],
-            [2, 1, "E"],
-            [2, 2, "W"],
-            [2, 4, "W"],
-            [2, 5, "W"],
-            [3, 0, "S"],
-            [3, 1, "W"],
-            [3, 3, "S"],
-            [3, 4, "E"],
-            [4, 2, "W"]
+            [
+              0,
+              1,
+              "S"
+            ],
+            [
+              0,
+              3,
+              "W"
+            ],
+            [
+              0,
+              3,
+              "S"
+            ],
+            [
+              0,
+              5,
+              "S"
+            ],
+            [
+              1,
+              0,
+              "E"
+            ],
+            [
+              1,
+              2,
+              "S"
+            ],
+            [
+              1,
+              3,
+              "E"
+            ],
+            [
+              1,
+              4,
+              "S"
+            ],
+            [
+              2,
+              1,
+              "E"
+            ],
+            [
+              2,
+              2,
+              "W"
+            ],
+            [
+              2,
+              4,
+              "W"
+            ],
+            [
+              2,
+              5,
+              "W"
+            ],
+            [
+              3,
+              0,
+              "S"
+            ],
+            [
+              3,
+              1,
+              "W"
+            ],
+            [
+              3,
+              3,
+              "S"
+            ],
+            [
+              3,
+              4,
+              "E"
+            ],
+            [
+              4,
+              2,
+              "W"
+            ]
           ],
-          "start": { "row": 0, "col": 0, "facing": "E" },
-          "goal": { "row": 4, "col": 5 },
+          "start": {
+            "row": 0,
+            "col": 0,
+            "facing": "E"
+          },
+          "goal": {
+            "row": 4,
+            "col": 5
+          },
           "bumpPenalty": 15
         }
       },
@@ -421,7 +580,8 @@
         "Joachim said Mary is near the bride's family, on the far side of the courtyard.",
         "Head east and south through the courtyard. Avoid the tables and guests.",
         "From start: E, E, S, S, E, S, E — reach the far corner."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "miriam-word",
@@ -442,7 +602,8 @@
         "Mary went to her son with a simple statement about what the wedding lacked.",
         "She said, 'They have no ____.' What ran out at the wedding?",
         "The answer is WINE. 'They have no wine.' (John 2:3)"
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "npc-fishermen",
@@ -478,7 +639,8 @@
         ],
         "state_lines": []
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "kavod-word",
@@ -496,7 +658,9 @@
         "You've seen these letters before — observe the artwork in The Bride's Family Area.",
         "Look at the wall behind Mary. There are markings carved into the stone.",
         "Four Hebrew characters are carved on the wall: כ ,ב ,ו ,ד — enter them: כבוד"
-      ]
+      ],
+      "mandatory": true,
+      "isFinal": true
     },
     {
       "id": "first-sign",
@@ -506,12 +670,42 @@
       "ui": "witness-lock",
       "config": {
         "testimonies": [
-          { "id": "t1", "who": "Simon", "quote": "\"I saw Mary whisper to him. He seemed reluctant at first.\"", "moment": "Mary told her son and he said his hour had not come" },
-          { "id": "t2", "who": "Andrew", "quote": "\"The servants filled those huge jars — all six, to the very brim!\"", "moment": "Servants filled six stone jars with water" },
-          { "id": "t3", "who": "Simon", "quote": "\"She just told them: do whatever he says. Such confidence!\"", "moment": "Mary told the servants to obey him" },
-          { "id": "t4", "who": "Andrew", "quote": "\"He simply said: draw some out, take it to the master of the feast.\"", "moment": "He commanded them to draw out and serve" },
-          { "id": "t5", "who": "Simon", "quote": "\"The look on Matthias's face when he tasted it — pure shock!\"", "moment": "The ruler of the feast tasted and was astonished" },
-          { "id": "t6", "who": "Andrew", "quote": "\"Everyone was talking — the wine had run out, the feast was ruined!\"", "moment": "The wine ran out at the wedding" }
+          {
+            "id": "t1",
+            "who": "Simon",
+            "quote": "\"I saw Mary whisper to him. He seemed reluctant at first.\"",
+            "moment": "Mary told her son and he said his hour had not come"
+          },
+          {
+            "id": "t2",
+            "who": "Andrew",
+            "quote": "\"The servants filled those huge jars — all six, to the very brim!\"",
+            "moment": "Servants filled six stone jars with water"
+          },
+          {
+            "id": "t3",
+            "who": "Simon",
+            "quote": "\"She just told them: do whatever he says. Such confidence!\"",
+            "moment": "Mary told the servants to obey him"
+          },
+          {
+            "id": "t4",
+            "who": "Andrew",
+            "quote": "\"He simply said: draw some out, take it to the master of the feast.\"",
+            "moment": "He commanded them to draw out and serve"
+          },
+          {
+            "id": "t5",
+            "who": "Simon",
+            "quote": "\"The look on Matthias's face when he tasted it — pure shock!\"",
+            "moment": "The ruler of the feast tasted and was astonished"
+          },
+          {
+            "id": "t6",
+            "who": "Andrew",
+            "quote": "\"Everyone was talking — the wine had run out, the feast was ruined!\"",
+            "moment": "The wine ran out at the wedding"
+          }
         ],
         "moments": [
           "The wine ran out at the wedding",
@@ -527,7 +721,8 @@
         "Read each quote carefully — what specific action is the disciple describing?",
         "Simon saw Mary speak, the servants obey, and Matthias react. Andrew saw the crisis, the filling, and the command.",
         "Match: 'reluctant' = Mary told son, 'filled jars' = servants filled, 'do whatever' = Mary told servants, 'draw some out' = his command, 'shock' = tasting, 'wine ran out' = the crisis."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "investigation-timeline",
@@ -537,20 +732,49 @@
       "ui": "evidence-board-lock",
       "config": {
         "connections": [
-          { "step": "Tasted the extraordinary wine", "finding": "This wine is impossibly good — better than what was served first", "icon": "🍷" },
-          { "step": "Questioned Ezra the steward", "finding": "Ezra confirmed the wine ran out — he never ordered more", "icon": "📋" },
-          { "step": "Interviewed the three servants", "finding": "They only carried water — they saw it change in the jars", "icon": "👥" },
-          { "step": "Examined the six stone jars", "finding": "Jars held 120 gallons total — all now contain wine, not water", "icon": "🏺" },
-          { "step": "Visited Joachim the merchant", "finding": "No wine was purchased or delivered — his records prove it", "icon": "📦" },
-          { "step": "Spoke with Mary the mother", "finding": "She saw the teacher speak quietly to the servants before they drew", "icon": "👰" },
-          { "step": "Met Simon and the disciples", "finding": "They witnessed every step — water in, wine out, no trick", "icon": "👁️" }
+          {
+            "step": "Tasted the extraordinary wine",
+            "finding": "This wine is impossibly good — better than what was served first",
+            "icon": "🍷"
+          },
+          {
+            "step": "Questioned Ezra the steward",
+            "finding": "Ezra confirmed the wine ran out — he never ordered more",
+            "icon": "📋"
+          },
+          {
+            "step": "Interviewed the three servants",
+            "finding": "They only carried water — they saw it change in the jars",
+            "icon": "👥"
+          },
+          {
+            "step": "Examined the six stone jars",
+            "finding": "Jars held 120 gallons total — all now contain wine, not water",
+            "icon": "🏺"
+          },
+          {
+            "step": "Visited Joachim the merchant",
+            "finding": "No wine was purchased or delivered — his records prove it",
+            "icon": "📦"
+          },
+          {
+            "step": "Spoke with Mary the mother",
+            "finding": "She saw the teacher speak quietly to the servants before they drew",
+            "icon": "👰"
+          },
+          {
+            "step": "Met Simon and the disciples",
+            "finding": "They witnessed every step — water in, wine out, no trick",
+            "icon": "👁️"
+          }
         ]
       },
       "hints": [
         "Think about what each step would logically reveal. What would examining jars tell you?",
         "Tasting = quality. Ezra = no order placed. Servants = they carried water. Jars = volume. Joachim = no purchase. Mary = she saw him speak. Disciples = eyewitnesses.",
         "Match each step to the finding that ONLY that step could reveal."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "final-conclusion",
@@ -572,7 +796,9 @@
         "Every witness told you the same thing about what went into the jars.",
         "The servants filled the jars from the well. What comes from a well?",
         "The answer is WATER. 'The water now become wine.' (John 2:9)"
-      ]
+      ],
+      "mandatory": true,
+      "isFinal": true
     }
   ]
 }

@@ -34,6 +34,11 @@ def resize_image(filepath, target_size):
     img = Image.open(filepath)
     if img.size[0] <= target_size[0] and img.size[1] <= target_size[1]:
         return False  # already small enough
+    # Respect orientation: if image is portrait but target is landscape, flip target
+    img_is_portrait = img.size[1] > img.size[0]
+    target_is_landscape = target_size[0] > target_size[1]
+    if img_is_portrait and target_is_landscape:
+        target_size = (target_size[1], target_size[0])  # swap to portrait
     img = img.resize(target_size, Image.LANCZOS)
     img.save(filepath, 'PNG', optimize=True)
     return True

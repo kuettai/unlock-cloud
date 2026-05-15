@@ -1,0 +1,304 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "type": "location",
+      "color": "green",
+      "title": "The Desk",
+      "description": "Your new desk at the Builders' Guild. A dormant golem sits in the corner with dark eyes. Scattered documents cover the surface — some current, some outdated. A badge reader blinks by the inner door. Pip waves from the hallway.",
+      "image": "assets/the-desk.png",
+      "reveals": [],
+      "discoveries": [
+        { "label": "Talk to Pip", "card_id": 2, "puzzle": "npc-pip" },
+        { "label": "Try talking to the golem", "card_id": 4, "puzzle": "npc-golem" },
+        { "label": "Read Marcus's farewell note", "card_id": 6 },
+        { "label": "Sort the desk papers", "card_id": 5, "puzzle": "sort-priorities" },
+        { "label": "Pick up the guild badge", "card_id": 3, "requires_item": [5] },
+        { "label": "Enter the Drafting Hall", "card_id": 10, "requires_item": [3], "consumes_item": [3, 4, 5, 6] }
+      ],
+      "visible_to": "all",
+      "room": "desk"
+    },
+    {
+      "id": 2,
+      "type": "object",
+      "color": "blue",
+      "title": "Pip (Apprentice)",
+      "description": "A young apprentice with boundless energy. Pip explains spec-driven development and warns you about Marcus's vibe-coding habits.",
+      "image": "assets/card-pip.png",
+      "reveals": [],
+      "discoveries": [],
+      "visible_to": "all",
+      "room": "desk"
+    },
+    {
+      "id": 3,
+      "type": "item",
+      "color": "red",
+      "title": "Architect's Badge",
+      "description": "A heavy brass badge engraved with the Builders' Guild crest. Opens the inner door to the Drafting Hall.",
+      "image": "assets/card-architects-badge.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "desk"
+    },
+    {
+      "id": 4,
+      "type": "object",
+      "color": "blue",
+      "title": "Dormant Golem",
+      "description": "The golem's eyes are dark. It tries to speak: 'I... have no context. No specs. No connections to external guilds. The conduits were severed when Marcus left. I need three things: specs in my memory, and conduits reconnected to the Testing Guild and Diagram Guild.' Its voice fades to static.",
+      "image": "assets/card-dormant-golem.png",
+      "reveals": [],
+      "discoveries": [],
+      "visible_to": "all",
+      "room": "desk"
+    },
+    {
+      "id": 5,
+      "type": "item",
+      "color": "red",
+      "title": "Sorted Papers",
+      "description": "The papers reveal Marcus never wrote specs — he told the golem 'build a social app' and got a different interpretation every time. Vibe coding works for prototypes but fails for production.",
+      "image": "assets/card-sorted-papers.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "desk"
+    },
+    {
+      "id": 6,
+      "type": "object",
+      "color": "blue",
+      "title": "Marcus's Farewell Note",
+      "description": "Scrawled on the back of a napkin: 'I'm done. The golem kept building the wrong thing because I never wrote proper specs. Then the client wanted testing and I had no conduits to the Testing Guild. The MCP pipes are disconnected — you'll need to rewire them in the Workshop. Good luck. — M'",
+      "image": "assets/card-marcus-note.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "desk"
+    },
+    {
+      "id": 10,
+      "type": "location",
+      "color": "green",
+      "title": "The Drafting Hall",
+      "description": "A long room with drafting tables. The left wall has a terminal. The right wall has a client communication screen. In the center: a large scroll frame waiting for structured specs.",
+      "image": "assets/drafting-hall.png",
+      "reveals": [],
+      "discoveries": [
+        { "label": "Talk to Lord Ashford (screen)", "card_id": 11, "puzzle": "npc-ashford" },
+        { "label": "Read Marcus's sticky notes", "card_id": 13 },
+        { "label": "Write the specs", "card_id": 12, "requires_item": [11], "puzzle": "spec-requirements" },
+        { "label": "Go to the Golem Workshop", "card_id": 30, "requires_item": [12], "consumes_item": [12, 11, 13] }
+      ],
+      "visible_to": "all",
+      "room": "drafting"
+    },
+    {
+      "id": 11,
+      "type": "object",
+      "color": "blue",
+      "title": "Lord Ashford",
+      "description": "A demanding client displayed on the communication screen. He wants a social platform — users post short messages, follow each other, and it works on mobile. Marcus gave him a cat adoption site instead.",
+      "image": "assets/card-lord-ashford.png",
+      "reveals": [],
+      "discoveries": [],
+      "visible_to": "all",
+      "room": "drafting"
+    },
+    {
+      "id": 12,
+      "type": "item",
+      "color": "red",
+      "title": "Project Specs",
+      "description": "Three structured requirements converted from Ashford's vague demands: user posting, following/feed, and responsive mobile performance. The golem can now build with precision.",
+      "image": "assets/card-project-specs.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "drafting"
+    },
+    {
+      "id": 13,
+      "type": "object",
+      "color": "blue",
+      "title": "Marcus's Notes",
+      "description": "Spec-driven development produces three documents: Requirements (WHAT), Design (HOW), and Tasks (IN WHAT ORDER). Together they give the golem everything it needs.",
+      "image": "assets/card-marcus-notes.png",
+      "reveals": [],
+      "discoveries": [],
+      "visible_to": "all",
+      "room": "drafting"
+    },
+    {
+      "id": 30,
+      "type": "location",
+      "color": "green",
+      "title": "The Golem Workshop",
+      "description": "A circular chamber. The golem sits in the center, connected to conduit pipes on all sides. A monitor shows its build output — currently static. Document shelves line the walls. A pipe junction box connects to external guilds.",
+      "image": "assets/golem-workshop.png",
+      "reveals": [],
+      "discoveries": [
+        { "label": "Load the golem's memory", "card_id": 31, "puzzle": "context-memory" },
+        { "label": "Wire the MCP conduits", "card_id": 32, "puzzle": "wire-mcp" },
+        { "label": "Go to the Build Yard", "card_id": 50, "requires_item": [31, 32], "consumes_item": [31, 32] }
+      ],
+      "visible_to": "all",
+      "room": "workshop"
+    },
+    {
+      "id": 31,
+      "type": "item",
+      "color": "red",
+      "title": "Context Loaded",
+      "description": "The golem's memory is loaded with the correct documents — requirements.md, design.md, and tasks.md — fitting within its 2000-token context window. Poisoned docs excluded.",
+      "image": "assets/card-context-loaded.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "workshop"
+    },
+    {
+      "id": 32,
+      "type": "item",
+      "color": "red",
+      "title": "MCP Connected",
+      "description": "Three conduits wired correctly: Testing Guild to Playwright Server, Diagram Guild to AWS Diagram Server, Documentation Guild to AWS Docs Server. The golem can now reach external tools.",
+      "image": "assets/card-mcp-connected.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "workshop"
+    },
+    {
+      "id": 33,
+      "type": "item",
+      "color": "red",
+      "title": "Pipeline Ready",
+      "description": "Model Context Protocol connects the golem to external tools — testing, diagram generators, documentation servers. Each connection extends what the golem can do. The pipe junction is complete.",
+      "image": "assets/card-pipeline-ready.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "workshop"
+    },
+    {
+      "id": 50,
+      "type": "location",
+      "color": "green",
+      "title": "The Build Yard",
+      "description": "An open construction yard. The golem stands ready, glowing blue. A blueprint frame shows the architecture layers. A terminal awaits commands. The building foundation is laid but empty.",
+      "image": "assets/build-yard.png",
+      "reveals": [],
+      "discoveries": [
+        { "label": "Issue first build command", "card_id": 51, "puzzle": "terminal-build" },
+        { "label": "Place the architecture", "card_id": 52, "requires_item": [51], "consumes_item": [51], "puzzle": "blueprint-arch" },
+        { "label": "Navigate the codebase", "card_id": 53, "requires_item": [52], "consumes_item": [52], "puzzle": "path-codebase" },
+        { "label": "Go to the Launch Tower", "card_id": 70, "requires_item": [53], "consumes_item": [53] }
+      ],
+      "visible_to": "all",
+      "room": "build"
+    },
+    {
+      "id": 51,
+      "type": "item",
+      "color": "red",
+      "title": "First Command",
+      "description": "You issued the build command: 'build from design-specs'. The golem acknowledges and begins constructing from the structured specifications.",
+      "image": "assets/card-first-command.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "build"
+    },
+    {
+      "id": 52,
+      "type": "item",
+      "color": "red",
+      "title": "Architecture Done",
+      "description": "Eight components placed on correct layers: React+Next.js and CloudFront on Presentation, Lambda and API Routes on Application, DynamoDB on Data, CDK Stack and IAM Roles on Infrastructure.",
+      "image": "assets/card-architecture-done.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "build"
+    },
+    {
+      "id": 53,
+      "type": "item",
+      "color": "red",
+      "title": "Codebase Mapped",
+      "description": "You can't deploy frontend and backend simultaneously. The frontend needs the API URL which only exists AFTER the backend deploys. Phase 1: infrastructure. Phase 2: frontend with real URLs.",
+      "image": "assets/card-codebase-mapped.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "build"
+    },
+    {
+      "id": 70,
+      "type": "location",
+      "color": "green",
+      "title": "The Launch Tower",
+      "description": "The top floor. A panoramic window shows the city below. A deployment console with a countdown timer. A test results screen. The golem stands at the controls, ready for final commands.",
+      "image": "assets/launch-tower.png",
+      "reveals": [],
+      "discoveries": [
+        { "label": "Build the test pipeline", "card_id": 71, "puzzle": "match-tests" },
+        { "label": "Order the deployment", "card_id": 72, "requires_item": [71], "consumes_item": [71], "puzzle": "timeline-deploy" },
+        { "label": "Check the deploy logs", "card_id": 73, "requires_item": [72], "consumes_item": [72], "puzzle": "log-bug" },
+        { "label": "Ship it!", "card_id": 99, "requires_item": [73], "consumes_item": [73], "puzzle": "defuse-ship" }
+      ],
+      "visible_to": "all",
+      "room": "launch"
+    },
+    {
+      "id": 71,
+      "type": "item",
+      "color": "red",
+      "title": "Tests Ready",
+      "description": "Playwright test pipeline built in correct order: Navigate to URL → Click Login → Fill Form → Assert Feed Visible → Take Screenshot. The test suite is green.",
+      "image": "assets/card-tests-ready.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "launch"
+    },
+    {
+      "id": 72,
+      "type": "item",
+      "color": "red",
+      "title": "Deploy Sequence",
+      "description": "Two-phase deployment ordered correctly: CDK deploy infrastructure, extract API URL, rebuild frontend, deploy to S3, invalidate CloudFront cache. Ready to execute.",
+      "image": "assets/card-deploy-sequence.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "launch"
+    },
+    {
+      "id": 73,
+      "type": "item",
+      "color": "red",
+      "title": "Bug Found",
+      "description": "CORS error identified in the deployment logs — Access-Control-Allow-Origin header missing and POST /api/posts returning 403 from browser. The fix is clear.",
+      "image": "assets/card-bug-found.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "launch"
+    },
+    {
+      "id": 74,
+      "type": "object",
+      "color": "blue",
+      "title": "Deployment Runbook",
+      "description": "A laminated card pinned to the console: 'TWO-PHASE DEPLOY: 1) CDK deploy infrastructure (Lambda, DynamoDB, API Gateway). 2) Extract the API Gateway URL from CDK output. 3) Rebuild frontend with the real API URL baked in. 4) Deploy static assets to S3. 5) Invalidate CloudFront cache so users get the new version.'",
+      "image": "assets/card-deploy-runbook.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "launch"
+    },
+    {
+      "id": 99,
+      "type": "event",
+      "color": "gold",
+      "title": "Launched!",
+      "description": "CORS headers added, API Gateway redeployed, tests passing. The CloudFront URL goes live. Lord Ashford sees a working social platform. The golem's eyes glow steady blue — it knows what it is now.",
+      "image": "assets/card-launched.png",
+      "reveals": [],
+      "is_ending": true,
+      "visible_to": "all",
+      "room": "launch"
+    }
+  ]
+}
