@@ -1,5 +1,5 @@
 /**
- * Unlock the Cloud — Happy Path Tests
+ * Re:Solve — Happy Path Tests
  * Simulates a successful playthrough of each episode using the game engine directly.
  * Run: node --test tests/happy-path.test.js
  */
@@ -501,4 +501,69 @@ describe('Bible EP1 — JSON Validation', () => {
       assert.doesNotThrow(() => JSON.parse(raw), `${file} is not valid JSON`);
     });
   }
+});
+
+// ============================================================
+// EP4 — The Spec Architect
+// ============================================================
+describe('EP4 — The Spec Architect', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep4-spec-architect'); engine.start(); });
+
+  test('The Desk: sort priorities → Sorted Papers, get badge, enter Drafting Hall', () => {
+    assert.equal(engine.currentRoom, 1);
+    discover(engine, 2, 'Pip');
+    discover(engine, 4, 'Dormant Golem');
+    discover(engine, 3, 'Architect Badge');
+    solvePuzzle(engine, 'sort-priorities', 5, 'Sorted Papers');
+    // Badge unlocks Drafting Hall
+    discover(engine, 10, 'The Drafting Hall');
+    assert.ok(engine.unlockedRooms.includes(10));
+  });
+
+  test('The Drafting Hall: talk to Ashford, solve spec-lock (3 rounds)', () => {
+    engine.navigateToRoom(10);
+    assert.equal(engine.currentRoom, 10);
+    discover(engine, 11, 'Lord Ashford');
+    discover(engine, 13, 'Marcus Notes');
+    solvePuzzle(engine, 'spec-requirements', 12, 'Project Specs');
+    assert.ok(engine.inventory.includes(12));
+    // Spec puzzle unlocks Golem Workshop
+    discover(engine, 30, 'The Golem Workshop');
+    assert.ok(engine.unlockedRooms.includes(30));
+  });
+
+  test('Golem Workshop: load context, wire MCP', () => {
+    engine.navigateToRoom(30);
+    assert.equal(engine.currentRoom, 30);
+
+    solvePuzzle(engine, 'context-memory', 31, 'Context Loaded');
+    solvePuzzle(engine, 'wire-mcp', 32, 'MCP Connected');
+    // context + wire unlock Build Yard
+    discover(engine, 50, 'The Build Yard');
+    assert.ok(engine.unlockedRooms.includes(50));
+  });
+
+  test('Build Yard: terminal command, place architecture, navigate codebase', () => {
+    engine.navigateToRoom(50);
+    assert.equal(engine.currentRoom, 50);
+
+    solvePuzzle(engine, 'terminal-build', 51, 'First Command');
+    solvePuzzle(engine, 'blueprint-arch', 52, 'Architecture Done');
+    solvePuzzle(engine, 'path-codebase', 53, 'Codebase Mapped');
+    // path puzzle unlocks Launch Tower
+    discover(engine, 70, 'The Launch Tower');
+    assert.ok(engine.unlockedRooms.includes(70));
+  });
+
+  test('Launch Tower: test pipeline, deploy order, find bug, ship it', () => {
+    engine.navigateToRoom(70);
+    assert.equal(engine.currentRoom, 70);
+
+    solvePuzzle(engine, 'match-tests', 71, 'Tests Ready');
+    solvePuzzle(engine, 'timeline-deploy', 72, 'Deploy Sequence');
+    solvePuzzle(engine, 'log-bug', 73, 'Bug Found');
+    solvePuzzle(engine, 'defuse-ship', 99, 'Launched!');
+    assertCompleted(engine);
+  });
 });

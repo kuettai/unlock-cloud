@@ -86,9 +86,8 @@ class MazeLock {
     // maze area: canvas for walls, grid for cell highlights
     const area = document.createElement('div');
     area.className = 'mazlk-area';
-    const size = `min(280px, 90vw)`;
-    area.style.width = size;
-    area.style.height = size;
+    area.style.width = `min(280px, 90vw)`;
+    area.style.aspectRatio = `${this.cols} / ${this.rows}`;
 
     this.canvas = document.createElement('canvas');
     this.canvas.className = 'mazlk-canvas';

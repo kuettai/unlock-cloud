@@ -1,0 +1,638 @@
+{
+  "puzzles": [
+    {
+      "id": "door-code",
+      "type": "keypad_lock",
+      "card_ref": 10,
+      "description": "Enter the 4-digit door code to unlock the store room",
+      "ui": "keypad-lock",
+      "config": {
+        "answer": "7213",
+        "falseOutputs": [
+          "Wrong code. The keypad flashes red.",
+          "Access denied. Try again.",
+          "Incorrect. Check the note."
+        ]
+      },
+      "success_card": 10,
+      "hints": [
+        "There's a note on the wall. Look at the image carefully.",
+        "The code is written on the laminated note — check the card image.",
+        "The code is 7-2-1-3."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "grinder",
+      "type": "grinder_lock",
+      "card_ref": 23,
+      "description": "Dial in the espresso — adjust grind/dose/yield, pull a shot, hit 25-30s",
+      "ui": "grinder-lock",
+      "config": {
+        "sliders": [
+          {
+            "id": "grind",
+            "label": "Grind Size",
+            "sub": "fine ← → coarse",
+            "min": 1,
+            "max": 9,
+            "default": 3
+          },
+          {
+            "id": "dose",
+            "label": "Dose",
+            "sub": "14g ← → 22g",
+            "min": 1,
+            "max": 9,
+            "default": 7
+          },
+          {
+            "id": "yield",
+            "label": "Yield",
+            "sub": "short ← → long",
+            "min": 1,
+            "max": 9,
+            "default": 2
+          }
+        ],
+        "formula": "35 - grind*2 + dose*0.8 + yield*1.2",
+        "randomRange": 0.5,
+        "target": {
+          "min": 25,
+          "max": 26
+        },
+        "feedback": {
+          "fast": "⚡ Sour & thin. Too fast — grind finer.",
+          "slow": "🐌 Bitter & ashy. Too slow — grind coarser.",
+          "perfect": "✅ Golden crema. 25-26s. Balanced. Perfect."
+        },
+        "managerNote": "Sour/fast? Grind finer (↓ number). Bitter/slow? Grind coarser (↑ number).\nDose: keep it mid-range — 5 is our sweet spot.\nYield: short keeps it punchy — try 4.\nSweet spot is 25-26s. Not a second more. — M"
+      },
+      "success_card": 23,
+      "hints": [
+        "Read the Manager's note. Sour means too fast — grind finer (lower number).",
+        "Dose 5, Yield 4. Now adjust grind until you hit 25-26 seconds.",
+        "Grind 7, Dose 5, Yield 4 = ~25.8 seconds."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "stock",
+      "type": "stock_memory_lock",
+      "card_ref": 12,
+      "description": "Memorize the checklist (5s), then grab correct items from the shelf",
+      "ui": "stock-memory-lock",
+      "config": {
+        "memorizeSeconds": 5,
+        "checklist": [
+          {
+            "id": "milk",
+            "label": "🥛 Milk Jugs",
+            "need": 2
+          },
+          {
+            "id": "beans",
+            "label": "☕ Bags of Beans",
+            "need": 1
+          },
+          {
+            "id": "cups",
+            "label": "🥤 Cups (sleeve)",
+            "need": 1
+          },
+          {
+            "id": "ice",
+            "label": "🧊 Ice Trays (72 cubes, 1 tray = 18)",
+            "need": 4
+          },
+          {
+            "id": "syrup",
+            "label": "🍯 Syrup Bottles",
+            "need": 3
+          },
+          {
+            "id": "matcha",
+            "label": "🍵 Matcha Tin",
+            "need": 1
+          }
+        ],
+        "shelf": {
+          "rows": [
+            "milk",
+            "beans",
+            "cups",
+            "ice",
+            "syrup",
+            "matcha"
+          ],
+          "itemsPerRow": 5,
+          "badItems": {
+            "milk": "Expired!",
+            "beans": "Decaf",
+            "ice": "Cracked",
+            "syrup": "Empty",
+            "matcha": "Stale"
+          }
+        },
+        "allowReview": true,
+        "reviewSeconds": 5,
+        "allowQualityCheck": true
+      },
+      "success_card": 12,
+      "hints": [
+        "The checklist showed quantities for each item. Remember: 72 cubes ÷ 18 per tray = how many trays?",
+        "Milk: 2, Beans: 1, Cups: 1, Ice: 4 trays, Syrups: 3, Matcha: 1.",
+        "Use 'Check Quality' to find bad items before submitting."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "chalkboard",
+      "type": "spelling_lock",
+      "card_ref": 31,
+      "description": "Tap letters in order to spell 3 menu items on the chalkboard",
+      "ui": "spelling-lock",
+      "config": {
+        "pool": [
+          "MATCHA LATTE",
+          "BUTTERFLY PEA SODA",
+          "ICED CHOCOLATE",
+          "HOT AMERICANO",
+          "ICED LATTE",
+          "FLAT WHITE",
+          "MOCHA",
+          "CHAI LATTE",
+          "COLD BREW"
+        ],
+        "pickCount": 3,
+        "sequential": true,
+        "scrambleLetters": true,
+        "theme": "chalkboard"
+      },
+      "success_card": 31,
+      "hints": [
+        "Look at the drink name shown above the letter slots.",
+        "Tap letters one by one in the correct order to spell the word.",
+        "If stuck, clear and start the word again. The letters are all there — just scrambled."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "cups",
+      "type": "evidence_lock",
+      "card_ref": 80,
+      "description": "10-step number deduction — cups and shots don't add up",
+      "ui": "evidence-lock",
+      "config": {
+        "steps": [
+          {
+            "type": "count",
+            "narrative": "You grab a tub and start clearing. Most tables are clean. You bring everything to the wash basin and count twice.",
+            "prompt": "Hot cups: 15. Cold cups: 6. Total in wash?",
+            "answer": 21,
+            "hint": "15 + 6"
+          },
+          {
+            "type": "reveal",
+            "narrative": "But wait — in the corner. A table you don't remember serving. Four cups. Still slightly warm. Names written in handwriting that isn't yours:",
+            "detail": "Simon • Thomas • Nathanael • James",
+            "prompt": "Total cups used today (wash + corner table)?",
+            "answer": 25,
+            "hint": "21 + 4"
+          },
+          {
+            "type": "compare",
+            "narrative": "You check the POS. 17 transactions. $89 total. Cash matches perfectly. No discrepancy in the money.",
+            "prompt": "Cups unaccounted for by sales (total used − POS transactions)?",
+            "answer": 8,
+            "hint": "25 − 17"
+          },
+          {
+            "type": "deduce",
+            "narrative": "Think about the 21 cups in the wash. Those were used DURING service. The 4 on the corner table appeared AFTER. So of the 21 washed cups...",
+            "prompt": "How many of the 21 washed cups were from YOUR 17 sales?",
+            "answer": 17,
+            "hint": "You sold 17 drinks. Those cups went in the wash."
+          },
+          {
+            "type": "deduce",
+            "narrative": "17 of the 21 washed cups are yours. That leaves cups in the wash that you did NOT serve:",
+            "prompt": "Mystery cups in the wash (21 − 17)?",
+            "answer": 4,
+            "hint": "21 − 17"
+          },
+          {
+            "type": "conclusion",
+            "narrative": "4 mystery cups in the wash — served DURING the rush, but not by you. Plus 4 cups on the corner table — served to people you never saw. The cash is perfect. Nothing was stolen.",
+            "prompt": "Total drinks NOT made by you?",
+            "answer": 8,
+            "hint": "4 during rush + 4 on corner table"
+          },
+          {
+            "type": "count",
+            "narrative": "You walk to the espresso machine. You zeroed the shot counter this morning. You check it now:",
+            "detail": "Shot Counter: 21",
+            "prompt": "You count the order tickets — coffee drinks only: 3 Lattes + 3 Caps + 1 Flat White + 2 Long Blacks + 1 Mocha + 1 Iced Latte + 2 Iced Long Blacks. Shots from orders?",
+            "answer": 13,
+            "hint": "3+3+1+2+1+1+2 = 13"
+          },
+          {
+            "type": "deduce",
+            "narrative": "13 shots from orders. But you also pulled a calibration shot this morning when dialing in the grinder. So accounted shots:",
+            "prompt": "Orders + calibration shot?",
+            "answer": 14,
+            "hint": "13 + 1"
+          },
+          {
+            "type": "deduce",
+            "narrative": "The 4 mystery cups in the wash — if those were coffee drinks, someone pulled shots for them too.",
+            "prompt": "Accounted shots + 4 mystery drinks?",
+            "answer": 18,
+            "hint": "14 + 4"
+          },
+          {
+            "type": "conclusion",
+            "narrative": "The machine says 21. You can account for 18. That leaves shots pulled by someone — behind you — that don't match ANY cup in the wash or on the tables.",
+            "prompt": "Unexplained extra shots (21 − 18)?",
+            "answer": 3,
+            "hint": "21 − 18"
+          }
+        ],
+        "hintsAfterAttempts": 2
+      },
+      "success_card": 80,
+      "hints": [
+        "Start with what you can count: cups in the wash, cups on the table.",
+        "The POS says 17 sold. But 25 cups were used. The difference is the mystery.",
+        "Final step: Machine says 21 shots. You account for 18. The gap is 3."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "milk-jug",
+      "type": "milk_jug_lock",
+      "card_ref": 76,
+      "description": "5-step deduction — shelf tap, timeline, card elimination, number input, conclusion",
+      "ui": "milk-jug-lock",
+      "config": {
+        "jugDisplay": {
+          "jugs": [
+            {
+              "name": "Jug A",
+              "batch": "A-1",
+              "time": "6:45am"
+            },
+            {
+              "name": "Jug B",
+              "batch": "B-2",
+              "time": "7:30am"
+            },
+            {
+              "name": "Jug C",
+              "batch": "C-3",
+              "time": "???"
+            }
+          ]
+        },
+        "steps": [
+          {
+            "type": "shelf_tap",
+            "narrative": "You walk into the store room to do the final stocktake. You check the rinse sink — three empty milk jugs. But wait... you remember this morning clearly. Tap the jugs you took from the shelf:",
+            "shelfCount": 5,
+            "selectCount": 2,
+            "afterAction": "mark_yours"
+          },
+          {
+            "type": "choice",
+            "narrative": "Jug C is empty and rinsed. Same batch as the others — it was right there on the shelf. But you only took 2.",
+            "prompt": "Jug A emptied by 8:15am. Jug B lasted until 9:30am. Rush ended at 10am. When was Jug C needed?",
+            "options": [
+              "Before 8:15am (pre-rush)",
+              "During the rush (8:15–10am)",
+              "After 10am (closing)"
+            ],
+            "answer": 1,
+            "wrong": [
+              "You had Jug A still going before the rush.",
+              null,
+              "After the rush there were no more milk drinks to make."
+            ]
+          },
+          {
+            "type": "card_elimination",
+            "narrative": "Jug C was fetched from the store room DURING the rush. The store room is behind a coded door.",
+            "prompt": "Who could have done this? Tap to flip and eliminate.",
+            "suspects": [
+              {
+                "icon": "👤",
+                "name": "A customer",
+                "reason": "No store room code. Counter blocks access.",
+                "eliminate": true
+              },
+              {
+                "icon": "🚚",
+                "name": "Delivery driver",
+                "reason": "No deliveries on Sundays.",
+                "eliminate": true
+              },
+              {
+                "icon": "🤔",
+                "name": "You (forgot)",
+                "reason": "Both hands full at the machine the entire rush.",
+                "eliminate": true
+              },
+              {
+                "icon": "🔑",
+                "name": "Someone with the code",
+                "reason": "Knows the layout. Has access. Knows where the milk is.",
+                "eliminate": false
+              }
+            ]
+          },
+          {
+            "type": "number_input",
+            "narrative": "Someone with access fetched a third jug during the rush. A full jug is 2L — enough for about 8 steamed milk drinks. The jug is completely empty.",
+            "prompt": "The 4 mystery cups in the wash were milk drinks. The 4 cups on the corner table also had milk. Total milk drinks from Jug C?",
+            "answer": 8,
+            "hint": "4 mystery + 4 corner table"
+          },
+          {
+            "type": "choice",
+            "narrative": "A third jug. Fetched during the rush. By someone with the code. Used to make 8 drinks you didn't make. Rinsed and left in the sink — like someone who knows the closing routine.",
+            "prompt": "What does the third jug prove?",
+            "options": [
+              "Someone helped briefly and left",
+              "Someone worked a full shift beside you — setup to close",
+              "Someone broke in after hours"
+            ],
+            "answer": 1,
+            "wrong": [
+              "The jug is empty AND rinsed. That's not 'briefly.'",
+              null,
+              "The jug was used DURING the rush, not after."
+            ]
+          }
+        ]
+      },
+      "success_card": 76,
+      "hints": [
+        "You took 2 jugs this morning. The third is Batch C-3 — you saw it on the shelf.",
+        "Only someone with the store room code could get Jug C. Not a customer, not a driver.",
+        "4 mystery cups during rush + 4 cups on corner table = 8 drinks from Jug C."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "names",
+      "type": "cascade_lock",
+      "card_ref": 73,
+      "description": "4-step realization cascade — each correct answer lights up a cup",
+      "ui": "cascade-lock",
+      "config": {
+        "cupNames": [
+          "Simon",
+          "Thomas",
+          "Nathanael",
+          "James"
+        ],
+        "pauseBetweenSteps": 3000,
+        "steps": [
+          {
+            "question": "Do you recognize these names?",
+            "options": [
+              "Regular customers",
+              "Staff members",
+              "Disciples of Jesus",
+              "Random names"
+            ],
+            "answer": 2,
+            "wrong": [
+              "You've never seen these names in the booking system.",
+              "No one on the roster has these names.",
+              null,
+              "The handwriting is deliberate. These names mean something."
+            ],
+            "after": "Simon Peter. Thomas. Nathanael. James, son of Zebedee. Disciples."
+          },
+          {
+            "question": "These four were all present at the same event. What connects them?",
+            "options": [
+              "The Last Supper",
+              "The feeding of the 5,000",
+              "A breakfast on the shore",
+              "Walking on water"
+            ],
+            "answer": 2,
+            "wrong": [
+              "All twelve were at the Last Supper — but these four are singled out together in only one passage.",
+              "Thousands were there. These four are named specifically together elsewhere.",
+              null,
+              "Only Peter walked on water. These four are named together in a different story."
+            ],
+            "after": "John 21. After the resurrection. A morning by the Sea of Tiberias."
+          },
+          {
+            "question": "What happened that morning?",
+            "options": [
+              "They caught nothing all night — then He told them to cast on the right side",
+              "He walked across the water to them",
+              "He calmed a storm",
+              "He sent them out to preach"
+            ],
+            "answer": 0,
+            "wrong": [
+              null,
+              "That was a different night, a different sea.",
+              "No storm in John 21.",
+              "That was earlier, during His ministry."
+            ],
+            "after": "They obeyed. The net filled. 153 fish. And when they reached the shore..."
+          },
+          {
+            "question": "What was waiting for them on the shore?",
+            "options": [
+              "A crowd",
+              "A boat",
+              "Breakfast — bread and fish on a charcoal fire",
+              "Nothing"
+            ],
+            "answer": 2,
+            "wrong": [
+              "No crowd. Just Him.",
+              "They came FROM the boat.",
+              null,
+              "He was there. He'd been there the whole time."
+            ],
+            "after": null
+          }
+        ],
+        "onComplete": {
+          "scene": "sunrise",
+          "emojis": "🌅🔥🍞🐟",
+          "text": "Come and have breakfast.",
+          "subtext": "This isn't just a café. This is the shore."
+        }
+      },
+      "success_card": 73,
+      "hints": [
+        "These aren't random names. They're from John chapter 21.",
+        "John 21:2 lists who was there: Simon Peter, Thomas, Nathanael, the sons of Zebedee...",
+        "Disciples → Breakfast on shore → Cast on right side → Bread and fish on charcoal fire."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "safe",
+      "type": "dial_lock",
+      "card_ref": 90,
+      "description": "3-dial combination safe — code planted across earlier scenes",
+      "ui": "dial-lock",
+      "config": {
+        "dials": [
+          {
+            "label": "shot counter",
+            "min": 0,
+            "max": 9,
+            "answer": 1
+          },
+          {
+            "label": "table number",
+            "min": 0,
+            "max": 9,
+            "answer": 5
+          },
+          {
+            "label": "batch number",
+            "min": 0,
+            "max": 9,
+            "answer": 3
+          }
+        ],
+        "title": "Café 153 — Cash Safe",
+        "subtitle": "Manager's Daily Code",
+        "handleStyle": "circular",
+        "falseOutputs": [
+          "The handle won't turn. Wrong code.",
+          "Nothing. Try again.",
+          "The safe stays locked. Think about what you saw today."
+        ],
+        "reward": {
+          "type": "net_fill",
+          "total": 153,
+          "emoji": "🐟",
+          "durationMs": 3000,
+          "counterColorStart": "#556",
+          "counterColorEnd": "#f39c12",
+          "revelation": {
+            "hebrew": "אֲנִי אֱלֹהִים",
+            "greek": "ἐγώ εἰμι ὁ θεός",
+            "english": "I AM God",
+            "verse": "John 8:58 — \"Before Abraham was, I AM.\""
+          }
+        }
+      },
+      "success_card": 999,
+      "hints": [
+        "The Manager's note says: 'The machine. The table. The jug.' What numbers did you see?",
+        "Shot counter flickered to 1. Corner table was #5. Jug batch ended in 3.",
+        "The code is 1-5-3."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    },
+    {
+      "id": "cafe-orders",
+      "type": "tool",
+      "card_ref": 44,
+      "description": "Café Orders — serve drinks during the rush",
+      "ui": "cafe-order-lock",
+      "config": {
+        "recipes": {
+          "Hot Long Black": {
+            "cup": "hot",
+            "ingredients": [
+              "Hot Water",
+              "Espresso"
+            ]
+          },
+          "Iced Black": {
+            "cup": "cold",
+            "ingredients": [
+              "Ice",
+              "Water",
+              "Espresso"
+            ]
+          },
+          "Hot Latte": {
+            "cup": "hot",
+            "ingredients": [
+              "Espresso",
+              "Steamed Milk"
+            ]
+          },
+          "Iced Latte": {
+            "cup": "cold",
+            "ingredients": [
+              "Ice",
+              "Espresso",
+              "Milk"
+            ]
+          },
+          "Iced Matcha": {
+            "cup": "cold",
+            "ingredients": [
+              "Ice",
+              "Milk",
+              "Matcha"
+            ]
+          },
+          "Hot Matcha": {
+            "cup": "hot",
+            "ingredients": [
+              "Matcha",
+              "Steamed Milk"
+            ]
+          },
+          "Hot Chocolate": {
+            "cup": "hot",
+            "ingredients": [
+              "Cocoa",
+              "Hot Water",
+              "Hot Milk"
+            ]
+          },
+          "Iced Tea": {
+            "cup": "cold",
+            "ingredients": [
+              "Tea Bag",
+              "Hot Water",
+              "Ice"
+            ]
+          },
+          "Hot Tea": {
+            "cup": "hot",
+            "ingredients": [
+              "Tea Bag",
+              "Hot Water"
+            ]
+          },
+          "Butterfly Pea Soda": {
+            "cup": "cold",
+            "ingredients": [
+              "Nata De Coco",
+              "Ice",
+              "Soda Water",
+              "Butterfly Pea",
+              "Lemon"
+            ]
+          }
+        },
+        "queueInterval": 20000,
+        "autoCompleteChance": 0.2,
+        "maxQueue": 4
+      },
+      "hints": [],
+      "mandatory": false
+    }
+  ]
+}

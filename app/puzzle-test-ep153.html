@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle Prototypes — EP 153 Fish (Café)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; }
+header { background: #16213e; padding: 1rem 2rem; border-bottom: 2px solid #0f3460; }
+header h1 { font-size: 1.3rem; color: #e94560; }
+header p { font-size: 0.85rem; color: #aaa; margin-top: 0.3rem; }
+nav { display: flex; gap: 0.4rem; padding: 0.8rem 2rem; background: #16213e; flex-wrap: wrap; }
+nav button { padding: 0.5rem 0.8rem; border: 2px solid #0f3460; background: #1a1a2e; color: #eee; border-radius: 6px; cursor: pointer; font-size: 0.78rem; transition: all 0.2s; }
+nav button:hover { border-color: #e94560; }
+nav button.active { background: #e94560; border-color: #e94560; color: #fff; }
+.panel { display: none; padding: 1.5rem; max-width: 500px; margin: 0 auto; }
+.panel.active { display: block; }
+.panel h2 { color: #e94560; margin-bottom: 0.3rem; font-size: 1.1rem; }
+.panel .subtitle { color: #aaa; font-size: 0.8rem; margin-bottom: 1.2rem; }
+.btn { padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+.btn-primary { background: #e94560; color: #fff; }
+.btn-secondary { background: #0f3460; color: #eee; }
+.result { margin-top: 1rem; padding: 0.8rem; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
+.result.win { background: #1e4d2b; color: #2ecc71; border: 1px solid #2ecc71; }
+.result.lose { background: #4d1e1e; color: #e74c3c; border: 1px solid #e74c3c; }
+.result.info { background: #1e3a4d; color: #3498db; border: 1px solid #3498db; }
+</style>
+</head>
+<body>
+<header>
+<h1>☕ Puzzle Prototypes — 153 Fish (Café Ministry)</h1>
+<p>Act 1: Setup | Act 3: Investigation | Act 4: Revelation</p>
+</header>
+<nav>
+<button class="active" onclick="showPanel('grinder')">☕ Grinder</button>
+<button onclick="showPanel('stock')">📦 Stock Count</button>
+<button onclick="showPanel('chalkboard')">📝 Chalkboard</button>
+<button onclick="showPanel('cups')">🔍 Evidence</button>
+<button onclick="showPanel('cafe')">☕ Orders</button>
+<button onclick="showPanel('shots')">🥛 Milk Jug</button>
+<button onclick="showPanel('names')">✝️ The Names</button>
+<button onclick="showPanel('net')">🐟 The Safe</button>
+</nav>
+
+<div id="grinder" class="panel active">
+<h2>☕ Grinder Calibration</h2>
+<p class="subtitle">Act 1. Dial in the espresso. Adjust settings, pull a shot, watch the extraction.</p>
+
+<div style="position:relative;background:#1a1a2e;border:1px solid #444;border-radius:12px;padding:1.5rem 1rem;margin-bottom:1rem;text-align:center;overflow:hidden;">
+  <!-- Machine body -->
+  <div style="background:#333;border-radius:8px;padding:0.5rem;margin:0 auto;width:160px;">
+    <div style="font-size:0.65rem;color:#888;text-transform:uppercase;letter-spacing:1px;">Espresso Machine</div>
+    <!-- Portafilter -->
+    <div style="margin-top:0.5rem;position:relative;height:40px;">
+      <div style="position:absolute;left:50%;transform:translateX(-50%);width:80px;height:20px;background:#555;border-radius:0 0 10px 10px;top:0;"></div>
+      <div style="position:absolute;left:50%;transform:translateX(-50%);width:6px;top:20px;height:20px;display:flex;justify-content:center;">
+        <div id="gr-drip" style="width:4px;height:0;background:linear-gradient(to bottom,#3d1f0a,#5c3317);border-radius:0 0 2px 2px;transition:height 0.3s;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Cup -->
+  <div style="margin:0.3rem auto 0;width:60px;height:45px;border:3px solid #666;border-top:none;border-radius:0 0 8px 8px;background:#111;position:relative;overflow:hidden;">
+    <div id="gr-fill" style="position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(to top,#2c1810,#5c3317);transition:height 1s;"></div>
+  </div>
+  <div style="width:80px;height:6px;background:#444;border-radius:3px;margin:0 auto;"></div>
+  <!-- Timer display -->
+  <div style="margin-top:0.8rem;">
+    <span id="gr-timer" style="font-size:2rem;font-weight:bold;color:#888;">--</span>
+    <span style="font-size:0.8rem;color:#666;">sec</span>
+  </div>
+  <div style="font-size:0.7rem;color:#555;">Target: 25-30s = perfect extraction</div>
+  <!-- Extraction quality indicator -->
+  <div id="gr-quality" style="margin-top:0.5rem;font-size:0.8rem;color:#888;min-height:20px;"></div>
+</div>
+
+<div id="gr-sliders"></div>
+<div style="background:#f5e6a3;border-radius:4px;padding:0.5rem 0.7rem;margin-top:0.6rem;transform:rotate(-1deg);box-shadow:2px 2px 6px rgba(0,0,0,0.3);">
+  <div style="font-size:0.65rem;color:#5a4a00;font-family:'Comic Sans MS',cursive;">📝 Dial-in notes (Manager):</div>
+  <div style="font-size:0.75rem;color:#3a2a00;font-family:'Comic Sans MS',cursive;margin-top:0.2rem;">Grind <strong>7</strong>, Dose <strong>5</strong>, Yield <strong>4</strong>. Should pull ~27s. ☕</div>
+</div>
+<div style="text-align:center;margin-top:0.8rem;"><button class="btn btn-primary" id="gr-pull-btn" onclick="grPull()">☕ Pull Shot</button></div>
+<div id="gr-result"></div>
+<script>
+(function(){
+  let grind=3, dose=7, yield_=2, pulling=false;
+  function calcTime(){ return Math.round(10 + grind*2.5 - dose*0.8 + yield_*1.2 + (Math.random()*2-1)); }
+  function render(){
+    document.getElementById('gr-sliders').innerHTML=[
+      {label:'Grind Size',sub:'fine ← → coarse',id:'grind',val:grind,min:1,max:9},
+      {label:'Dose',sub:'14g ← → 22g',id:'dose',val:dose,min:1,max:9},
+      {label:'Yield',sub:'short ← → long',id:'yield',val:yield_,min:1,max:9},
+    ].map(s=>`<div style="margin-bottom:0.6rem;background:#2a2a4e;border-radius:6px;padding:0.6rem;">
+      <div style="display:flex;justify-content:space-between;font-size:0.75rem;"><span style="color:#eee;">${s.label}</span><span style="color:#f39c12;">${s.val}</span></div>
+      <div style="font-size:0.65rem;color:#666;margin-bottom:0.2rem;">${s.sub}</div>
+      <input type="range" min="${s.min}" max="${s.max}" value="${s.val}" oninput="grSet('${s.id}',this.value)" style="width:100%;accent-color:#e94560;">
+    </div>`).join('');
+  }
+  window.grSet=function(id,v){if(pulling)return;v=parseInt(v);if(id==='grind')grind=v;if(id==='dose')dose=v;if(id==='yield')yield_=v;render();};
+  window.grPull=function(){
+    if(pulling)return;
+    pulling=true;
+    const btn=document.getElementById('gr-pull-btn');
+    btn.disabled=true;btn.style.opacity='0.5';
+    const t=calcTime();
+    const drip=document.getElementById('gr-drip');
+    const fill=document.getElementById('gr-fill');
+    const timer=document.getElementById('gr-timer');
+    const quality=document.getElementById('gr-quality');
+    // Reset
+    drip.style.height='0';fill.style.height='0';timer.textContent='0';quality.textContent='Pulling...';quality.style.color='#f39c12';
+    // Animate drip
+    setTimeout(()=>{drip.style.height='20px';},200);
+    // Animate fill and timer
+    let elapsed=0;
+    const interval=setInterval(()=>{
+      elapsed++;
+      timer.textContent=elapsed;
+      fill.style.height=Math.min(90,elapsed/t*90)+'%';
+      if(elapsed>=t){
+        clearInterval(interval);
+        drip.style.height='0';
+        timer.style.color=t>=25&&t<=30?'#2ecc71':t<25?'#3498db':'#e74c3c';
+        if(t>=25&&t<=30){quality.textContent='✅ Golden crema. Balanced. Perfect.';quality.style.color='#2ecc71';}
+        else if(t<25){quality.textContent='⚡ Blonde & sour. Too fast — grind finer.';quality.style.color='#3498db';}
+        else{quality.textContent='🐌 Dark & bitter. Too slow — grind coarser.';quality.style.color='#e74c3c';}
+        const res=document.getElementById('gr-result');
+        if(t>=25&&t<=30){res.className='result win';res.textContent='Machine dialed in! Shot counter: 1. Ready for service.';}
+        else{res.className='result info';res.textContent='Adjust and try again. Waste the shot, pull another.';}
+        pulling=false;btn.disabled=false;btn.style.opacity='1';
+      }
+    },100); // 100ms per "second" for fast prototype
+  };
+  render();
+})();
+</script>
+</div>
+<div id="stock" class="panel">
+<h2>📦 Stock Take</h2>
+<p class="subtitle">Act 1. Memorize the checklist, then grab from the store room. No peeking.</p>
+
+<div id="st-phase"></div>
+<div id="st-result"></div>
+<script>
+(function(){
+  const checklist=[
+    {id:'milk',label:'🥛 Milk Jugs',need:2,max:4},
+    {id:'beans',label:'☕ Bags of Beans',need:1,max:3},
+    {id:'cups',label:'🥤 25 Cups',need:1,max:3},
+    {id:'ice',label:'🧊 72 Ice Cubes',need:4,max:5},
+    {id:'syrup',label:'🍯 Syrup Bottles',need:2,max:4},
+  ];
+  let phase='memorize', timer=5, grabbed={}, interval=null;
+
+  function renderMemorize(){
+    document.getElementById('st-phase').innerHTML=`
+      <div style="background:#2a2a4e;border:2px solid #f39c12;border-radius:10px;padding:1.2rem;text-align:center;">
+        <div style="font-size:0.8rem;color:#f39c12;margin-bottom:0.5rem;">📋 TODAY'S CHECKLIST — MEMORIZE!</div>
+        <div style="font-size:1.5rem;font-weight:bold;color:#e94560;margin-bottom:0.8rem;">${timer}s</div>
+        <div style="text-align:left;display:inline-block;">
+          ${checklist.map(c=>`<div style="font-size:0.9rem;color:#eee;padding:0.3rem 0;">• ${c.label}: <strong style="color:#f39c12;">${c.need}</strong></div>`).join('')}
+        </div>
+        <div style="font-size:0.75rem;color:#888;margin-top:0.8rem;">Checklist will disappear in ${timer} seconds...</div>
+      </div>`;
+  }
+
+  const shelfRows=[
+    {id:'milk',emoji:'🥛',count:5,badLabel:'Expired!'},
+    {id:'beans',emoji:'☕',count:5,badLabel:'Decaf'},
+    {id:'cups',emoji:'🥤',count:5,badLabel:null},
+    {id:'ice',emoji:'🧊',count:5,badLabel:'Cracked'},
+    {id:'syrup',emoji:'🍯',count:5,badLabel:'Empty'},
+  ];
+  const shelfItems=shelfRows.flatMap(row=>{
+    const items=Array.from({length:row.count},()=>({id:row.id,emoji:row.emoji,label:row.id.charAt(0).toUpperCase()+row.id.slice(1),bad:false}));
+    if(row.badLabel){const pos=Math.floor(Math.random()*row.count);items[pos]={id:row.id,emoji:row.emoji,label:row.badLabel,bad:true};}
+    return items;
+  });
+  let picked=[], reviewing=false, checking=false;
+
+  function renderGrab(){
+    if(reviewing){
+      document.getElementById('st-phase').innerHTML=`<div style="background:#2a2a4e;border:2px solid #f39c12;border-radius:10px;padding:1.2rem;text-align:center;"><div style="font-size:0.8rem;color:#f39c12;margin-bottom:0.5rem;">📋 REVIEWING CHECKLIST</div><div style="font-size:1.5rem;font-weight:bold;color:#e94560;margin-bottom:0.8rem;" id="st-rv">5</div><div style="text-align:left;display:inline-block;">${checklist.map(c=>`<div style="font-size:0.9rem;color:#eee;padding:0.3rem 0;">\u2022 ${c.label}: <strong style="color:#f39c12;">${c.need}</strong></div>`).join('')}</div></div>`;
+      let rt=5;const ri=setInterval(()=>{rt--;const el=document.getElementById('st-rv');if(el)el.textContent=rt;if(rt<=0){clearInterval(ri);reviewing=false;renderGrab();}},1000);
+      return;
+    }
+    const basketHtml=checking?picked.map(i=>{const it=shelfItems[i];return`<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:${it.bad?'#e74c3c':'#2ecc71'};"><span>${it.emoji} ${it.id} \u2014 ${it.bad?'\u26a0\ufe0f '+it.label:'\u2705 Good'}</span><button onclick="stReturn(${i})" style="padding:0.1rem 0.4rem;background:#4d1e1e;border:1px solid #e74c3c;border-radius:3px;color:#e74c3c;cursor:pointer;font-size:0.6rem;">\u21a9</button></div>`;}).join('')||'<div style="font-size:0.75rem;color:#666;">Empty</div>':`<div style="display:flex;flex-wrap:wrap;gap:0.3rem;">${picked.map(i=>{const it=shelfItems[i];return`<span style="padding:0.2rem 0.4rem;background:#1a1a2e;border:1px solid #444;border-radius:4px;font-size:0.7rem;cursor:pointer;" onclick="stReturn(${i})">${it.emoji}<span style="font-size:0.6rem;color:#888;margin-left:2px;">\u00d7</span></span>`;}).join('')||'<span style="font-size:0.75rem;color:#666;">Empty</span>'}</div>`;
+    document.getElementById('st-phase').innerHTML=`<div style="background:#1a1a2e;border:1px solid #444;border-radius:10px;padding:1rem;"><div style="font-size:0.8rem;color:#e94560;text-align:center;margin-bottom:0.3rem;">📋 Checklist HIDDEN \u2014 grab from memory!</div><div style="font-size:0.7rem;color:#888;text-align:center;margin-bottom:0.8rem;">Tap items on the shelf. Some may be spoilt \u2014 use Check Quality to inspect.</div><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.35rem;margin-bottom:0.8rem;">${shelfItems.map((item,i)=>{const sel=picked.includes(i);const displayLabel=item.bad?item.id.charAt(0).toUpperCase()+item.id.slice(1):item.label;return`<button onclick="stPick(${i})" style="padding:0.3rem;background:${sel?'#1e4d2b':'#2a2a4e'};border:2px solid ${sel?'#2ecc71':'#444'};border-radius:6px;cursor:${sel?'default':'pointer'};text-align:center;opacity:${sel?'0.4':'1'};" ${sel?'disabled':''}><div style="font-size:1.1rem;">${item.emoji}</div><div style="font-size:0.55rem;color:#aaa;">${displayLabel}</div></button>`;}).join('')}</div><div style="background:#2a2a4e;border-radius:6px;padding:0.5rem;margin-bottom:0.8rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.2rem;"><span style="font-size:0.7rem;color:#aaa;">\ud83e\udea3 Basket:</span><button onclick="stDoubleCheck()" style="padding:0.2rem 0.5rem;background:#0f3460;border:1px solid #3498db;border-radius:4px;color:#3498db;cursor:pointer;font-size:0.65rem;">\ud83d\udd0d ${checking?'Hide':'Check quality'}</button></div>${basketHtml}</div><div style="text-align:center;display:flex;gap:0.4rem;justify-content:center;flex-wrap:wrap;"><button class="btn btn-primary" onclick="stSubmit()">\u2705 Done</button><button class="btn btn-secondary" onclick="stReview()">📋 Review list</button><button class="btn btn-secondary" onclick="stClear()">\u21ba Put back</button></div></div>`;
+  }
+
+  function startTimer(){
+    renderMemorize();
+    interval=setInterval(()=>{
+      timer--;
+      if(timer<=0){clearInterval(interval);phase='grab';renderGrab();}
+      else{renderMemorize();}
+    },1000);
+  }
+
+  window.stPick=function(i){if(picked.includes(i))return;picked.push(i);const item=shelfItems[i];if(!item.bad)grabbed[item.id]=(grabbed[item.id]||0)+1;checking=false;renderGrab();};
+  window.stReturn=function(i){picked=picked.filter(x=>x!==i);const item=shelfItems[i];if(!item.bad&&grabbed[item.id])grabbed[item.id]--;checking=false;renderGrab();};
+  window.stClear=function(){grabbed={};picked=[];checking=false;renderGrab();};
+  window.stReview=function(){reviewing=true;renderGrab();};
+  window.stDoubleCheck=function(){checking=!checking;renderGrab();};
+  window.stSubmit=function(){
+    const hasBad=picked.some(i=>shelfItems[i].bad);
+    const correct=checklist.every(c=>(grabbed[c.id]||0)===c.need)&&!hasBad;
+    const res=document.getElementById('st-result');
+    if(hasBad){res.className='result lose';res.textContent='❌ You have a bad item in your basket! Use Check Quality to find and return it.';}
+    else if(correct){res.className='result win';res.textContent='✅ Perfect! Right items, right amounts, no bad stock. You note the starting numbers. These matter later.';}
+    else{const wrong=checklist.filter(c=>(grabbed[c.id]||0)!==c.need);res.className='result lose';res.textContent='❌ Wrong amounts: '+wrong.map(c=>`${c.label.split('(')[0].trim()} (got ${grabbed[c.id]||0}, need ${c.need})`).join(', ');}
+  };
+  window.stReset=function(){grabbed={};timer=5;phase='memorize';document.getElementById('st-result').innerHTML='';startTimer();};
+
+  startTimer();
+})();
+</script>
+</div>
+<div id="chalkboard" class="panel">
+<h2>📝 Chalkboard Specials</h2>
+<p class="subtitle">Act 1. Tap the letters in order to spell today's specials on the board.</p>
+<div id="cb-board"></div>
+<script>
+(function(){
+  const specials=['MATCHA LATTE','BUTTERFLY PEA SODA','ICED CHOCOLATE'];
+  let current=0, spelled=[], solved=[], pool=[];
+
+  function shuffle(str){return str.split('').sort(()=>Math.random()-0.5);}
+  function buildPool(){pool=shuffle(specials[current].replace(/ /g,'')).map((ch,i)=>({ch,i,used:false}));}
+  buildPool();
+
+  function render(){
+    if(current>=specials.length){
+      document.getElementById('cb-board').innerHTML=`<div style="background:#1a3320;border:2px solid #2ecc71;border-radius:12px;padding:1.5rem;text-align:center;"><div style="font-size:1.2rem;color:#2ecc71;margin-bottom:0.5rem;">✅ Board is ready!</div><div style="font-family:'Courier New',monospace;color:#f0e6c0;font-size:0.9rem;">${solved.map(s=>'• '+s).join('<br>')}</div></div>`;
+      return;
+    }
+    const word=specials[current];
+    const letters=word.split('');
+
+    // Mark used pool items
+    const usedSet=new Set(spelled.map(s=>s.poolIdx));
+    const poolHtml=pool.map(p=>{const used=usedSet.has(p.i);return`<button onclick="cbTap(${p.i},'${p.ch}')" style="width:32px;height:36px;background:${used?'#1a3320':'#3d5a3e'};border:2px solid ${used?'#2d4a2e':'#8fbc8f'};border-radius:4px;color:${used?'#2d4a2e':'#f0e6c0'};font-family:'Courier New',monospace;font-size:1rem;font-weight:bold;cursor:${used?'default':'pointer'};${used?'pointer-events:none;':''}">${p.ch}</button>`;}).join('');
+
+    document.getElementById('cb-board').innerHTML=`
+      <div style="background:#2d4a2e;border:3px solid #5a3e1b;border-radius:12px;padding:1.2rem;box-shadow:inset 0 2px 8px rgba(0,0,0,.5);">
+        <div style="font-size:0.7rem;color:#8fbc8f;text-align:center;margin-bottom:0.3rem;">TODAY'S SPECIALS (${current+1}/${specials.length})</div>
+        <div style="min-height:44px;display:flex;align-items:center;justify-content:center;gap:3px;flex-wrap:wrap;margin-bottom:1rem;padding:0.5rem;border-bottom:2px dashed #5a7a5a;">
+          ${letters.map((ch,i)=>{
+            if(ch===' ')return'<div style="width:10px;"></div>';
+            const nonSpaceIdx=letters.slice(0,i).filter(c=>c!==' ').length;
+            const filled=spelled[nonSpaceIdx];
+            return`<div style="width:28px;height:34px;border:2px solid ${filled?'#f0e6c0':'#5a7a5a'};border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:1.1rem;font-weight:bold;color:#f0e6c0;background:${filled?'rgba(240,230,192,0.1)':'transparent'};">${filled?filled.ch:''}</div>`;
+          }).join('')}
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;">
+          ${poolHtml}
+        </div>
+        <div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem;">
+          <button onclick="cbUndo()" style="padding:0.4rem 0.8rem;background:#5a3e1b;border:1px solid #8fbc8f;border-radius:4px;color:#f0e6c0;cursor:pointer;font-size:0.75rem;">↩ Undo</button>
+          <button onclick="cbClear()" style="padding:0.4rem 0.8rem;background:#5a3e1b;border:1px solid #8fbc8f;border-radius:4px;color:#f0e6c0;cursor:pointer;font-size:0.75rem;">✕ Clear</button>
+        </div>
+      </div>
+      ${solved.length?`<div style="margin-top:0.8rem;font-size:0.8rem;color:#2ecc71;">${solved.map(s=>'✅ '+s).join('<br>')}</div>`:''}`;
+  }
+
+  window.cbTap=function(poolIdx,ch){
+    const word=specials[current];
+    const target=word.replace(/ /g,'');
+    // Find next empty slot (skip spaces)
+    let slotIdx=0,filled=0;
+    for(let i=0;i<word.length;i++){if(word[i]===' ')continue;if(filled===spelled.length){slotIdx=i;break;}filled++;}
+    spelled.push({ch,poolIdx});
+    // Check if complete
+    const spellStr=spelled.map(s=>s.ch).join('');
+    const targetStr=word.replace(/ /g,'');
+    if(spelled.length===targetStr.length){
+      if(spellStr===targetStr){solved.push(word);current++;spelled=[];if(current<specials.length)buildPool();setTimeout(render,500);}
+      else{spelled=[];setTimeout(()=>{render();},300);}
+    } else{render();}
+  };
+  window.cbUndo=function(){spelled.pop();render();};
+  window.cbClear=function(){spelled=[];render();};
+
+  render();
+})();
+</script>
+</div>
+<div id="cups" class="panel">
+<h2>🔍 Cup Count & Shot Recon</h2>
+<p class="subtitle">Act 3. You're closing up. The numbers don't add up. Work through the evidence.</p>
+
+<div id="cup-game"></div>
+<div id="cup-result"></div>
+<script>
+(function(){
+  let step=0;
+  const steps=[
+    // Step 0: Count the wash basin
+    {type:'count',
+     narrative:'You grab a tub and start clearing. Most tables are clean. You bring everything to the wash basin and count twice.',
+     prompt:'Hot cups: 15. Cold cups: 6. Total in wash?',
+     answer:21, hint:'15 + 6'},
+    // Step 1: Corner table discovery
+    {type:'reveal',
+     narrative:'But wait — in the corner. A table you don\'t remember serving. Four cups. Still slightly warm. Names written in handwriting that isn\'t yours:',
+     detail:'Simon • Thomas • Nathanael • James',
+     prompt:'Total cups used today (wash + corner table)?',
+     answer:25, hint:'21 + 4'},
+    // Step 2: Cross-reference POS
+    {type:'compare',
+     narrative:'You check the POS. 17 transactions. $89 total. Cash matches perfectly. No discrepancy in the money.',
+     prompt:'Cups unaccounted for by sales (total used − POS transactions)?',
+     answer:8, hint:'25 − 17'},
+    // Step 3: Deduction — the wash basin breakdown
+    {type:'deduce',
+     narrative:'Think about the 21 cups in the wash. Those were used DURING service. The 4 on the corner table appeared AFTER. So of the 21 washed cups...',
+     prompt:'How many of the 21 washed cups were from YOUR 17 sales?',
+     answer:17, hint:'You sold 17 drinks. Those cups went in the wash.'},
+    // Step 4: The gap
+    {type:'deduce',
+     narrative:'17 of the 21 washed cups are yours. That leaves cups in the wash that you did NOT serve:',
+     prompt:'Mystery cups in the wash (21 − 17)?',
+     answer:4, hint:'21 − 17'},
+    // Step 5: Final conclusion (cups)
+    {type:'conclusion',
+     narrative:'4 mystery cups in the wash — served DURING the rush, but not by you. Plus 4 cups on the corner table — served to people you never saw. The cash is perfect. Nothing was stolen.',
+     prompt:'Total drinks NOT made by you?',
+     answer:8, hint:'4 during rush + 4 on corner table'},
+    // Step 6: Shot counter — the machine tells the truth
+    {type:'count',
+     narrative:'You walk to the espresso machine. You zeroed the shot counter this morning. You check it now:',
+     detail:'Shot Counter: 21',
+     prompt:'You count the order tickets — coffee drinks only: 3 Lattes + 3 Caps + 1 Flat White + 2 Long Blacks + 1 Mocha + 1 Iced Latte + 2 Iced Long Blacks. Shots from orders?',
+     answer:13, hint:'3+3+1+2+1+1+2 = 13'},
+    // Step 7: Calibration
+    {type:'deduce',
+     narrative:'13 shots from orders. But you also pulled a calibration shot this morning when dialing in the grinder. So accounted shots:',
+     prompt:'Orders + calibration shot?',
+     answer:14, hint:'13 + 1'},
+    // Step 8: Mystery shots
+    {type:'deduce',
+     narrative:'The 4 mystery cups in the wash — if those were coffee drinks, someone pulled shots for them too.',
+     prompt:'Accounted shots + 4 mystery drinks?',
+     answer:18, hint:'14 + 4'},
+    // Step 9: The unexplained
+    {type:'conclusion',
+     narrative:'The machine says 21. You can account for 18. That leaves shots pulled by someone — behind you — that don\'t match ANY cup in the wash or on the tables.',
+     prompt:'Unexplained extra shots (21 − 18)?',
+     answer:3, hint:'21 − 18'},
+  ];
+
+  function render(){
+    if(step>=steps.length){
+      document.getElementById('cup-game').innerHTML=`
+        <div style="background:#1a3320;border:2px solid #2ecc71;border-radius:10px;padding:1.2rem;text-align:center;">
+          <div style="font-size:1rem;color:#2ecc71;margin-bottom:0.8rem;">📋 Evidence Board — Complete</div>
+          <div style="text-align:left;font-size:0.8rem;color:#ccc;line-height:1.6;">
+            <div style="border-left:3px solid #2ecc71;padding-left:0.8rem;margin-bottom:0.5rem;">25 cups used (full sleeve — empty)</div>
+            <div style="border-left:3px solid #3498db;padding-left:0.8rem;margin-bottom:0.5rem;">17 sales (cash matches perfectly)</div>
+            <div style="border-left:3px solid #f39c12;padding-left:0.8rem;margin-bottom:0.5rem;">21 in wash = 17 yours + <strong style="color:#e94560;">4 mystery</strong></div>
+            <div style="border-left:3px solid #e94560;padding-left:0.8rem;margin-bottom:0.5rem;">4 on corner table = served to <strong style="color:#e94560;">no one you saw</strong></div>
+            <div style="border-left:3px solid #9b59b6;padding-left:0.8rem;margin-bottom:0.5rem;">Shot counter: 21 = 13 orders + 1 calibration + 4 mystery + <strong style="color:#e94560;">3 unexplained</strong></div>
+          </div>
+        </div>`;
+      document.getElementById('cup-result').className='result win';
+      document.getElementById('cup-result').textContent='✅ Cups AND machine confirm it. Someone was pulling shots behind you. Making drinks you didn\'t make. Serving people you couldn\'t reach. And 3 extra shots? Maybe they had a coffee themselves. The Manager was here.';
+      return;
+    }
+    const s=steps[step];
+    // Progress bar
+    const progress=`<div style="display:flex;gap:3px;margin-bottom:1rem;">${steps.map((_,i)=>`<div style="flex:1;height:4px;border-radius:2px;background:${i<step?'#2ecc71':i===step?'#f39c12':'#333'};"></div>`).join('')}</div>`;
+    // Narrative
+    const narrative=`<div style="background:#2a2a4e;border-left:3px solid #f39c12;border-radius:0 6px 6px 0;padding:0.8rem;margin-bottom:0.8rem;font-size:0.82rem;color:#ccc;line-height:1.5;font-style:italic;">${s.narrative}${s.detail?`<div style="color:#f39c12;font-weight:bold;margin-top:0.5rem;font-style:normal;text-align:center;font-size:0.9rem;">${s.detail}</div>`:''}</div>`;
+    // Input
+    const input=`<div style="background:#1a1a2e;border:1px solid #444;border-radius:8px;padding:0.8rem;text-align:center;">
+      <div style="font-size:0.85rem;color:#eee;margin-bottom:0.6rem;">${s.prompt}</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+        <input type="number" id="cup-input" style="width:70px;padding:0.5rem;background:#2a2a4e;border:2px solid #f39c12;border-radius:6px;color:#f39c12;font-size:1.3rem;text-align:center;" onkeydown="if(event.key==='Enter')cupSubmitStep()">
+        <button class="btn btn-primary" onclick="cupSubmitStep()">→</button>
+      </div>
+      <div id="cup-hint" style="font-size:0.7rem;color:#666;margin-top:0.5rem;min-height:1em;"></div>
+    </div>`;
+    document.getElementById('cup-game').innerHTML=progress+narrative+input;
+    document.getElementById('cup-result').className='';
+    document.getElementById('cup-result').textContent='';
+    setTimeout(()=>{const el=document.getElementById('cup-input');if(el)el.focus();},50);
+  }
+
+  let attempts=0;
+  window.cupSubmitStep=function(){
+    const input=document.getElementById('cup-input');
+    const val=parseInt(input.value);
+    if(isNaN(val))return;
+    const s=steps[step];
+    if(val===s.answer){
+      attempts=0;
+      step++;
+      render();
+    } else {
+      attempts++;
+      input.style.borderColor='#e74c3c';
+      setTimeout(()=>{input.style.borderColor='#f39c12';},400);
+      if(attempts>=2){
+        document.getElementById('cup-hint').textContent='💡 '+s.hint;
+      }
+    }
+  };
+
+  render();
+})();
+</script>
+</div>
+<div id="cafe" class="panel">
+<h2>☕ Café Orders</h2>
+<p class="subtitle">Act 2. The rush is on. Customers order drinks. Pick cup, add ingredients in order, serve.</p>
+
+<div style="display:flex;gap:1rem;margin:1rem 0;flex-wrap:wrap;">
+  <div style="flex:1;min-width:80px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">Sentiment</div>
+    <div id="cafe-sentiment" style="font-size:1.5rem;">😊</div>
+  </div>
+  <div style="flex:1;min-width:80px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">Served</div>
+    <div id="cafe-served" style="font-size:1.2rem;font-weight:bold;color:#2ecc71;">0</div>
+  </div>
+  <div style="flex:1;min-width:80px;padding:0.7rem;background:#2a2a4e;border-radius:8px;text-align:center;">
+    <div style="font-size:0.7rem;color:#aaa;">Waiting</div>
+    <div id="cafe-waiting" style="font-size:1.2rem;font-weight:bold;color:#f39c12;">0</div>
+  </div>
+</div>
+
+<div style="margin-bottom:0.8rem;text-align:right;"><button onclick="document.getElementById('cafe-menu').style.display=document.getElementById('cafe-menu').style.display==='none'?'block':'none'" style="padding:0.4rem 0.8rem;background:#2a2a4e;border:1px solid #444;border-radius:4px;color:#f39c12;cursor:pointer;font-size:0.8rem;">📖 Menu</button></div>
+<div id="cafe-menu" style="display:none;background:#2a2a4e;border:1px solid #444;border-radius:8px;padding:0.8rem;margin-bottom:1rem;max-height:250px;overflow-y:auto;">
+<table style="width:100%;font-size:0.7rem;border-collapse:collapse;">
+<tr style="color:#aaa;border-bottom:1px solid #444;"><th style="text-align:left;padding:3px;">Drink</th><th style="text-align:left;padding:3px;">Cup</th><th style="text-align:left;padding:3px;">Ingredients (in order)</th></tr>
+<tr><td style="padding:3px;">Hot Americano</td><td>☕</td><td>Espresso → Hot Water</td></tr>
+<tr><td style="padding:3px;">Iced Americano</td><td>🧊</td><td>Ice → Espresso → Cold Water</td></tr>
+<tr><td style="padding:3px;">Hot Latte</td><td>☕</td><td>Espresso → Steamed Milk</td></tr>
+<tr><td style="padding:3px;">Iced Latte</td><td>🧊</td><td>Ice → Espresso → Milk → Syrup</td></tr>
+<tr><td style="padding:3px;">Matcha Latte</td><td>🧊</td><td>Ice → Matcha → Milk</td></tr>
+<tr><td style="padding:3px;">Hot Tea</td><td>☕</td><td>Tea Bag → Hot Water</td></tr>
+<tr><td style="padding:3px;">Butterfly Pea Soda</td><td>🧊</td><td>Ice → Nata De Coco → Butterfly Pea → Soda Water → Lemon</td></tr>
+<tr><td style="padding:3px;">Hot Chocolate</td><td>☕</td><td>Cocoa → Hot Milk → Whipped Cream</td></tr>
+<tr><td style="padding:3px;">Iced Chocolate</td><td>🧊</td><td>Ice → Cocoa → Milk → Chocolate Syrup</td></tr>
+</table>
+</div>
+<div id="cafe-order" style="margin-bottom:1rem;"></div>
+<div id="cafe-workspace" style="margin-bottom:1rem;"></div>
+<div id="cafe-result" style="min-height:20px;text-align:center;font-size:0.85rem;"></div>
+
+<script>
+(function(){
+  const recipes = {
+    'Hot Americano':      {cup:'hot', ingredients:['Espresso','Hot Water']},
+    'Iced Americano':     {cup:'cold', ingredients:['Ice','Espresso','Cold Water']},
+    'Hot Latte':          {cup:'hot', ingredients:['Espresso','Steamed Milk']},
+    'Iced Latte':         {cup:'cold', ingredients:['Ice','Espresso','Milk','Syrup']},
+    'Matcha Latte':       {cup:'cold', ingredients:['Ice','Matcha','Milk']},
+    'Hot Tea':            {cup:'hot', ingredients:['Tea Bag','Hot Water']},
+    'Butterfly Pea Soda': {cup:'cold', ingredients:['Ice','Nata De Coco','Butterfly Pea','Soda Water','Lemon']},
+    'Hot Chocolate':      {cup:'hot', ingredients:['Cocoa','Hot Milk','Whipped Cream']},
+    'Iced Chocolate':     {cup:'cold', ingredients:['Ice','Cocoa','Milk','Chocolate Syrup']},
+  };
+  const drinkNames = Object.keys(recipes);
+  let queue = [], served = 0, sentiment = 100, chosenCup = null, addedIngredients = [];
+
+  function randomDrink() { return drinkNames[Math.floor(Math.random() * drinkNames.length)]; }
+  function addOrder() {
+    if (queue.length >= 4) { sentiment = Math.max(0, sentiment - 15); render(); return; }
+    queue.push({drink: randomDrink(), time: Date.now()});
+    render();
+  }
+  function getSentimentEmoji() {
+    if (sentiment >= 80) return '😊';
+    if (sentiment >= 60) return '😐';
+    if (sentiment >= 40) return '😤';
+    return '😡';
+  }
+
+  function render() {
+    document.getElementById('cafe-sentiment').textContent = getSentimentEmoji();
+    document.getElementById('cafe-served').textContent = served;
+    document.getElementById('cafe-waiting').textContent = queue.length;
+
+    const orderEl = document.getElementById('cafe-order');
+    if (queue.length === 0) {
+      orderEl.innerHTML = '<div style="text-align:center;padding:1rem;color:#666;font-style:italic;">No orders yet... waiting for customers.</div>';
+      document.getElementById('cafe-workspace').innerHTML = '';
+      return;
+    }
+    const current = queue[0];
+    const waitSec = Math.floor((Date.now() - current.time) / 1000);
+    orderEl.innerHTML = `<div style="background:#3d2a1f;border:1px solid #f39c12;border-radius:8px;padding:0.8rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><strong style="color:#f39c12;">Order: ${current.drink}</strong></div>
+        <div style="font-size:0.75rem;color:${waitSec>30?'#e74c3c':'#aaa'};">⏱️ ${waitSec}s</div>
+      </div>
+      ${queue.length > 1 ? `<div style="font-size:0.7rem;color:#888;margin-top:0.3rem;">+${queue.length-1} more in queue</div>` : ''}
+    </div>`;
+
+    const cupColors = {'Ice':'#e0f4ff','Nata De Coco':'#f5f0e0','Espresso':'#3d1f0a','Hot Water':'#f5e6d3','Cold Water':'#d4eaf7','Steamed Milk':'#fff8f0','Milk':'#fff','Syrup':'#c8860a','Matcha':'#7ab648','Tea Bag':'#a0522d','Butterfly Pea':'#4a3ab5','Soda Water':'#e8f8ff','Lemon':'#fff44f','Cocoa':'#5c3317','Hot Milk':'#fff8f0','Whipped Cream':'#fffef5','Chocolate Syrup':'#2c1810'};
+    const layers = addedIngredients.map(ing => `<div style="flex:1;background:${cupColors[ing]||'#888'};"></div>`).join('');
+    const emptySlots = Math.max(0, 5 - addedIngredients.length);
+    const empty = Array(emptySlots).fill('<div style="flex:1;border-top:1px dashed #333;"></div>').join('');
+
+    const ingredientGroups = [
+      {label:'🧊', items:['Ice','Nata De Coco']},
+      {label:'💧', items:['Hot Water','Cold Water','Soda Water']},
+      {label:'☕', items:['Espresso']},
+      {label:'🍵', items:['Tea Bag','Matcha','Butterfly Pea']},
+      {label:'🥛', items:['Steamed Milk','Milk','Hot Milk','Whipped Cream']},
+      {label:'🍫', items:['Syrup','Cocoa','Chocolate Syrup','Lemon']},
+    ];
+
+    document.getElementById('cafe-workspace').innerHTML = `
+      <div style="margin-bottom:0.8rem;"><div style="font-size:0.7rem;color:#aaa;margin-bottom:0.3rem;">Cup:</div><div style="display:flex;gap:0.5rem;">
+        <button onclick="cafeCup('hot')" style="padding:0.4rem 0.8rem;border:2px solid ${chosenCup==='hot'?'#e74c3c':'#444'};background:${chosenCup==='hot'?'#3d1f1f':'#1a1a2e'};color:#eee;border-radius:6px;cursor:pointer;font-size:0.8rem;">☕ Hot</button>
+        <button onclick="cafeCup('cold')" style="padding:0.4rem 0.8rem;border:2px solid ${chosenCup==='cold'?'#3498db':'#444'};background:${chosenCup==='cold'?'#1f2a3d':'#1a1a2e'};color:#eee;border-radius:6px;cursor:pointer;font-size:0.8rem;">🧊 Cold</button>
+      </div></div>
+      <div style="display:flex;gap:0.8rem;align-items:flex-start;margin-bottom:0.8rem;">
+        <div style="text-align:center;">
+          <div style="width:70px;height:120px;border:3px solid ${chosenCup==='hot'?'#e74c3c':chosenCup==='cold'?'#3498db':'#555'};border-top:none;border-radius:0 0 10px 10px;background:#0a0e17;display:flex;flex-direction:column-reverse;overflow:hidden;">${layers}${empty}</div>
+          <div style="font-size:0.6rem;color:#888;margin-top:0.2rem;">${addedIngredients.length}/5</div>
+        </div>
+        <div style="flex:1;font-size:0.7rem;color:#888;">
+          ${addedIngredients.length ? [...addedIngredients].reverse().map(ing => `<div style="margin-bottom:2px;"><span style="display:inline-block;width:8px;height:8px;background:${cupColors[ing]||'#888'};border-radius:2px;margin-right:3px;"></span>${ing}</div>`).join('') : '<div style="color:#555;">Empty</div>'}
+          ${addedIngredients.length ? `<button onclick="cafeUndo()" style="margin-top:0.3rem;padding:0.2rem 0.4rem;background:#4d1e1e;border:1px solid #e74c3c;border-radius:3px;color:#e74c3c;cursor:pointer;font-size:0.6rem;">↩ Undo</button>` : ''}
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-bottom:0.8rem;">
+        ${ingredientGroups.map(g => `<div style="background:#1a1a2e;border:1px solid #333;border-radius:5px;padding:0.3rem;"><div style="font-size:0.6rem;color:#666;margin-bottom:0.2rem;">${g.label}</div>${g.items.map(ing => `<button onclick="cafeAdd('${ing}')" style="display:block;width:100%;padding:0.25rem 0.4rem;margin-bottom:0.15rem;background:#2a2a4e;border:1px solid #444;border-radius:3px;color:#eee;cursor:pointer;font-size:0.68rem;text-align:left;border-left:3px solid ${cupColors[ing]||'#888'};">${ing}</button>`).join('')}</div>`).join('')}
+      </div>
+      <div style="text-align:center;"><button onclick="cafeServe()" class="btn btn-primary">🍽️ Serve</button> <button onclick="cafeReset()" class="btn btn-secondary">↺ Clear</button></div>`;
+  }
+
+  window.cafeCup = function(type) { chosenCup = type; render(); };
+  window.cafeAdd = function(ing) { if (addedIngredients.length < 5) { addedIngredients.push(ing); render(); } };
+  window.cafeUndo = function() { addedIngredients.pop(); render(); };
+  window.cafeReset = function() { chosenCup = null; addedIngredients = []; document.getElementById('cafe-result').innerHTML = ''; render(); };
+
+  window.cafeServe = function() {
+    if (!queue.length) return;
+    const current = queue[0];
+    const recipe = recipes[current.drink];
+    const res = document.getElementById('cafe-result');
+    if (!chosenCup) { res.innerHTML = '<span style="color:#e74c3c;">Pick a cup first!</span>'; return; }
+    if (chosenCup !== recipe.cup) { res.innerHTML = `<span style="color:#e74c3c;">Wrong cup! ${current.drink} needs a ${recipe.cup} cup.</span>`; return; }
+    if (addedIngredients.length < 5) { res.innerHTML = '<span style="color:#e74c3c;">Fill the cup! (need 5 layers)</span>'; return; }
+    let searchFrom = 0, valid = true;
+    for (const req of recipe.ingredients) {
+      const idx = addedIngredients.indexOf(req, searchFrom);
+      if (idx === -1) { valid = false; break; }
+      searchFrom = idx + 1;
+    }
+    if (!valid) { res.innerHTML = '<span style="color:#e74c3c;">Missing ingredient or wrong order! Check the recipe.</span>'; return; }
+    queue.shift(); served++; sentiment = Math.min(100, sentiment + 10);
+    chosenCup = null; addedIngredients = [];
+    res.innerHTML = `<span style="color:#2ecc71;">✅ ${current.drink} served!</span>`;
+    setTimeout(() => { res.innerHTML = ''; render(); }, 1500);
+    render();
+  };
+
+  setInterval(() => { if (queue.length > 0) { sentiment = Math.max(0, sentiment - queue.length * 2); render(); } }, 5000);
+  addOrder();
+  setInterval(addOrder, 15000);
+  render();
+})();
+</script>
+</div>
+<div id="shots" class="panel">
+<h2>🥛 The Third Milk Jug</h2>
+<p class="subtitle">Act 3. You took 2 jugs this morning. There are 3 empty jugs in the rinse sink. Investigate.</p>
+<div id="milk-jugs" style="display:flex;justify-content:center;gap:1rem;margin-bottom:1rem;padding:0.8rem;background:#1a1a2e;border:1px solid #333;border-radius:10px;"></div>
+<div id="milk-game"></div>
+<div id="milk-result"></div>
+<script>
+(function(){
+  let step=0;
+  const jugStates=['unknown','unknown','unknown']; // 'yours','mystery','unknown'
+
+  function renderJugs(){
+    const labels=[
+      {name:'Jug A',time:'6:45am',state:jugStates[0]},
+      {name:'Jug B',time:'7:30am',state:jugStates[1]},
+      {name:'Jug C',time:'???',state:jugStates[2]},
+    ];
+    document.getElementById('milk-jugs').innerHTML=labels.map(j=>{
+      const color=j.state==='yours'?'#2ecc71':j.state==='mystery'?'#e94560':'#555';
+      const label=j.state==='yours'?'You':j.state==='mystery'?'???':'';
+      const opacity=j.state==='unknown'?'0.3':'1';
+      return`<div style="text-align:center;opacity:${opacity};transition:all 0.4s;">
+        <div style="font-size:2.2rem;filter:${j.state==='mystery'?'hue-rotate(300deg)':'none'};">🥛</div>
+        <div style="font-size:0.65rem;color:${color};font-weight:bold;margin-top:0.2rem;">${j.name}</div>
+        <div style="font-size:0.6rem;color:#888;">${j.time}</div>
+        ${label?`<div style="font-size:0.6rem;color:${color};margin-top:0.1rem;">${label}</div>`:''}
+      </div>`;
+    }).join('');
+  }
+
+  const steps=[
+    // Step 0: Interactive shelf — tap the jugs you took
+    {type:'shelf',
+     narrative:'You walk into the store room to do the final stocktake. You check the rinse sink — three empty milk jugs. But wait... you remember this morning clearly. Tap the jugs you took from the shelf:'},
+    // Step 1: When was it opened?
+    {narrative:'Jug C is empty and rinsed. Same batch as Jug B — it was right there on the shelf. But you only took 2.',
+     type:'choice',
+     prompt:'Jug A emptied by 8:15am. Jug B lasted until 9:30am. Rush ended at 10am. When was Jug C needed?',
+     options:['Before 8:15am (pre-rush)','During the rush (8:15–10am)','After 10am (closing)'],
+     answer:'During the rush (8:15–10am)',
+     wrong:['You had Jug A still going before the rush.','','After the rush there were no more milk drinks to make.']},
+    // Step 2: Who has access? (card elimination)
+    {type:'cards',
+     narrative:'Jug C was fetched from the store room DURING the rush. The store room is behind a coded door.',
+     prompt:'Who could have done this? Tap to flip and eliminate.'},
+    // Step 3: What did they use it for?
+    {narrative:'Someone with access fetched a third jug during the rush. A full jug is 2L — enough for about 8 steamed milk drinks. The jug is completely empty.',
+     prompt:'The 4 mystery cups in the wash were milk drinks. The 4 cups on the corner table also had milk. Total milk drinks from Jug C?',
+     answer:8, hint:'4 mystery + 4 corner table'},
+    // Step 4: Final deduction
+    {narrative:'A third jug. Fetched during the rush. By someone with the code. Used to make 8 drinks you didn\'t make. Rinsed and left in the sink — like someone who knows the closing routine.',
+     type:'choice',
+     prompt:'What does the third jug prove?',
+     options:['Someone helped briefly and left','Someone worked a full shift beside you — setup to close','Someone broke in after hours'],
+     answer:'Someone worked a full shift beside you — setup to close',
+     wrong:['The jug is empty AND rinsed. That\'s not "briefly."','','The jug was used DURING the rush, not after.']},
+  ];
+
+  const suspects=[
+    {name:'A customer',icon:'👤',reason:'No store room code. Counter blocks access.',eliminate:true},
+    {name:'Delivery driver',icon:'🚚',reason:'No deliveries on Sundays.',eliminate:true},
+    {name:'You (forgot)',icon:'🤔',reason:'Both hands full at the machine the entire rush.',eliminate:true},
+    {name:'Someone with the code',icon:'🔑',reason:'Knows the layout. Has access. Knows where the milk is.',eliminate:false},
+  ];
+  let cardFlipped=[], shelfPicked=[];
+
+  function render(){
+    renderJugs();
+    if(step>=steps.length){
+      jugStates[0]='yours';jugStates[1]='yours';jugStates[2]='mystery';renderJugs();
+      document.getElementById('milk-game').innerHTML=`
+        <div style="background:#1a3320;border:2px solid #2ecc71;border-radius:10px;padding:1.2rem;text-align:center;">
+          <div style="font-size:1rem;color:#2ecc71;margin-bottom:0.5rem;">🥛 Evidence Complete</div>
+          <div style="font-size:0.8rem;color:#ccc;">Someone with the store room code. Working the machine. Steaming milk. Rinsing up after. The whole shift.</div>
+        </div>`;
+      document.getElementById('milk-result').className='result win';
+      document.getElementById('milk-result').textContent='✅ The third jug is the physical proof. Someone walked into the store room, grabbed a jug, steamed milk for 8 drinks, and cleaned up. The Manager was here.';
+      return;
+    }
+    const s=steps[step];
+    const progress=`<div style="display:flex;gap:3px;margin-bottom:1rem;">${steps.map((_,i)=>`<div style="flex:1;height:4px;border-radius:2px;background:${i<step?'#2ecc71':i===step?'#f39c12':'#333'};"></div>`).join('')}</div>`;
+    const narrative=`<div style="background:#2a2a4e;border-left:3px solid #f39c12;border-radius:0 6px 6px 0;padding:0.8rem;margin-bottom:0.8rem;font-size:0.82rem;color:#ccc;line-height:1.5;font-style:italic;">${s.narrative}</div>`;
+
+    let input='';
+    if(s.type==='shelf'){
+      input=`<div style="background:#111;border:1px solid #333;border-radius:10px;padding:1rem;">
+        <div style="font-size:0.7rem;color:#888;text-align:center;margin-bottom:0.6rem;">STORE ROOM SHELF — tap the jugs you took this morning</div>
+        <div style="display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;">
+          ${[0,1,2,3,4].map(i=>{const picked=shelfPicked.includes(i);return`<button onclick="milkShelf(${i})" style="width:60px;height:75px;background:${picked?'#1e4d2b':'#2a2a4e'};border:2px solid ${picked?'#2ecc71':'#555'};border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.2s;${picked?'transform:scale(0.9);':''}">
+            <div style="font-size:1.8rem;${picked?'opacity:0.4':''}">🥛</div>
+            <div style="font-size:0.55rem;color:#888;">Jug ${String.fromCharCode(65+i)}</div>
+          </button>`;}).join('')}
+        </div>
+        <div style="text-align:center;margin-top:0.8rem;font-size:0.75rem;color:${shelfPicked.length===2?'#2ecc71':'#888'};">${shelfPicked.length}/2 selected</div>
+        ${shelfPicked.length===2?`<div style="text-align:center;margin-top:0.5rem;"><button class="btn btn-primary" onclick="milkShelfDone()">Done — head to the counter</button></div>`:''}
+      </div>`;
+    } else if(s.type==='choice'){
+      input=`<div style="background:#1a1a2e;border:1px solid #444;border-radius:8px;padding:0.8rem;">
+        <div style="font-size:0.85rem;color:#eee;margin-bottom:0.6rem;">${s.prompt}</div>
+        ${s.options.map((o,i)=>`<button onclick="milkChoice(${i})" style="display:block;width:100%;text-align:left;padding:0.6rem;margin-bottom:0.3rem;background:#2a2a4e;border:1px solid #444;border-radius:6px;color:#eee;cursor:pointer;font-size:0.8rem;">${o}</button>`).join('')}
+        <div id="milk-hint" style="font-size:0.7rem;color:#e74c3c;margin-top:0.4rem;min-height:1em;"></div>
+      </div>`;
+    } else if(s.type==='cards'){
+      input=`<div style="background:#1a1a2e;border:1px solid #444;border-radius:8px;padding:0.8rem;">
+        <div style="font-size:0.85rem;color:#eee;margin-bottom:0.6rem;">${s.prompt}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+          ${suspects.map((su,i)=>{
+            const flipped=cardFlipped.includes(i);
+            if(flipped&&su.eliminate)return`<div style="padding:0.6rem;background:#1a1a1a;border:2px solid #333;border-radius:8px;text-align:center;opacity:0.4;">
+              <div style="font-size:1.2rem;">❌</div>
+              <div style="font-size:0.7rem;color:#666;text-decoration:line-through;">${su.name}</div>
+              <div style="font-size:0.6rem;color:#e74c3c;margin-top:0.2rem;">${su.reason}</div>
+            </div>`;
+            if(flipped&&!su.eliminate)return`<div style="padding:0.6rem;background:#1e4d2b;border:2px solid #2ecc71;border-radius:8px;text-align:center;">
+              <div style="font-size:1.2rem;">🔑</div>
+              <div style="font-size:0.7rem;color:#2ecc71;font-weight:bold;">${su.name}</div>
+              <div style="font-size:0.6rem;color:#2ecc71;margin-top:0.2rem;">${su.reason}</div>
+            </div>`;
+            return`<button onclick="milkCard(${i})" style="padding:0.6rem;background:#2a2a4e;border:2px solid #555;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s;">
+              <div style="font-size:1.5rem;">${su.icon}</div>
+              <div style="font-size:0.75rem;color:#eee;margin-top:0.3rem;">${su.name}</div>
+              <div style="font-size:0.6rem;color:#888;margin-top:0.1rem;">tap to investigate</div>
+            </button>`;
+          }).join('')}
+        </div>
+      </div>`;
+    } else {
+      input=`<div style="background:#1a1a2e;border:1px solid #444;border-radius:8px;padding:0.8rem;text-align:center;">
+        <div style="font-size:0.85rem;color:#eee;margin-bottom:0.6rem;">${s.prompt}</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+          <input type="number" id="milk-input" style="width:70px;padding:0.5rem;background:#2a2a4e;border:2px solid #f39c12;border-radius:6px;color:#f39c12;font-size:1.3rem;text-align:center;" onkeydown="if(event.key==='Enter')milkNum()">
+          <button class="btn btn-primary" onclick="milkNum()">→</button>
+        </div>
+        <div id="milk-hint" style="font-size:0.7rem;color:#666;margin-top:0.5rem;min-height:1em;"></div>
+      </div>`;
+    }
+    document.getElementById('milk-game').innerHTML=progress+narrative+input;
+    document.getElementById('milk-result').className='';
+    document.getElementById('milk-result').textContent='';
+    if(!s.type){setTimeout(()=>{const el=document.getElementById('milk-input');if(el)el.focus();},50);}
+  }
+
+  let attempts=0;
+  window.milkShelf=function(i){
+    if(shelfPicked.includes(i)){shelfPicked=shelfPicked.filter(x=>x!==i);}
+    else if(shelfPicked.length<2){shelfPicked.push(i);}
+    render();
+  };
+  window.milkShelfDone=function(){
+    jugStates[0]='yours';jugStates[1]='yours';jugStates[2]='mystery';
+    step++;render();
+  };
+  window.milkNum=function(){
+    const input=document.getElementById('milk-input');
+    const val=parseInt(input.value);if(isNaN(val))return;
+    if(val===steps[step].answer){attempts=0;step++;render();}
+    else{attempts++;input.style.borderColor='#e74c3c';setTimeout(()=>{input.style.borderColor='#f39c12';},400);if(attempts>=2)document.getElementById('milk-hint').textContent='💡 '+steps[step].hint;}
+  };
+  window.milkChoice=function(i){
+    const s=steps[step];
+    if(s.options[i]===s.answer){attempts=0;step++;render();}
+    else{document.getElementById('milk-hint').textContent='❌ '+s.wrong[i];}
+  };
+  window.milkCard=function(i){
+    cardFlipped.push(i);
+    render();
+    if(suspects[i].eliminate&&cardFlipped.filter(x=>suspects[x].eliminate).length===suspects.filter(x=>x.eliminate).length){
+      setTimeout(()=>{step++;render();},1000);
+    }
+  };
+
+  render();
+})();
+</script>
+</div>
+<div id="names" class="panel">
+<h2>✝️ The Names on the Cups</h2>
+<p class="subtitle">Act 4. Four cups on the corner table. Names written in handwriting that isn't yours.</p>
+<div id="names-cups" style="display:flex;justify-content:center;gap:0.8rem;margin:1.5rem 0;">
+  <div id="nc-0" style="background:#3d2a1f;border:2px solid #555;border-radius:8px;padding:0.8rem;text-align:center;width:70px;transition:all 0.6s;"><div style="font-size:1.5rem;">☕</div><div style="font-size:0.7rem;color:#888;margin-top:0.3rem;">Simon</div></div>
+  <div id="nc-1" style="background:#3d2a1f;border:2px solid #555;border-radius:8px;padding:0.8rem;text-align:center;width:70px;transition:all 0.6s;"><div style="font-size:1.5rem;">☕</div><div style="font-size:0.7rem;color:#888;margin-top:0.3rem;">Thomas</div></div>
+  <div id="nc-2" style="background:#3d2a1f;border:2px solid #555;border-radius:8px;padding:0.8rem;text-align:center;width:70px;transition:all 0.6s;"><div style="font-size:1.5rem;">☕</div><div style="font-size:0.7rem;color:#888;margin-top:0.3rem;">Nathanael</div></div>
+  <div id="nc-3" style="background:#3d2a1f;border:2px solid #555;border-radius:8px;padding:0.8rem;text-align:center;width:70px;transition:all 0.6s;"><div style="font-size:1.5rem;">☕</div><div style="font-size:0.7rem;color:#888;margin-top:0.3rem;">James</div></div>
+</div>
+<div id="names-game"></div>
+<div id="names-result"></div>
+<script>
+(function(){
+  let step=0;
+  const cupNames=['Simon','Thomas','Nathanael','James'];
+  const steps=[
+    {prompt:'Do you recognize these names?',
+     options:['Regular customers','Staff members','Disciples of Jesus','Random names'],
+     answer:2,
+     wrong:['You\'ve never seen these names in the booking system.','No one on the roster has these names.','','The handwriting is deliberate. These names mean something.'],
+     after:'Simon Peter. Thomas. Nathanael. James, son of Zebedee. Disciples.'},
+    {prompt:'These four were all present at the same event. What connects them?',
+     options:['The Last Supper','The feeding of the 5,000','A breakfast on the shore','Walking on water'],
+     answer:2,
+     wrong:['All twelve were at the Last Supper — but these four are singled out together in only one passage.','Thousands were there. These four are named specifically together elsewhere.','','Only Peter walked on water. These four are named together in a different story.'],
+     after:'John 21. After the resurrection. A morning by the Sea of Tiberias.'},
+    {prompt:'What happened that morning?',
+     options:['They caught nothing all night — then He told them to cast on the right side','He walked across the water to them','He calmed a storm','He sent them out to preach'],
+     answer:0,
+     wrong:['','That was a different night, a different sea.','No storm in John 21.','That was earlier, during His ministry.'],
+     after:'They obeyed. The net filled. 153 fish. And when they reached the shore...'},
+    {prompt:'What was waiting for them on the shore?',
+     options:['A crowd','A boat','Breakfast — bread and fish on a charcoal fire','Nothing'],
+     answer:2,
+     wrong:['No crowd. Just Him.','They came FROM the boat.','','He was there. He\'d been there the whole time.'],
+     after:null},
+  ];
+
+  function glowCup(i){
+    const el=document.getElementById('nc-'+i);
+    if(!el)return;
+    el.style.borderColor='#f39c12';
+    el.style.boxShadow='0 0 12px rgba(243,156,18,0.5)';
+    el.querySelector('div:last-child').style.color='#f39c12';
+  }
+
+  function render(){
+    if(step>=steps.length){
+      // Light all cups fully
+      for(let i=0;i<4;i++){
+        const el=document.getElementById('nc-'+i);
+        el.style.borderColor='#2ecc71';
+        el.style.boxShadow='0 0 16px rgba(46,204,113,0.6)';
+        el.style.background='#1e3a2a';
+        el.querySelector('div:last-child').style.color='#2ecc71';
+      }
+      // Scene transition
+      document.getElementById('names-game').innerHTML=`
+        <div style="background:linear-gradient(to bottom,#2a1a0a,#1a1a2e);border:2px solid #f39c12;border-radius:12px;padding:1.5rem;text-align:center;animation:fadeIn 1.5s;">
+          <div style="font-size:2rem;margin-bottom:0.8rem;">🌅🔥🍞🐟</div>
+          <div style="font-size:0.85rem;color:#f0e6c0;line-height:1.8;font-style:italic;">
+            He had breakfast ready. Before they even landed. Before they asked.<br><br>
+            A charcoal fire. Bread. Fish.<br>
+            <span style="color:#f39c12;font-weight:bold;">"Come and have breakfast."</span><br><br>
+            <span style="color:#ccc;font-style:normal;">And you look around the café. The tables. The cups. The names.</span><br><br>
+            <span style="color:#f39c12;font-size:1rem;">This isn't just a café. This is the shore.</span>
+          </div>
+        </div>`;
+      document.getElementById('names-result').className='result win';
+      document.getElementById('names-result').innerHTML='✅ <strong>John 21:2</strong> — Simon Peter, Thomas, Nathanael, the sons of Zebedee. The morning He served them breakfast. The morning He was already there before they arrived.';
+      return;
+    }
+    // Glow cups up to current step
+    for(let i=0;i<step;i++)glowCup(i);
+
+    const s=steps[step];
+    const progress=`<div style="display:flex;gap:3px;margin-bottom:1rem;">${steps.map((_,i)=>`<div style="flex:1;height:4px;border-radius:2px;background:${i<step?'#2ecc71':i===step?'#f39c12':'#333'};"></div>`).join('')}</div>`;
+    document.getElementById('names-game').innerHTML=progress+`
+      <div style="background:#1a1a2e;border:1px solid #444;border-radius:8px;padding:0.8rem;">
+        <div style="font-size:0.85rem;color:#eee;margin-bottom:0.6rem;">${s.prompt}</div>
+        ${s.options.map((o,i)=>`<button onclick="namesPick(${i})" style="display:block;width:100%;text-align:left;padding:0.6rem;margin-bottom:0.3rem;background:#2a2a4e;border:1px solid #444;border-radius:6px;color:#eee;cursor:pointer;font-size:0.8rem;">${o}</button>`).join('')}
+        <div id="names-hint" style="font-size:0.7rem;color:#e74c3c;margin-top:0.4rem;min-height:1em;"></div>
+      </div>`;
+    document.getElementById('names-result').className='';
+    document.getElementById('names-result').textContent='';
+  }
+
+  window.namesPick=function(i){
+    const s=steps[step];
+    if(i===s.answer){
+      glowCup(step);
+      if(s.after){
+        document.getElementById('names-game').innerHTML+=`<div style="margin-top:0.8rem;background:#2a2a4e;border-left:3px solid #2ecc71;border-radius:0 6px 6px 0;padding:0.6rem;font-size:0.8rem;color:#2ecc71;font-style:italic;animation:fadeIn 0.5s;">${s.after}</div>`;
+        setTimeout(()=>{step++;render();},3000);
+      } else {step++;render();}
+    } else {
+      document.getElementById('names-hint').textContent='❌ '+s.wrong[i];
+    }
+  };
+
+  render();
+})();
+</script>
+<style>@keyframes fadeIn{from{opacity:0}to{opacity:1}}</style>
+</div>
+<div id="net" class="panel">
+<h2>🐟 The Cash Drop</h2>
+<p class="subtitle">Act 4. End of shift. Drop the cash in the safe. The Manager's code — you've never needed it before.</p>
+
+<!-- Safe visual -->
+<div id="safe-door" style="position:relative;background:linear-gradient(145deg,#3a3a3a,#2a2a2a);border:3px solid #555;border-radius:12px;padding:1.5rem;text-align:center;box-shadow:inset 0 2px 8px rgba(0,0,0,0.5),0 4px 12px rgba(0,0,0,0.3);">
+  <div style="font-size:0.7rem;color:#888;text-transform:uppercase;letter-spacing:2px;margin-bottom:0.3rem;">Café 153 — Cash Safe</div>
+  <div style="font-size:0.6rem;color:#666;margin-bottom:1rem;">Manager's Daily Code</div>
+
+  <!-- 3 Dials -->
+  <div style="display:flex;justify-content:center;gap:1.2rem;margin-bottom:1rem;">
+    <div style="text-align:center;">
+      <div style="font-size:0.55rem;color:#888;margin-bottom:0.3rem;">▼</div>
+      <div style="position:relative;width:56px;height:70px;background:#111;border:2px solid #666;border-radius:6px;overflow:hidden;">
+        <div id="dial-0" style="position:absolute;width:100%;transition:transform 0.2s;" data-val="0"></div>
+      </div>
+      <div style="font-size:0.5rem;color:#666;margin-top:0.3rem;">shot counter</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:0.55rem;color:#888;margin-bottom:0.3rem;">▼</div>
+      <div style="position:relative;width:56px;height:70px;background:#111;border:2px solid #666;border-radius:6px;overflow:hidden;">
+        <div id="dial-1" style="position:absolute;width:100%;transition:transform 0.2s;" data-val="0"></div>
+      </div>
+      <div style="font-size:0.5rem;color:#666;margin-top:0.3rem;">table number</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:0.55rem;color:#888;margin-bottom:0.3rem;">▼</div>
+      <div style="position:relative;width:56px;height:70px;background:#111;border:2px solid #666;border-radius:6px;overflow:hidden;">
+        <div id="dial-2" style="position:absolute;width:100%;transition:transform 0.2s;" data-val="0"></div>
+      </div>
+      <div style="font-size:0.5rem;color:#666;margin-top:0.3rem;">batch number</div>
+    </div>
+  </div>
+
+  <!-- Handle -->
+  <div id="safe-handle" style="width:40px;height:40px;margin:0 auto;border:3px solid #666;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;" onclick="safeTry()">
+    <div style="width:16px;height:3px;background:#666;border-radius:2px;"></div>
+  </div>
+  <div style="font-size:0.6rem;color:#555;margin-top:0.4rem;">turn handle to open</div>
+</div>
+
+<!-- Clue reminder -->
+<div style="background:#2a2a4e;border:1px solid #444;border-radius:8px;padding:0.8rem;margin-top:1rem;font-size:0.78rem;color:#999;">
+  <div style="color:#f39c12;font-size:0.7rem;margin-bottom:0.4rem;">📝 Note in the Manager's handwriting:</div>
+  <em>"Today's code — you already saw it. The machine. The table. The jug."</em>
+</div>
+
+<!-- Net (hidden until correct) -->
+<div id="net-reveal" style="display:none;margin-top:1.2rem;">
+  <div id="net-visual" style="position:relative;background:linear-gradient(to bottom,#0a1628,#1a2a4e);border:2px solid #444;border-radius:12px;padding:1.5rem 1rem;text-align:center;overflow:hidden;min-height:180px;">
+    <div style="position:relative;margin:0 auto;width:180px;height:130px;">
+      <div style="position:absolute;inset:0;border:3px solid #556;border-radius:0 0 50% 50%;background:rgba(50,80,120,0.15);"></div>
+      <div style="position:absolute;inset:8px;border:2px dashed #445;border-radius:0 0 50% 50%;"></div>
+      <div id="net-fish" style="position:absolute;inset:12px;display:flex;flex-wrap:wrap;align-items:end;justify-content:center;gap:1px;padding:0.5rem;overflow:hidden;"></div>
+    </div>
+    <div id="net-counter" style="margin-top:0.6rem;font-size:1.8rem;font-weight:bold;color:#556;">0</div>
+    <div style="font-size:0.7rem;color:#445;">fish in the net</div>
+  </div>
+</div>
+<div id="net-result"></div>
+
+<script>
+(function(){
+  const code=[1,5,3];
+  const vals=[0,0,0];
+
+  function renderDials(){
+    for(let i=0;i<3;i++){
+      const el=document.getElementById('dial-'+i);
+      const nums=[];
+      for(let n=0;n<=9;n++)nums.push(n);
+      el.innerHTML=nums.map(n=>`<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:bold;color:${n===vals[i]?'#f39c12':'#444'};font-family:'Courier New',monospace;">${n}</div>`).join('');
+      el.style.transform=`translateY(-${vals[i]*70}px)`;
+      // Touch/click zones
+      el.parentElement.onpointerdown=function(e){
+        e.preventDefault();
+        const startY=e.clientY;
+        const startVal=vals[i];
+        const onMove=function(ev){
+          const diff=startY-ev.clientY;
+          vals[i]=(startVal+Math.round(diff/30)+100)%10;
+          renderDials();
+        };
+        const onUp=function(){
+          document.removeEventListener('pointermove',onMove);
+          document.removeEventListener('pointerup',onUp);
+        };
+        document.addEventListener('pointermove',onMove);
+        document.addEventListener('pointerup',onUp);
+      };
+    }
+  }
+
+  window.safeTry=function(){
+    const correct=vals[0]===code[0]&&vals[1]===code[1]&&vals[2]===code[2];
+    const handle=document.getElementById('safe-handle');
+    if(correct){
+      handle.style.transform='rotate(90deg)';
+      handle.style.borderColor='#2ecc71';
+      handle.querySelector('div').style.background='#2ecc71';
+      document.getElementById('safe-door').style.borderColor='#2ecc71';
+      document.getElementById('safe-door').style.boxShadow='0 0 20px rgba(46,204,113,0.3)';
+      // Show net and animate
+      document.getElementById('net-reveal').style.display='block';
+      setTimeout(fillNet,600);
+    } else {
+      handle.style.transform='rotate(5deg)';
+      handle.style.borderColor='#e74c3c';
+      setTimeout(()=>{handle.style.transform='';handle.style.borderColor='#666';},400);
+      const res=document.getElementById('net-result');
+      res.className='result lose';
+      res.textContent='The handle won\'t turn. Wrong code. Think: what numbers stood out today?';
+      setTimeout(()=>{res.className='';res.textContent='';},3000);
+    }
+  };
+
+  function fillNet(){
+    const fishEl=document.getElementById('net-fish');
+    const counter=document.getElementById('net-counter');
+    const netVis=document.getElementById('net-visual');
+    fishEl.innerHTML='';
+    let count=0;const total=153;
+    const interval=setInterval(()=>{
+      const batch=Math.min(Math.ceil((total-count)/20)+1,total-count);
+      for(let i=0;i<batch;i++){
+        const f=document.createElement('span');
+        f.textContent='🐟';
+        f.style.fontSize=(0.35+Math.random()*0.25)+'rem';
+        f.style.opacity='0';f.style.transition='opacity 0.3s';
+        fishEl.appendChild(f);
+        setTimeout(()=>{f.style.opacity='1';},50);
+        count++;
+      }
+      counter.textContent=count;
+      counter.style.color=count>=153?'#f39c12':'#8ab4f8';
+      if(count>=total){
+        clearInterval(interval);
+        netVis.style.borderColor='#f39c12';
+        netVis.style.boxShadow='0 0 20px rgba(243,156,18,0.3)';
+        setTimeout(()=>{
+          document.getElementById('net-result').className='result win';
+          document.getElementById('net-result').innerHTML=`<strong style="font-size:1.1rem;">153.</strong><br><br><em>"Simon Peter went aboard and hauled the net ashore, full of large fish, 153 of them. And although there were so many, the net was not torn." — John 21:11</em><br><br>You were never alone. Not during setup. Not during the rush. Not during closing. He was beside you at the machine. He was serving the people you couldn't reach.<br><br><strong>The net held 153 fish and did not break. You held an entire day alone — and did not break. Because it was never just you.</strong>`;
+        },1200);
+      }
+    },60);
+  }
+
+  renderDials();
+})();
+</script>
+</div>
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => {
+    if (b.onclick && b.onclick.toString().includes(id)) b.classList.add('active');
+  });
+}
+</script>
+</body>
+</html>

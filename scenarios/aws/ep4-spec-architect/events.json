@@ -1,0 +1,110 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 1200,
+      "message": "Ashford here. Twenty minutes left. Tell me you have something to show.",
+      "type": "atmosphere",
+      "voice": "client"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 300,
+      "message": "Emergency lighting activates. Pip looks at you nervously. The golem hums faster. Five minutes remain.",
+      "type": "alarm"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "sort-solved",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "sort-priorities",
+      "result_card": 5,
+      "message": "Papers sorted. Marcus skipped Requirements and Design entirely. No wonder the golem built nonsense.",
+      "type": "reveal"
+    },
+    {
+      "id": "specs-complete",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "spec-requirements",
+      "result_card": 12,
+      "message": "All three specs written. The scroll frame glows. The Golem Workshop door unlocks.",
+      "type": "reveal",
+      "unlocks_room": 30
+    },
+    {
+      "id": "context-loaded",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "context-memory",
+      "result_card": 31,
+      "message": "Context loaded. The golem's eyes flicker — it can read the specs now.",
+      "type": "reveal"
+    },
+    {
+      "id": "mcp-wired",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "wire-mcp",
+      "result_card": 32,
+      "message": "MCP conduits connected. The golem can now reach external tools. Build Yard doors open.",
+      "type": "reveal",
+      "unlocks_room": 50
+    },
+    {
+      "id": "terminal-done",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "terminal-build",
+      "result_card": 51,
+      "message": "First command issued. The golem begins building from the design specs.",
+      "type": "reveal"
+    },
+    {
+      "id": "arch-placed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "blueprint-arch",
+      "result_card": 52,
+      "message": "Architecture placed. CDK, Lambda, DynamoDB, CloudFront — all in the right layers.",
+      "type": "reveal"
+    },
+    {
+      "id": "codebase-mapped",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "path-codebase",
+      "result_card": 53,
+      "message": "Codebase mapped. The deployment config is found. Launch Tower unlocks.",
+      "type": "reveal",
+      "unlocks_room": 70
+    },
+    {
+      "id": "tests-built",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "match-tests",
+      "result_card": 71,
+      "message": "Playwright test pipeline built. Navigate, login, fill, assert, screenshot.",
+      "type": "reveal"
+    },
+    {
+      "id": "deploy-ordered",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "timeline-deploy",
+      "result_card": 72,
+      "message": "Deployment sequence correct. Infrastructure first, then frontend with real URLs.",
+      "type": "reveal"
+    },
+    {
+      "id": "bug-found",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "log-bug",
+      "result_card": 73,
+      "message": "CORS error identified. The API needs Access-Control-Allow-Origin headers.",
+      "type": "reveal"
+    },
+    {
+      "id": "shipped",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "defuse-ship",
+      "result_card": 99,
+      "message": "You press DEPLOY. The URL goes live. Lord Ashford sees a working social platform. Episode complete.",
+      "type": "ending"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Story narrator — warm, professional" },
+    "golem": { "voice_id": "Matthew", "role": "The Golem (Kiro) — starts confused, becomes confident" },
+    "client": { "voice_id": "Brian", "role": "Lord Ashford — demanding client" },
+    "pip": { "voice_id": "Ivy", "role": "Pip — eager apprentice" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "narrator", "text": "Tuesday morning. You arrive at the Builders' Guild. The hallway is empty.", "pause_after_ms": 1000 },
+      { "voice": "narrator", "text": "The previous architect — Marcus — quit last Friday. No handoff. No notes. Just a half-built project and a client demo tomorrow.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "On your desk: a dormant golem, a stack of scattered documents, and a blinking message.", "pause_after_ms": 600 },
+      { "voice": "client", "text": "This is Lord Ashford. My social platform launches tomorrow. I was told the new architect would handle it. Don't disappoint me.", "pause_after_ms": 1000 },
+      { "voice": "narrator", "text": "The golem's eyes flicker. It tries to speak.", "pause_after_ms": 800 },
+      { "voice": "golem", "text": "I... I don't know what I am. I have no context. No instructions. Tell me what to do.", "pause_after_ms": 1000 },
+      { "voice": "pip", "text": "A young apprentice bursts through the door. Oh! You're the new architect! I'm Pip! The golem needs specs to build anything — without them it just... makes stuff up.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "The clock on the wall reads 9:00 AM. The demo is at 9:40. Your forty minutes start now." }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 1200,
+    "segments": [
+      { "voice": "client", "text": "Ashford here. Twenty minutes left. Tell me you have something to show.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "The message light blinks red. Pip looks at you nervously.", "pause_after_ms": 600 },
+      { "voice": "pip", "text": "We're halfway there! The golem is building but... we still need to test and deploy.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "The golem hums steadily. It's working. But the clock doesn't care." }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "The deployment completes. The URL goes live. You paste it into the message.", "pause_after_ms": 800 },
+        { "voice": "golem", "text": "All systems nominal. Build complete. Tests passing. Deployed to production.", "pause_after_ms": 1000 },
+        { "voice": "client", "text": "Long pause. ...It works. It actually works. On your first day. I'm impressed.", "pause_after_ms": 800 },
+        { "voice": "pip", "text": "We did it! Spec-driven development for the win!", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "You lean back. The golem's eyes glow steady blue. It knows what it is now.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "And tomorrow, when the next project comes, you'll both be ready." }
+      ],
+      "audio": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "client", "text": "Time's up. I'm looking at a blank page. We'll talk Monday.", "pause_after_ms": 1000 },
+        { "voice": "narrator", "text": "The demo slot passes. Lord Ashford disconnects. Pip slumps in his chair.", "pause_after_ms": 800 },
+        { "voice": "golem", "text": "I was close. I understand the architecture now. Next time will be different.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "Tomorrow, you'll be faster. The specs are written. The golem remembers.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "Next time, you'll ship." }
+      ],
+      "audio": null
+    }
+  }
+}

@@ -269,15 +269,15 @@ class WireLock {
     const s = document.createElement('style');
     s.id = 'wirelk-css';
     s.textContent = `
-.wirelk{position:relative;display:flex;justify-content:space-between;align-items:stretch;padding:24px 0 60px;min-height:220px;user-select:none;-webkit-user-select:none}
+.wirelk{position:relative;display:flex;justify-content:space-between;align-items:stretch;padding:24px 0 60px;min-height:220px;user-select:none;-webkit-user-select:none;gap:40px}
 .wirelk-canvas{position:absolute;inset:0;pointer-events:none;z-index:1}
-.wirelk-col{display:flex;flex-direction:column;justify-content:space-around;gap:12px;z-index:2}
-.wirelk-left .wirelk-terminal{display:flex;align-items:center;gap:10px;justify-content:flex-end}
-.wirelk-right .wirelk-terminal{display:flex;align-items:center;gap:10px}
-.wirelk-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border,#1e2a45);cursor:pointer;flex-shrink:0;transition:box-shadow .2s}
+.wirelk-col{display:flex;flex-direction:column;justify-content:space-around;gap:12px;z-index:2;max-width:40%}
+.wirelk-left .wirelk-terminal{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.wirelk-right .wirelk-terminal{display:flex;align-items:center;gap:6px}
+.wirelk-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--border,#1e2a45);cursor:pointer;flex-shrink:0;transition:box-shadow .2s}
 .wirelk-dot:hover{box-shadow:0 0 10px rgba(255,255,255,.2)}
 .wirelk-socket{background:var(--surface,#141b2d)!important}
-.wirelk-label{font-size:13px;color:var(--muted,#7a8ba8);font-weight:600}
+.wirelk-label{font-size:11px;color:var(--muted,#7a8ba8);font-weight:600}
 .wirelk-spark{position:absolute;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;pointer-events:none;z-index:3;opacity:0;transition:opacity .1s}
 .wirelk-spark.active{opacity:1;box-shadow:0 0 20px 10px #ef4444,0 0 40px 20px #ff8800;animation:wirelk-zap .4s}
 @keyframes wirelk-zap{0%{transform:scale(1)}50%{transform:scale(3)}100%{transform:scale(0);opacity:0}}

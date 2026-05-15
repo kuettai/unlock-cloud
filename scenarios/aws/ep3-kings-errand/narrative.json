@@ -1,0 +1,57 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Story narrator — warm, whimsical" },
+    "system": { "voice_id": "Matthew", "role": "System alerts — herald's proclamation style" },
+    "aldric": { "voice_id": "Brian", "role": "King Aldric — jovial, distracted" },
+    "pip": { "voice_id": "Ivy", "role": "Pip the apprentice — eager, clumsy" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "narrator", "text": "The Kingdom of Cloudmere. The morning sun warms the castle walls. Banners flutter in the breeze.", "pause_after_ms": 1000 },
+      { "voice": "narrator", "text": "Today is the day before the Grand Harvest Festival — the biggest celebration of the year. And nothing is ready.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "The previous Steward of Errands quit without warning. Rumor says he tried to do everything himself instead of delegating to knights.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "You've been summoned to the Throne Room. King Aldric paces before his throne, muttering about decorations.", "pause_after_ms": 800 },
+      { "voice": "aldric", "text": "Ah! You're here! Splendid! The festival is tomorrow and — well — nothing is ready. The cook has lost the menu. The foreign traders can't understand anyone. The entertainers haven't been booked. And the nobles are feuding over stall positions. Again.", "pause_after_ms": 1200 },
+      { "voice": "aldric", "text": "I'm appointing you Steward of Errands. You'll command knights of increasing rank to handle each task. And visit the Bedrock Bazaar — the marketplace in the town square — to recruit the right allies.", "pause_after_ms": 1000 },
+      { "voice": "pip", "text": "A young apprentice stumbles through the door, scrolls tumbling from their arms. I'm Pip! Your apprentice! I'll help you learn the ropes!", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "The clock tower chimes. Sundown is sixty minutes away.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "Welcome to Cloudmere. Your sixty minutes start now." }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 1800,
+    "segments": [
+      { "voice": "system", "text": "WEATHER ALERT: Storm clouds gathering over the Bazaar. Merchants preparing to cover stalls.", "pause_after_ms": 800, "emphasis": "strong" },
+      { "voice": "narrator", "text": "Thunder rumbles across the town square. The Bazaar merchants start pulling tarps over their wares. Pip looks up at the sky, worried.", "pause_after_ms": 600 },
+      { "voice": "pip", "text": "Steward! The storm! The merchants are closing up! We have two minutes before the Bazaar shuts!", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "Rain lashes the cobblestones. Two minutes pass. Then — sunlight breaks through. The merchants uncover their stalls, grumbling.", "pause_after_ms": 600 },
+      { "voice": "pip", "text": "That was close! The merchants are back. But we've lost time!" }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "The Champion knight strides through the festival grounds. Every errand complete. Every stall in place. The smell of Greta's feast drifts from the kitchens.", "pause_after_ms": 800 },
+        { "voice": "system", "text": "Grand Harvest Festival: READY. All errands fulfilled before sundown.", "pause_after_ms": 1000, "emphasis": "strong" },
+        { "voice": "narrator", "text": "Lanterns flicker to life across the square. Music rises from the stages. The foreign traders raise a toast in three languages.", "pause_after_ms": 800 },
+        { "voice": "aldric", "text": "You did it! On your first day as Steward! The Queen is delighted. The nobles have stopped feuding. Even Sir Cedric cracked a smile — and I didn't think that was possible.", "pause_after_ms": 800 },
+        { "voice": "pip", "text": "We did it, Steward! All five errands! I can't believe it!", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "You lean against the castle wall, watching the festival come alive below. Pip hands you a mug of cider.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "The Kingdom of Cloudmere celebrates. And you — the Steward of Errands — made it happen." }
+      ],
+      "audio": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "system", "text": "Sundown. The Grand Harvest Festival is incomplete.", "pause_after_ms": 1000, "emphasis": "strong" },
+        { "voice": "narrator", "text": "The sun dips below the hills. Festival-goers arrive to half-built stalls and missing performers. Greta serves bread and cheese instead of a feast.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "But the lanterns still glow. The people still gather. A festival half-done is still a festival.", "pause_after_ms": 600 },
+        { "voice": "pip", "text": "We learned a lot today, Steward. Tomorrow we'll be faster. I kept notes!", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "Tomorrow, you'll know which knights to send, which allies to recruit, and which errands to tackle first." }
+      ],
+      "audio": null
+    }
+  }
+}

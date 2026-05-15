@@ -1,0 +1,16 @@
+{
+  "base_score": 30,
+  "time_bonus_per_minute": 1,
+  "hint_penalty": -2,
+  "wrong_combination_penalty": -3,
+  "lore_bonus": 1,
+  "lore_ids": [300, 301, 302, 303, 304, 305, 306, 307, 308, 309],
+  "all_lore_bonus": 5,
+  "stars": [
+    { "min": 38, "stars": 5 },
+    { "min": 30, "stars": 4 },
+    { "min": 22, "stars": 3 },
+    { "min": 14, "stars": 2 },
+    { "min": 0, "stars": 1 }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "ep3-kings-errand",
+  "title": "The King's Errand",
+  "episode": 3,
+  "arc": "AI Unit",
+  "description": "The Grand Harvest Festival is tomorrow and nothing is ready. As the newly appointed Steward of Errands, command knights of increasing rank to solve five problems — from finding a lost feast menu to resolving a noble feud. Visit the Bedrock Bazaar to recruit allies, earn ranks, and ultimately assemble a Champion knight before sundown.",
+  "difficulty": {
+    "tier": 3,
+    "label": "Specialist"
+  },
+  "duration_minutes": 60,
+  "players": {
+    "min": 2,
+    "max": 6,
+    "recommended": 4
+  },
+  "aws_topics": [
+    "Amazon Bedrock",
+    "Bedrock Guardrails",
+    "Amazon Bedrock AgentCore",
+    "AgentCore Runtime",
+    "AgentCore Memory",
+    "AgentCore Gateway",
+    "AgentCore Identity",
+    "AgentCore Policy",
+    "AgentCore Observability",
+    "Amazon Nova",
+    "Amazon Nova Sonic",
+    "Amazon Nova Act",
+    "Amazon Nova Canvas",
+    "MCP Protocol",
+    "Cedar Policy Language"
+  ],
+  "mechanics_taught": [
+    "npc_dialog_trees",
+    "card_combination_discovery",
+    "cross_card_observation",
+    "rank_lock",
+    "scroll_lock",
+    "bazaar_lock",
+    "wire_lock",
+    "path_lock",
+    "sg_lock",
+    "terminal_lock",
+    "match_lock",
+    "timeline_lock",
+    "arch_lock",
+    "chain_lock",
+    "timed_events",
+    "lore_scroll_fragments",
+    "knight_rank_progression",
+    "gold_economy"
+  ],
+  "version": "0.1"
+}

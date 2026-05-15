@@ -1,0 +1,39 @@
+{
+  "combinations": [
+    {
+      "card_a": 82,
+      "card_b": 78,
+      "result_card": 84,
+      "type": "item_object",
+      "description": "Cross-reference mystery cups with wash count"
+    },
+    {
+      "card_a": 74,
+      "card_b": 79,
+      "result_card": 85,
+      "type": "item_object",
+      "description": "Compare machine counter to order tickets"
+    },
+    {
+      "card_a": 70,
+      "card_b": 71,
+      "result_card": 86,
+      "type": "object_object",
+      "description": "Third jug + extra beans = someone used supplies"
+    },
+    {
+      "card_a": 76,
+      "card_b": 80,
+      "result_card": 87,
+      "type": "item_item",
+      "description": "All evidence points to one conclusion"
+    },
+    {
+      "card_a": 73,
+      "card_b": 91,
+      "result_card": 92,
+      "type": "item_object",
+      "description": "The names lead you to understand the Manager's note"
+    }
+  ]
+}

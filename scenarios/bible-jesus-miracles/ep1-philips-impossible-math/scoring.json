@@ -4,7 +4,8 @@
   "hint_penalty": -2,
   "wrong_combination_penalty": -3,
   "lore_bonus": 1,
-  "lore_max": 12,
+  "lore_ids": [300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311],
+  "all_lore_bonus": 5,
   "stars": [
     {
       "min": 38,

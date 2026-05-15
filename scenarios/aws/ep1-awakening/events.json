@@ -14,6 +14,13 @@
       "voice": "narrator"
     },
     {
+      "id": "warning-40",
+      "time_remaining": 2400,
+      "message": "Private subnet destabilizing. Retrieve what you need NOW — these rooms will lock soon.",
+      "type": "warning",
+      "voice": "alert"
+    },
+    {
       "id": "mid-purge-35",
       "time_remaining": 2100,
       "message": "Private Subnet locks. Spawn Room, Processing Chamber, Archive Room, and Policy Vault become inaccessible.",
@@ -45,7 +52,7 @@
     {
       "id": "sg-door-open",
       "trigger": "puzzle_solved",
-      "puzzle_id": "slider-sg",
+      "puzzle_id": "sg-config",
       "result_card": 135,
       "message": "The Security Group rules are accepted. A corridor opens ahead.",
       "type": "reveal"

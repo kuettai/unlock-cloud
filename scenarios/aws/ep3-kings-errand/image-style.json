@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Medieval illuminated manuscript illustration, storybook art style, rich jewel tones, gold leaf accents, ornate borders, warm parchment textures, fantasy kingdom aesthetic, game card art.",
+  "style_prefix_location": "Medieval illuminated manuscript illustration, storybook art style, rich jewel tones, gold leaf accents, ornate borders, warm parchment textures, fantasy kingdom interior/exterior, wide angle, game card art.",
+  "style_prefix_item": "Medieval illuminated manuscript illustration, storybook art style, single item on aged parchment background, rich jewel tones, gold leaf accents, ornate border detail, close-up, game card art.",
+  "style_prefix_object": "Medieval illuminated manuscript illustration, storybook art style, interactive element on aged parchment, rich jewel tones, gold leaf accents, ornate border detail, close-up, game card art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, realistic photo, modern elements, technology",
+  "aspect_ratio": "16:9"
+}

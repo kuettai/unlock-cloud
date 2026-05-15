@@ -1,0 +1,14 @@
+{
+  "base_score_per_puzzle": 100,
+  "time_bonuses": [
+    { "finish_under_minutes": 25, "bonus": 200 },
+    { "finish_under_minutes": 35, "bonus": 100 }
+  ],
+  "hint_penalty": -25,
+  "wrong_answer_penalty": -10,
+  "stars": [
+    { "min": 1100, "stars": 3 },
+    { "min": 800, "stars": 2 },
+    { "min": 500, "stars": 1 }
+  ]
+}

@@ -2,14 +2,14 @@
   "timed_events": [
     {
       "id": "mid-event",
-      "trigger_at_remaining_seconds": 900,
+      "time_remaining": 900,
       "message": "The sun drops lower. The crowd grows restless. Hungry faces turn toward the disciples.",
       "type": "narrative",
       "narrative_key": "mid_event"
     },
     {
       "id": "urgency-warning",
-      "trigger_at_remaining_seconds": 300,
+      "time_remaining": 300,
       "message": "The sun is almost gone. Five thousand hungry people and I still have no answer. I must finish this now.",
       "voice": "philip",
       "type": "alert",
@@ -59,7 +59,7 @@
     {
       "id": "crowd-arranged",
       "trigger": "puzzle_solved",
-      "puzzle_id": "arrangement-maze",
+      "puzzle_id": "crowd-seating",
       "card_id": 173,
       "message": "The crowd is seated. Groups of fifty. Groups of a hundred. The hillside is organized like a feast.",
       "type": "discovery",

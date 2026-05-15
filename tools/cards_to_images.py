@@ -28,6 +28,15 @@ SIZE_MAP = {
     "1:1": "1024x1024",
 }
 
+RESIZE_MAP = {
+    "location": (768, 432),
+    "item": (320, 320),
+    "object": (320, 320),
+    "tool": (320, 320),
+    "lore": (320, 320),
+}
+}
+
 
 def load_json(path: Path) -> dict:
     with open(path, encoding="utf-8") as f:
@@ -86,7 +95,18 @@ def run(scenario_dir: str):
         img_bytes = generate_image(client, prompt, style)
         with open(out_path, "wb") as f:
             f.write(img_bytes)
-        print(f"  OK ({len(img_bytes)} bytes)\n")
+
+        # Resize to display size
+        target_size = RESIZE_MAP.get(card_type)
+        if target_size:
+            from PIL import Image
+            import io
+            img = Image.open(io.BytesIO(img_bytes))
+            img = img.resize(target_size, Image.LANCZOS)
+            img.save(out_path, "PNG", optimize=True)
+            print(f"  OK (resized to {target_size[0]}x{target_size[1]})\n")
+        else:
+            print(f"  OK ({len(img_bytes)} bytes)\n")
 
     print("Done.")
 

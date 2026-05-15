@@ -3,139 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Unlock the Cloud</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--accent:#3b82f6;--green:#22c55e;--yellow:#eab308}
-html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif}
-
-.container{max-width:600px;margin:0 auto;padding:24px 16px}
-h1{font-size:22px;font-weight:700;text-align:center;margin-bottom:4px}
-.subtitle{text-align:center;color:var(--muted);font-size:14px;margin-bottom:32px}
-
-/* Category cards */
-.cat-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px}
-.cat-card:hover{border-color:var(--accent)}
-.cat-card:active{opacity:.7}
-.cat-icon{font-size:40px;min-width:50px;text-align:center}
-.cat-info{flex:1}
-.cat-title{font-size:18px;font-weight:700;margin-bottom:4px}
-.cat-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px}
-.cat-meta{font-size:11px;color:var(--muted)}
-
-/* Back button */
-.back-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:8px 16px;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:20px;display:none}
-.back-btn:hover{border-color:var(--accent);color:var(--accent)}
-
-/* Scenario cards */
-.scenario-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;cursor:pointer;transition:all .2s}
-.scenario-card:hover{border-color:var(--accent)}
-.scenario-card:active{opacity:.7}
-.scenario-cover{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
-.scenario-body{display:flex;gap:14px;align-items:center;padding:16px}
-.scenario-ep{font-size:28px;font-weight:800;color:var(--accent);min-width:48px;text-align:center}
-.scenario-info{flex:1}
-.scenario-title{font-size:16px;font-weight:700;margin-bottom:4px}
-.scenario-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:8px}
-.scenario-meta{display:flex;gap:8px;flex-wrap:wrap}
-.scenario-tag{font-size:11px;padding:3px 8px;border-radius:4px;background:var(--bg);color:var(--muted);border:1px solid var(--border)}
-.scenario-tag.diff-tutorial{color:var(--green);border-color:var(--green)}
-.scenario-tag.diff-initiate{color:var(--yellow);border-color:var(--yellow)}
-.scenario-tag.diff-practitioner{color:#f97316;border-color:#f97316}
-.scenario-tag.diff-architect{color:var(--accent);border-color:var(--accent)}
-.resume-badge{font-size:11px;color:var(--green);background:rgba(34,197,94,.1);padding:3px 8px;border-radius:4px;white-space:nowrap}
-
-.loading{text-align:center;color:var(--muted);padding:40px}
-</style>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+<title>re:Solve</title>
+<link rel="stylesheet" href="home.css">
 </head>
 <body>
+<svg class="kiro-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600" preserveAspectRatio="xMidYMid slice"><g transform="matrix(1.458,0,0,1.458,265.367,317.039)"><g transform="matrix(-1,0,0,1,0,0)"><path fill="#fff" d="M124.872,-2.098C121.933,-31.071 121.463,-58.981 113.863,-83.37C81.313,-222.739 -107.797,-222.6 -145.633,-84.076C-201.448,150.349 133.689,84.831 124.872,-2.098z"/></g></g><g transform="matrix(1.458,0,0,1.458,265.367,317.039)"><g transform="matrix(-1,0,0,1,0,0)"><path fill="#fff" d="M-9.992,160.677C7.8,54.301 -74.528,-129.561 -145.633,-84.076C-151.149,-63.764 -172.644,34.713 -119.417,131.246C-95.268,175.043 -27.931,217.213 -9.992,160.677z"/></g></g><g transform="matrix(1.458,0,0,1.458,265.367,317.039)"><g transform="matrix(-1,0,0,1,0,0)"><path fill="#fff" d="M-9.993,160.676C51.058,211.091 133.832,189.492 94.959,103.344C94.959,103.344 29.176,-50.213 -20.944,-22.834C-74.722,6.544 -64.236,96.151 -9.993,160.676z"/></g></g><g transform="matrix(1.458,0,0,1.458,265.367,317.039)"><g transform="matrix(-1,0,0,1,0,0)"><path fill="#fff" d="M100.243,105.751C100.243,105.756 100.243,105.735 100.243,105.735C156.155,126.168 161.725,86.206 149.884,66.351C112.421,3.533 128.201,-32.828 113.863,-83.37C81.313,-222.739 -15.527,40.716 100.243,105.751z"/></g></g><g transform="matrix(1.458,0,0,1.458,263.3,317.038)"><g transform="matrix(1,0,0,1,17.992,-53.739)"><path fill="#000" d="M-18.456,-0.001C-18.456,11.057 -16.138,29.607 -0.615,29.607C-0.615,29.607 -0.612,29.607 -0.612,29.607C11.327,29.607 18.456,18.54 18.456,-0.001C18.456,-9.814 16.48,-17.707 12.741,-22.831C9.459,-27.328 4.807,-29.607 -0.615,-29.607C-6.037,-29.607 -10.3,-27.363 -13.28,-22.94C-16.667,-17.913 -18.456,-9.981 -18.456,-0.001z"/></g></g><g transform="matrix(1.458,0,0,1.458,265.367,317.038)"><g transform="matrix(1,0,0,1,81.822,-53.739)"><path fill="#000" d="M-18.456,-0.001C-18.456,11.057 -16.138,29.607 -0.615,29.607C-0.615,29.607 -0.612,29.607 -0.612,29.607C11.327,29.607 18.456,18.54 18.456,-0.001C18.456,-9.814 16.48,-17.707 12.741,-22.831C9.459,-27.328 4.807,-29.607 -0.615,-29.607C-6.037,-29.607 -10.3,-27.363 -13.28,-22.94C-16.667,-17.913 -18.456,-9.981 -18.456,-0.001z"/></g></g></svg>
 <div class="container">
-  <h1>Unlock the Cloud</h1>
-  <p class="subtitle" id="subtitle">Choose a category</p>
-  <button class="back-btn" id="back-btn" onclick="showCategories()">← Back to categories</button>
-  <div id="content"><div class="loading">Loading...</div></div>
+  <!-- QR Gate: shown when no game_id -->
+  <div id="qr-gate" style="display:none;text-align:center;padding:60px 20px">
+    <div style="font-size:64px;margin-bottom:20px">📱</div>
+    <h2 style="font-size:20px;margin-bottom:12px">Scan the QR Code</h2>
+    <p style="color:var(--muted);font-size:14px;line-height:1.6;max-width:280px;margin:0 auto">Scan the QR code at the booth or event to join a game session.</p>
+    <div style="margin-top:32px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;max-width:280px;margin-left:auto;margin-right:auto">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Or enter a game code:</div>
+      <input id="gate-code-input" type="text" placeholder="e.g. abc123" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:14px;text-align:center;margin-bottom:8px">
+      <button onclick="submitGateCode()" style="width:100%;padding:10px;background:var(--accent);border:none;border-radius:6px;color:#fff;font-size:14px;font-weight:600;cursor:pointer">Join Game</button>
+    </div>
+  </div>
+
+  <!-- Main content: shown when game_id present -->
+  <div id="main-content" style="display:none">
+    <h1>🧩 re:Solve</h1>
+    <p class="subtitle" id="subtitle">Choose a category</p>
+    <div class="mode-toggle">
+      <button class="mode-btn" data-mode="normal" onclick="setMode('normal')">Normal</button>
+      <button class="mode-btn" data-mode="challenge" onclick="setMode('challenge')">Challenge</button>
+    </div>
+    <button class="back-btn" id="back-btn" onclick="showCategories()">← Back to categories</button>
+    <div id="content"><div class="loading">Loading...</div></div>
+  </div>
 </div>
 
-<script>
-const BASE = '../scenarios';
-const ASSET_BASE = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
-  ? BASE
-  : 'https://d37w3py52wsl8r.cloudfront.net/scenarios';
-let categories = [];
+<script src="home.js" charset="utf-8"></script>
 
-async function init() {
-  const resp = await fetch(`${BASE}/categories.json`);
-  categories = await resp.json();
-  showCategories();
-}
+<div class="kiro-peek" onclick="window.open('https://kiro.dev','_blank')">
+  <span class="kiro-ghost">👻</span>
+  <span class="kiro-text"></span>
+</div>
 
-function showCategories() {
-  document.getElementById('subtitle').textContent = 'Choose a category';
-  document.getElementById('back-btn').style.display = 'none';
-  const el = document.getElementById('content');
-  el.innerHTML = categories.map(c => `
-    <div class="cat-card" onclick="showEpisodes('${c.id}')" style="border-color:${c.color}20">
-      <div class="cat-icon">${c.icon}</div>
-      <div class="cat-info">
-        <div class="cat-title">${c.title}</div>
-        <div class="cat-desc">${c.description}</div>
-        <div class="cat-meta">${c.episodes} episode${c.episodes > 1 ? 's' : ''}</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-async function showEpisodes(catId) {
-  const cat = categories.find(c => c.id === catId);
-  document.getElementById('subtitle').textContent = cat.title;
-  document.getElementById('back-btn').style.display = 'block';
-  const el = document.getElementById('content');
-  el.innerHTML = '<div class="loading">Loading episodes...</div>';
-
-  const resp = await fetch(`${BASE}/${catId}/index.json`);
-  const list = await resp.json();
-
-  const metas = await Promise.all(list.map(async id => {
-    try {
-      const r = await fetch(`${BASE}/${catId}/${id}/meta.json`);
-      const meta = await r.json();
-      meta._id = id;
-      meta._cat = catId;
-      return meta;
-    } catch { return null; }
-  }));
-
-  const valid = metas.filter(Boolean).sort((a, b) => a.episode - b.episode);
-  if (!valid.length) { el.innerHTML = '<div class="loading">No episodes found.</div>'; return; }
-
-  el.innerHTML = valid.map(m => {
-    const diffClass = `diff-${(m.difficulty?.label || '').toLowerCase()}`;
-    const hasSave = localStorage.getItem(`utc_${m.id}`);
-    const resumeBadge = hasSave ? '<span class="resume-badge">In Progress</span>' : '';
-    const tags = [
-      `<span class="scenario-tag ${diffClass}">${m.difficulty?.label || 'Unknown'}</span>`,
-      `<span class="scenario-tag">${m.duration_minutes} min</span>`,
-      `<span class="scenario-tag">${m.players?.min || 1}-${m.players?.max || 6} players</span>`,
-    ];
-    return `<div class="scenario-card" onclick="play('${m._cat}','${m._id}')">
-      <img class="scenario-cover" src="${ASSET_BASE}/${m._cat}/${m._id}/assets/cover.png" alt="${m.title}" onerror="this.style.display='none'">
-      <div class="scenario-body">
-      <div class="scenario-ep">${m.episode}</div>
-      <div class="scenario-info">
-        <div class="scenario-title">${m.title} ${resumeBadge}</div>
-        <div class="scenario-desc">${m.description}</div>
-        <div class="scenario-meta">${tags.join('')}</div>
-      </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function play(cat, id) {
-  window.location.href = `index.html?scenario=${BASE}/${cat}/${id}`;
-}
-
-init();
-</script>
 </body>
 </html>

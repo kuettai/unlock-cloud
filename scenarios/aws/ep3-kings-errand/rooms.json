@@ -1,0 +1,94 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Throne Room",
+      "description": "Grand hall with golden throne and festival tapestry",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "You enter the Throne Room. King Aldric waves you over.",
+      "map_pos": [140, 360]
+    },
+    {
+      "card_id": 200,
+      "name": "Steward's Study",
+      "description": "Cozy room with oak desk, errand board, and knight rank chart",
+      "connects_to": [300, 500, 400],
+      "unlocked_by": { "type": "item", "card_id": 104 },
+      "unlock_text": "Pip leads you down the corridor to the Steward's Study.",
+      "map_pos": [140, 230]
+    },
+    {
+      "card_id": 300,
+      "name": "Castle Kitchen",
+      "description": "Cavernous kitchen with iron pots and recipe archive shelves",
+      "connects_to": [],
+      "unlocked_by": { "type": "discovery", "from_room": 200 },
+      "unlock_text": "The smell of burnt pastry guides you to the Castle Kitchen.",
+      "map_pos": [0, 230]
+    },
+    {
+      "card_id": 400,
+      "name": "Chronicle Hall",
+      "description": "Vaulted chamber with glowing memory crystals and timeline table",
+      "connects_to": [],
+      "unlocked_by": { "type": "item", "card_id": 706 },
+      "unlock_text": "The Chronicle Hall's heavy doors swing open. Memory crystals glow on the shelves.",
+      "map_pos": [280, 230]
+    },
+    {
+      "card_id": 500,
+      "name": "Castle Gate",
+      "description": "Massive stone gatehouse with conduit pipes and connection diagrams",
+      "connects_to": [600],
+      "unlocked_by": { "type": "item", "card_id": 205 },
+      "unlock_text": "The Castle Gate looms ahead — the controlled passage to the outside world.",
+      "map_pos": [140, 130]
+    },
+    {
+      "card_id": 600,
+      "name": "Bedrock Bazaar",
+      "description": "Bustling town square marketplace with colorful merchant stalls",
+      "connects_to": [700, 800, 900, 1000],
+      "unlocked_by": { "type": "item", "card_id": 501 },
+      "unlock_text": "You step through the Gate into the bustling Bedrock Bazaar.",
+      "map_pos": [140, 0]
+    },
+    {
+      "card_id": 700,
+      "name": "Foreign Quarter",
+      "description": "Colorful district of silk canopies, spice stalls, and unfamiliar scripts",
+      "connects_to": [],
+      "unlocked_by": { "type": "item", "card_id": 605 },
+      "unlock_text": "Colorful foreign banners mark the entrance to the Foreign Quarter.",
+      "map_pos": [0, 0]
+    },
+    {
+      "card_id": 800,
+      "name": "Entertainment Guild",
+      "description": "Theatrical hall with miniature stage model and booking sheets",
+      "connects_to": [],
+      "unlocked_by": { "type": "item", "card_id": 706 },
+      "unlock_text": "A grand stage entrance leads into the Entertainment Guild.",
+      "map_pos": [280, 0]
+    },
+    {
+      "card_id": 900,
+      "name": "Noble Quarter",
+      "description": "Elegant district of manicured gardens and heraldic banners",
+      "connects_to": [],
+      "unlocked_by": { "type": "item", "card_id": 406 },
+      "unlock_text": "Manicured hedges line the path into the Noble Quarter.",
+      "map_pos": [0, 130]
+    },
+    {
+      "card_id": 1000,
+      "name": "The Proving Ground",
+      "description": "Open field with training dummies and Champion assembly platform",
+      "connects_to": [],
+      "unlocked_by": { "type": "items", "card_ids": [306, 706, 809, 909] },
+      "unlock_text": "Sir Cedric stands at the gate. \"Show me what you've built.\"",
+      "map_pos": [280, 130]
+    }
+  ]
+}

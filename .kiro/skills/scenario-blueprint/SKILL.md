@@ -42,10 +42,75 @@ For each room, define:
 
 - **Description** — Room text shown to the player
 - **Image** — Asset filename (`.png` for generated, `.svg` for hand-crafted)
-- **Discoveries** — Table: label, card ID, type (🔴/🔵), title, optional `requires` gate
+- **Discoveries** — Table: label, card ID, type (🔴/🔵), title, optional `requires` gate, optional `consumes_item`
 - **Puzzle** (if any) — ID, type, UI variant, solution, hints (3 tiers), solve steps
-- **Combinations** — Table: item + object = result card, ✅ event / ❌ penalty
+- **Combinations** — Table: item + object = result card, ✅ event / ❌ penalty, consumes list
 - **Consumes** — Which cards are removed on success
+
+### 5. Consume Mechanics
+
+Cards can be consumed (removed from inventory/play) in three ways:
+
+#### A. `consumes` on event/result cards (in cards.json)
+
+When a combination succeeds and reveals a result card, that card's `consumes` array lists card IDs to remove from the player's inventory. This is the most common pattern — the items "used up" in the combination disappear.
+
+```json
+{
+  "id": 5,
+  "type": "event",
+  "title": "Click.",
+  "consumes": [2, 3],
+  "reveals": [20, 10]
+}
+```
+
+**When to use:** The combination physically uses up the items (key inserted into lock, ingredients mixed, items given to NPC). Both the item (red) and object (blue) used in the combination should typically be consumed.
+
+**When NOT to consume:** If an item is reusable (a tool, a reference card, a badge that grants ongoing access). Only consume items that are logically "spent" by the action.
+
+#### B. `consumes_item` on discoveries (in cards.json, on discovery entries)
+
+When a discovery button is clicked, the listed items are removed from inventory as a cost. This happens BEFORE the discovery reveals its card.
+
+```json
+{
+  "card_id": 30,
+  "label": "Open the passage ahead",
+  "requires_item": [33, 16],
+  "consumes_item": [33, 16]
+}
+```
+
+**When to use:** A discovery requires spending items to activate (give an item to an NPC, use a key to open a door, sacrifice materials). The items are gone after use.
+
+**Design note:** `requires_item` gates visibility (button only appears when you have the items). `consumes_item` removes them on click. You almost always want both together — gate + consume. But you can have `requires_item` without `consumes_item` if the item is just needed as proof (show a badge) but not consumed.
+
+#### C. Implicit consumption via combinations
+
+When `tryCombination` succeeds, the engine calls `revealCard(result_card)`. If that result card has a `consumes` array, those cards are removed. The combination itself does NOT auto-consume the two cards used — you must explicitly list them in `consumes` on the result card.
+
+### Consume Design Guidelines
+
+1. **Always ask: is this item single-use or reusable?**
+   - Single-use: keys, ingredients, fuel cells, offerings, evidence submitted → consume
+   - Reusable: tools, badges, reference sheets, maps → don't consume
+
+2. **Consume both sides of a combination** when the action physically merges/destroys them:
+   - "Insert Power Cell into Device" → consumes both Power Cell and Device
+   - "Show Badge to Guard" → consumes neither (badge is reusable, guard stays)
+
+3. **Consume only the item side** when the object persists:
+   - "Pour water into jar" → consumes water, jar remains for inspection
+   - "Give letter to NPC" → consumes letter, NPC remains
+
+4. **Use `consumes_item` on discoveries** for gate-and-spend patterns:
+   - "Use the key on the locked door" → requires_item + consumes_item the key
+   - "Give all evidence to the judge" → consumes multiple items at once
+
+5. **Track the dependency chain** — never consume an item that is needed later by another puzzle or combination. Map out the full critical path before deciding what to consume.
+
+6. **Consumed cards appear in the "Used" section** of the Interact screen, greyed out. Players can still see what they had. This is a UI feature, not something you need to configure.
 
 ### 5. Dependency Chain
 
@@ -76,16 +141,56 @@ Given a completed blueprint, generate these files in `scenarios/<category>/<epis
 |------|---------------|
 | `meta.json` | Meta |
 | `narrative.json` | Narrative (voices + segments with pause/emphasis) |
-| `cards.json` | Card Index + Room Details (discoveries, hidden_elements, puzzle_ref, reveals, consumes) |
-| `rooms.json` | Room Graph (card_id, connects_to, unlocked_by, unlock_text) |
+| `cards.json` | Card Index + Room Details (discoveries, hidden_elements, puzzle_ref, reveals, consumes, consumes_item) |
+| `rooms.json` | Room Graph (card_id, connects_to, unlocked_by, unlock_text, map_pos) |
 | `combinations.json` | Room Details → Combinations tables |
 | `puzzles.json` | Room Details → Puzzle definitions |
 | `events.json` | Timed events from Room Graph + triggered events |
+
+### puzzles.json Mandatory Field
+
+Every puzzle MUST include a `mandatory` field:
+- `"mandatory": true` — actual puzzles (locks, code entries, hidden elements) that block progression
+- `"mandatory": false` — NPCs (`type: "tool"`, `ui: "npc-dialog"`), audio players, reusable tools
+
+### puzzles.json isFinal Field
+
+At least ONE puzzle per episode MUST have `"isFinal": true` — any puzzle that triggers an ending. Multiple puzzles can be `isFinal` if the episode has branching endings (e.g., different paths lead to different conclusions). This tells the backend the game is complete when ANY `isFinal` puzzle is solved.
+
+These fields are used by the backend to track player progression and game completion.
 | `scoring.json` | Scoring section |
+
+### cards.json Consume Fields Checklist
+
+When generating `cards.json`, for every event/result card ask:
+1. What items were used to trigger this card? → add them to `"consumes": [...]`
+2. Are those items single-use? If reusable, don't consume them.
+3. Does any later puzzle/combination need these items? If yes, don't consume them.
+
+For every discovery with `requires_item`, ask:
+1. Is the required item spent by this action? → add `"consumes_item": [...]`
+2. Or is it just shown/checked? → only `requires_item`, no consume.
 
 After generating JSON, run:
 - `python tools/narrative_to_voice.py scenarios/<category>/<episode-id>` — generate voice audio
 - `python tools/cards_to_images.py scenarios/<category>/<episode-id>` — generate card artwork
+
+## Folder Structure
+
+### Isometric Map Layout
+
+Rooms can define `map_pos: [x, y]` in `rooms.json` for a 2.5D isometric map view. If present, the map renders as tilted tiles with room images; otherwise falls back to a list view.
+
+Coordinate space: 400×480px grid, tiles are 120×120px. Position is top-left corner of each tile.
+
+Example layout for a café:
+```json
+{ "card_id": 1, "name": "Back Door", "map_pos": [140, 380] }
+{ "card_id": 10, "name": "Store Room", "map_pos": [60, 280] }
+{ "card_id": 20, "name": "Brew Station", "map_pos": [140, 180] }
+{ "card_id": 30, "name": "Service Counter", "map_pos": [220, 280] }
+{ "card_id": 40, "name": "The Floor", "map_pos": [140, 60] }
+```
 
 ## Folder Structure
 

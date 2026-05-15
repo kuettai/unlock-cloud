@@ -16,13 +16,41 @@
           "[03:41:16] INFO  igw.status: igw-abc123 DETACHED",
           "[03:41:17] WARN  route.table: No route to igw. Public subnet isolated."
         ],
-        "correct_lines": [1, 4, 5]
+        "correct_lines": [
+          1,
+          4,
+          5
+        ]
+      },
+      "challenge": {
+        "config": {
+          "lines": [
+            "[03:41:11] INFO  sys.boot: Kernel loaded. Memory check passed.",
+            "[03:41:12] WARN  process.monitor: Unregistered process detected in subnet-private-7a",
+            "[03:41:12] DEBUG net.dns: Resolving internal hostnames... OK",
+            "[03:41:13] INFO  vpc.status: VPC-7 id=vpc-0f8c3a HEALTHY",
+            "[03:41:13] INFO  s3.sync: Bucket sync complete. 47 objects.",
+            "[03:41:14] ERROR purge.scheduler: Purge sequence armed. T-60:00",
+            "[03:41:14] WARN  lambda.timeout: Function arn:aws:lambda:us-east-1:*:cleanup exceeded 30s",
+            "[03:41:15] INFO  ec2.status: EC2-unit-47 RUNNING. credentials rotated.",
+            "[03:41:15] DEBUG ec2.auth: new password hash: 70726f746f636f6c",
+            "[03:41:16] INFO  igw.status: igw-abc123 DETACHED",
+            "[03:41:16] DEBUG cloudwatch.metric: CPUUtilization 23.4% within threshold",
+            "[03:41:17] WARN  route.table: No route to igw. Public subnet isolated."
+          ],
+          "correct_lines": [
+            3,
+            8,
+            9
+          ]
+        }
       },
       "hints": [
         "The logs contain more than warnings. Look at the data values.",
         "Three lines have critical data: a VPC ID, a password hash, and a gateway ID.",
         "Select the lines with vpc-0f8c3a, 6e6574776f726b, and igw-abc123."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "terminal-ec2",
@@ -34,17 +62,25 @@
         "prompt": "ec2-unit-47 login:",
         "answer": "network",
         "case_sensitive": false,
-        "prerequisite": { "requires_card": 101 },
+        "prerequisite": {
+          "requires_card": 101
+        },
         "falseOutputs": {
           "no_prerequisite": "ACCESS DENIED. Credentials unknown. The password was recently rotated — check the system logs.",
           "wrong_answer": "LOGIN FAILED. Invalid password. The hash in the logs might need decoding."
+        }
+      },
+      "challenge": {
+        "config": {
+          "answer": "protocol"
         }
       },
       "hints": [
         "The password was recently changed. Check the system logs in the Spawn Room.",
         "Look for 'password hash' in the logs. The value 6e6574776f726b is hex-encoded.",
         "Use the Hex Decoder tool. 6e6574776f726b in hex = 'network'."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "hex-tool",
@@ -53,7 +89,8 @@
       "description": "Hex-to-ASCII decoder (reusable)",
       "ui": "hex-decoder",
       "config": {},
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "terminal-archive",
@@ -65,31 +102,23 @@
         "prompt": "archive> search:",
         "answer": "security group",
         "case_sensitive": false,
-        "accept_variations": ["security groups", "sg rules", "firewall rules"]
+        "accept_variations": [
+          "security groups",
+          "sg rules",
+          "firewall rules"
+        ]
+      },
+      "challenge": {
+        "config": {
+          "accept_variations": []
+        }
       },
       "hints": [
         "The terminal is a search engine. What did the blast door warning say you'd need?",
         "The blast door mentioned a 'Security Group checkpoint'. Search for that.",
         "Type 'security group' into the terminal."
-      ]
-    },
-    {
-      "id": "overlay-sg-reveal",
-      "type": "card_overlay",
-      "card_ref": 130,
-      "description": "Overlay the Security Group Blueprint (#125) with the Port Reference Card (#133) to reveal the corrupted port number",
-      "mechanic": "card_overlay",
-      "config": {
-        "card_a": 125,
-        "card_b": 133,
-        "result_image": "assets/overlay-sg-port.png",
-        "reveals": "The corrupted port on the blueprint aligns with 443 (HTTPS) on the port reference. The scattered line fragments complete the number."
-      },
-      "hints": [
-        "Both cards have alignment marks. What if they were meant to be placed together?",
-        "Try overlaying the Security Group Blueprint with the Port Reference Card.",
-        "The corrupted port is 443 — HTTPS. You can see it when the cards are combined."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "audio-intercept",
@@ -100,10 +129,11 @@
       "config": {
         "message": "...configure... inbound... port four-four-three... secure channel only... outbound... let everything out... repeat... four-four-three inbound... all outbound..."
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
-      "id": "slider-sg",
+      "id": "sg-config",
       "type": "terminal_lock",
       "card_ref": 130,
       "description": "Configure inbound port and outbound range for the Security Group",
@@ -119,11 +149,24 @@
           "wrong_answer": "RULE REJECTED. Invalid port value."
         }
       },
+      "challenge": {
+        "config": {
+          "follow_up": {
+            "prompt": "Enter outbound port (0 = all):",
+            "answer": "0",
+            "follow_up": {
+              "prompt": "Enter source CIDR (who can connect inbound):",
+              "answer": "0.0.0.0/0"
+            }
+          }
+        }
+      },
       "hints": [
         "You need info from three sources: the blueprint, the port card, and the speaker.",
         "The inbound port is for secure web traffic. The speaker says 'four-four-three'. Outbound is 'everything' = 0.",
         "Inbound Port: 443. Outbound Port: 0 (all)."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "keypad-vault",
@@ -139,7 +182,8 @@
         "Look carefully at the Archive Room description. The vault door keypad is visible.",
         "The keypad beside the vault door displays a faint sequence.",
         "The code is 7143 — shown on the keypad display next to the vault door."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "policy-lock",
@@ -150,16 +194,87 @@
       "config": {
         "template": "{\n  \"Effect\": \"___\",\n  \"Action\": \"___\",\n  \"Resource\": \"___\"\n}",
         "blanks": [
-          { "placeholder": "___", "answer": "Allow", "options": ["Allow", "Deny"] },
-          { "placeholder": "___", "answer": "ec2:CreateRoute", "options": ["ec2:CreateRoute", "ec2:DescribeInstances", "s3:GetObject", "iam:PassRole"] },
-          { "placeholder": "___", "answer": "arn:aws:ec2:*:*:route-table/*", "options": ["*", "arn:aws:ec2:*:*:route-table/*", "arn:aws:s3:::*", "arn:aws:ec2:*:*:instance/*"] }
+          {
+            "placeholder": "___",
+            "answer": "Allow",
+            "options": [
+              "Allow",
+              "Deny"
+            ]
+          },
+          {
+            "placeholder": "___",
+            "answer": "ec2:CreateRoute",
+            "options": [
+              "ec2:CreateRoute",
+              "ec2:DescribeInstances",
+              "s3:GetObject",
+              "iam:PassRole"
+            ]
+          },
+          {
+            "placeholder": "___",
+            "answer": "arn:aws:ec2:*:*:route-table/*",
+            "options": [
+              "*",
+              "arn:aws:ec2:*:*:route-table/*",
+              "arn:aws:s3:::*",
+              "arn:aws:ec2:*:*:instance/*"
+            ]
+          }
         ]
+      },
+      "challenge": {
+        "config": {
+          "template": "{\n  \"Effect\": \"___\",\n  \"Action\": \"___\",\n  \"Resource\": \"___\",\n  \"Condition\": { \"StringEquals\": { \"ec2:Vpc\": \"___\" } }\n}",
+          "blanks": [
+            {
+              "placeholder": "___",
+              "answer": "Allow",
+              "options": [
+                "Allow",
+                "Deny"
+              ]
+            },
+            {
+              "placeholder": "___",
+              "answer": "ec2:CreateRoute",
+              "options": [
+                "ec2:CreateRoute",
+                "ec2:DescribeInstances",
+                "s3:GetObject",
+                "iam:PassRole"
+              ]
+            },
+            {
+              "placeholder": "___",
+              "answer": "arn:aws:ec2:*:*:route-table/*",
+              "options": [
+                "*",
+                "arn:aws:ec2:*:*:route-table/*",
+                "arn:aws:s3:::*",
+                "arn:aws:ec2:*:*:instance/*"
+              ]
+            },
+            {
+              "placeholder": "___",
+              "answer": "vpc-0f8c3a",
+              "options": [
+                "vpc-0f8c3a",
+                "vpc-default",
+                "vpc-*",
+                "subnet-private-7a"
+              ]
+            }
+          ]
+        }
       },
       "hints": [
         "Read the policy console description — it tells you what the policy needs to authorize.",
         "You need to Allow creating a route to the gateway. The action is an EC2 action on route tables.",
         "Effect: Allow. Action: ec2:CreateRoute. Resource: arn:aws:ec2:*:*:route-table/*."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "nacl-sg-lock",
@@ -169,17 +284,90 @@
       "ui": "sg-lock",
       "config": {
         "rules": [
-          { "protocol": "TCP", "port": "443", "source": "0.0.0.0/0", "answer": "allow", "label": "#100 Inbound" },
-          { "protocol": "ALL", "port": "ALL", "source": "0.0.0.0/0", "answer": "deny", "label": "#200 Inbound" },
-          { "protocol": "TCP", "port": "1024-65535", "source": "0.0.0.0/0", "answer": "allow", "label": "#100 Outbound" },
-          { "protocol": "ALL", "port": "ALL", "source": "0.0.0.0/0", "answer": "deny", "label": "#200 Outbound" }
+          {
+            "protocol": "TCP",
+            "port": "443",
+            "source": "0.0.0.0/0",
+            "answer": "allow",
+            "label": "#100 Inbound"
+          },
+          {
+            "protocol": "ALL",
+            "port": "ALL",
+            "source": "0.0.0.0/0",
+            "answer": "deny",
+            "label": "#200 Inbound"
+          },
+          {
+            "protocol": "TCP",
+            "port": "1024-65535",
+            "source": "0.0.0.0/0",
+            "answer": "allow",
+            "label": "#100 Outbound"
+          },
+          {
+            "protocol": "ALL",
+            "port": "ALL",
+            "source": "0.0.0.0/0",
+            "answer": "deny",
+            "label": "#200 Outbound"
+          }
         ]
+      },
+      "challenge": {
+        "config": {
+          "rules": [
+            {
+              "protocol": "TCP",
+              "port": "443",
+              "source": "0.0.0.0/0",
+              "answer": "allow",
+              "label": "#100 Inbound"
+            },
+            {
+              "protocol": "TCP",
+              "port": "22",
+              "source": "0.0.0.0/0",
+              "answer": "deny",
+              "label": "#110 Inbound"
+            },
+            {
+              "protocol": "ALL",
+              "port": "ALL",
+              "source": "0.0.0.0/0",
+              "answer": "deny",
+              "label": "#200 Inbound"
+            },
+            {
+              "protocol": "TCP",
+              "port": "1024-65535",
+              "source": "0.0.0.0/0",
+              "answer": "allow",
+              "label": "#100 Outbound"
+            },
+            {
+              "protocol": "TCP",
+              "port": "443",
+              "source": "0.0.0.0/0",
+              "answer": "allow",
+              "label": "#110 Outbound"
+            },
+            {
+              "protocol": "ALL",
+              "port": "ALL",
+              "source": "0.0.0.0/0",
+              "answer": "deny",
+              "label": "#200 Outbound"
+            }
+          ]
+        }
       },
       "hints": [
         "Check the NACL Reference Sheet you picked up in the Policy Vault. It has the exact rules.",
         "Inbound: Allow TCP 443, then Deny ALL. Outbound: Allow TCP 1024-65535 (ephemeral ports), then Deny ALL.",
         "Toggle all four rules to match: Inbound 443=Allow, Inbound ALL=Deny, Outbound 1024-65535=Allow, Outbound ALL=Deny."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "wire-junction",
@@ -189,27 +377,139 @@
       "ui": "wire-lock",
       "config": {
         "wires": [
-          { "id": "red", "color": "#ef4444", "label": "Red" },
-          { "id": "blue", "color": "#3b82f6", "label": "Blue" },
-          { "id": "green", "color": "#22c55e", "label": "Green" },
-          { "id": "yellow", "color": "#eab308", "label": "Yellow" },
-          { "id": "grey", "color": "#7a8ba8", "label": "Grey" }
+          {
+            "id": "red",
+            "color": "#ef4444",
+            "label": "Red"
+          },
+          {
+            "id": "blue",
+            "color": "#3b82f6",
+            "label": "Blue"
+          },
+          {
+            "id": "green",
+            "color": "#22c55e",
+            "label": "Green"
+          },
+          {
+            "id": "yellow",
+            "color": "#eab308",
+            "label": "Yellow"
+          },
+          {
+            "id": "grey",
+            "color": "#7a8ba8",
+            "label": "Grey"
+          }
         ],
         "sockets": [
-          { "id": "power", "label": "Power Core" },
-          { "id": "data", "label": "Data Link" },
-          { "id": "signal", "label": "Signal Relay" },
-          { "id": "ground", "label": "Ground Loop" },
-          { "id": "backup", "label": "Backup (offline)" }
+          {
+            "id": "power",
+            "label": "Power Core"
+          },
+          {
+            "id": "data",
+            "label": "Data Link"
+          },
+          {
+            "id": "signal",
+            "label": "Signal Relay"
+          },
+          {
+            "id": "ground",
+            "label": "Ground Loop"
+          },
+          {
+            "id": "backup",
+            "label": "Backup (offline)"
+          }
         ],
-        "solution": { "red": "power", "blue": "data", "green": "signal", "yellow": "ground" },
-        "falseOutputs": ["Sparks! Wrong connection. Check the diagram.", "No power. The wiring doesn't match the diagram."]
+        "solution": {
+          "red": "power",
+          "blue": "data",
+          "green": "signal",
+          "yellow": "ground"
+        },
+        "falseOutputs": [
+          "Sparks! Wrong connection. Check the diagram.",
+          "No power. The wiring doesn't match the diagram."
+        ]
+      },
+      "challenge": {
+        "config": {
+          "wires": [
+            {
+              "id": "red",
+              "color": "#ef4444",
+              "label": "Red"
+            },
+            {
+              "id": "blue",
+              "color": "#3b82f6",
+              "label": "Blue"
+            },
+            {
+              "id": "green",
+              "color": "#22c55e",
+              "label": "Green"
+            },
+            {
+              "id": "yellow",
+              "color": "#eab308",
+              "label": "Yellow"
+            },
+            {
+              "id": "grey",
+              "color": "#7a8ba8",
+              "label": "Grey"
+            },
+            {
+              "id": "white",
+              "color": "#e0e6f0",
+              "label": "White"
+            }
+          ],
+          "sockets": [
+            {
+              "id": "power",
+              "label": "PWR-C"
+            },
+            {
+              "id": "data",
+              "label": "D-LNK"
+            },
+            {
+              "id": "signal",
+              "label": "SIG-R"
+            },
+            {
+              "id": "ground",
+              "label": "GND-L"
+            },
+            {
+              "id": "aux1",
+              "label": "AUX-1"
+            },
+            {
+              "id": "aux2",
+              "label": "AUX-2"
+            }
+          ],
+          "solution": {
+            "red": "power",
+            "blue": "data",
+            "green": "signal",
+            "yellow": "ground"
+          }
+        }
       },
       "hints": [
         "You've seen clues about these wires in earlier rooms. Think back — what color was connected to what?",
         "Spawn Room: red cable → Power Core. System Logs: blue → Data Link. Processing Chamber: green → Signal Relay. Network Diagram: yellow → Ground Loop.",
         "Red→Power Core, Blue→Data Link, Green→Signal Relay, Yellow→Ground Loop. Grey is a decoy — leave it unconnected."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "keypad-gateway",
@@ -220,18 +520,50 @@
       "mechanic": "cross_card_observation",
       "config": {
         "fields": [
-          { "label": "VPC ID", "answer": "vpc-0f8c3a", "source_hint": "System Logs (#101)" },
-          { "label": "Gateway ID", "answer": "igw-abc123", "source_hint": "Repaired Communicator (#115)" },
-          { "label": "Route CIDR", "answer": "10.0.1.0/24", "source_hint": "Network Diagram (#121)" }
+          {
+            "label": "VPC ID",
+            "answer": "vpc-0f8c3a",
+            "source_hint": "System Logs (#101)"
+          },
+          {
+            "label": "Gateway ID",
+            "answer": "igw-abc123",
+            "source_hint": "Repaired Communicator (#115)"
+          },
+          {
+            "label": "Route CIDR",
+            "answer": "10.0.1.0/24",
+            "source_hint": "Network Diagram (#121)"
+          }
         ],
         "case_sensitive": false,
         "all_required": true
+      },
+      "challenge": {
+        "config": {
+          "fields": [
+            {
+              "label": "VPC ID",
+              "answer": "vpc-0f8c3a"
+            },
+            {
+              "label": "Gateway ID",
+              "answer": "igw-abc123"
+            },
+            {
+              "label": "Route CIDR",
+              "answer": "10.0.1.0/24"
+            }
+          ]
+        }
       },
       "hints": [
         "The console needs three values. You've seen each one on a different card from your journey.",
         "VPC ID is in the system logs. Gateway ID is on the communicator. The route CIDR is on the network diagram.",
         "VPC ID: vpc-0f8c3a. Gateway ID: igw-abc123. Route CIDR: 10.0.1.0/24."
-      ]
+      ],
+      "mandatory": true,
+      "isFinal": true
     }
   ]
 }

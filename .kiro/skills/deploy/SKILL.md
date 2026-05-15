@@ -1,80 +1,115 @@
 ---
 name: deploy
-description: Guide for deploying the Unlock the Cloud app to the EC2 instance. Use when pushing updates or redeploying.
+description: Guide for deploying the Re:Solve app to S3 + CloudFront. Use when pushing updates or redeploying.
 ---
 
-# Deploy to EC2
+# Deploy to S3 + CloudFront
 
-## Current Environment
+## Architecture
 
-- **Instance:** i-040574f44ac216631 (t3.micro, Amazon Linux 2023)
-- **Region:** ap-southeast-1
-- **IP:** 18.138.232.101
-- **URL:** http://18.138.232.101/app/index.html
-- **S3 Staging:** s3://kuettai-ap-southeast-1-ssm/unlock-cloud/
-- **Web server:** nginx, files served from /usr/share/nginx/html/
-- **Access:** AWS Systems Manager (SSM) — no SSH, port 22 is closed
+- **S3 Bucket:** `kuettai-unlock-asset` (ap-southeast-1) — PRIVATE, no public access
+- **CloudFront:** `E2C30I0Z1TIG84` (`d37w3py52wsl8r.cloudfront.net`)
+- **Custom Domain:** `beta.re-solve.cloud` (CNAME → CloudFront)
+- **ACM Cert:** `arn:aws:acm:us-east-1:956288449190:certificate/6ae2153e-5e68-4c4b-9981-8e32a27f9ea4` (us-east-1)
+- **OAI:** EY9ZQ0C4X57N2 (bucket only accessible via CloudFront)
+- **URL:** https://beta.re-solve.cloud/app/home.html
+- **Root redirect:** `index.html` at bucket root redirects `/` → `/app/home.html` (preserves query params)
 
-## Deploy Process (SSM + S3)
-
-### Step 1: Sync code (non-asset files) to S3 staging
+## S3 Bucket Structure
 
 ```
-aws s3 sync app s3://kuettai-ap-southeast-1-ssm/unlock-cloud/app/ --delete --region ap-southeast-1
-aws s3 sync scenarios s3://kuettai-ap-southeast-1-ssm/unlock-cloud/scenarios/ --delete --exclude "*.png" --exclude "*.wav" --exclude "*.mp3" --exclude "*.svg" --region ap-southeast-1
+kuettai-unlock-asset/
+├── index.html              ← root redirect (JS-based, preserves ?game_id=)
+├── app/                    ← game engine, UI, puzzle components
+│   ├── home.html
+│   ├── home.js / home.css
+│   ├── index.html / index.js / index.css
+│   ├── engine.js
+│   ├── guide.html
+│   ├── puzzle/             ← all lock components
+│   └── tools/              ← in-game tools
+└── scenarios/              ← all episode data + assets
+    ├── categories.json
+    ├── aws/
+    │   ├── index.json
+    │   └── ep0-boot-sequence/ ... ep4-spec-architect/
+    └── bible-jesus-miracles/
 ```
 
-### Step 2: Pull code from S3 to nginx via SSM
+## Deploy Process
+
+### Step 1: Sync app code
 
 ```
-aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-040574f44ac216631" --parameters commands='["aws s3 sync s3://kuettai-ap-southeast-1-ssm/unlock-cloud/app/ /usr/share/nginx/html/app/ --delete --region ap-southeast-1 && aws s3 sync s3://kuettai-ap-southeast-1-ssm/unlock-cloud/scenarios/ /usr/share/nginx/html/scenarios/ --delete --exclude \"*.png\" --exclude \"*.wav\" --exclude \"*.mp3\" --exclude \"*.svg\" --region ap-southeast-1 && chmod -R 755 /usr/share/nginx/html/app /usr/share/nginx/html/scenarios"]' --region ap-southeast-1
+aws s3 sync app s3://kuettai-unlock-asset/app/ --delete --region ap-southeast-1
 ```
 
-### Step 3: Deploy assets to S3 (served via CloudFront)
-
-Only needed when assets change (new images, new voice files):
+### Step 2: Sync scenarios (JSON + assets + voice)
 
 ```
-aws s3 sync scenarios s3://kuettai-unlock-asset/scenarios/ --exclude "*" --include "*.png" --include "*.wav" --include "*.mp3" --include "*.svg" --region ap-southeast-1
+aws s3 sync scenarios s3://kuettai-unlock-asset/scenarios/ --region ap-southeast-1
 ```
 
-### Step 4: Check command status
+### Step 3: Invalidate CloudFront cache
 
 ```
-aws ssm get-command-invocation --command-id "<COMMAND_ID>" --instance-id "i-040574f44ac216631" --region ap-southeast-1
+aws cloudfront create-invalidation --distribution-id E2C30I0Z1TIG84 --paths "/app/*" --region us-east-1
 ```
 
-Wait for `"Status": "Success"`.
-
-### Step 5: Verify
-
-- Home page: http://18.138.232.101/app/home.html
-- Check new/changed episodes load correctly
-- Assets should load from CloudFront: https://d37w3py52wsl8r.cloudfront.net/
-
-## Asset Architecture
-
-- **Code/JSON** → S3 staging → SSM pull → nginx on EC2
-- **Assets (png/wav/mp3/svg)** → S3 `kuettai-unlock-asset` → CloudFront `d37w3py52wsl8r.cloudfront.net`
-- **CloudFront OAI:** EY9ZQ0C4X57N2 (bucket remains private, only CloudFront can read)
-- **Game engine** uses `ASSET_BASE` variable: local paths in dev, CloudFront URL in production
-
-## Run Commands via SSM
-
-To run any command on the instance (replaces SSH):
-
+For scenario changes only:
 ```
-aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-040574f44ac216631" --parameters commands='["<COMMAND>"]' --region ap-southeast-1
+aws cloudfront create-invalidation --distribution-id E2C30I0Z1TIG84 --paths "/scenarios/*" --region us-east-1
 ```
 
-Note: On Windows PowerShell, use double quotes for the outer string and escape inner quotes, or use a JSON file for parameters.
+### Step 4: Verify
+
+```
+curl -s -o /dev/null -w "%{http_code}" https://beta.re-solve.cloud/app/home.html
+```
+
+Should return `200`.
+
+## Image Workflow
+
+Before deploying new images:
+
+```
+python tools/resize_images.py
+```
+
+This resizes all PNGs to optimized sizes (respects portrait/landscape orientation):
+- Cover/ending: 576×1024 (portrait) or 1024×576 (landscape)
+- Room images: 768×432
+- Card images: 320×320
+
+## Voice Workflow
+
+Generate voice files for a scenario:
+
+```
+python tools/narrative_to_voice.py scenarios/<category>/<episode>
+```
+
+Output: `assets/voice/intro.wav`, `mid_event.wav`, `ending_success.wav`, `ending_failure.wav`
+
+## Quick Deploy (all-in-one)
+
+```
+python tools/resize_images.py
+aws s3 sync app s3://kuettai-unlock-asset/app/ --delete --region ap-southeast-1
+aws s3 sync scenarios s3://kuettai-unlock-asset/scenarios/ --region ap-southeast-1
+aws cloudfront create-invalidation --distribution-id E2C30I0Z1TIG84 --paths "/*" --region us-east-1
+```
+
+## Security Rules
+
+- **NEVER make the S3 bucket public.** All access goes through CloudFront OAI.
+- The bucket policy only allows `s3:GetObject` from CloudFront OAI `EY9ZQ0C4X57N2`.
+- ACM certificate must be in `us-east-1` for CloudFront.
 
 ## Notes
 
-- Port 22 (SSH) is disabled. All access is via SSM.
-- The .pem key file is no longer needed for deployment.
-- nginx serves static files only — no backend.
-- App loads scenarios from ../scenarios/<category>/<episode>/ relative to app/index.html.
-- Home page loads categories from ../scenarios/categories.json, then episodes from ../scenarios/<category>/index.json.
-- S3 staging bucket: `kuettai-ap-southeast-1-ssm` prefix `unlock-cloud/`
-- Instance IAM role `EpoxyChronicleInstanceRole` has read access to the S3 staging path.
+- No EC2, no ALB, no nginx. Pure static hosting.
+- Game engine uses relative paths (`../scenarios/`) which resolve correctly since both `/app/` and `/scenarios/` are on the same origin.
+- `ASSET_BASE` in the engine detects production (non-localhost) and uses the CloudFront URL for asset loading.
+- Root `index.html` uses JavaScript redirect to preserve `?game_id=` query params.

@@ -97,14 +97,124 @@
         ],
         "target": 5000,
         "tolerance": 0,
-        "showTally": false
+        "showTally": true
+      },
+      "challenge": {
+        "config": {
+          "clusters": [
+            {
+              "row": 0,
+              "col": 0,
+              "count": 820,
+              "icon": "👨‍👩‍👦"
+            },
+            {
+              "row": 0,
+              "col": 2,
+              "count": 430,
+              "icon": "👥"
+            },
+            {
+              "row": 0,
+              "col": 4,
+              "count": 610,
+              "icon": "👥"
+            },
+            {
+              "row": 0,
+              "col": 5,
+              "count": 270,
+              "icon": "👥"
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "count": 750,
+              "icon": "👨‍👩‍👦"
+            },
+            {
+              "row": 1,
+              "col": 3,
+              "count": 380,
+              "icon": "👥"
+            },
+            {
+              "row": 1,
+              "col": 5,
+              "count": 520,
+              "icon": "👥"
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "count": 190,
+              "icon": "👥"
+            },
+            {
+              "row": 2,
+              "col": 2,
+              "count": 860,
+              "icon": "👨‍👩‍👦"
+            },
+            {
+              "row": 2,
+              "col": 4,
+              "count": 340,
+              "icon": "👥"
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "count": 470,
+              "icon": "👥"
+            },
+            {
+              "row": 3,
+              "col": 3,
+              "count": 680,
+              "icon": "👨‍👩‍👦"
+            },
+            {
+              "row": 3,
+              "col": 5,
+              "count": 130,
+              "icon": "👥"
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "count": 560,
+              "icon": "👥"
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "count": 290,
+              "icon": "👨‍👩‍👦"
+            },
+            {
+              "row": 4,
+              "col": 4,
+              "count": 410,
+              "icon": "👥"
+            },
+            {
+              "row": 4,
+              "col": 5,
+              "count": 150,
+              "icon": "👥"
+            }
+          ],
+          "showTally": false
+        }
       },
       "success_card": 113,
       "hints": [
         "Count the men, as is custom. You need groups that add up to exactly 5,000.",
         "Try selecting the largest groups first, then fill in with smaller ones. 800 + 700 + 900 + 650 + 550 + 500 + 400 + 300 + 200 = ?",
         "Select: 800, 600, 700, 500, 900, 650, 550, 300 = 5,000."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "npc-families",
@@ -141,7 +251,8 @@
           }
         ]
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "npc-merchant",
@@ -169,7 +280,8 @@
         ],
         "state_lines": []
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "npc-judas",
@@ -197,7 +309,8 @@
         ],
         "state_lines": []
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "denarii-math",
@@ -209,9 +322,15 @@
         "solution": "400",
         "max_length": 3,
         "falseOutputs": {
-          "100": "That would only buy 200 loaves — enough for 600 people.",
-          "300": "Even 200 denarii is more than enough for 'a little.' You're overestimating.",
-          "30": "That's what Judas has in the bag. Not nearly enough."
+          "100": "That's not enough loaves. Remember: half a denarius per loaf, 200 denarii total.",
+          "200": "You're dividing wrong. A loaf costs HALF a denarius — so each denarius buys two.",
+          "1667": "That's how many loaves you NEED, not how many you can BUY."
+        }
+      },
+      "challenge": {
+        "description": "Based on what the merchant and Judas told you — how many loaves can you buy?",
+        "config": {
+          "falseOutputs": {}
         }
       },
       "success_card": 133,
@@ -219,7 +338,8 @@
         "The merchant told you the price. Judas told you the budget. Do the math.",
         "200 denarii divided by half a denarius per loaf...",
         "200 ÷ 0.5 = 400 loaves. But you need thousands — it's not enough."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "npc-andrew",
@@ -247,7 +367,8 @@
         ],
         "state_lines": []
       },
-      "hints": []
+      "hints": [],
+      "mandatory": false
     },
     {
       "id": "offering-table",
@@ -343,12 +464,117 @@
           }
         ]
       },
+      "challenge": {
+        "config": {
+          "items": [
+            {
+              "id": "l1",
+              "icon": "📦",
+              "label": "Crusty barley loaf",
+              "correct": true
+            },
+            {
+              "id": "l2",
+              "icon": "📦",
+              "label": "Flat barley bread",
+              "correct": true
+            },
+            {
+              "id": "l3",
+              "icon": "📦",
+              "label": "Round barley cake",
+              "correct": true
+            },
+            {
+              "id": "l4",
+              "icon": "📦",
+              "label": "Dense barley roll",
+              "correct": true
+            },
+            {
+              "id": "l5",
+              "icon": "📦",
+              "label": "Warm barley loaf",
+              "correct": true
+            },
+            {
+              "id": "f1",
+              "icon": "📦",
+              "label": "Dried Galilee fish",
+              "correct": true
+            },
+            {
+              "id": "f2",
+              "icon": "📦",
+              "label": "Pickled Galilee fish",
+              "correct": true
+            },
+            {
+              "id": "wheat1",
+              "icon": "📦",
+              "label": "Wheat loaf from Sepphoris",
+              "correct": false,
+              "response": "The boy's loaves were barley, not wheat."
+            },
+            {
+              "id": "wheat2",
+              "icon": "📦",
+              "label": "Fine wheat bread",
+              "correct": false,
+              "response": "This is wheat — the boy had barley."
+            },
+            {
+              "id": "f3",
+              "icon": "📦",
+              "label": "Salted fish from Tyre",
+              "correct": false,
+              "response": "This fish isn't from the boy's basket — it's from Tyre."
+            },
+            {
+              "id": "f4",
+              "icon": "📦",
+              "label": "Smoked fish from Capernaum",
+              "correct": false,
+              "response": "The boy's fish were from Galilee, dried — not smoked."
+            },
+            {
+              "id": "l6",
+              "icon": "📦",
+              "label": "Stale barley crust",
+              "correct": false,
+              "response": "The boy's loaves were fresh — his mother packed them this morning."
+            },
+            {
+              "id": "coins",
+              "icon": "📦",
+              "label": "Bag of coins",
+              "correct": false,
+              "response": "Money won't solve this."
+            },
+            {
+              "id": "water",
+              "icon": "📦",
+              "label": "Water skin",
+              "correct": false,
+              "response": "Water won't feed the hungry."
+            },
+            {
+              "id": "figs",
+              "icon": "📦",
+              "label": "A few dried figs",
+              "correct": false,
+              "response": "Not part of the boy's offering."
+            }
+          ]
+        }
+      },
       "success_card": 153,
       "hints": [
         "The boy has five barley loaves and two fish. Find exactly those items among the crowd's belongings.",
         "Look for the 🍞 and 🐟 icons. Ignore coins, water, cloth, and other distractors.",
         "Select all 5 loaves (🍞) and both fish (🐟). Leave everything else."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "crowd-seating",
@@ -400,12 +626,74 @@
           ]
         ]
       },
+      "challenge": {
+        "config": {
+          "cols": 6,
+          "rows": 6,
+          "target": 12,
+          "blocked": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              5,
+              4
+            ],
+            [
+              5,
+              5
+            ]
+          ]
+        }
+      },
       "success_card": 173,
       "hints": [
         "Place 12 groups on the hillside. No two groups can touch — leave paths between them.",
         "Red borders mean groups are too close. Try a checkerboard-like pattern around the rocks.",
         "Work from the corners inward. Each group needs empty space on all four sides."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "bread-break",
@@ -463,12 +751,20 @@
           5000
         ]
       },
+      "challenge": {
+        "config": {
+          "holdMin": 0.6,
+          "holdMax": 0.8,
+          "randomizeHold": true
+        }
+      },
       "success_card": 195,
       "hints": [
         "Hold each item — not too quick, not too long. Find the sweet spot in the green zone.",
         "Press and hold for about half a second to one second. Release when the bar is in the green.",
         "The counter shows how many are fed. Break all 7 items to reach 5,000+."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "hidden-baskets",
@@ -489,7 +785,8 @@
           "Think about the number of disciples."
         ]
       },
-      "success_card": 202
+      "success_card": 202,
+      "mandatory": true
     },
     {
       "id": "prophet-word",
@@ -502,12 +799,16 @@
         "max_length": 7,
         "case_sensitive": false
       },
+      "challenge": {
+        "description": "After the miracle, what title did the crowd give him?"
+      },
       "success_card": 218,
       "hints": [
         "After seeing the miracle, the crowd recognized Jesus as a figure foretold in Scripture.",
         "Moses promised that God would raise up someone like him. The crowd used that title.",
         "The answer is PROPHET. 'This is truly the prophet who comes into the world.' (John 6:14)"
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "hebrew-sign",
@@ -525,7 +826,8 @@
         "Remember the rock in Room 1? Hebrew letters were carved into it. The word means 'sign.'",
         "The Hebrew word for 'sign' is three letters: aleph, vav, tav. Hebrew reads right to left.",
         "Enter אות (aleph-vav-tav). Look at the Room 1 artwork for the visual clue."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "supply-run",
@@ -632,11 +934,18 @@
         ]
       },
       "success_card": 193,
+      "challenge": {
+        "config": {
+          "maxSteps": 25
+        }
+      },
       "hints": [
         "Visit each group (pulsing 👥) to deliver food, then return to ★.",
         "Your icon alternates between 🍞 and 🐟 at each stop. The basket never empties!",
         "Navigate efficiently — you have 30 forward steps. Turns are free."
-      ]
+      ],
+      "mandatory": true,
+      "isFinal": true
     }
   ]
 }

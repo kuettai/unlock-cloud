@@ -36,23 +36,20 @@ Fields:
 - `style_prefix` — default prefix for all card types.
 - `style_prefix_location` / `style_prefix_item` / `style_prefix_object` — type-specific overrides. The tool picks the prefix matching the card's `type` field, falling back to `style_prefix`.
 - `negative_prompt` — appended as "Do NOT include: ..." to the prompt.
-- `aspect_ratio` — mapped to OpenAI sizes: `16:9` → `1536x1024`, `9:16` → `1024x1536`, `1:1` → `1024x1024`.
+- `aspect_ratio` — mapped to OpenAI sizes: `16:9` → `1536x1024`, `9:16` → `1024x1536`, `1:1` → `1024x1024`. Images are auto-resized after generation to display-optimized sizes (768×432 for rooms, 320×320 for cards).
 
 If `image-style.json` is missing, defaults are used (generic game card art, 16:9).
 
 ## Image Resolution by Type
 
-When generating images manually (e.g. in ChatGPT), always include the target resolution in the prompt. Different card types need different sizes:
+All images generated manually via ChatGPT. Always include exact pixel size in the prompt.
 
-| Image Type | Resolution | Ratio | Notes |
-|---|---|---|---|
-| **Cover** (`cover.png`) | 1536×1024 | 16:9 | High-res, cinematic title screen |
-| **Ending Success** (`ending-success.png`) | 1536×1024 | 16:9 | High-res, triumphant scene |
-| **Ending Failure** (`ending-failure.png`) | 1536×1024 | 16:9 | High-res, melancholic scene |
-| **Location/Room** (`<room>.png`) | 1280×720 | 16:9 | Medium-res, wide environment |
-| **Object** (`card-<name>.png`) | 480×480 | 1:1 | Small, close-up interactive prop |
-| **Item** (`card-<name>.png`) | 480×480 | 1:1 | Small, clean icon-style collectible |
-| **NPC** (`card-<name>.png`) | 480×480 | 1:1 | Small, character portrait |
+| Image Type | Size | Prompt prefix |
+|---|---|---|
+| **Cover** | 1024×576 | "Generate a 1024x576 image:" |
+| **Ending** | 1024×576 | "Generate a 1024x576 image:" |
+| **Room** | 768×432 | "Generate a 768x432 image:" |
+| **Card** (item/object/NPC) | 320×320 | "Generate a 320x320 image:" |
 
 Always include the resolution in the prompt when generating manually. Example:
 > "Generate a 1280x720 image: Digital illustration, wide angle..."

@@ -1,0 +1,171 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 3300,
+      "message": "Pip: \"The sun's moving fast, Steward! We'd better get started.\"",
+      "type": "atmosphere",
+      "voice": "pip"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 2700,
+      "message": "King Aldric (messenger): \"How goes the preparation? The Queen is asking about the decorations.\"",
+      "type": "atmosphere",
+      "voice": "aldric"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 2100,
+      "message": "Greta sends word: \"If I don't have that menu soon, I'm serving PORRIDGE to the entire kingdom!\"",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-04",
+      "time_remaining": 1800,
+      "message": "MID-EVENT: Storm over the Bazaar. Merchants cover stalls — Bazaar locked for 2 minutes.",
+      "type": "lockout",
+      "locks_rooms": [600],
+      "triggers_narrative": "mid_event",
+      "voice": "pip"
+    },
+    {
+      "id": "TE-05",
+      "time_remaining": 1680,
+      "message": "Storm passes. Bazaar reopens. Pip: \"That was close! The merchants are back.\"",
+      "type": "unlock",
+      "unlocks_rooms": [600],
+      "voice": "pip"
+    },
+    {
+      "id": "TE-06",
+      "time_remaining": 1500,
+      "message": "Lord Ashford sends an angry messenger: \"If my stall isn't sorted by sundown, I'm boycotting the festival!\"",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-07",
+      "time_remaining": 900,
+      "message": "Sir Cedric sends word: \"The Proving Ground closes at dusk. If your Champion isn't ready, there'll be no rehearsal.\"",
+      "type": "alarm"
+    },
+    {
+      "id": "TE-08",
+      "time_remaining": 600,
+      "message": "The sun begins to set. Golden light across all rooms. Pip: \"Steward, we're running out of daylight!\"",
+      "type": "atmosphere",
+      "voice": "pip"
+    },
+    {
+      "id": "TE-09",
+      "time_remaining": 300,
+      "message": "Torches are lit. Festival-goers start arriving early. Pip: \"They're HERE! Are we ready?!\"",
+      "type": "urgency",
+      "voice": "pip"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "first-command-solved",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "first-command",
+      "result_card": 205,
+      "message": "The Soldier returns with the festival preparation schedule. Your first successful command!",
+      "type": "reveal"
+    },
+    {
+      "id": "gate-wired",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "gate-wiring",
+      "result_card": 504,
+      "message": "The conduits hum with energy. Gate Pass and Scout Badge earned.",
+      "awards_cards": [501, 505],
+      "type": "reveal"
+    },
+    {
+      "id": "ally-recruited",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "bazaar-recruit",
+      "result_card": 1201,
+      "message": "Ally recruited from the Bazaar! They're ready to help in the Kitchen.",
+      "awards_card": 605,
+      "type": "reveal"
+    },
+    {
+      "id": "menu-found",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "recipe-sort",
+      "result_card": 306,
+      "message": "Greta cheers — the feast menu is found! Roast pheasant, honeyed parsnips, elderflower wine!",
+      "type": "reveal"
+    },
+    {
+      "id": "trade-negotiated",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "negotiation",
+      "result_card": 1202,
+      "message": "Trade agreement signed! Ambassador Kael celebrates with a dance.",
+      "awards_card": 706,
+      "type": "reveal"
+    },
+    {
+      "id": "seal-written",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "kings-seal",
+      "result_card": 1203,
+      "message": "The King's Seal is written. Marshal rank earned. The Artificer can now book with authority.",
+      "awards_card": 806,
+      "type": "reveal"
+    },
+    {
+      "id": "performers-assigned",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "stage-assign",
+      "result_card": 809,
+      "message": "All performers assigned! Mistress Thornbury takes a dramatic bow.",
+      "type": "reveal"
+    },
+    {
+      "id": "timeline-reconstructed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "memory-timeline",
+      "result_card": 406,
+      "message": "Last year's festival layout reconstructed from memory crystals.",
+      "type": "reveal"
+    },
+    {
+      "id": "guardrails-configured",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "code-of-honor",
+      "result_card": 906,
+      "message": "Code of Honor configured. The Chronicler will be fair and factual.",
+      "type": "reveal"
+    },
+    {
+      "id": "stalls-designed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "stall-design",
+      "result_card": 1204,
+      "message": "Both nobles grudgingly satisfied. The stall designs are approved.",
+      "awards_card": 909,
+      "type": "reveal"
+    },
+    {
+      "id": "champion-assembled",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "champion-chain",
+      "result_card": 1008,
+      "message": "Champion assembled! Sir Cedric nods. Now run the rehearsal.",
+      "awards_card": 1009,
+      "type": "reveal"
+    },
+    {
+      "id": "festival-ready",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "rehearsal-path",
+      "result_card": 1010,
+      "message": "The Champion completes the rehearsal flawlessly. The festival is READY!",
+      "type": "ending"
+    }
+  ]
+}

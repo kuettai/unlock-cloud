@@ -1,0 +1,1573 @@
+{
+  "puzzles": [
+    {
+      "id": "npc-pip",
+      "type": "tool",
+      "card_ref": 2,
+      "description": "Pip — eager apprentice, tutorial guide",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Pip",
+        "portrait": "🧒",
+        "greeting": "Oh! You're the new architect! I'm Pip! I'll explain everything as we go.",
+        "lines": [
+          {
+            "label": "What's spec-driven development?",
+            "response": "Instead of just telling the golem 'build something cool,' you write exact specs first. Who uses it, what it does, why it matters. Then the golem builds exactly that."
+          },
+          {
+            "label": "What happened to Marcus?",
+            "response": "He was a vibe coder. Just told the golem to build stuff without specs. It worked... until it didn't. The client got a chat app when they wanted a social platform."
+          },
+          {
+            "label": "How does the golem work?",
+            "response": "It needs context — documents loaded into its memory. The right docs make it brilliant. Wrong docs make it build nonsense. And it has a memory limit!"
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 12,
+            "label": "The specs are done!",
+            "response": "The specs are done! Now we need to configure the golem's memory and connect it to external tools."
+          },
+          {
+            "requires_card": 52,
+            "label": "Architecture placed!",
+            "response": "Architecture placed! The golem is building. Now we test and deploy!"
+          },
+          {
+            "requires_card": 53,
+            "label": "How do we deploy?",
+            "response": "Oh! Marcus left a runbook. It's a two-phase thing: First, CDK deploys the infrastructure — Lambda, DynamoDB, API Gateway. Then you extract the API URL from the CDK output. Then rebuild the frontend WITH that URL baked in. Then push the static files to S3. Finally, invalidate the CloudFront cache so users get the fresh version. Five steps, that exact order, or it breaks!"
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-ashford",
+      "type": "tool",
+      "card_ref": 11,
+      "description": "Lord Ashford — demanding client",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Lord Ashford",
+        "portrait": "👑",
+        "greeting": "You're the new architect? Marcus promised me a social platform. I got a cat adoption site. Don't repeat his mistakes.",
+        "lines": [
+          {
+            "label": "What do you need?",
+            "response": "A social platform. Users post short messages. They follow each other. It works on mobile. It doesn't crash. Is that so hard?"
+          },
+          {
+            "label": "What went wrong with Marcus?",
+            "response": "He never asked what I wanted. Just started building. Three weeks later I had a beautiful app that did everything EXCEPT what I needed."
+          },
+          {
+            "label": "When's the demo?",
+            "response": "Forty minutes. If I don't see a working URL by then, I'm finding another guild."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-golem",
+      "type": "tool",
+      "card_ref": 4,
+      "description": "The Dormant Golem — explains what it needs to function",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "The Golem",
+        "portrait": "🤖",
+        "greeting": "*The golem's eyes flicker dimly.* I... I am here. But I cannot build. I have nothing. No specs. No memory. No connections.",
+        "lines": [
+          {
+            "label": "What do you need?",
+            "response": "Three things. First: specifications loaded into my memory — who uses this, what it does, why it matters. Second: my conduits reconnected to the external guilds — Testing, Diagrams, Documentation. Marcus severed them when he left."
+          },
+          {
+            "label": "What are conduits?",
+            "response": "Pipes to the outside world. The Testing Guild can verify my work. The Diagram Guild can visualize architecture. Without them, I build blind and can't prove anything works."
+          },
+          {
+            "label": "What happened with Marcus?",
+            "response": "He never gave me specs. Just said 'build something social.' I built a cat adoption site. Then a taco app. Then a circus booking system. Every time different. Every time wrong. He blamed me. But I was never the problem."
+          },
+          {
+            "label": "Can you build right now?",
+            "response": "*Static crackle.* No. My memory is empty. Load the right documents — requirements, design, tasks — and reconnect my conduits. Then I will build exactly what you specify. Not a character more."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 12,
+            "label": "I have the specs.",
+            "response": "*Eyes brighten.* I can feel them. Requirements. Design. Tasks. Now load them into my memory in the Workshop — and reconnect the conduits. Then we build."
+          },
+          {
+            "requires_card": 31,
+            "label": "Your memory is loaded. What now?",
+            "response": "*Eyes glow steady blue.* I'm ready. Go to the Build Yard and issue the command. Tell me to BUILD FROM DESIGN-SPECS — that's where my instructions live. Say it exactly."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "sort-priorities",
+      "type": "sort_lock",
+      "card_ref": 5,
+      "description": "Sort the development phases into correct order",
+      "ui": "sort-lock",
+      "config": {
+        "items": [
+          "Test",
+          "Deploy",
+          "Build",
+          "Design",
+          "Requirements"
+        ],
+        "answer": [
+          "Requirements",
+          "Design",
+          "Build",
+          "Test",
+          "Deploy"
+        ]
+      },
+      "hints": [
+        "What comes before you can build? You need to know WHAT to build.",
+        "Requirements first. Then design HOW. Then build. Then test. Then deploy.",
+        "Requirements → Design → Build → Test → Deploy"
+      ],
+      "challenge": {
+        "config": {
+          "items": [
+            "Deploy",
+            "Retest",
+            "Fix Bugs",
+            "Requirements",
+            "Build",
+            "Test",
+            "Design"
+          ],
+          "answer": [
+            "Requirements",
+            "Design",
+            "Build",
+            "Test",
+            "Fix Bugs",
+            "Retest",
+            "Deploy"
+          ]
+        }
+      },
+      "success_card": 5,
+      "mandatory": true
+    },
+    {
+      "id": "spec-requirements",
+      "type": "spec_lock",
+      "card_ref": 12,
+      "description": "Write structured specs from vague client requests",
+      "ui": "spec-lock",
+      "config": {
+        "rounds": [
+          {
+            "vibe": "make it social and posty, like twitter but cooler",
+            "golemChaos": [
+              "🐱 Built a cat adoption portal",
+              "📊 Created a spreadsheet of emotions",
+              "🎪 Deployed a circus booking system",
+              "🌮 Launched a taco delivery app"
+            ],
+            "spec": [
+              {
+                "label": "Who",
+                "prompt": "As a ___",
+                "answer": "registered user",
+                "options": [
+                  "registered user",
+                  "stray cat",
+                  "cloud server",
+                  "the void"
+                ]
+              },
+              {
+                "label": "What",
+                "prompt": "I want to ___",
+                "answer": "post 280-char messages",
+                "options": [
+                  "post 280-char messages",
+                  "feel things deeply",
+                  "deploy emotions to prod",
+                  "juggle microservices"
+                ]
+              },
+              {
+                "label": "Why",
+                "prompt": "So that ___",
+                "answer": "followers see my updates",
+                "options": [
+                  "followers see my updates",
+                  "cats are finally happy",
+                  "the servers feel loved",
+                  "chaos reigns eternal"
+                ]
+              }
+            ],
+            "correctScene": [
+              "👤 User profile",
+              "✍️ Post composer (280 chars)",
+              "📰 Chronological feed"
+            ]
+          },
+          {
+            "vibe": "let people stalk each other's profiles and stuff",
+            "golemChaos": [
+              "🕵️ Built a surveillance dashboard",
+              "📸 Created an AI face-tracker",
+              "🗺️ Deployed a GPS stalking app",
+              "👁️ Launched 'Big Brother as a Service'"
+            ],
+            "spec": [
+              {
+                "label": "Who",
+                "prompt": "As a ___",
+                "answer": "logged-in user",
+                "options": [
+                  "logged-in user",
+                  "private investigator",
+                  "government agent",
+                  "nosy neighbor"
+                ]
+              },
+              {
+                "label": "What",
+                "prompt": "I want to ___",
+                "answer": "follow other users",
+                "options": [
+                  "follow other users",
+                  "track their location",
+                  "read their emails",
+                  "hack their accounts"
+                ]
+              },
+              {
+                "label": "Why",
+                "prompt": "So that ___",
+                "answer": "their posts appear in my feed",
+                "options": [
+                  "their posts appear in my feed",
+                  "I know their secrets",
+                  "I can sell their data",
+                  "they feel watched"
+                ]
+              }
+            ],
+            "correctScene": [
+              "🔍 User search",
+              "➕ Follow button",
+              "📰 Personalized feed"
+            ]
+          },
+          {
+            "vibe": "make it work on phones and also don't crash when lots of people use it",
+            "golemChaos": [
+              "📱 Built an app that only works on Nokia 3310",
+              "🏋️ Deployed to a single Raspberry Pi",
+              "🐌 Added a 30-second loading spinner",
+              "💥 Crash handler that just says 'oops'"
+            ],
+            "spec": [
+              {
+                "label": "Who",
+                "prompt": "As a ___",
+                "answer": "mobile user",
+                "options": [
+                  "mobile user",
+                  "time traveler",
+                  "dial-up enthusiast",
+                  "server hamster"
+                ]
+              },
+              {
+                "label": "What",
+                "prompt": "I want ___",
+                "answer": "responsive UI under 3s load time",
+                "options": [
+                  "responsive UI under 3s load time",
+                  "a fax machine interface",
+                  "loading screens with ads",
+                  "the app to crash gracefully"
+                ]
+              },
+              {
+                "label": "Why",
+                "prompt": "So that ___",
+                "answer": "I can use the app anywhere reliably",
+                "options": [
+                  "I can use the app anywhere reliably",
+                  "my phone overheats",
+                  "I appreciate patience",
+                  "the hamster gets exercise"
+                ]
+              }
+            ],
+            "correctScene": [
+              "📱 Responsive layout",
+              "⚡ <3s page load",
+              "📈 Auto-scaling infra"
+            ]
+          }
+        ],
+        "falseOutputs": [
+          "The golem builds a cat meme generator. Not quite.",
+          "Spec unclear — golem is deploying feelings to production.",
+          "The golem stares at you. 'I still don't understand.'",
+          "Wrong spec! The golem starts building a surveillance tool."
+        ]
+      },
+      "hints": [
+        "Each round has a vague request. Break it into WHO uses it, WHAT it does, and WHY it matters.",
+        "Round 1: 'social and posty' means posting messages. Round 2: 'stalk' means following users. Round 3: 'phones and not crash' means responsive + reliable.",
+        "R1: registered user / post 280-char messages / followers see updates. R2: logged-in user / follow others / posts in feed. R3: mobile user / responsive <3s / use anywhere reliably."
+      ],
+      "challenge": {
+        "config": {
+          "skipChaos": true,
+          "rounds": [
+            {
+              "vibe": "make it social and posty, like twitter but cooler",
+              "golemChaos": [
+                "🐱 Built a cat adoption portal",
+                "📊 Created a spreadsheet of emotions",
+                "🎪 Deployed a circus booking system",
+                "🌮 Launched a taco delivery app"
+              ],
+              "spec": [
+                {
+                  "label": "Who",
+                  "prompt": "As a ___",
+                  "answer": "registered user",
+                  "options": [
+                    "registered user",
+                    "stray cat",
+                    "cloud server",
+                    "the void"
+                  ]
+                },
+                {
+                  "label": "What",
+                  "prompt": "I want to ___",
+                  "answer": "post 280-char messages",
+                  "options": [
+                    "post 280-char messages",
+                    "feel things deeply",
+                    "deploy emotions to prod",
+                    "juggle microservices"
+                  ]
+                },
+                {
+                  "label": "Why",
+                  "prompt": "So that ___",
+                  "answer": "followers see my updates",
+                  "options": [
+                    "followers see my updates",
+                    "cats are finally happy",
+                    "the servers feel loved",
+                    "chaos reigns eternal"
+                  ]
+                }
+              ],
+              "correctScene": [
+                "👤 User profile",
+                "✍️ Post composer (280 chars)",
+                "📰 Chronological feed"
+              ]
+            },
+            {
+              "vibe": "let people stalk each other's profiles and stuff",
+              "golemChaos": [
+                "🕵️ Built a surveillance dashboard",
+                "📸 Created an AI face-tracker",
+                "🗺️ Deployed a GPS stalking app",
+                "👁️ Launched 'Big Brother as a Service'"
+              ],
+              "spec": [
+                {
+                  "label": "Who",
+                  "prompt": "As a ___",
+                  "answer": "logged-in user",
+                  "options": [
+                    "logged-in user",
+                    "private investigator",
+                    "government agent",
+                    "nosy neighbor"
+                  ]
+                },
+                {
+                  "label": "What",
+                  "prompt": "I want to ___",
+                  "answer": "follow other users",
+                  "options": [
+                    "follow other users",
+                    "track their location",
+                    "read their emails",
+                    "hack their accounts"
+                  ]
+                },
+                {
+                  "label": "Why",
+                  "prompt": "So that ___",
+                  "answer": "their posts appear in my feed",
+                  "options": [
+                    "their posts appear in my feed",
+                    "I know their secrets",
+                    "I can sell their data",
+                    "they feel watched"
+                  ]
+                }
+              ],
+              "correctScene": [
+                "🔍 User search",
+                "➕ Follow button",
+                "📰 Personalized feed"
+              ]
+            },
+            {
+              "vibe": "make it work on phones and also don't crash when lots of people use it",
+              "golemChaos": [
+                "📱 Built an app that only works on Nokia 3310",
+                "🏋️ Deployed to a single Raspberry Pi",
+                "🐌 Added a 30-second loading spinner",
+                "💥 Crash handler that just says 'oops'"
+              ],
+              "spec": [
+                {
+                  "label": "Who",
+                  "prompt": "As a ___",
+                  "answer": "mobile user",
+                  "options": [
+                    "mobile user",
+                    "time traveler",
+                    "dial-up enthusiast",
+                    "server hamster"
+                  ]
+                },
+                {
+                  "label": "What",
+                  "prompt": "I want ___",
+                  "answer": "responsive UI under 3s load time",
+                  "options": [
+                    "responsive UI under 3s load time",
+                    "a fax machine interface",
+                    "loading screens with ads",
+                    "the app to crash gracefully"
+                  ]
+                },
+                {
+                  "label": "Why",
+                  "prompt": "So that ___",
+                  "answer": "I can use the app anywhere reliably",
+                  "options": [
+                    "I can use the app anywhere reliably",
+                    "my phone overheats",
+                    "I appreciate patience",
+                    "the hamster gets exercise"
+                  ]
+                }
+              ],
+              "correctScene": [
+                "📱 Responsive layout",
+                "⚡ <3s page load",
+                "📈 Auto-scaling infra"
+              ]
+            },
+            {
+              "vibe": "add some security stuff idk",
+              "golemChaos": [
+                "🔓 Built a padlock shop",
+                "🏰 Deployed a medieval fortress simulator",
+                "🕵️ Created a spy recruitment app",
+                "🔐 Launched a password tattoo service"
+              ],
+              "spec": [
+                {
+                  "label": "Who",
+                  "prompt": "As a ___",
+                  "answer": "platform operator",
+                  "options": [
+                    "platform operator",
+                    "medieval knight",
+                    "secret agent",
+                    "locksmith"
+                  ]
+                },
+                {
+                  "label": "What",
+                  "prompt": "I want ___",
+                  "answer": "HTTPS and input validation",
+                  "options": [
+                    "HTTPS and input validation",
+                    "a moat around the server",
+                    "invisible ink encryption",
+                    "guard dogs in the data center"
+                  ]
+                },
+                {
+                  "label": "Why",
+                  "prompt": "So that ___",
+                  "answer": "user data is protected from attacks",
+                  "options": [
+                    "user data is protected from attacks",
+                    "hackers feel intimidated",
+                    "the castle looks cool",
+                    "nobody can find the server"
+                  ]
+                }
+              ],
+              "correctScene": [
+                "🔒 HTTPS everywhere",
+                "🛡️ Input sanitization",
+                "🚫 SQL injection blocked"
+              ]
+            }
+          ]
+        }
+      },
+      "success_card": 12,
+      "mandatory": true
+    },
+    {
+      "id": "context-memory",
+      "type": "context_lock",
+      "card_ref": 31,
+      "description": "Debug the golem's memory — load correct docs, reject poisoned ones",
+      "ui": "context-lock",
+      "config": {
+        "documents": [
+          {
+            "id": "req",
+            "label": "requirements.md",
+            "icon": "📋",
+            "desc": "Current sprint requirements (updated Monday)",
+            "tokens": 500,
+            "status": "required",
+            "poisonLine": null,
+            "missingLine": "What am I building? No requirements found..."
+          },
+          {
+            "id": "old-req",
+            "label": "requirements-v1.md",
+            "icon": "📋",
+            "desc": "Original requirements draft (from kickoff)",
+            "tokens": 450,
+            "status": "poison",
+            "poisonLine": "Building chat feature + admin panel... wait, were those cut?"
+          },
+          {
+            "id": "design",
+            "label": "design.md",
+            "icon": "🏗️",
+            "desc": "Technical architecture — React, Lambda, DynamoDB",
+            "tokens": 800,
+            "status": "required",
+            "poisonLine": null,
+            "missingLine": "No architecture doc. Guessing the tech stack..."
+          },
+          {
+            "id": "marcus-design",
+            "label": "design-marcus.md",
+            "icon": "🏗️",
+            "desc": "Architecture notes (Marcus, former lead)",
+            "tokens": 750,
+            "status": "poison",
+            "poisonLine": "Using Express + MongoDB... conflicting with Lambda + DynamoDB!"
+          },
+          {
+            "id": "tasks",
+            "label": "tasks.md",
+            "icon": "✅",
+            "desc": "Implementation checklist with sub-tasks",
+            "tokens": 600,
+            "status": "required",
+            "poisonLine": null,
+            "missingLine": "No task order. Building random features in random order..."
+          },
+          {
+            "id": "changelog",
+            "label": "CHANGELOG.md",
+            "icon": "📝",
+            "desc": "Version history and release notes",
+            "tokens": 200,
+            "status": "safe",
+            "poisonLine": null
+          },
+          {
+            "id": "readme",
+            "label": "README.md",
+            "icon": "📖",
+            "desc": "Project overview and setup instructions",
+            "tokens": 150,
+            "status": "safe",
+            "poisonLine": null
+          },
+          {
+            "id": "meeting",
+            "label": "meeting-notes.md",
+            "icon": "🗒️",
+            "desc": "Brainstorm session notes (unfiltered ideas)",
+            "tokens": 400,
+            "status": "poison",
+            "poisonLine": "Adding blockchain integration and AR mode... is this real?"
+          }
+        ],
+        "capacity": 2000
+      },
+      "hints": [
+        "The golem has a 2000-token memory limit. You need the three core spec documents — requirements, design, and tasks.",
+        "Watch for poisoned docs — old versions and Marcus's files will confuse the golem. Look for '-v1' and '-marcus' suffixes.",
+        "Load: requirements.md (500) + design.md (800) + tasks.md (600) = 1900 tokens. Reject requirements-v1, design-marcus, and meeting-notes."
+      ],
+      "challenge": {
+        "config": {
+          "capacity": 1800,
+          "documents": [
+            {
+              "id": "req",
+              "label": "requirements.md",
+              "icon": "📋",
+              "desc": "Project requirements",
+              "tokens": 450,
+              "status": "required",
+              "poisonLine": null,
+              "missingLine": "What am I building? No requirements found..."
+            },
+            {
+              "id": "old-req",
+              "label": "requirements-v1.md",
+              "icon": "📋",
+              "desc": "Requirements draft",
+              "tokens": 400,
+              "status": "poison",
+              "poisonLine": "Building chat feature + admin panel... wait, were those cut?"
+            },
+            {
+              "id": "design",
+              "label": "design.md",
+              "icon": "🏗️",
+              "desc": "Technical design",
+              "tokens": 750,
+              "status": "required",
+              "poisonLine": null,
+              "missingLine": "No architecture doc. Guessing the tech stack..."
+            },
+            {
+              "id": "marcus-design",
+              "label": "design-marcus.md",
+              "icon": "🏗️",
+              "desc": "Architecture notes",
+              "tokens": 700,
+              "status": "poison",
+              "poisonLine": "Using Express + MongoDB... conflicting with Lambda + DynamoDB!"
+            },
+            {
+              "id": "tasks",
+              "label": "tasks.md",
+              "icon": "✅",
+              "desc": "Implementation checklist",
+              "tokens": 550,
+              "status": "required",
+              "poisonLine": null,
+              "missingLine": "No task order. Building random features in random order..."
+            },
+            {
+              "id": "changelog",
+              "label": "CHANGELOG.md",
+              "icon": "📝",
+              "desc": "Version history",
+              "tokens": 200,
+              "status": "safe",
+              "poisonLine": null
+            },
+            {
+              "id": "readme",
+              "label": "README.md",
+              "icon": "📖",
+              "desc": "Project overview",
+              "tokens": 150,
+              "status": "safe",
+              "poisonLine": null
+            },
+            {
+              "id": "meeting",
+              "label": "meeting-notes.md",
+              "icon": "🗒️",
+              "desc": "Brainstorm notes",
+              "tokens": 400,
+              "status": "poison",
+              "poisonLine": "Adding blockchain integration and AR mode... is this real?"
+            }
+          ]
+        }
+      },
+      "success_card": 31,
+      "mandatory": true
+    },
+    {
+      "id": "wire-mcp",
+      "type": "wire_lock",
+      "card_ref": 32,
+      "description": "Connect 3 MCP conduits to the correct external tool endpoints",
+      "ui": "wire-lock",
+      "config": {
+        "wires": [
+          {
+            "id": "testing",
+            "color": "#ef4444",
+            "label": "Testing Guild"
+          },
+          {
+            "id": "diagram",
+            "color": "#3b82f6",
+            "label": "Diagram Guild"
+          },
+          {
+            "id": "docs",
+            "color": "#22c55e",
+            "label": "Documentation Guild"
+          }
+        ],
+        "sockets": [
+          {
+            "id": "playwright",
+            "label": "Playwright Server"
+          },
+          {
+            "id": "awsdiagram",
+            "label": "AWS Diagram Server"
+          },
+          {
+            "id": "awsdocs",
+            "label": "AWS Docs Server"
+          },
+          {
+            "id": "weather",
+            "label": "Weather Oracle"
+          },
+          {
+            "id": "bard",
+            "label": "Bard's Archive"
+          },
+          {
+            "id": "courier",
+            "label": "Courier Network"
+          }
+        ],
+        "solution": {
+          "testing": "playwright",
+          "diagram": "awsdiagram",
+          "docs": "awsdocs"
+        },
+        "falseOutputs": [
+          "The testing conduit now connects to the weather. Your tests predict rain.",
+          "The diagram guild is receiving poetry instead of architecture.",
+          "Connection refused. Wrong endpoint."
+        ]
+      },
+      "hints": [
+        "Each guild needs its matching tool. Testing uses Playwright, diagrams use AWS Diagram, docs use AWS Docs.",
+        "Ignore the Weather Oracle, Bard's Archive, and Courier Network — those are decoys.",
+        "Testing Guild → Playwright Server, Diagram Guild → AWS Diagram Server, Documentation Guild → AWS Docs Server."
+      ],
+      "challenge": {
+        "config": {
+          "wires": [
+            {
+              "id": "testing",
+              "color": "#22c55e",
+              "label": "Testing"
+            },
+            {
+              "id": "diagram",
+              "color": "#3b82f6",
+              "label": "Diagrams"
+            },
+            {
+              "id": "docs",
+              "color": "#eab308",
+              "label": "Docs"
+            },
+            {
+              "id": "monitoring",
+              "color": "#a855f7",
+              "label": "Monitoring"
+            },
+            {
+              "id": "deploy",
+              "color": "#ef4444",
+              "label": "Deploy"
+            }
+          ],
+          "sockets": [
+            {
+              "id": "playwright",
+              "label": "Playwright"
+            },
+            {
+              "id": "aws-diagram",
+              "label": "AWS Diagram"
+            },
+            {
+              "id": "aws-docs",
+              "label": "AWS Docs"
+            },
+            {
+              "id": "weather",
+              "label": "Weather Oracle"
+            },
+            {
+              "id": "bard",
+              "label": "Bard Archive"
+            },
+            {
+              "id": "courier",
+              "label": "Courier"
+            },
+            {
+              "id": "cloudwatch",
+              "label": "CloudWatch"
+            },
+            {
+              "id": "codepipeline",
+              "label": "CodePipeline"
+            }
+          ],
+          "solution": {
+            "testing": "playwright",
+            "diagram": "aws-diagram",
+            "docs": "aws-docs",
+            "monitoring": "cloudwatch",
+            "deploy": "codepipeline"
+          }
+        }
+      },
+      "success_card": 32,
+      "mandatory": true
+    },
+    {
+      "id": "pipe-junction",
+      "type": "pipe_lock",
+      "card_ref": 33,
+      "description": "Rotate pipe segments to connect Kiro CLI to External Tool through MCP Server",
+      "ui": "pipe-lock",
+      "config": {
+        "cols": 4,
+        "rows": 3,
+        "pipes": [
+          "┌",
+          "─",
+          "┐",
+          " ",
+          "│",
+          " ",
+          "│",
+          " ",
+          "└",
+          "─",
+          "─",
+          "┘"
+        ],
+        "source": {
+          "col": 0,
+          "row": 0
+        },
+        "sink": {
+          "col": 3,
+          "row": 2
+        }
+      },
+      "hints": [
+        "The pipe must flow from Kiro CLI on the left to External Tool on the right. Rotate segments to connect them.",
+        "Look for the path through the middle row — it's the most direct route through the MCP Server.",
+        "Connect left→right through row 1. Rotate each segment until the pipe forms a continuous path."
+      ],
+      "success_card": 33,
+      "mandatory": true
+    },
+    {
+      "id": "terminal-build",
+      "type": "terminal_lock",
+      "card_ref": 51,
+      "description": "Issue the first build command to the golem",
+      "ui": "terminal-lock",
+      "config": {
+        "prompt": "architect@guild:~$ kiro",
+        "answer": "build from design-specs",
+        "accept_variations": [
+          "build from design-specs/",
+          "build using design-specs",
+          "build from ./design-specs"
+        ],
+        "history": [
+          "[Golem Workshop — Golem Active]",
+          "Golem: \"Ready. What should I build from?\""
+        ],
+        "falseOutputs": [
+          "The golem builds a random todo app. Be specific — tell it WHERE the specs are.",
+          "Golem: 'Build what? I need a source.'",
+          "Pip: 'Tell it to build FROM the design-specs!'"
+        ]
+      },
+      "hints": [
+        "The golem needs to know WHERE to find the specs. They're in the design-specs directory.",
+        "Use the 'build' command and point it at the specs location.",
+        "Type: build from design-specs"
+      ],
+      "challenge": {
+        "config": {
+          "accept_variations": [],
+          "falseOutputs": [
+            "Command not recognized.",
+            "Invalid syntax.",
+            "Try again."
+          ],
+          "hints": [
+            "The golem needs a command.",
+            "Think about what to build from.",
+            "Exact syntax matters."
+          ]
+        }
+      },
+      "success_card": 51,
+      "mandatory": true
+    },
+    {
+      "id": "blueprint-arch",
+      "type": "blueprint_lock",
+      "card_ref": 52,
+      "description": "Place 8 components on the correct architecture layers",
+      "ui": "blueprint-lock",
+      "config": {
+        "layers": [
+          {
+            "id": "presentation",
+            "label": "Presentation",
+            "icon": "🖥️",
+            "color": "#22c55e"
+          },
+          {
+            "id": "application",
+            "label": "Application",
+            "icon": "⚙️",
+            "color": "#3b82f6"
+          },
+          {
+            "id": "data",
+            "label": "Data",
+            "icon": "🗄️",
+            "color": "#8b5cf6"
+          },
+          {
+            "id": "infrastructure",
+            "label": "Infrastructure",
+            "icon": "☁️",
+            "color": "#6366f1"
+          }
+        ],
+        "components": [
+          {
+            "id": "react",
+            "label": "React+Next.js",
+            "layer": "presentation",
+            "hint": "Frontend framework — what users see"
+          },
+          {
+            "id": "cloudfront",
+            "label": "CloudFront CDN",
+            "layer": "presentation",
+            "hint": "Content delivery — serves static assets"
+          },
+          {
+            "id": "lambda",
+            "label": "Lambda Functions",
+            "layer": "application",
+            "hint": "Serverless compute — runs business logic"
+          },
+          {
+            "id": "apiroutes",
+            "label": "API Routes",
+            "layer": "application",
+            "hint": "HTTP endpoints — handles requests"
+          },
+          {
+            "id": "dynamodb",
+            "label": "DynamoDB",
+            "layer": "data",
+            "hint": "NoSQL database — stores posts and users"
+          },
+          {
+            "id": "sqlite",
+            "label": "SQLite",
+            "layer": "data",
+            "hint": "Local database — Marcus's old choice (wrong for production)"
+          },
+          {
+            "id": "cdk",
+            "label": "CDK Stack",
+            "layer": "infrastructure",
+            "hint": "Infrastructure as code — defines all AWS resources"
+          },
+          {
+            "id": "iam",
+            "label": "IAM Roles",
+            "layer": "infrastructure",
+            "hint": "Permissions — controls who can do what"
+          }
+        ],
+        "falseOutputs": {
+          "presentation": "That component doesn't belong in the presentation layer — it's not user-facing.",
+          "application": "Not application logic — think about where this actually runs.",
+          "data": "This isn't a data store. Try another layer.",
+          "infrastructure": "This isn't infrastructure — it runs on top of infrastructure."
+        }
+      },
+      "hints": [
+        "Presentation = what users see. Application = business logic. Data = storage. Infrastructure = AWS resources.",
+        "React and CloudFront are presentation. Lambda and API Routes are application. DynamoDB and SQLite are data. CDK and IAM are infrastructure.",
+        "Place: Presentation(React, CloudFront), Application(Lambda, API Routes), Data(DynamoDB, SQLite), Infrastructure(CDK, IAM)."
+      ],
+      "challenge": {
+        "config": {
+          "components": [
+            {
+              "id": "react",
+              "label": "React+Next.js",
+              "layer": "presentation",
+              "hint": ""
+            },
+            {
+              "id": "cloudfront",
+              "label": "CloudFront CDN",
+              "layer": "presentation",
+              "hint": ""
+            },
+            {
+              "id": "lambda",
+              "label": "Lambda Functions",
+              "layer": "application",
+              "hint": ""
+            },
+            {
+              "id": "apiroutes",
+              "label": "API Routes",
+              "layer": "application",
+              "hint": ""
+            },
+            {
+              "id": "dynamodb",
+              "label": "DynamoDB",
+              "layer": "data",
+              "hint": ""
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite",
+              "layer": "data",
+              "hint": ""
+            },
+            {
+              "id": "cdk",
+              "label": "CDK Stack",
+              "layer": "infrastructure",
+              "hint": ""
+            },
+            {
+              "id": "iam",
+              "label": "IAM Roles",
+              "layer": "infrastructure",
+              "hint": ""
+            }
+          ],
+          "falseOutputs": {
+            "presentation": "Wrong layer. Try again.",
+            "application": "Wrong layer. Try again.",
+            "data": "Wrong layer. Try again.",
+            "infrastructure": "Wrong layer. Try again."
+          }
+        }
+      },
+      "success_card": 52,
+      "mandatory": true
+    },
+    {
+      "id": "path-codebase",
+      "type": "path_lock",
+      "card_ref": 53,
+      "description": "Navigate the project structure to find the deployment config",
+      "ui": "path-lock",
+      "config": {
+        "nodes": [
+          {
+            "id": "root",
+            "label": "root",
+            "x": 50,
+            "y": 5
+          },
+          {
+            "id": "src",
+            "label": "src/",
+            "x": 25,
+            "y": 25
+          },
+          {
+            "id": "infra",
+            "label": "infra/",
+            "x": 75,
+            "y": 25
+          },
+          {
+            "id": "components",
+            "label": "components/",
+            "x": 10,
+            "y": 50
+          },
+          {
+            "id": "pages",
+            "label": "pages/",
+            "x": 25,
+            "y": 50
+          },
+          {
+            "id": "api",
+            "label": "api/",
+            "x": 40,
+            "y": 50
+          },
+          {
+            "id": "lib",
+            "label": "lib/",
+            "x": 55,
+            "y": 50
+          },
+          {
+            "id": "cdk-stack",
+            "label": "cdk-stack.ts",
+            "x": 75,
+            "y": 50
+          }
+        ],
+        "edges": [
+          [
+            "root",
+            "src"
+          ],
+          [
+            "root",
+            "infra"
+          ],
+          [
+            "src",
+            "components"
+          ],
+          [
+            "src",
+            "pages"
+          ],
+          [
+            "src",
+            "api"
+          ],
+          [
+            "src",
+            "lib"
+          ],
+          [
+            "infra",
+            "cdk-stack"
+          ]
+        ],
+        "answer": [
+          "root",
+          "infra",
+          "cdk-stack"
+        ]
+      },
+      "hints": [
+        "You need the deployment config. That's infrastructure, not source code.",
+        "The deployment config is the CDK stack — it lives in the infra/ directory.",
+        "Path: root → infra → cdk-stack.ts"
+      ],
+      "success_card": 53,
+      "mandatory": true
+    },
+    {
+      "id": "match-tests",
+      "type": "match_lock",
+      "card_ref": 71,
+      "description": "Match each Playwright test assertion to what it verifies",
+      "ui": "match-lock",
+      "config": {
+        "pairs": [
+          [
+            "expect(page).toHaveURL('/feed')",
+            "User reached the feed page"
+          ],
+          [
+            "expect(post).toBeVisible()",
+            "New post appears in timeline"
+          ],
+          [
+            "expect(followers).toContainText('1')",
+            "Follow count updated"
+          ],
+          [
+            "expect(input).toHaveAttribute('maxlength','280')",
+            "Character limit enforced"
+          ]
+        ],
+        "cols": 4
+      },
+      "hints": [
+        "Flip cards to find pairs. Each Playwright assertion matches the feature it tests.",
+        "toHaveURL checks navigation. toBeVisible checks rendering. toContainText checks content. toHaveAttribute checks constraints.",
+        "Pairs: toHaveURL↔feed page, toBeVisible↔post appears, toContainText↔follow count, toHaveAttribute↔char limit."
+      ],
+      "challenge": {
+        "config": {
+          "pairs": [
+            [
+              "expect(page).toHaveURL('/feed')",
+              "User reached the feed page"
+            ],
+            [
+              "expect(post).toBeVisible()",
+              "New post appears in timeline"
+            ],
+            [
+              "expect(followers).toContainText('1')",
+              "Follow count updated"
+            ],
+            [
+              "expect(input).toHaveAttribute('maxlength','280')",
+              "Character limit enforced"
+            ],
+            [
+              "await page.click(\"#follow\")",
+              "Follow button works"
+            ],
+            [
+              "expect(toast).toBeVisible()",
+              "Success notification shown"
+            ]
+          ],
+          "cols": 4
+        }
+      },
+      "success_card": 71,
+      "mandatory": true
+    },
+    {
+      "id": "timeline-deploy",
+      "type": "timeline_lock",
+      "card_ref": 72,
+      "description": "Order the two-phase deployment steps correctly",
+      "ui": "timeline-lock",
+      "config": {
+        "events": [
+          {
+            "id": "cdk",
+            "label": "CDK deploy infrastructure (Lambda + DynamoDB + API Gateway)",
+            "time": "Phase 1"
+          },
+          {
+            "id": "extract",
+            "label": "Extract API Gateway URL from CDK output",
+            "time": "Phase 1"
+          },
+          {
+            "id": "rebuild",
+            "label": "Rebuild frontend with real API URL",
+            "time": "Phase 2"
+          },
+          {
+            "id": "s3",
+            "label": "Deploy static assets to S3",
+            "time": "Phase 2"
+          },
+          {
+            "id": "invalidate",
+            "label": "Invalidate CloudFront cache",
+            "time": "Phase 2"
+          }
+        ],
+        "answer": [
+          "cdk",
+          "extract",
+          "rebuild",
+          "s3",
+          "invalidate"
+        ]
+      },
+      "hints": [
+        "The frontend needs the API URL — which only exists AFTER the backend deploys. Phase 1 is backend, Phase 2 is frontend.",
+        "First deploy infrastructure, then get the URL it produces, then build frontend with that URL, then deploy frontend, then clear cache.",
+        "Order: CDK deploy → Extract URL → Rebuild frontend → Deploy to S3 → Invalidate CloudFront"
+      ],
+      "challenge": {
+        "config": {
+          "events": [
+            {
+              "id": "test",
+              "label": "Run integration tests",
+              "time": "Phase 0"
+            },
+            {
+              "id": "cdk",
+              "label": "CDK deploy infrastructure",
+              "time": "Phase 1"
+            },
+            {
+              "id": "extract",
+              "label": "Extract API Gateway URL",
+              "time": "Phase 1"
+            },
+            {
+              "id": "tag",
+              "label": "Tag release version",
+              "time": "Phase 1"
+            },
+            {
+              "id": "rebuild",
+              "label": "Rebuild frontend with real API URL",
+              "time": "Phase 2"
+            },
+            {
+              "id": "s3",
+              "label": "Deploy static assets to S3",
+              "time": "Phase 2"
+            },
+            {
+              "id": "invalidate",
+              "label": "Invalidate CloudFront cache",
+              "time": "Phase 2"
+            }
+          ],
+          "answer": [
+            "test",
+            "cdk",
+            "extract",
+            "tag",
+            "rebuild",
+            "s3",
+            "invalidate"
+          ]
+        }
+      },
+      "success_card": 72,
+      "mandatory": true
+    },
+    {
+      "id": "log-bug",
+      "type": "log_lock",
+      "card_ref": 73,
+      "description": "Find the CORS errors in the deployment logs",
+      "ui": "log-lock",
+      "config": {
+        "prompt": "Review the deployment logs. Which lines indicate the bug?",
+        "lines": [
+          {
+            "text": "✅ Lambda function deployed successfully",
+            "correct": false
+          },
+          {
+            "text": "✅ DynamoDB table created: q-social-posts",
+            "correct": false
+          },
+          {
+            "text": "✅ API Gateway endpoint: https://abc123.execute-api.us-east-1.amazonaws.com",
+            "correct": false
+          },
+          {
+            "text": "❌ Access-Control-Allow-Origin header missing from API response",
+            "correct": true
+          },
+          {
+            "text": "✅ S3 bucket created: q-social-frontend-assets",
+            "correct": false
+          },
+          {
+            "text": "✅ CloudFront distribution: d1234.cloudfront.net",
+            "correct": false
+          },
+          {
+            "text": "⚠️ Cache invalidation pending (takes ~60s)",
+            "correct": false
+          },
+          {
+            "text": "❌ POST /api/posts returns 403 from browser — CORS policy blocked",
+            "correct": true
+          },
+          {
+            "text": "✅ GET /health returns 200",
+            "correct": false
+          }
+        ]
+      },
+      "hints": [
+        "Look for error lines — the ❌ markers indicate problems.",
+        "Two lines mention CORS issues. One is about a missing header, the other is about a blocked request.",
+        "Select: 'Access-Control-Allow-Origin header missing' and 'POST /api/posts returns 403 — CORS policy blocked'."
+      ],
+      "challenge": {
+        "config": {
+          "lines": [
+            {
+              "text": "Lambda function deployed successfully",
+              "correct": false
+            },
+            {
+              "text": "DynamoDB table created: q-social-posts",
+              "correct": false
+            },
+            {
+              "text": "API Gateway endpoint: https://abc123.execute-api.us-east-1.amazonaws.com",
+              "correct": false
+            },
+            {
+              "text": "Access-Control-Allow-Origin header missing from API response",
+              "correct": true
+            },
+            {
+              "text": "S3 bucket created: q-social-frontend-assets",
+              "correct": false
+            },
+            {
+              "text": "CloudFront distribution: d1234.cloudfront.net",
+              "correct": false
+            },
+            {
+              "text": "Cache invalidation pending (takes ~60s)",
+              "correct": false
+            },
+            {
+              "text": "POST /api/posts returns 403 from browser — CORS policy blocked",
+              "correct": true
+            },
+            {
+              "text": "GET /health returns 200",
+              "correct": false
+            },
+            {
+              "text": "IAM role attached to Lambda function",
+              "correct": false
+            },
+            {
+              "text": "Route53 DNS record propagated",
+              "correct": false
+            },
+            {
+              "text": "DynamoDB read capacity: 5 units",
+              "correct": false
+            },
+            {
+              "text": "OPTIONS /api/users returns 403 — preflight blocked",
+              "correct": true
+            },
+            {
+              "text": "CloudWatch log group created",
+              "correct": false
+            },
+            {
+              "text": "S3 bucket policy applied",
+              "correct": false
+            }
+          ]
+        }
+      },
+      "success_card": 73,
+      "mandatory": true
+    },
+    {
+      "id": "defuse-ship",
+      "type": "defuse_lock",
+      "card_ref": 99,
+      "description": "Timed final deployment — fix CORS and ship under pressure",
+      "ui": "defuse-lock",
+      "config": {
+        "timeSeconds": 45,
+        "tasks": [
+          {
+            "id": "cors",
+            "type": "toggle",
+            "label": "Add CORS headers to Lambda",
+            "answer": true
+          },
+          {
+            "id": "redeploy",
+            "type": "toggle",
+            "label": "Redeploy API Gateway",
+            "answer": true
+          },
+          {
+            "id": "skip-tests",
+            "type": "toggle",
+            "label": "Skip tests",
+            "answer": false
+          },
+          {
+            "id": "url",
+            "type": "code",
+            "label": "Enter the CloudFront distribution ID",
+            "answer": "d1234"
+          }
+        ]
+      },
+      "hints": [
+        "You need to fix CORS (add headers + redeploy). Don't skip tests — that's a trap! The CloudFront URL is somewhere in this room...",
+        "Toggle CORS headers ON, redeploy ON, skip tests OFF. Look at the deployment console screen in the room image for the URL.",
+        "CORS=true, Redeploy=true, Skip tests=false. The URL is on the console screen: d1234.cloudfront.net"
+      ],
+      "challenge": {
+        "config": {
+          "timeSeconds": 30,
+          "tasks": [
+            {
+              "type": "toggle",
+              "label": "Add CORS headers to Lambda",
+              "answer": true
+            },
+            {
+              "type": "toggle",
+              "label": "Redeploy API Gateway",
+              "answer": true
+            },
+            {
+              "type": "toggle",
+              "label": "Skip tests",
+              "answer": false
+            },
+            {
+              "type": "toggle",
+              "label": "Delete and recreate the API",
+              "answer": false
+            },
+            {
+              "type": "code",
+              "label": "Enter CloudFront distribution ID",
+              "answer": "d1234"
+            }
+          ]
+        }
+      },
+      "success_card": 99,
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}

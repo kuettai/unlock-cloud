@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+<title>Admin — re:Solve</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e17;--surface:#141b2d;--border:#1e2a45;--text:#e0e6f0;--muted:#7a8ba8;--green:#22c55e;--red:#ef4444;--accent:#3b82f6;--yellow:#eab308}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;padding:24px;min-height:100vh}
+h1{font-size:20px;margin-bottom:4px}
+.subtitle{color:var(--muted);font-size:13px;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:1000px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
+.card h3{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+input,select{width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:14px;margin-bottom:8px}
+button{padding:8px 16px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;color:#fff;background:var(--accent);margin-right:6px;margin-bottom:6px}
+button:hover{opacity:.85}
+button.green{background:var(--green)}
+button.red{background:var(--red)}
+.link-box{background:var(--bg);border:1px solid var(--green);border-radius:6px;padding:10px;margin-top:10px;font-family:monospace;font-size:12px;word-break:break-all;color:var(--green)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.dot-waiting{background:var(--yellow)}
+.dot-playing{background:var(--green)}
+.dot-done{background:var(--muted)}
+#event-list{margin-bottom:12px}
+.event-item{display:flex;align-items:center;justify-content:space-between;padding:8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;margin-bottom:6px;font-size:13px}
+.event-item .eid{font-family:monospace;color:var(--accent)}
+.event-item .estatus{font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+<h1>🎮 Admin Panel</h1>
+<p class="subtitle">Manage events and view live leaderboard</p>
+
+<div class="grid">
+  <div class="card">
+    <h3>Create Event</h3>
+    <label style="font-size:11px;color:var(--muted)">Scenario</label>
+    <select id="scenario-input"><option value="">Loading...</option></select>
+    <label style="font-size:11px;color:var(--muted)">Duration (minutes)</label>
+    <input id="duration-input" type="number" value="10" style="margin-top:4px" title="Duration in minutes">
+    <label style="font-size:11px;color:var(--muted)">Game Mode</label>
+    <select id="mode-input"><option value="normal">Normal</option><option value="challenge">Challenge</option></select>
+    <button onclick="createNewEvent()">Create Event</button>
+    <div id="event-list"></div>
+    <div id="event-link" style="display:none"></div>
+  </div>
+
+  <div class="card">
+    <h3>Event Controls</h3>
+    <select id="event-select"><option value="">— select event —</option></select>
+    <div style="margin-top:8px">
+      <button class="green" onclick="startEvent()">▶ Start Event</button>
+      <button class="red" onclick="lockEvent()">🔒 Lock Event</button>
+      <button class="red" onclick="resetAll()">Reset</button>
+    </div>
+    <div id="event-timer" style="font-size:28px;font-weight:700;margin-top:16px;color:var(--green);font-variant-numeric:tabular-nums">--:--</div>
+  </div>
+
+  <div class="card" style="grid-column:1/-1">
+    <h3>Live Leaderboard</h3>
+    <table>
+      <thead><tr><th>Status</th><th>Player</th><th>Puzzles</th><th>Penalty</th><th>Score</th><th>Note</th></tr></thead>
+      <tbody id="leaderboard"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const API = 'https://9ean11i2e8.execute-api.ap-southeast-5.amazonaws.com/prod';
+const SCENARIOS_BASE = '../scenarios';
+let pollTimer = null;
+
+// Load scenarios into dropdown
+(async () => {
+  const sel = document.getElementById('scenario-input');
+  try {
+    const cats = await fetch(`${SCENARIOS_BASE}/categories.json`).then(r => r.json());
+    sel.innerHTML = '';
+    for (const cat of cats) {
+      const eps = await fetch(`${SCENARIOS_BASE}/${cat.id}/index.json`).then(r => r.json());
+      for (const ep of eps) {
+        const meta = await fetch(`${SCENARIOS_BASE}/${cat.id}/${ep}/meta.json`).then(r => r.json()).catch(() => null);
+        if (!meta) continue;
+        const opt = document.createElement('option');
+        opt.value = `${cat.id}/${ep}`;
+        opt.textContent = `${cat.title} — EP${meta.episode}: ${meta.title}`;
+        opt.dataset.puzzleCount = meta.mechanics_taught ? meta.mechanics_taught.length : 5;
+        sel.appendChild(opt);
+      }
+    }
+  } catch { sel.innerHTML = '<option value="aws/ep0-boot-sequence">aws/ep0 (fallback)</option>'; }
+})();
+
+async function createNewEvent() {
+  const sel = document.getElementById('scenario-input');
+  const scenarioId = sel.value || 'aws/ep0-boot-sequence';
+  const durationMinutes = parseInt(document.getElementById('duration-input').value) || 10;
+  const gameMode = document.getElementById('mode-input').value;
+  const puzzleCount = parseInt(sel.selectedOptions[0]?.dataset.puzzleCount) || 5;
+
+  const res = await fetch(API + '/games', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      max_participants: 30,
+      games_config: { puzzle_count: puzzleCount },
+      scenario_id: scenarioId,
+      target_duration_seconds: durationMinutes * 60
+    })
+  }).then(r => r.json());
+
+  if (res.game_id) {
+    const opt = document.createElement('option');
+    opt.value = res.game_id;
+    opt.textContent = res.game_id.slice(0, 8) + '…';
+    document.getElementById('event-select').appendChild(opt);
+    document.getElementById('event-select').value = res.game_id;
+
+    const link = `${location.origin}/app/index.html?scenario=${encodeURIComponent('../scenarios/' + scenarioId)}&event=${res.game_id}&gameMode=${gameMode}`;
+    const linkBox = document.getElementById('event-link');
+    linkBox.style.display = 'block';
+    linkBox.innerHTML = `<div class="link-box">Player link:<br><a href="${link}" target="_blank" style="color:var(--green)">${link}</a><div id="qr-code" style="margin-top:12px;text-align:center;background:#fff;padding:12px;border-radius:8px;display:inline-block;"></div></div>`;
+    new QRCode(document.getElementById('qr-code'), { text: link, width: 200, height: 200 });
+  }
+  refreshState();
+}
+
+async function startEvent() {
+  const gameId = document.getElementById('event-select').value;
+  if (!gameId) return alert('Select a game first');
+  await fetch(`${API}/games/${gameId}/start`, { method: 'POST' });
+  refreshState();
+}
+
+async function lockEvent() {
+  const gameId = document.getElementById('event-select').value;
+  if (!gameId) return alert('Select a game first');
+  await fetch(`${API}/games/${gameId}/end`, { method: 'POST' });
+  refreshState();
+}
+
+async function resetAll() {
+  alert('Reset not available — end individual games instead.');
+}
+
+async function refreshState() {
+  // Load games list
+  const games = await fetch(`${API}/games`).then(r => r.json()).then(r => r.games || []).catch(() => []);
+
+  // Events list
+  const evList = document.getElementById('event-list');
+  evList.innerHTML = games.map(g => {
+    const status = g.status === 'ended' ? '🔒 Ended' : g.status === 'in_progress' ? '🟢 Running' : '🟡 Waiting';
+    const dur = g.target_duration_seconds ? Math.round(g.target_duration_seconds / 60) + 'min' : '—';
+    return `<div class="event-item"><span class="eid">${g.game_id.slice(0, 8)}…</span><span class="estatus">${status} · ${dur}</span></div>`;
+  }).join('');
+
+  // Populate select if empty
+  const evSelect = document.getElementById('event-select');
+  if (evSelect.options.length <= 1 && games.length) {
+    games.forEach(g => {
+      if ([...evSelect.options].some(o => o.value === g.game_id)) return;
+      const opt = document.createElement('option');
+      opt.value = g.game_id;
+      opt.textContent = g.game_id.slice(0, 8) + '… (' + g.status + ')';
+      evSelect.appendChild(opt);
+    });
+  }
+
+  // Timer for selected game
+  const selId = evSelect.value;
+  const selGame = games.find(g => g.game_id === selId);
+  if (selGame && selGame.status === 'in_progress' && selGame.started_at) {
+    const elapsed = Math.floor((Date.now() - new Date(selGame.started_at).getTime()) / 1000);
+    const remaining = Math.max(0, (selGame.target_duration_seconds || 0) - elapsed);
+    const m = Math.floor(remaining / 60);
+    const s = remaining % 60;
+    document.getElementById('event-timer').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  } else {
+    document.getElementById('event-timer').textContent = selGame ? (selGame.status === 'ended' ? 'Ended' : 'Waiting...') : '--:--';
+  }
+
+  // Leaderboard for selected game
+  if (!selId) { document.getElementById('leaderboard').innerHTML = '<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:20px">Select a game to view leaderboard</td></tr>'; return; }
+
+  const lb = await fetch(`${API}/games/${selId}/leaderboard`).then(r => r.json()).catch(() => null);
+  const tbody = document.getElementById('leaderboard');
+  if (!lb || !lb.leaderboard || !lb.leaderboard.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:20px">No players registered yet</td></tr>';
+    return;
+  }
+
+  const rows = lb.leaderboard.map(p => {
+    const dotClass = p.completed ? 'dot-done' : p.timed_out ? 'dot-done' : 'dot-playing';
+    const statusLabel = p.completed ? (p.timed_out ? 'Timed Out' : 'Done') : 'Playing';
+    const puzzles = p.puzzles_completed || 0;
+    const penalty = p.penalty_seconds ? Math.round(p.penalty_seconds) + 's' : '0s';
+    const score = p.final_score_seconds ? Math.round(p.final_score_seconds) + 's' : '—';
+    return `<tr><td><span class="status-dot ${dotClass}"></span>${statusLabel}</td><td>${p.player_name}</td><td>${puzzles}</td><td>${penalty}</td><td>${score}</td><td>${p.late_join ? '⚡ Late' : '—'}</td></tr>`;
+  });
+  tbody.innerHTML = rows.join('');
+}
+
+// Poll every 3s
+setInterval(refreshState, 3000);
+refreshState();
+</script>
+</body>
+</html>

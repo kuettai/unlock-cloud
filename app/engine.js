@@ -1,4 +1,4 @@
-/* Unlock the Cloud — Game Engine */
+/* re:Solve — Game Engine */
 
 class GameEngine {
   constructor(scenarioPath) {
@@ -33,6 +33,13 @@ class GameEngine {
     this.revealedCards = new Set();    // all cards ever revealed (persists even after event dismissal)
     this.revealQueue = [];             // cards auto-revealed (for UI toasts)
 
+    // Leaderboard state
+    this.uuid = null;
+    this.playerName = null;
+    this.serverTimer = null;  // "MM:SS" from server, authoritative
+    this.serverTimerAt = null; // Date.now() when serverTimer was received
+    this.onLeaderboardEvent = null; // callback(event, payload) for leaderboard submissions
+
     this.onUpdate = null; // callback for UI refresh
   }
 
@@ -57,6 +64,26 @@ class GameEngine {
     this.rooms = rooms.rooms || [];
     cards.cards.forEach(c => this.cards[c.id] = c);
     puzzles.puzzles.forEach(p => this.puzzles[p.id] = p);
+    this.gameMode = (typeof localStorage !== 'undefined' && localStorage.getItem('gameMode')) || 'normal';
+    if (this.gameMode === 'challenge') {
+      Object.values(this.puzzles).forEach(p => {
+        if (!p.challenge) return;
+        const { config: cfgOverride, ...topLevel } = p.challenge;
+        if (cfgOverride) p.config = { ...p.config, ...cfgOverride };
+        Object.assign(p, topLevel);
+        delete p.challenge;
+      });
+      Object.values(this.cards).forEach(c => {
+        if (!c.challenge) return;
+        Object.assign(c, c.challenge);
+        delete c.challenge;
+      });
+    }
+  }
+
+  getPuzzleConfig(puzzleId) {
+    const p = this.puzzles[puzzleId];
+    return p ? (p.config || {}) : {};
   }
 
   start() {
@@ -73,7 +100,10 @@ class GameEngine {
 
     // Track unlocked rooms
     if (card.type === 'location') {
-      if (!this.unlockedRooms.includes(id)) this.unlockedRooms.push(id);
+      if (!this.unlockedRooms.includes(id)) {
+        this.unlockedRooms.push(id);
+        if (this.onLeaderboardEvent) this.onLeaderboardEvent('room_unlocked', { roomId: id });
+      }
       this.currentRoom = id;
     }
 
@@ -111,6 +141,7 @@ class GameEngine {
     if (card.type === 'penalty') {
       this.penalties++;
       this.penaltySeconds += card.penalty_seconds || 0;
+      if (this.onLeaderboardEvent) this.onLeaderboardEvent('penalty', { seconds: card.penalty_seconds || 0, reason: card.title });
       if (card.returns_items) {
         card.returns_items.forEach(rid => {
           if (!this.inventory.includes(rid)) this.inventory.push(rid);
@@ -129,6 +160,7 @@ class GameEngine {
       this.finished = true;
       this.completed = true;
       this.endTime = Date.now();
+      if (this.onLeaderboardEvent) this.onLeaderboardEvent('game_complete', { score: this.getScore() });
     }
 
     this._notify();
@@ -184,6 +216,7 @@ class GameEngine {
     const match = card.hidden_elements.find(h => h.value === number);
     if (match) {
       this.solvedPuzzles.add(card.puzzle_ref);
+      if (this.onLeaderboardEvent) this.onLeaderboardEvent('puzzle_solved', { puzzleId: card.puzzle_ref });
       return this.discoverCard(number);
     }
     return false;
@@ -205,6 +238,7 @@ class GameEngine {
 
     if (correct) {
       this.solvedPuzzles.add(puzzleId);
+      if (this.onLeaderboardEvent) this.onLeaderboardEvent('puzzle_solved', { puzzleId });
       if (puzzle.success_card) {
         this.revealCard(puzzle.success_card);
       }
@@ -214,6 +248,7 @@ class GameEngine {
     if (puzzle.penalty_on_wrong !== false) {
       this.penalties++;
       this.penaltySeconds += 60;
+      if (this.onLeaderboardEvent) this.onLeaderboardEvent('penalty', { seconds: 60, reason: 'wrong_answer' });
     }
     this._notify();
     return { correct: false, message: puzzle.wrong_answer_message || 'Incorrect. Try again.' };
@@ -235,6 +270,7 @@ class GameEngine {
     if (used >= puzzle.hints.length) return { hint: puzzle.hints[puzzle.hints.length - 1], tooltip };
     puzzle._hintsUsed = used + 1;
     this.hintsUsed++;
+    if (this.onLeaderboardEvent) this.onLeaderboardEvent('hint_used', { puzzleId });
     this._notify();
     return { hint: puzzle.hints[used], tooltip };
   }
@@ -246,7 +282,7 @@ class GameEngine {
   }
 
   getRemainingSeconds() {
-    return this.meta.duration_minutes * 60 - this.getElapsedSeconds();
+    return Math.max(0, this.meta.duration_minutes * 60 - this.getElapsedSeconds());
   }
 
   getScore() {
@@ -332,6 +368,13 @@ class GameEngine {
     if (this.onUpdate) this.onUpdate();
   }
 
+  syncTimer(timer) {
+    if (!timer) return;
+    this.serverTimer = timer;
+    this.serverTimerAt = Date.now();
+    this.saveState();
+  }
+
   saveState() {
     const key = `utc_${this.meta.id || 'game'}`;
     const state = {
@@ -352,6 +395,10 @@ class GameEngine {
       completed: this.completed,
       hintTooltipShown: this.hintTooltipShown,
       hintsPerPuzzle: {},
+      uuid: this.uuid,
+      playerName: this.playerName,
+      serverTimer: this.serverTimer,
+      serverTimerAt: this.serverTimerAt,
     };
     // Save per-puzzle hint counts
     for (const [id, p] of Object.entries(this.puzzles)) {
@@ -392,6 +439,10 @@ class GameEngine {
           if (this.puzzles[id]) this.puzzles[id]._hintsUsed = count;
         }
       }
+      this.uuid = s.uuid || null;
+      this.playerName = s.playerName || null;
+      this.serverTimer = s.serverTimer || null;
+      this.serverTimerAt = s.serverTimerAt || null;
       this.revealQueue = [];
       return true;
     } catch { return false; }
@@ -400,5 +451,144 @@ class GameEngine {
   clearSave() {
     const key = `utc_${this.meta.id || 'game'}`;
     try { localStorage.removeItem(key); } catch {}
+  }
+}
+
+
+/* Leaderboard Client — queue-based event submission with retry */
+class LeaderboardClient {
+  constructor(baseUrl) {
+    this.baseUrl = baseUrl || 'https://9ean11i2e8.execute-api.ap-southeast-5.amazonaws.com/prod';
+    this.gameId = null;
+    this.playerId = null;
+    this.queue = [];
+    this._flushing = false;
+    this._flushInterval = null;
+    this._storageKey = 'utc_lb_queue';
+    this._loadQueue();
+  }
+
+  // Legacy compat
+  get uuid() { return this.playerId; }
+  set uuid(v) { this.playerId = v; }
+
+  _loadQueue() {
+    try { this.queue = JSON.parse(localStorage.getItem(this._storageKey)) || []; } catch { this.queue = []; }
+  }
+
+  _saveQueue() {
+    try { localStorage.setItem(this._storageKey, JSON.stringify(this.queue)); } catch {}
+  }
+
+  startPeriodicFlush(intervalMs) {
+    this._flushInterval = setInterval(() => this.flush(), intervalMs || 10000);
+  }
+
+  stopPeriodicFlush() {
+    if (this._flushInterval) { clearInterval(this._flushInterval); this._flushInterval = null; }
+  }
+
+  push(event, payload) {
+    this.queue.push({ event, ...payload, ts: Date.now() });
+    this._saveQueue();
+  }
+
+  async register(playerName, scenarioId, gameId) {
+    if (!gameId) return null;
+    this.gameId = gameId;
+    try {
+      const r = await fetch(`${this.baseUrl}/games/${gameId}/players`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ player_name: playerName })
+      });
+      if (r.status === 400) {
+        const d = await r.json();
+        if (d.error && d.error.includes('full')) return { _rejected: true, gameState: 'FULL' };
+        return null;
+      }
+      if (!r.ok) return null;
+      const res = await r.json();
+      if (res && res.player_id) {
+        this.playerId = res.player_id;
+        // Check game status to determine if ready
+        const game = await this.getGame();
+        const ready = game && game.status === 'in_progress';
+        return { uuid: res.player_id, ready, timer: game && game.started_at ? this._calcTimer(game) : null };
+      }
+      return null;
+    } catch { return null; }
+  }
+
+  async getGame() {
+    if (!this.gameId) return null;
+    try {
+      const r = await fetch(`${this.baseUrl}/games/${this.gameId}`);
+      if (!r.ok) return null;
+      return r.json();
+    } catch { return null; }
+  }
+
+  async status() {
+    const game = await this.getGame();
+    if (!game) return null;
+    const ready = game.status === 'in_progress';
+    return { ready, timer: game.started_at ? this._calcTimer(game) : null };
+  }
+
+  _calcTimer(game) {
+    if (!game.started_at || !game.target_duration_seconds) return null;
+    const started = new Date(game.started_at).getTime();
+    const elapsed = Math.floor((Date.now() - started) / 1000);
+    const remaining = Math.max(0, game.target_duration_seconds - elapsed);
+    const m = Math.floor(remaining / 60);
+    const s = remaining % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  _mapEvent(ev) {
+    // Map our engine events to backend action format
+    switch (ev.event) {
+      case 'puzzle_solved':
+        return { action: 'complete_puzzle', puzzle_id: ev.puzzleId };
+      case 'hint_used':
+        return { action: 'used_hint', seconds: 60 };
+      case 'penalty':
+        return { action: 'wrong_move', seconds: ev.seconds || 30 };
+      case 'room_unlocked':
+        return { action: 'room_unlocked', room_id: ev.roomId };
+      case 'game_complete':
+        return null; // Backend handles this implicitly on last puzzle
+      default:
+        return null;
+    }
+  }
+
+  async flush() {
+    if (this._flushing || !this.playerId || !this.gameId || !this.queue.length) return null;
+    this._flushing = true;
+    const batch = this.queue.splice(0);
+    this._saveQueue();
+    try {
+      const url = `${this.baseUrl}/games/${this.gameId}/players/${this.playerId}/action`;
+      for (const ev of batch) {
+        const body = this._mapEvent(ev);
+        if (!body) continue;
+        await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+      }
+      this._flushing = false;
+      // Return timer from game state
+      const game = await this.getGame();
+      return game ? { timer: this._calcTimer(game) } : null;
+    } catch {
+      this.queue.unshift(...batch);
+      this._saveQueue();
+      this._flushing = false;
+      return null;
+    }
   }
 }

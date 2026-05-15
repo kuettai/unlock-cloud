@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle Prototypes — EP0 Master's Investigation</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; }
+header { background: #16213e; padding: 1rem 2rem; border-bottom: 2px solid #0f3460; }
+header h1 { font-size: 1.4rem; color: #e94560; }
+header p { font-size: 0.85rem; color: #aaa; margin-top: 0.3rem; }
+nav { display: flex; gap: 0.5rem; padding: 1rem 2rem; background: #16213e; flex-wrap: wrap; }
+nav button { padding: 0.6rem 1.2rem; border: 2px solid #0f3460; background: #1a1a2e; color: #eee; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+nav button:hover { border-color: #e94560; }
+nav button.active { background: #e94560; border-color: #e94560; color: #fff; }
+.panel { display: none; padding: 2rem; max-width: 900px; margin: 0 auto; }
+.panel.active { display: block; }
+.panel h2 { color: #e94560; margin-bottom: 0.3rem; }
+.panel .subtitle { color: #aaa; font-size: 0.85rem; margin-bottom: 1.5rem; }
+.btn { padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+.btn-primary { background: #e94560; color: #fff; }
+.btn-secondary { background: #0f3460; color: #eee; }
+.result { margin-top: 1rem; padding: 1rem; border-radius: 6px; font-weight: bold; }
+.result.win { background: #1e4d2b; color: #2ecc71; border: 1px solid #2ecc71; }
+.result.lose { background: #4d1e1e; color: #e74c3c; border: 1px solid #e74c3c; }
+</style>
+</head>
+<body>
+<header>
+<h1>🔍 Puzzle Prototypes — EP0 Master's Investigation</h1>
+<p>Testing replacements for the two "arrange the sequence" puzzles</p>
+</header>
+<nav>
+<button class="active" onclick="showPanel('witness')">👁️ Witness Testimony</button>
+<button onclick="showPanel('evidence')">🔗 Evidence Board</button>
+</nav>
+
+<div id="witness" class="panel active">
+<h2>👁️ Witness Testimony — First Sign</h2>
+<p class="subtitle">Replaces first-sign (sort-lock). Disciples describe what they saw — match each testimony to the correct moment.</p>
+<p style="margin-bottom:1rem;color:#ccc;">Simon and Andrew witnessed the miracle. Each describes a moment — but their accounts are jumbled. Match each testimony to what actually happened.</p>
+
+<div id="wt-board"></div>
+<div style="text-align:center;margin-top:1rem;"><button class="btn btn-primary" onclick="wtSubmit()">✅ Confirm Matches</button> <button class="btn btn-secondary" onclick="wtReset()">↺ Reset</button></div>
+<div id="wt-result"></div>
+
+<script>
+(function(){
+  const testimonies = [
+    {id:'t1', who:'Simon', quote:'"I saw Mary whisper to him. He seemed reluctant at first."', moment:'Mary told her son and he said his hour had not come'},
+    {id:'t2', who:'Andrew', quote:'"The servants filled those huge jars — all six, to the very brim!"', moment:'Servants filled six stone jars with water'},
+    {id:'t3', who:'Simon', quote:'"She just told them: do whatever he says. Such confidence!"', moment:'Mary told the servants to obey him'},
+    {id:'t4', who:'Andrew', quote:'"He simply said: draw some out, take it to the master of the feast."', moment:'He commanded them to draw out and serve'},
+    {id:'t5', who:'Simon', quote:'"The look on Matthias\'s face when he tasted it — pure shock!"', moment:'The ruler of the feast tasted and was astonished'},
+    {id:'t6', who:'Andrew', quote:'"Everyone was talking — the wine had run out, the feast was ruined!"', moment:'The wine ran out at the wedding'},
+  ];
+
+  const moments = [
+    'The wine ran out at the wedding',
+    'Mary told her son and he said his hour had not come',
+    'Mary told the servants to obey him',
+    'Servants filled six stone jars with water',
+    'He commanded them to draw out and serve',
+    'The ruler of the feast tasted and was astonished',
+  ];
+
+  let assignments = {};
+  const shuffled = [...testimonies].sort(() => Math.random() - 0.5);
+
+  function render() {
+    document.getElementById('wt-board').innerHTML = shuffled.map(t => {
+      const assigned = assignments[t.id] || '';
+      const correct = assigned === t.moment;
+      return `<div style="background:#2a2a4e;border:1px solid ${assigned?(correct?'#2ecc71':'#444'):'#444'};border-radius:8px;padding:0.8rem;margin-bottom:0.6rem;">
+        <div style="font-size:0.8rem;color:#f39c12;margin-bottom:0.3rem;">${t.who} says:</div>
+        <div style="font-size:0.9rem;font-style:italic;color:#eee;margin-bottom:0.6rem;">${t.quote}</div>
+        <select onchange="wtAssign('${t.id}',this.value)" style="width:100%;padding:0.4rem;background:#1a1a2e;border:1px solid #444;border-radius:4px;color:#eee;font-size:0.8rem;">
+          <option value="">— What moment is this? —</option>
+          ${moments.map(m => `<option value="${m}" ${assigned===m?'selected':''}>${m}</option>`).join('')}
+        </select>
+      </div>`;
+    }).join('');
+  }
+
+  window.wtAssign = function(id, val) { assignments[id] = val; render(); };
+  window.wtSubmit = function() {
+    const allFilled = shuffled.every(t => assignments[t.id]);
+    if (!allFilled) { document.getElementById('wt-result').className='result lose'; document.getElementById('wt-result').textContent='Match all testimonies first.'; return; }
+    const correct = shuffled.every(t => assignments[t.id] === t.moment);
+    const el = document.getElementById('wt-result');
+    if (correct) { el.className='result win'; el.textContent='✅ All testimonies matched correctly! The disciples\' accounts align perfectly with the miracle.'; }
+    else { const wrong = shuffled.filter(t => assignments[t.id] !== t.moment).length; el.className='result lose'; el.textContent=`❌ ${wrong} testimony(ies) mismatched. Re-read what each disciple describes.`; }
+  };
+  window.wtReset = function() { assignments={}; document.getElementById('wt-result').innerHTML=''; render(); };
+  render();
+})();
+</script>
+</div>
+
+<div id="evidence" class="panel">
+<h2>🔗 Evidence Board — Investigation Timeline</h2>
+<p class="subtitle">Replaces investigation-timeline. Connect each investigation step to its key finding — like a detective's evidence board.</p>
+<p style="margin-bottom:1rem;color:#ccc;">Matthias investigated methodically. Each step revealed a key finding. Connect the steps to what they uncovered.</p>
+
+<div id="eb-board"></div>
+<div style="text-align:center;margin-top:1rem;"><button class="btn btn-primary" onclick="ebSubmit()">✅ Confirm Connections</button> <button class="btn btn-secondary" onclick="ebReset()">↺ Reset</button></div>
+<div id="eb-result"></div>
+
+<script>
+(function(){
+  const connections = [
+    {step:'Tasted the extraordinary wine', finding:'This wine is impossibly good — better than what was served first', icon:'🍷'},
+    {step:'Questioned Ezra the steward', finding:'Ezra confirmed the wine ran out — he never ordered more', icon:'📋'},
+    {step:'Interviewed the three servants', finding:'They only carried water — they saw it change in the jars', icon:'👥'},
+    {step:'Examined the six stone jars', finding:'Jars held 120 gallons total — all now contain wine, not water', icon:'🏺'},
+    {step:'Visited Joachim the merchant', finding:'No wine was purchased or delivered — his records prove it', icon:'📦'},
+    {step:'Crossed the courtyard to the well', finding:'The well water is ordinary — the transformation happened in the jars', icon:'💧'},
+    {step:'Spoke with Miriam (bride\'s mother)', finding:'She saw the teacher speak quietly to the servants before they drew', icon:'👰'},
+  ];
+
+  const findings = connections.map(c => c.finding).sort(() => Math.random() - 0.5);
+  let assignments = {};
+
+  function render() {
+    document.getElementById('eb-board').innerHTML = connections.map((c, i) => {
+      const assigned = assignments[i] || '';
+      return `<div style="display:flex;gap:0.6rem;align-items:flex-start;background:#2a2a4e;border:1px solid #444;border-radius:8px;padding:0.7rem;margin-bottom:0.5rem;">
+        <span style="font-size:1.3rem;">${c.icon}</span>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:bold;color:#eee;margin-bottom:0.4rem;">${c.step}</div>
+          <select onchange="ebAssign(${i},this.value)" style="width:100%;padding:0.35rem;background:#1a1a2e;border:1px solid #444;border-radius:4px;color:#aaa;font-size:0.78rem;">
+            <option value="">— Key finding —</option>
+            ${findings.map(f => `<option value="${f}" ${assigned===f?'selected':''}>${f}</option>`).join('')}
+          </select>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  window.ebAssign = function(i, val) { assignments[i] = val; render(); };
+  window.ebSubmit = function() {
+    const allFilled = connections.every((_, i) => assignments[i]);
+    if (!allFilled) { document.getElementById('eb-result').className='result lose'; document.getElementById('eb-result').textContent='Connect all steps to findings first.'; return; }
+    const correct = connections.every((c, i) => assignments[i] === c.finding);
+    const el = document.getElementById('eb-result');
+    if (correct) { el.className='result win'; el.textContent='✅ Evidence board complete! Every step of the investigation connects to its finding. The case is clear.'; }
+    else { const wrong = connections.filter((c,i) => assignments[i] !== c.finding).length; el.className='result lose'; el.textContent=`❌ ${wrong} connection(s) wrong. Think about what each step would logically reveal.`; }
+  };
+  window.ebReset = function() { assignments={}; document.getElementById('eb-result').innerHTML=''; render(); };
+  render();
+})();
+</script>
+</div>
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => {
+    if (b.onclick && b.onclick.toString().includes(id)) b.classList.add('active');
+  });
+}
+</script>
+</body>
+</html>

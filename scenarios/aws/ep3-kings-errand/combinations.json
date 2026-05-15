@@ -1,0 +1,46 @@
+{
+  "combinations": [
+    {
+      "card_a": 605,
+      "card_b": 301,
+      "result_card": 1201,
+      "type": "item_item",
+      "description": "The Bazaar ally arrives at the Kitchen, ready to search the archives."
+    },
+    {
+      "card_a": 505,
+      "card_b": 705,
+      "result_card": 1202,
+      "type": "item_item",
+      "description": "The Scout and Tongue of Babel work together — trade routes established."
+    },
+    {
+      "card_a": 806,
+      "card_b": 803,
+      "result_card": 1203,
+      "type": "item_item",
+      "description": "The Artificer books all performers with royal authority."
+    },
+    {
+      "card_a": 406,
+      "card_b": 906,
+      "result_card": 1204,
+      "type": "item_item",
+      "description": "The Chronicler presents fair evidence under the Code — both nobles accept."
+    },
+    {
+      "card_a": 601,
+      "card_b": 302,
+      "result_card": 1301,
+      "type": "penalty",
+      "description": "Wrong: Wave a Bazaar Token at the recipe shelves. You need an ALLY, not a token. -3 min"
+    },
+    {
+      "card_a": 405,
+      "card_b": 903,
+      "result_card": 1302,
+      "type": "penalty",
+      "description": "Wrong: The Chronicler blurts out Lord Ashford's private debts! Configure the Code of Honor FIRST! -3 min"
+    }
+  ]
+}

@@ -1,10 +1,10 @@
-# Unlock the Cloud
+# re:Solve
 
 An escape room card game that teaches through immersive storytelling. Currently features **Miracles of Jesus** — a Bible-based puzzle adventure.
 
 ## Play Online
 
-http://18.138.232.101/app/home.html
+https://beta.re-solve.cloud/app/home.html
 
 ## Run Locally
 
