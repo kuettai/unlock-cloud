@@ -90,7 +90,7 @@
           },
           {
             "label": "What are conduits?",
-            "response": "Pipes to the outside world. The Testing Guild can verify my work. The Diagram Guild can visualize architecture. Without them, I build blind and can't prove anything works."
+            "response": "Pipes to the outside world. The Testing conduit connects to the Playwright Server — it runs browser tests. The Diagram conduit connects to the AWS Diagram Server — it draws architecture. The Documentation conduit connects to the AWS Docs Server — it fetches references. Wire each to its matching endpoint."
           },
           {
             "label": "What happened with Marcus?",
@@ -861,46 +861,6 @@
       "mandatory": true
     },
     {
-      "id": "pipe-junction",
-      "type": "pipe_lock",
-      "card_ref": 33,
-      "description": "Rotate pipe segments to connect Kiro CLI to External Tool through MCP Server",
-      "ui": "pipe-lock",
-      "config": {
-        "cols": 4,
-        "rows": 3,
-        "pipes": [
-          "┌",
-          "─",
-          "┐",
-          " ",
-          "│",
-          " ",
-          "│",
-          " ",
-          "└",
-          "─",
-          "─",
-          "┘"
-        ],
-        "source": {
-          "col": 0,
-          "row": 0
-        },
-        "sink": {
-          "col": 3,
-          "row": 2
-        }
-      },
-      "hints": [
-        "The pipe must flow from Kiro CLI on the left to External Tool on the right. Rotate segments to connect them.",
-        "Look for the path through the middle row — it's the most direct route through the MCP Server.",
-        "Connect left→right through row 1. Rotate each segment until the pipe forms a continuous path."
-      ],
-      "success_card": 33,
-      "mandatory": true
-    },
-    {
       "id": "terminal-build",
       "type": "terminal_lock",
       "card_ref": 51,
@@ -1109,7 +1069,7 @@
       "id": "path-codebase",
       "type": "path_lock",
       "card_ref": 53,
-      "description": "Navigate the project structure to find the deployment config",
+      "description": "Find the CDK deployment config. You just placed it in the Infrastructure layer — now find it in the file tree.",
       "ui": "path-lock",
       "config": {
         "nodes": [

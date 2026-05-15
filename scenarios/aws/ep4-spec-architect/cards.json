@@ -9,12 +9,45 @@
       "image": "assets/the-desk.png",
       "reveals": [],
       "discoveries": [
-        { "label": "Talk to Pip", "card_id": 2, "puzzle": "npc-pip" },
-        { "label": "Try talking to the golem", "card_id": 4, "puzzle": "npc-golem" },
-        { "label": "Read Marcus's farewell note", "card_id": 6 },
-        { "label": "Sort the desk papers", "card_id": 5, "puzzle": "sort-priorities" },
-        { "label": "Pick up the guild badge", "card_id": 3, "requires_item": [5] },
-        { "label": "Enter the Drafting Hall", "card_id": 10, "requires_item": [3], "consumes_item": [3, 4, 5, 6] }
+        {
+          "label": "Talk to Pip",
+          "card_id": 2,
+          "puzzle": "npc-pip"
+        },
+        {
+          "label": "Try talking to the golem",
+          "card_id": 4,
+          "puzzle": "npc-golem"
+        },
+        {
+          "label": "Read Marcus's farewell note",
+          "card_id": 6
+        },
+        {
+          "label": "Sort the desk papers",
+          "card_id": 5,
+          "puzzle": "sort-priorities"
+        },
+        {
+          "label": "Pick up the guild badge",
+          "card_id": 3,
+          "requires_item": [
+            5
+          ]
+        },
+        {
+          "label": "Enter the Drafting Hall",
+          "card_id": 10,
+          "requires_item": [
+            3
+          ],
+          "consumes_item": [
+            3,
+            4,
+            5,
+            6
+          ]
+        }
       ],
       "visible_to": "all",
       "room": "desk"
@@ -85,10 +118,35 @@
       "image": "assets/drafting-hall.png",
       "reveals": [],
       "discoveries": [
-        { "label": "Talk to Lord Ashford (screen)", "card_id": 11, "puzzle": "npc-ashford" },
-        { "label": "Read Marcus's sticky notes", "card_id": 13 },
-        { "label": "Write the specs", "card_id": 12, "requires_item": [11], "puzzle": "spec-requirements" },
-        { "label": "Go to the Golem Workshop", "card_id": 30, "requires_item": [12], "consumes_item": [12, 11, 13] }
+        {
+          "label": "Talk to Lord Ashford (screen)",
+          "card_id": 11,
+          "puzzle": "npc-ashford"
+        },
+        {
+          "label": "Read Marcus's sticky notes",
+          "card_id": 13
+        },
+        {
+          "label": "Write the specs",
+          "card_id": 12,
+          "requires_item": [
+            11
+          ],
+          "puzzle": "spec-requirements"
+        },
+        {
+          "label": "Go to the Golem Workshop",
+          "card_id": 30,
+          "requires_item": [
+            12
+          ],
+          "consumes_item": [
+            12,
+            11,
+            13
+          ]
+        }
       ],
       "visible_to": "all",
       "room": "drafting"
@@ -137,9 +195,28 @@
       "image": "assets/golem-workshop.png",
       "reveals": [],
       "discoveries": [
-        { "label": "Load the golem's memory", "card_id": 31, "puzzle": "context-memory" },
-        { "label": "Wire the MCP conduits", "card_id": 32, "puzzle": "wire-mcp" },
-        { "label": "Go to the Build Yard", "card_id": 50, "requires_item": [31, 32], "consumes_item": [31, 32] }
+        {
+          "label": "Load the golem's memory",
+          "card_id": 31,
+          "puzzle": "context-memory"
+        },
+        {
+          "label": "Wire the MCP conduits",
+          "card_id": 32,
+          "puzzle": "wire-mcp"
+        },
+        {
+          "label": "Go to the Build Yard",
+          "card_id": 50,
+          "requires_item": [
+            31,
+            32
+          ],
+          "consumes_item": [
+            31,
+            32
+          ]
+        }
       ],
       "visible_to": "all",
       "room": "workshop"
@@ -167,17 +244,6 @@
       "room": "workshop"
     },
     {
-      "id": 33,
-      "type": "item",
-      "color": "red",
-      "title": "Pipeline Ready",
-      "description": "Model Context Protocol connects the golem to external tools — testing, diagram generators, documentation servers. Each connection extends what the golem can do. The pipe junction is complete.",
-      "image": "assets/card-pipeline-ready.png",
-      "reveals": [],
-      "visible_to": "all",
-      "room": "workshop"
-    },
-    {
       "id": 50,
       "type": "location",
       "color": "green",
@@ -186,10 +252,43 @@
       "image": "assets/build-yard.png",
       "reveals": [],
       "discoveries": [
-        { "label": "Issue first build command", "card_id": 51, "puzzle": "terminal-build" },
-        { "label": "Place the architecture", "card_id": 52, "requires_item": [51], "consumes_item": [51], "puzzle": "blueprint-arch" },
-        { "label": "Navigate the codebase", "card_id": 53, "requires_item": [52], "consumes_item": [52], "puzzle": "path-codebase" },
-        { "label": "Go to the Launch Tower", "card_id": 70, "requires_item": [53], "consumes_item": [53] }
+        {
+          "label": "Issue first build command",
+          "card_id": 51,
+          "puzzle": "terminal-build"
+        },
+        {
+          "label": "Place the architecture",
+          "card_id": 52,
+          "requires_item": [
+            51
+          ],
+          "consumes_item": [
+            51
+          ],
+          "puzzle": "blueprint-arch"
+        },
+        {
+          "label": "Navigate the codebase",
+          "card_id": 53,
+          "requires_item": [
+            52
+          ],
+          "consumes_item": [
+            52
+          ],
+          "puzzle": "path-codebase"
+        },
+        {
+          "label": "Go to the Launch Tower",
+          "card_id": 70,
+          "requires_item": [
+            53
+          ],
+          "consumes_item": [
+            53
+          ]
+        }
       ],
       "visible_to": "all",
       "room": "build"
@@ -236,10 +335,44 @@
       "image": "assets/launch-tower.png",
       "reveals": [],
       "discoveries": [
-        { "label": "Build the test pipeline", "card_id": 71, "puzzle": "match-tests" },
-        { "label": "Order the deployment", "card_id": 72, "requires_item": [71], "consumes_item": [71], "puzzle": "timeline-deploy" },
-        { "label": "Check the deploy logs", "card_id": 73, "requires_item": [72], "consumes_item": [72], "puzzle": "log-bug" },
-        { "label": "Ship it!", "card_id": 99, "requires_item": [73], "consumes_item": [73], "puzzle": "defuse-ship" }
+        {
+          "label": "Build the test pipeline",
+          "card_id": 71,
+          "puzzle": "match-tests"
+        },
+        {
+          "label": "Order the deployment",
+          "card_id": 72,
+          "requires_item": [
+            71
+          ],
+          "consumes_item": [
+            71
+          ],
+          "puzzle": "timeline-deploy"
+        },
+        {
+          "label": "Check the deploy logs",
+          "card_id": 73,
+          "requires_item": [
+            72
+          ],
+          "consumes_item": [
+            72
+          ],
+          "puzzle": "log-bug"
+        },
+        {
+          "label": "Ship it!",
+          "card_id": 99,
+          "requires_item": [
+            73
+          ],
+          "consumes_item": [
+            73
+          ],
+          "puzzle": "defuse-ship"
+        }
       ],
       "visible_to": "all",
       "room": "launch"

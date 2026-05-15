@@ -160,7 +160,11 @@ function renderPuzzle(p) {
       return `${i + 1}. ${label}`;
     }).join('\n');
   } else if (p.ui === 'log-lock') {
-    answer = (cfg.lines || []).filter(l => l.correct).map(l => `→ ${l.text}`).join('\n');
+    if (cfg.correct_lines) {
+      answer = cfg.correct_lines.map(i => `→ ${cfg.lines[i]}`).join('\n');
+    } else {
+      answer = (cfg.lines || []).filter(l => l.correct).map(l => `→ ${l.text}`).join('\n');
+    }
   } else if (p.ui === 'defuse-lock') {
     answer = (cfg.tasks || []).map(t => {
       if (t.type === 'toggle') return `${t.label}: ${t.answer ? 'ON ✅' : 'OFF ❌'}`;
@@ -233,7 +237,7 @@ function renderPuzzle(p) {
   </div>`;
 }
 
-function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escHtml(s) { s = String(s ?? ''); return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 init();
 </script>
