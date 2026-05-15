@@ -104,7 +104,11 @@ class DefuseLock {
   _test() {
     const correct = this.tasks.every((t, i) => {
       if (t.type === 'toggle') return this.taskStates[i] === t.answer;
-      if (t.type === 'code') return this.taskStates[i] === t.answer;
+      if (t.type === 'code') {
+        const input = (this.taskStates[i] || '').toLowerCase();
+        const answer = t.answer.toLowerCase();
+        return t.accept_contains ? input.includes(answer) : input === answer;
+      }
       return false;
     });
     if (correct) {

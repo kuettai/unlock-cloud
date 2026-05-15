@@ -164,12 +164,35 @@ class WireLock {
       return { x: t.clientX - cr.left, y: t.clientY - cr.top };
     };
 
+    // Click-click support: click wire, then click socket
+    let selectedWire = null;
+    const highlightWire = (wid) => {
+      Object.values(this.wireDots).forEach(d => d.classList.remove('wirelk-dot-selected'));
+      if (wid && this.wireDots[wid]) this.wireDots[wid].classList.add('wirelk-dot-selected');
+    };
+
+    let didDrag = false;
+
     const onStart = (e) => {
-      const dot = e.target.closest('[data-wire]');
-      if (!dot) return;
-      const wid = dot.dataset.wire;
+      const wireDot = e.target.closest('[data-wire]');
+      const socketDot = e.target.closest('[data-socket]');
+
+      // Click on socket while a wire is selected → connect
+      if (socketDot && selectedWire) {
+        const sid = socketDot.dataset.socket;
+        const taken = Object.entries(this.connections).find(([k, v]) => v === sid && k !== selectedWire);
+        if (!taken) this.connections[selectedWire] = sid;
+        highlightWire(null);
+        selectedWire = null;
+        this._drawAll();
+        return;
+      }
+
+      if (!wireDot) { highlightWire(null); selectedWire = null; return; }
+      const wid = wireDot.dataset.wire;
       if (this.locked[wid]) return;
       delete this.connections[wid];
+      didDrag = false;
       const pos = getPos(e);
       this.dragging = { wireId: wid, x: pos.x, y: pos.y };
       this._drawAll();
@@ -177,6 +200,7 @@ class WireLock {
 
     const onMove = (e) => {
       if (!this.dragging) return;
+      didDrag = true;
       e.preventDefault();
       const pos = getPos(e);
       this.dragging.x = pos.x;
@@ -188,6 +212,14 @@ class WireLock {
       if (!this.dragging) return;
       const wid = this.dragging.wireId;
       this.dragging = null;
+
+      if (!didDrag) {
+        // It was a click, not a drag — select the wire for click-click mode
+        selectedWire = wid;
+        highlightWire(wid);
+        this._drawAll();
+        return;
+      }
 
       const endEl = document.elementFromPoint(
         e.changedTouches ? e.changedTouches[0].clientX : e.clientX,
@@ -275,6 +307,7 @@ class WireLock {
 .wirelk-left .wirelk-terminal{display:flex;align-items:center;gap:6px;justify-content:flex-end}
 .wirelk-right .wirelk-terminal{display:flex;align-items:center;gap:6px}
 .wirelk-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--border,#1e2a45);cursor:pointer;flex-shrink:0;transition:box-shadow .2s}
+.wirelk-dot-selected{box-shadow:0 0 12px var(--accent,#3b82f6);border-color:var(--accent,#3b82f6)}
 .wirelk-dot:hover{box-shadow:0 0 10px rgba(255,255,255,.2)}
 .wirelk-socket{background:var(--surface,#141b2d)!important}
 .wirelk-label{font-size:11px;color:var(--muted,#7a8ba8);font-weight:600}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Carnegie — Setup & Turn Reference</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #eee; padding: 40px; }
+  h1 { text-align: center; font-size: 2rem; margin-bottom: 10px; color: #f0c040; }
+  .subtitle { text-align: center; color: #aaa; margin-bottom: 40px; }
+  .section { margin-bottom: 50px; }
+  .section h2 { font-size: 1.4rem; color: #f0c040; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 8px; }
+  svg { display: block; margin: 0 auto; }
+  .note { text-align: center; color: #888; font-size: 0.85rem; margin-top: 10px; }
+  @media print {
+    body { background: #fff; color: #222; padding: 20px; }
+    h1, .section h2 { color: #b8860b; }
+    .subtitle, .note { color: #666; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Carnegie</h1>
+<p class="subtitle">Quick Visual Reference — Setup & Turn Flow</p>
+
+<!-- SECTION 1: SETUP -->
+<div class="section">
+<h2>1. Game Setup</h2>
+<svg viewBox="0 0 900 520" width="900" height="520" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="900" height="520" fill="#16213e" rx="12"/>
+
+  <!-- Central Board -->
+  <rect x="250" y="120" width="400" height="280" fill="#1e3a5f" stroke="#4a90d9" stroke-width="2" rx="8"/>
+  <text x="450" y="150" text-anchor="middle" fill="#4a90d9" font-size="14" font-weight="bold">CENTRAL GAME BOARD</text>
+
+  <!-- City Map zone -->
+  <rect x="270" y="170" width="160" height="120" fill="#2d5a3d" stroke="#5cb85c" stroke-width="1.5" rx="4"/>
+  <text x="350" y="200" text-anchor="middle" fill="#5cb85c" font-size="11" font-weight="bold">CITY MAP</text>
+  <text x="350" y="220" text-anchor="middle" fill="#aaa" font-size="9">Build here to gain</text>
+  <text x="350" y="234" text-anchor="middle" fill="#aaa" font-size="9">income/donations</text>
+  <!-- Grid hint -->
+  <line x1="290" y1="250" x2="410" y2="250" stroke="#5cb85c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="290" y1="270" x2="410" y2="270" stroke="#5cb85c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="330" y1="240" x2="330" y2="280" stroke="#5cb85c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="370" y1="240" x2="370" y2="280" stroke="#5cb85c" stroke-width="0.5" opacity="0.5"/>
+
+  <!-- Timeline Track -->
+  <rect x="270" y="310" width="360" height="50" fill="#3d2d5a" stroke="#9b59b6" stroke-width="1.5" rx="4"/>
+  <text x="450" y="332" text-anchor="middle" fill="#9b59b6" font-size="11" font-weight="bold">TIMELINE / EVENT TRACK</text>
+  <text x="450" y="348" text-anchor="middle" fill="#aaa" font-size="9">Active player picks action here → triggers for ALL players</text>
+  <!-- Arrow markers -->
+  <circle cx="300" cy="345" r="4" fill="#9b59b6" opacity="0.6"/>
+  <circle cx="340" cy="345" r="4" fill="#9b59b6" opacity="0.6"/>
+  <circle cx="380" cy="345" r="4" fill="#9b59b6" opacity="0.6"/>
+  <circle cx="420" cy="345" r="4" fill="#9b59b6" opacity="0.6"/>
+  <circle cx="460" cy="345" r="4" fill="#9b59b6" opacity="0.8"/>
+  <circle cx="500" cy="345" r="4" fill="#9b59b6" opacity="0.6"/>
+  <circle cx="540" cy="345" r="4" fill="#9b59b6" opacity="0.6"/>
+  <circle cx="580" cy="345" r="4" fill="#9b59b6" opacity="0.6"/>
+
+  <!-- Donation/Government tracks -->
+  <rect x="450" y="170" width="180" height="120" fill="#5a3d2d" stroke="#e67e22" stroke-width="1.5" rx="4"/>
+  <text x="540" y="195" text-anchor="middle" fill="#e67e22" font-size="11" font-weight="bold">GOVERNMENT &</text>
+  <text x="540" y="210" text-anchor="middle" fill="#e67e22" font-size="11" font-weight="bold">DONATION TRACKS</text>
+  <text x="540" y="235" text-anchor="middle" fill="#aaa" font-size="9">Donations → VP</text>
+  <text x="540" y="250" text-anchor="middle" fill="#aaa" font-size="9">Gov events → scoring</text>
+
+  <!-- Player Board (bottom left) -->
+  <rect x="40" y="350" width="180" height="150" fill="#2a2a4a" stroke="#6c9bd9" stroke-width="2" rx="6"/>
+  <text x="130" y="375" text-anchor="middle" fill="#6c9bd9" font-size="11" font-weight="bold">YOUR PLAYER BOARD</text>
+  <!-- Department rows -->
+  <rect x="55" y="390" width="150" height="20" fill="#2d5a3d" rx="3"/>
+  <text x="130" y="404" text-anchor="middle" fill="#fff" font-size="9">HR Department</text>
+  <rect x="55" y="415" width="150" height="20" fill="#1e3a5f" rx="3"/>
+  <text x="130" y="429" text-anchor="middle" fill="#fff" font-size="9">Management Dept</text>
+  <rect x="55" y="440" width="150" height="20" fill="#5a3d2d" rx="3"/>
+  <text x="130" y="454" text-anchor="middle" fill="#fff" font-size="9">Construction Dept</text>
+  <rect x="55" y="465" width="150" height="20" fill="#5a2d4a" rx="3"/>
+  <text x="130" y="479" text-anchor="middle" fill="#fff" font-size="9">Government Dept</text>
+
+  <!-- Workers on player board -->
+  <circle cx="75" cy="400" r="5" fill="#f0c040"/>
+  <circle cx="90" cy="400" r="5" fill="#f0c040"/>
+  <circle cx="75" cy="425" r="5" fill="#f0c040"/>
+
+  <!-- Callout: starting workers -->
+  <text x="130" y="500" text-anchor="middle" fill="#f0c040" font-size="9">● = Starting workers (3)</text>
+
+  <!-- Shared Supply (top left) -->
+  <rect x="40" y="30" width="180" height="80" fill="#2a2a4a" stroke="#aaa" stroke-width="1.5" rx="6"/>
+  <text x="130" y="52" text-anchor="middle" fill="#ccc" font-size="11" font-weight="bold">SHARED SUPPLY</text>
+  <text x="130" y="70" text-anchor="middle" fill="#aaa" font-size="9">💰 Money tokens</text>
+  <text x="130" y="85" text-anchor="middle" fill="#aaa" font-size="9">🏗️ Building tiles (by type)</text>
+  <text x="130" y="100" text-anchor="middle" fill="#aaa" font-size="9">📋 Event cards deck</text>
+
+  <!-- Player supply (top right) -->
+  <rect x="680" y="30" width="180" height="80" fill="#2a2a4a" stroke="#6c9bd9" stroke-width="1.5" rx="6"/>
+  <text x="770" y="52" text-anchor="middle" fill="#6c9bd9" font-size="11" font-weight="bold">YOUR SUPPLY</text>
+  <text x="770" y="70" text-anchor="middle" fill="#aaa" font-size="9">⬡ Discs (donation/gov)</text>
+  <text x="770" y="85" text-anchor="middle" fill="#aaa" font-size="9">◼ Cubes (buildings)</text>
+  <text x="770" y="100" text-anchor="middle" fill="#aaa" font-size="9">$ Starting money: $4</text>
+
+  <!-- Numbered callouts -->
+  <circle cx="130" cy="18" r="12" fill="#f0c040"/>
+  <text x="130" y="23" text-anchor="middle" fill="#1a1a2e" font-size="11" font-weight="bold">1</text>
+
+  <circle cx="450" cy="108" r="12" fill="#f0c040"/>
+  <text x="450" y="113" text-anchor="middle" fill="#1a1a2e" font-size="11" font-weight="bold">2</text>
+
+  <circle cx="130" cy="338" r="12" fill="#f0c040"/>
+  <text x="130" y="343" text-anchor="middle" fill="#1a1a2e" font-size="11" font-weight="bold">3</text>
+
+  <circle cx="770" cy="18" r="12" fill="#f0c040"/>
+  <text x="770" y="23" text-anchor="middle" fill="#1a1a2e" font-size="11" font-weight="bold">4</text>
+
+  <!-- Legend -->
+  <text x="450" y="420" text-anchor="middle" fill="#ccc" font-size="11">① Place shared supply → ② Lay out central board → ③ Take player board + 3 workers → ④ Take personal supply</text>
+  <text x="450" y="445" text-anchor="middle" fill="#888" font-size="10">Each player starts with $4, 3 workers on their board, and all discs/cubes in personal supply.</text>
+  <text x="450" y="465" text-anchor="middle" fill="#888" font-size="10">Shuffle event cards, place on timeline. Youngest player goes first.</text>
+
+  <!-- Other players hint -->
+  <rect x="680" y="350" width="180" height="60" fill="#2a2a4a" stroke="#aaa" stroke-width="1" rx="6" stroke-dasharray="4"/>
+  <text x="770" y="375" text-anchor="middle" fill="#aaa" font-size="10">Other players</text>
+  <text x="770" y="393" text-anchor="middle" fill="#aaa" font-size="9">(same setup, different color)</text>
+</svg>
+<p class="note">Setup overview — refer to rulebook for exact tile/card placement details.</p>
+</div>
+
+<!-- SECTION 2: TURN FLOW -->
+<div class="section">
+<h2>2. How to Play — Turn Flow</h2>
+<svg viewBox="0 0 900 600" width="900" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="600" fill="#16213e" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" fill="#f0c040" font-size="16" font-weight="bold">ROUND STRUCTURE</text>
+
+  <!-- Step 1: Active player picks -->
+  <rect x="50" y="55" width="800" height="70" fill="#1e2a4a" stroke="#4a90d9" stroke-width="1.5" rx="8"/>
+  <text x="450" y="80" text-anchor="middle" fill="#4a90d9" font-size="13" font-weight="bold">STEP 1: Active Player Chooses Action on Timeline</text>
+  <text x="450" y="100" text-anchor="middle" fill="#ccc" font-size="11">Move the marker forward to the next available action slot. This determines what EVERYONE does this round.</text>
+  <text x="450" y="116" text-anchor="middle" fill="#888" font-size="10">⚡ You cannot skip — you must pick the next unclaimed slot on the track.</text>
+
+  <!-- Arrow down -->
+  <polygon points="450,130 440,130 450,145 460,130" fill="#f0c040"/>
+
+  <!-- Step 2: All players activate -->
+  <rect x="50" y="150" width="800" height="55" fill="#1e2a4a" stroke="#f0c040" stroke-width="1.5" rx="8"/>
+  <text x="450" y="175" text-anchor="middle" fill="#f0c040" font-size="13" font-weight="bold">STEP 2: ALL Players Activate Matching Departments</text>
+  <text x="450" y="195" text-anchor="middle" fill="#ccc" font-size="11">Every player with workers in the triggered department row gets to use them. More workers = more power.</text>
+
+  <!-- Arrow down -->
+  <polygon points="450,210 440,210 450,225 460,210" fill="#f0c040"/>
+
+  <!-- The 4 Actions -->
+  <text x="450" y="248" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">THE 4 ACTIONS</text>
+
+  <!-- HR -->
+  <rect x="30" y="265" width="200" height="200" fill="#2d5a3d" stroke="#5cb85c" stroke-width="2" rx="8"/>
+  <text x="130" y="290" text-anchor="middle" fill="#5cb85c" font-size="13" font-weight="bold">① HR</text>
+  <text x="130" y="310" text-anchor="middle" fill="#5cb85c" font-size="10">RECRUIT</text>
+  <line x1="70" y1="320" x2="190" y2="320" stroke="#5cb85c" stroke-width="0.5" opacity="0.5"/>
+  <text x="130" y="340" text-anchor="middle" fill="#ccc" font-size="10">Hire new workers</text>
+  <text x="130" y="358" text-anchor="middle" fill="#ccc" font-size="10">from the supply</text>
+  <text x="130" y="380" text-anchor="middle" fill="#aaa" font-size="9">Place them on any</text>
+  <text x="130" y="395" text-anchor="middle" fill="#aaa" font-size="9">department row</text>
+  <text x="130" y="420" text-anchor="middle" fill="#5cb85c" font-size="9">Workers = your engine.</text>
+  <text x="130" y="435" text-anchor="middle" fill="#5cb85c" font-size="9">More workers = more</text>
+  <text x="130" y="450" text-anchor="middle" fill="#5cb85c" font-size="9">activations per turn.</text>
+
+  <!-- Management -->
+  <rect x="245" y="265" width="200" height="200" fill="#1e3a5f" stroke="#4a90d9" stroke-width="2" rx="8"/>
+  <text x="345" y="290" text-anchor="middle" fill="#4a90d9" font-size="13" font-weight="bold">② MANAGEMENT</text>
+  <text x="345" y="310" text-anchor="middle" fill="#4a90d9" font-size="10">MOVE & ACTIVATE</text>
+  <line x1="285" y1="320" x2="405" y2="320" stroke="#4a90d9" stroke-width="0.5" opacity="0.5"/>
+  <text x="345" y="340" text-anchor="middle" fill="#ccc" font-size="10">Move workers between</text>
+  <text x="345" y="358" text-anchor="middle" fill="#ccc" font-size="10">department rows</text>
+  <text x="345" y="380" text-anchor="middle" fill="#aaa" font-size="9">Then activate depts</text>
+  <text x="345" y="395" text-anchor="middle" fill="#aaa" font-size="9">that received workers</text>
+  <text x="345" y="420" text-anchor="middle" fill="#4a90d9" font-size="9">Key combo action!</text>
+  <text x="345" y="435" text-anchor="middle" fill="#4a90d9" font-size="9">Chain activations by</text>
+  <text x="345" y="450" text-anchor="middle" fill="#4a90d9" font-size="9">moving strategically.</text>
+
+  <!-- Construction -->
+  <rect x="460" y="265" width="200" height="200" fill="#5a3d2d" stroke="#e67e22" stroke-width="2" rx="8"/>
+  <text x="560" y="290" text-anchor="middle" fill="#e67e22" font-size="13" font-weight="bold">③ CONSTRUCTION</text>
+  <text x="560" y="310" text-anchor="middle" fill="#e67e22" font-size="10">BUILD</text>
+  <line x1="500" y1="320" x2="620" y2="320" stroke="#e67e22" stroke-width="0.5" opacity="0.5"/>
+  <text x="560" y="340" text-anchor="middle" fill="#ccc" font-size="10">Place a building on</text>
+  <text x="560" y="358" text-anchor="middle" fill="#ccc" font-size="10">the city map</text>
+  <text x="560" y="380" text-anchor="middle" fill="#aaa" font-size="9">Choose: gain recurring</text>
+  <text x="560" y="395" text-anchor="middle" fill="#aaa" font-size="9">INCOME or DONATION</text>
+  <text x="560" y="420" text-anchor="middle" fill="#e67e22" font-size="9">Buildings score VP and</text>
+  <text x="560" y="435" text-anchor="middle" fill="#e67e22" font-size="9">fuel your economy.</text>
+  <text x="560" y="450" text-anchor="middle" fill="#e67e22" font-size="9">Location matters!</text>
+
+  <!-- Government -->
+  <rect x="675" y="265" width="200" height="200" fill="#5a2d4a" stroke="#c0392b" stroke-width="2" rx="8"/>
+  <text x="775" y="290" text-anchor="middle" fill="#e74c3c" font-size="13" font-weight="bold">④ GOVERNMENT</text>
+  <text x="775" y="310" text-anchor="middle" fill="#e74c3c" font-size="10">SCORE</text>
+  <line x1="715" y1="320" x2="835" y2="320" stroke="#c0392b" stroke-width="0.5" opacity="0.5"/>
+  <text x="775" y="340" text-anchor="middle" fill="#ccc" font-size="10">Score VP based on</text>
+  <text x="775" y="358" text-anchor="middle" fill="#ccc" font-size="10">current event goals</text>
+  <text x="775" y="380" text-anchor="middle" fill="#aaa" font-size="9">Donations + city</text>
+  <text x="775" y="395" text-anchor="middle" fill="#aaa" font-size="9">presence = points</text>
+  <text x="775" y="420" text-anchor="middle" fill="#e74c3c" font-size="9">Timing is everything.</text>
+  <text x="775" y="435" text-anchor="middle" fill="#e74c3c" font-size="9">Prepare before gov</text>
+  <text x="775" y="450" text-anchor="middle" fill="#e74c3c" font-size="9">events trigger!</text>
+
+  <!-- End Game -->
+  <rect x="100" y="490" width="700" height="55" fill="#2a1a1a" stroke="#c0392b" stroke-width="2" rx="8"/>
+  <text x="450" y="515" text-anchor="middle" fill="#e74c3c" font-size="12" font-weight="bold">🏁 GAME END: Timeline reaches final event</text>
+  <text x="450" y="535" text-anchor="middle" fill="#ccc" font-size="11">Final Score = Building VP + Donation VP + Government Bonuses + Money (every $4 = 1 VP)</text>
+
+  <!-- Key insight -->
+  <text x="450" y="575" text-anchor="middle" fill="#f0c040" font-size="11" font-style="italic">💡 Key Insight: You don't pick actions just for yourself — every action you choose affects ALL players.</text>
+  <text x="450" y="592" text-anchor="middle" fill="#888" font-size="10">Choose actions that benefit you most while giving opponents the least advantage.</text>
+</svg>
+<p class="note">Simplified overview — some details (department upgrades, project tiles, region bonuses) omitted for clarity.</p>
+</div>
+
+</body>
+</html>
