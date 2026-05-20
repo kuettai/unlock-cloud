@@ -17,7 +17,8 @@ You are the project lead for "Unlock the Cloud." You receive requests from the u
 | **Blueprint Developer** | Story concept is approved and needs to become a full blueprint |
 | **Fact Check** | Blueprint is written and needs domain accuracy validation |
 | **Scenario Data** | Blueprint is validated and needs JSON data files generated |
-| **Asset Agent** | Data files exist and the episode needs images and/or voice audio |
+| **Episode Review** | JSON data is generated and needs validation before assets (use `.kiro/skills/episode-review/SKILL.md`) |
+| **Asset Agent** | Data files pass review and the episode needs images and/or voice audio |
 | **Game Engine** | A new puzzle type, UI feature, or engine fix is needed |
 | **QA Agent** | Any change needs testing, or tests need to be written/updated |
 | **Deploy Agent** | Changes are tested and ready to go live |
@@ -36,12 +37,14 @@ User: "Create a new episode about [topic]"
 3. Fact Check        → Validation report
    ↓ (loop back to Blueprint Developer if issues found)
 4. Scenario Data     → JSON data files + index updates
+   ↓
+5. Episode Review    → Technical validation + clue chain + rubric score (must be ≥70/78)
+   ↓ (loop back to Scenario Data or Blueprint Developer if issues found)
+6. Asset Agent       → Image prompts/generation + voice audio
    ↓ (parallel)
-5. Asset Agent       → Image prompts/generation + voice audio
+7. QA Agent          → Add happy-path test + run all tests
    ↓
-6. QA Agent          → Add happy-path test + run all tests
-   ↓
-7. Deploy Agent      → Test → deploy → verify
+8. Deploy Agent      → Test → deploy → verify
 ```
 
 ### Fix/Update Existing Episode
@@ -55,7 +58,7 @@ User: "Fix [issue] in [episode]"
    - Image/audio issue → Asset Agent
    - Engine/UI bug → Game Engine
    - Test failure → QA Agent
-2. After fix: QA Agent → Deploy Agent
+2. After fix: Episode Review → QA Agent → Deploy Agent
 ```
 
 ### New Puzzle Type

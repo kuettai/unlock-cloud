@@ -1,0 +1,167 @@
+{
+  "cards": [
+    {
+      "id": 10,
+      "type": "location",
+      "color": "green",
+      "title": "Your Workstation",
+      "description": "Three monitors. Cold coffee. A red notification flashes: HKEX circular received.",
+      "image": "assets/workstation.png",
+      "image_prompt": "A corporate office workstation with three monitors, one flashing red. Cold coffee cup, Post-it notes. Secure door with keycard reader to the left. Warm fluorescent lighting, tense deadline atmosphere.",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 11, "label": "Open the HKEX circular", "puzzle": "circular-review" },
+        { "card_id": 14, "label": "Grab the Post-it note", "requires_item": [11] },
+        { "card_id": 30, "label": "Access Compliance Vault", "requires_item": [11], "puzzle": "impact-mapping" },
+        { "card_id": 56, "label": "Reply to meeting invite" },
+        { "card_id": 57, "label": "Forward to all stakeholders" }
+      ],
+      "visible_to": "all",
+      "room": "workstation"
+    },
+    {
+      "id": 11,
+      "type": "object",
+      "color": "blue",
+      "title": "HKEX Circular",
+      "description": "HKEX/RC-2026-017 — 3 chapters amended. Effective 12 May. 4 key changes.",
+      "visible_to": "all",
+      "room": "workstation"
+    },
+    {
+      "id": 14,
+      "type": "item",
+      "color": "red",
+      "title": "Intern's Post-it",
+      "description": "\"code = chapters + days + signoffs\"",
+      "visible_to": "all",
+      "room": "workstation"
+    },
+    {
+      "id": 30,
+      "type": "location",
+      "color": "green",
+      "title": "Compliance Vault",
+      "description": "Filing cabinets. A scrambled process flow on the display. Cabinet B is ajar.",
+      "image": "assets/compliance-vault.png",
+      "image_prompt": "A secure corporate vault room with tall metal filing cabinets. Wall-mounted display showing a scrambled flowchart. One cabinet drawer slightly ajar. Dim overhead lighting with blue security accent lights.",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 33, "label": "Look at the scrambled display" },
+        { "card_id": 31, "label": "Read the lifecycle poster", "requires_item": [33] },
+        { "card_id": 32, "label": "Open Cabinet B" },
+        { "card_id": 34, "label": "Pick up old circular from floor", "requires_item": [33] },
+        { "card_id": 50, "label": "Fix the process sequence", "requires_item": [31], "puzzle": "process-sequence" }
+      ],
+      "visible_to": "all",
+      "room": "compliance-vault"
+    },
+    {
+      "id": 31,
+      "type": "object",
+      "color": "blue",
+      "title": "Lifecycle Poster",
+      "description": "Published → Assessment → Gap Analysis → Remediation → Filing.",
+      "visible_to": "all",
+      "room": "compliance-vault"
+    },
+    {
+      "id": 32,
+      "type": "item",
+      "color": "red",
+      "title": "Director's Signature",
+      "description": "USB token. Label: \"DO NOT LOSE. — Management\"",
+      "visible_to": "all",
+      "room": "compliance-vault"
+    },
+    {
+      "id": 33,
+      "type": "object",
+      "color": "blue",
+      "title": "Scrambled Display",
+      "description": "Process steps in wrong order. Needs fixing before the terminal unlocks.",
+      "visible_to": "all",
+      "room": "compliance-vault"
+    },
+    {
+      "id": 34,
+      "type": "item",
+      "color": "red",
+      "title": "Outdated Circular (v3)",
+      "description": "Stamped SUPERSEDED in red. Looks official but outdated.",
+      "visible_to": "all",
+      "room": "compliance-vault"
+    },
+    {
+      "id": 50,
+      "type": "location",
+      "color": "green",
+      "title": "e-Filing Terminal",
+      "description": "A glowing terminal. \"Insert authorisation token. Enter submission code.\"",
+      "image": "assets/efiling-terminal.png",
+      "image_prompt": "A single glowing computer terminal in a dim corporate room. Filing system interface on screen with blinking cursor. Card slot on the side. Dark room, single overhead spotlight. Clean, high-security atmosphere.",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 51, "label": "View the filing template" },
+        { "card_id": 53, "label": "Insert Director's Signature", "requires_item": [32], "consumes_item": [32] },
+        { "card_id": 99, "label": "Submit the filing", "requires_item": [53], "puzzle": "submission-code" }
+      ],
+      "visible_to": "all",
+      "room": "efiling-terminal"
+    },
+    {
+      "id": 51,
+      "type": "object",
+      "color": "blue",
+      "title": "Filing Template",
+      "description": "Greyed out. \"Authorisation required.\"",
+      "visible_to": "all",
+      "room": "efiling-terminal"
+    },
+    {
+      "id": 53,
+      "type": "event",
+      "color": "yellow",
+      "title": "Template Unlocked",
+      "description": "Signature accepted. Submission code field active.",
+      "visible_to": "all",
+      "room": "efiling-terminal"
+    },
+    {
+      "id": 55,
+      "type": "penalty",
+      "color": "black",
+      "title": "Version Mismatch",
+      "description": "System rejects v3. Wrong document.",
+      "visible_to": "all",
+      "room": "efiling-terminal"
+    },
+    {
+      "id": 56,
+      "type": "penalty",
+      "color": "black",
+      "title": "Meeting Trap",
+      "description": "You accepted a 1-hour meeting with no agenda. Time wasted.",
+      "visible_to": "all",
+      "room": "workstation"
+    },
+    {
+      "id": 57,
+      "type": "penalty",
+      "color": "black",
+      "title": "Reply All Trap",
+      "description": "Legal responds: 'We have concerns.' The thread spirals.",
+      "visible_to": "all",
+      "room": "workstation"
+    },
+    {
+      "id": 99,
+      "type": "event",
+      "color": "yellow",
+      "title": "Filing Submitted",
+      "description": "Submission received. Have a good weekend.",
+      "visible_to": "all",
+      "room": "efiling-terminal"
+    }
+  ]
+}

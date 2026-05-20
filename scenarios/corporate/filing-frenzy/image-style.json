@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Digital illustration, modern corporate office, warm fluorescent lighting, muted tones, clean lines, regulatory compliance theme, game card art.",
+  "style_prefix_location": "Digital illustration, corporate interior, warm overhead lighting, filing cabinets, monitors, muted blue-grey palette, wide angle, clean modern office.",
+  "style_prefix_item": "Digital illustration, corporate object on neutral background, clean lines, warm lighting, slight glow, professional, floating, minimal.",
+  "style_prefix_object": "Digital illustration, office document or screen interface, warm lighting, muted tones, close-up, readable layout, professional corporate style.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, realistic photo, fantasy, sci-fi",
+  "aspect_ratio": "16:9"
+}

@@ -110,3 +110,35 @@ Before handing off to Fact Check Agent:
 - Avoid redundant discoveries — don't ask the same question twice (e.g., 'count baskets' then 'how many baskets?')
 - For branching paths: both branches should reveal the next room independently
 - Match puzzle type to the action: maze for navigation/delivery, seating for spatial organization, offering-table for searching/selecting, bread-break for timing/miracle moments
+
+## Mandatory Fields Checklist
+
+Every puzzle in `puzzles.json` MUST include:
+- `"mandatory": true` for progression-blocking puzzles, `false` for NPCs/tools/optional
+- At least ONE puzzle per episode must have `"isFinal": true` — the puzzle that triggers the ending
+- These fields are used by the backend to track player completion and game state
+
+## Lore Chain Design
+
+Every episode should have 4-10 lore cards that deepen understanding:
+- Each lore card MUST be revealed by at least one other card's `reveals` array
+- Lore should be revealed by solving the puzzle it relates to (result card reveals the lore)
+- Lore explains WHY, not WHAT — connect in-game actions to real-world meaning
+- Scoring.json `lore_ids` must list all lore card IDs for bonus points
+- Verify: no lore card is orphaned (unreachable through any gameplay path)
+
+## Challenge Mode Design
+
+Every puzzle should consider a Challenge variant (`"challenge": {}` block):
+- Read `.kiro/skills/challenge-mode/SKILL.md` for patterns
+- Make it harder WITHOUT changing the answer: remove hints, add decoys, tighten constraints
+- Challenge descriptions should be vaguer (player must recall from cards, not read from puzzle)
+- Grid/timing puzzles: more cells, narrower windows
+- If the puzzle changes data visible on cards, add `"challenge": {"description": "..."}` to those cards too
+
+## Quality Gate
+
+Before handing off to Scenario Data Agent, run the episode-review process:
+- Read `.kiro/skills/episode-review/SKILL.md` for the full review rubric
+- Minimum: verify every puzzle has 2+ clue sources, hints escalate in 3 tiers, no orphaned dependencies
+- The episode should score ≥70/78 on the rubric before proceeding

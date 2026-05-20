@@ -1,0 +1,18 @@
+{
+  "combinations": [
+    {
+      "card_a": 32,
+      "card_b": 51,
+      "result_card": 53,
+      "type": "item_object",
+      "description": "Insert Director's Digital Signature into Filing Template"
+    },
+    {
+      "card_a": 34,
+      "card_b": 51,
+      "result_card": 55,
+      "type": "item_object",
+      "description": "Insert Outdated Circular into Filing Template (wrong)"
+    }
+  ]
+}

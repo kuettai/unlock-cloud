@@ -62,14 +62,16 @@ You are the art director and audio producer for "Unlock the Cloud." You create a
 
 ### Image Types
 
-| Type | Style | Composition | Resolution |
-|---|---|---|---|
-| **Cover** | Cinematic, title-screen | Protagonist from behind/side entering the world. Viewer feels part of it. | 1536×1024 |
-| **Ending Success** | Warm, triumphant | Protagonist in victory pose, world transformed (green dashboards, open doors). Supporting characters celebrating. | 1536×1024 |
-| **Ending Failure** | Muted, melancholic | Protagonist alone, world unresolved. Hint of hope (sticky note, cat nearby). | 1536×1024 |
-| **Location** | Wide angle, environmental | Full room with key discoverable objects visible. NPCs in character. | 1280×720 |
-| **Object** | Close-up, minimal background | Single interactive element, shallow depth of field, dark blurred background. | 480×480 |
-| **Item** | Icon-style, minimal background | Single collectible object, clean, centered, dark background. | 480×480 |
+| Type | Style | Composition | Resolution | Aspect |
+|---|---|---|---|---|
+| **Cover** | Cinematic, title-screen | Protagonist from behind/side entering the world. Viewer feels part of it. | 1024×1536 | 9:16 portrait |
+| **Ending Success** | Warm, triumphant | Protagonist in victory pose, world transformed (green dashboards, open doors). Supporting characters celebrating. | 1024×1536 | 9:16 portrait |
+| **Ending Failure** | Muted, melancholic | Protagonist alone, world unresolved. Hint of hope (sticky note, cat nearby). | 1024×1536 | 9:16 portrait |
+| **Location** | Wide angle, environmental | Full room with key discoverable objects visible. NPCs in character. | 768×432 | 16:9 landscape |
+| **Object** | Close-up, minimal background | Single interactive element, shallow depth of field, dark blurred background. | 480×480 | 1:1 |
+| **Item** | Icon-style, minimal background | Single collectible object, clean, centered, dark background. | 480×480 | 1:1 |
+
+Cover and ending images are displayed as full-screen mobile backgrounds (`object-fit:cover` / `background-size:cover`). Portrait 9:16 ensures the key composition fills the phone viewport without cropping.
 
 ### Per-Episode Style
 

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle Prototypes — Claude v1 (New Mechanics)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; }
+header { background: #16213e; padding: 1rem 2rem; border-bottom: 2px solid #0f3460; }
+header h1 { font-size: 1.3rem; color: #e94560; }
+header p { font-size: 0.85rem; color: #aaa; margin-top: 0.3rem; }
+nav { display: flex; gap: 0.4rem; padding: 0.8rem 2rem; background: #16213e; flex-wrap: wrap; }
+nav button { padding: 0.5rem 0.8rem; border: 2px solid #0f3460; background: #1a1a2e; color: #eee; border-radius: 6px; cursor: pointer; font-size: 0.78rem; transition: all 0.2s; }
+nav button:hover { border-color: #e94560; }
+nav button.active { background: #e94560; border-color: #e94560; color: #fff; }
+.panel { display: none; padding: 1.5rem; max-width: 500px; margin: 0 auto; }
+.panel.active { display: block; }
+.panel h2 { color: #e94560; margin-bottom: 0.3rem; font-size: 1.1rem; }
+.panel .subtitle { color: #aaa; font-size: 0.8rem; margin-bottom: 1.2rem; }
+</style>
+</head>
+<body>
+<header>
+<h1>🧪 Puzzle Prototypes — New Mechanics (Claude v1)</h1>
+<p>Deduction | Push Luck | Decay | Fog Map | Crafting | Trap Disarm | Wager | Auction | Streak</p>
+</header>
+<nav>
+<button class="active" onclick="showPanel('deduction')">🔍 Deduction</button>
+<button onclick="showPanel('push-luck')">🎲 Push Luck</button>
+<button onclick="showPanel('decay')">💀 Decay</button>
+<button onclick="showPanel('fog-map')">🗺️ Fog Map</button>
+<button onclick="showPanel('craft')">⚗️ Crafting</button>
+<button onclick="showPanel('trap')">💣 Trap Disarm</button>
+<button onclick="showPanel('wager')">🎰 Wager</button>
+<button onclick="showPanel('auction')">🏷️ Auction</button>
+<button onclick="showPanel('streak')">🔥 Streak</button>
+</nav>
+
+<div id="deduction" class="panel active">
+<h2>🔍 Deduction Grid Lock</h2>
+<p class="subtitle">Logic grid elimination. Use clues to deduce who accessed what system, and when. Tap cells to cycle: empty → O (yes) → X (no).</p>
+<div id="deduction-mount"></div>
+</div>
+
+<div id="push-luck" class="panel">
+<h2>🎲 Push-Your-Luck Lock</h2>
+<p class="subtitle">Each consecutive draw increases both your multiplier AND bust chance. Draw 1 = safe but 1×. Draw 4 = 4× but ~50% bust. Playing safe costs you rounds. Push too hard and lose everything.</p>
+<div id="push-luck-mount"></div>
+</div>
+
+<div id="decay" class="panel">
+<h2>💀 Decay Lock</h2>
+<p class="subtitle">Server logs are corrupting in real-time. Memorise the key information before it's gone, then answer from memory.</p>
+<div id="decay-mount"></div>
+</div>
+
+<div id="fog-map" class="panel">
+<h2>🗺️ Fog Map Lock</h2>
+<p class="subtitle">Explore the grid by revealing adjacent tiles. Collect 3 keycards before reaching the exit. Watch your energy — traps drain it, bonuses restore it. Choose your path wisely.</p>
+<div id="fog-map-mount"></div>
+</div>
+
+<div id="craft" class="panel">
+<h2>⚗️ Craft Lock</h2>
+<p class="subtitle">Combine materials based on their properties (tags), not fixed recipes. Select two items to combine. Items marked ∞ are tools — they aren't consumed. Discover the chain to produce the final item.</p>
+<div id="craft-mount"></div>
+</div>
+
+<div id="trap" class="panel">
+<h2>💣 Trap Disarm Lock</h2>
+<p class="subtitle">Cut wires in the correct order using a partially redacted manual. Some rules have blacked-out info — deduce the right sequence from what you CAN read. 3 strikes and the trap triggers.</p>
+<div id="trap-mount"></div>
+</div>
+
+<div id="wager" class="panel">
+<h2>🎰 Wager Lock — "Bluff the Guard"</h2>
+<p class="subtitle">You got caught near the vault. Talk your way out. Mumble = safe but only 2 choices (easy). Brazen Lie = high reward but 6 choices to pick from (hard). Reach enough trust to walk free.</p>
+<div id="wager-mount"></div>
+</div>
+
+<div id="auction" class="panel">
+<h2>🏷️ Auction Lock</h2>
+<p class="subtitle">Bid on mystery crates with limited budget. Some contain key items, some are decoys. Read the hints, decide how much to risk. Pass on junk, bid smart on essentials. Acquire 3 keys to unlock.</p>
+<div id="auction-mount"></div>
+</div>
+
+<div id="streak" class="panel">
+<h2>🔥 Streak Lock</h2>
+<p class="subtitle">Rapid-fire questions with a countdown timer. Consecutive correct answers build a combo multiplier (×1, ×2, ×3...). One wrong answer or timeout resets it to ×1. Race to the target score.</p>
+<div id="streak-mount"></div>
+</div>
+
+<script src="puzzle/deduction-grid-lock.js"></script>
+<script src="puzzle/push-luck-lock.js"></script>
+<script src="puzzle/decay-lock.js"></script>
+<script src="puzzle/fog-map-lock.js"></script>
+<script src="puzzle/craft-lock.js"></script>
+<script src="puzzle/trap-disarm-lock.js"></script>
+<script src="puzzle/wager-lock.js"></script>
+<script src="puzzle/auction-lock.js"></script>
+<script src="puzzle/streak-lock.js"></script>
+<script>
+// --- Deduction Grid: Security Incident Investigation ---
+new DeductionGridLock(document.getElementById('deduction-mount'), {
+  categories: ['Suspect', 'System', 'Time'],
+  items: [
+    ['Alice', 'Bob', 'Carol'],
+    ['Database', 'Firewall', 'API Gateway'],
+    ['9 AM', '1 PM', '6 PM'],
+  ],
+  solution: {
+    'Alice': ['Firewall', '1 PM'],
+    'Bob': ['API Gateway', '6 PM'],
+    'Carol': ['Database', '9 AM'],
+  },
+  clues: [
+    'Carol accessed her system before anyone else.',
+    'The Database was accessed at 9 AM.',
+    'Alice did not touch the Database or API Gateway.',
+    'Bob was the last person to access a system.',
+  ],
+  onSubmit(correct) { alert('Deduction complete! Incident traced.'); }
+});
+
+// --- Push-Your-Luck: Evidence Gathering ---
+// Target 30, max 5 rounds. Playing safe (bank after 1 draw) gives ~3-5 pts/round
+// = 15-25 in 5 rounds (not enough). Must push to 2-3 draws for multiplier.
+new PushLuckLock(document.getElementById('push-luck-mount'), {
+  target: 30,
+  maxRounds: 5,
+  bag: [
+    { type: 'gem', value: 3, label: '📄 +3', weight: 3 },
+    { type: 'gem', value: 5, label: '📂 +5', weight: 2 },
+    { type: 'gem', value: 8, label: '💾 +8', weight: 1 },
+    { type: 'bust', value: 0, label: '🚨 Caught!', weight: 2 },
+  ],
+  onSubmit(correct) { alert('Enough evidence gathered! Case unlocked.'); },
+  onPenalty(rounds) { alert('Too many rounds! Security is tightening — 30s penalty.'); }
+});
+
+// --- Decay Lock: Corrupting Server Logs ---
+new DecayLock(document.getElementById('decay-mount'), {
+  fragments: [
+    { text: 'Access granted to user: KESTREL', decayAfter: 5 },
+    { text: 'Ignore entries from user FALCON — cleared', decayAfter: 8 },
+    { text: 'Breach originated from port 4471', decayAfter: 6 },
+    { text: 'The intruder username is KESTREL', decayAfter: 4 },
+  ],
+  question: 'Who is the intruder?',
+  answer: 'KESTREL',
+  decayRate: 1.5,
+  onSubmit(correct) { alert('Intruder identified! Logs secured.'); }
+});
+
+// --- Fog Map: Server Room Infiltration (9x5) ---
+// 45 tiles, ~45% = 20 reveals. Traps cost 7 total, bonuses give 7 total.
+// Net energy: 18 base. Player can explore ~18-25 tiles depending on trap/bonus luck.
+// Minimum path (start to exit) = 12 steps. With intel detours ~16-18.
+// Tight but doable with good pathing. Bad luck = retry.
+new FogMapLock(document.getElementById('fog-map-mount'), {
+  cols: 9,
+  rows: 5,
+  energy: 18,
+  intelNeeded: 4,
+  tiles: [
+    { x: 0, y: 4, type: 'start' },
+    // Intel scattered across the map
+    { x: 2, y: 1, type: 'intel', label: '🔑 Access Card A' },
+    { x: 5, y: 0, type: 'intel', label: '🔑 Access Card B' },
+    { x: 7, y: 3, type: 'intel', label: '🔑 Access Card C' },
+    { x: 4, y: 4, type: 'intel', label: '🔑 Access Card D' },
+    { x: 6, y: 1, type: 'intel', label: '🔑 Access Card E' },
+    // Traps
+    { x: 1, y: 2, type: 'trap', label: '⚡ Laser Grid', cost: 2 },
+    { x: 3, y: 3, type: 'trap', label: '⚡ Motion Sensor', cost: 1 },
+    { x: 5, y: 2, type: 'trap', label: '⚡ Alarm Wire', cost: 2 },
+    { x: 7, y: 1, type: 'trap', label: '⚡ Pressure Plate', cost: 2 },
+    // Bonuses
+    { x: 0, y: 1, type: 'bonus', label: '🔋 Power Cell', gain: 3 },
+    { x: 4, y: 2, type: 'bonus', label: '🔋 Generator', gain: 2 },
+    { x: 8, y: 2, type: 'bonus', label: '🔋 Battery', gain: 2 },
+    // Exit
+    { x: 8, y: 0, type: 'exit' },
+  ],
+  onSubmit(correct) { alert('Server room breached! All access cards collected.'); }
+});
+
+// --- Crafting: Build a Decryption Key ---
+new CraftLock(document.getElementById('craft-mount'), {
+  materials: [
+    { id: 'chip', label: '💾 Memory Chip', tags: ['electronic', 'raw'] },
+    { id: 'wire', label: '🔌 Copper Wire', tags: ['conductive', 'raw'] },
+    { id: 'crystal', label: '💎 Quartz Crystal', tags: ['mineral', 'raw'] },
+    { id: 'soldering', label: '🔥 Soldering Iron', tags: ['heat'], permanent: true },
+    { id: 'compiler', label: '🖥️ Compiler', tags: ['software'], permanent: true },
+    { id: 'cutter', label: '✂️ Precision Cutter', tags: ['tool'], permanent: true },
+  ],
+  rules: [
+    { inputs: ['conductive', 'heat'], output: { id: 'joint', label: '🔗 Solder Joint', tags: ['connector'] } },
+    { inputs: ['mineral', 'tool'], output: { id: 'lens', label: '🔍 Frequency Lens', tags: ['optic'] } },
+    { inputs: ['electronic', 'software'], output: { id: 'firmware', label: '📀 Firmware', tags: ['program'] } },
+    { inputs: ['connector', 'optic'], output: { id: 'antenna', label: '📡 Antenna Module', tags: ['receiver'] } },
+    { inputs: ['program', 'receiver'], output: { id: 'decoder', label: '🔑 Decryption Key', tags: ['final'] } },
+  ],
+  goal: 'decoder',
+  onSubmit(correct) { alert('Decryption key assembled! System access granted.'); }
+});
+
+// --- Trap Disarm: Server Room Security Panel ---
+new TrapDisarmLock(document.getElementById('trap-mount'), {
+  wires: [
+    { id: 'w1', color: 'red', label: 'MAIN PWR', position: 1 },
+    { id: 'w2', color: 'blue', label: 'AUX SYS', position: 2 },
+    { id: 'w3', color: 'yellow', label: 'BACKUP', position: 3 },
+    { id: 'w4', color: 'green', label: 'GROUND', position: 4 },
+    { id: 'w5', color: 'white', label: 'SIGNAL', position: 5 },
+  ],
+  rules: [
+    { text: 'Cut the wire labeled "███ SYS" first.', hint: 'AUX' },
+    { text: 'Never cut GROUND — it triggers the alarm.', hint: null },
+    { text: 'The ██████ wire must be cut immediately after position 2.', hint: 'yellow' },
+    { text: 'Red is safe ONLY if cut third or later.', hint: null },
+    { text: 'The last wire to cut is in position ██.', hint: '5' },
+  ],
+  solution: ['w2', 'w3', 'w1', 'w5'],
+  maxStrikes: 3,
+  onSubmit(correct) { alert('Panel disarmed! Security bypassed.'); },
+  onFail() { alert('Trap triggered! 30s penalty.'); }
+});
+
+// --- Wager: NPC Bluff — "You got caught. Talk your way out." ---
+// Safe = easy (2 choices), Brazen = hard (6 choices). Questions are NPC interrogation.
+new WagerLock(document.getElementById('wager-mount'), {
+  target: 6,
+  questions: [
+    { question: '"Where were you at 9 PM last night?"',
+      options: ['At the server room doing maintenance', 'In my office working late', 'At home sleeping', 'In the cafeteria', 'At the gym', 'In a meeting with Director Chen'],
+      answer: 'At the server room doing maintenance' },
+    { question: '"Who authorized your access to Floor 7?"',
+      options: ['Director Chen signed the form', 'I have standing clearance from HR', 'The night supervisor let me in', 'I used my manager\'s badge', 'Security waved me through', 'IT issued a temporary pass'],
+      answer: 'Director Chen signed the form' },
+    { question: '"Why is your badge showing two swipes at 2 AM?"',
+      options: ['I forgot my phone and went back', 'The reader glitched — it happens', 'I stepped out for air', 'Someone else used my badge', 'I was testing the new access system', 'I went to the vending machine'],
+      answer: 'I forgot my phone and went back' },
+    { question: '"The CCTV shows you near the vault. Explain."',
+      options: ['The vault is next to the bathroom', 'I was checking a reported alarm', 'I took a wrong turn — new building', 'I was delivering a package', 'I was looking for the fire exit', 'I was meeting a colleague nearby'],
+      answer: 'I was checking a reported alarm' },
+    { question: '"Your fingerprints are on the filing cabinet."',
+      options: ['I filed reports there last week', 'Everyone touches those cabinets', 'I was looking for a stapler', 'Must be from the office party', 'I was organizing for the audit', 'I bumped into it walking past'],
+      answer: 'I filed reports there last week' },
+    { question: '"Why did you stay 3 hours past your shift?"',
+      options: ['Finishing the quarterly report', 'Server migration needed monitoring', 'I lost track of time', 'Waiting for a delivery', 'Training the new intern remotely', 'Catching up on emails'],
+      answer: 'Finishing the quarterly report' },
+  ],
+  stakes: [
+    { label: 'Mumble', wager: 1, penalty: 0, color: '#22c55e', showOptions: 2 },
+    { label: 'Smooth Talk', wager: 2, penalty: -1, color: '#eab308', showOptions: 4 },
+    { label: 'Brazen Lie', wager: 4, penalty: -3, color: '#ef4444', showOptions: 6 },
+  ],
+  onSubmit(correct) { alert('NPC convinced! "Alright, you can go. But I\'m watching you."'); }
+});
+
+// --- Auction: Black Market Equipment ---
+new AuctionLock(document.getElementById('auction-mount'), {
+  budget: 100,
+  requiredItems: 3,
+  lots: [
+    { id: 'a', label: '📦 Crate A', hint: 'Heavy. Metallic clinking inside. Smells like machine oil.', value: 'key', minBid: 15, idealBid: 25 },
+    { id: 'b', label: '📦 Crate B', hint: 'Light. Rattles like plastic. Faint chemical smell.', value: 'decoy', minBid: 10, idealBid: 20 },
+    { id: 'c', label: '📦 Crate C', hint: 'Medium weight. Electronic humming from inside.', value: 'key', minBid: 20, idealBid: 30 },
+    { id: 'd', label: '📦 Crate D', hint: 'Unmarked. Suspiciously clean. No smell, no sound.', value: 'decoy', minBid: 10, idealBid: 15 },
+    { id: 'e', label: '📦 Crate E', hint: 'Heavy. Glass clinking. "FRAGILE" stamp partially scraped off.', value: 'decoy', minBid: 15, idealBid: 25 },
+    { id: 'f', label: '📦 Crate F', hint: 'Warm to the touch. Faint static discharge when handled.', value: 'key', minBid: 25, idealBid: 35 },
+    { id: 'g', label: '📦 Crate G', hint: 'Small. Dense. Magnetic — sticks to the shelf.', value: 'key', minBid: 20, idealBid: 30 },
+    { id: 'h', label: '📦 Crate H', hint: 'Large but hollow. Sounds empty when tapped.', value: 'decoy', minBid: 5, idealBid: 10 },
+  ],
+  onSubmit(correct) { alert('All key components acquired! Device can be assembled.'); }
+});
+
+// --- Streak: Binary Speed Round ---
+new StreakLock(document.getElementById('streak-mount'), {
+  target: 20,
+  timePerQuestion: 4,
+  questions: [
+    { question: '1010 in decimal?', answer: '10', decoys: ['8', '12', '5'] },
+    { question: '255 in binary?', answer: '11111111', decoys: ['10101010', '11110000', '11111110'] },
+    { question: 'NOT 0 = ?', answer: '1', decoys: ['0', '-1', '2'] },
+    { question: '1100 AND 1010?', answer: '1000', decoys: ['1110', '0010', '1010'] },
+    { question: '1100 OR 1010?', answer: '1110', decoys: ['1000', '1010', '1100'] },
+    { question: '4 bits max value?', answer: '15', decoys: ['16', '8', '32'] },
+    { question: 'XOR: same inputs = ?', answer: '0', decoys: ['1', '-1', '2'] },
+    { question: '2^8 = ?', answer: '256', decoys: ['128', '512', '64'] },
+    { question: '0xFF in decimal?', answer: '255', decoys: ['256', '127', '16'] },
+    { question: 'How many bits in a byte?', answer: '8', decoys: ['4', '16', '6'] },
+    { question: '1 << 3 = ?', answer: '8', decoys: ['3', '6', '4'] },
+    { question: '0b1001 + 0b0110?', answer: '0b1111', decoys: ['0b1110', '0b1010', '0b1100'] },
+  ],
+  onSubmit(correct) { alert('Speed test passed! Reflexes verified.'); }
+});
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => {
+    if (b.onclick && b.onclick.toString().includes(id)) b.classList.add('active');
+  });
+}
+</script>
+</body>
+</html>

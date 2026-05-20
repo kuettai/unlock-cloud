@@ -153,7 +153,7 @@
     {
       "id": "champion-assembled",
       "trigger": "puzzle_solved",
-      "puzzle_id": "champion-chain",
+      "puzzle_id": "equipment-rack",
       "result_card": 1008,
       "message": "Champion assembled! Sir Cedric nods. Now run the rehearsal.",
       "awards_card": 1009,
@@ -162,7 +162,7 @@
     {
       "id": "festival-ready",
       "trigger": "puzzle_solved",
-      "puzzle_id": "rehearsal-path",
+      "puzzle_id": "rehearsal-run",
       "result_card": 1010,
       "message": "The Champion completes the rehearsal flawlessly. The festival is READY!",
       "type": "ending"

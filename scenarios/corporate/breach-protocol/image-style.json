@@ -1,0 +1,8 @@
+{
+  "style_prefix": "Digital illustration, corporate thriller mood, game card art.",
+  "style_prefix_location": "Digital illustration, wide angle, corporate office environment, moody lighting, game environment art.",
+  "style_prefix_item": "Digital illustration, single document or object, clean style, game inventory art.",
+  "style_prefix_object": "Digital illustration, close-up detail, corporate document or screen, game card art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality",
+  "aspect_ratio": "16:9"
+}

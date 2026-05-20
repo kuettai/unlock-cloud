@@ -1,0 +1,104 @@
+{
+  "puzzles": [
+    {
+      "id": "circular-review",
+      "type": "dns_lock",
+      "card_ref": 11,
+      "description": "Review the HKEX circular — identify the key facts by selecting from each dropdown.",
+      "ui": "dns-lock",
+      "config": {
+        "preamble": "HKEX/RC-2026-017: Amendments to Main Board Listing Rules\n\nEffective: 12 May 2026\nChapters Amended: 3\n• Ch.13 Continuing Obligations\n• Ch.14 Notifiable Transactions\n• Ch.37 Debt Securities\n\nKey Changes:\n1. Enhanced disclosure format for connected transactions\n2. Updated e-Filing system integration\n3. Record-keeping period extended from 3 to 5 years\n4. Mandatory breach escalation within 2 business days",
+        "steps": [
+          { "label": "Chapters Amended", "options": ["1", "2", "3", "4", "5"], "answer": "3" },
+          { "label": "Effective Date", "options": ["5 May", "12 May", "19 May", "1 June"], "answer": "12 May" },
+          { "label": "Record-keeping Period", "options": ["3 years", "5 years", "7 years", "10 years"], "answer": "5 years" },
+          { "label": "Breach Escalation", "options": ["Same day", "2 business days", "5 business days", "10 business days"], "answer": "2 business days" }
+        ]
+      },
+      "hints": [
+        "Read the circular title carefully — it mentions the number of chapters.",
+        "The circular says: 3 chapters, effective 12 May, record-keeping extended to 5 years, escalation within 2 days.",
+        "Select: 3, 12 May, 5 years, 2 business days."
+      ]
+    },
+    {
+      "id": "impact-mapping",
+      "type": "wire_lock",
+      "card_ref": 10,
+      "description": "Map each rule change to the responsible team.\n\nBusiness: disclosures & reporting\nOperations: records & document management\nCompliance: monitoring & escalation\nTechnology: systems & integrations",
+      "ui": "wire-lock",
+      "config": {
+        "wires": [
+          { "id": "disclosure", "color": "#3b82f6", "label": "Enhanced disclosure format" },
+          { "id": "efiling", "color": "#22c55e", "label": "e-Filing integration" },
+          { "id": "recordkeeping", "color": "#f59e0b", "label": "Record-keeping period" },
+          { "id": "escalation", "color": "#ef4444", "label": "Breach escalation" }
+        ],
+        "sockets": [
+          { "id": "business", "label": "Business Team" },
+          { "id": "technology", "label": "Technology Team" },
+          { "id": "operations", "label": "Operations Team" },
+          { "id": "compliance", "label": "Compliance Team" }
+        ],
+        "solution": {
+          "disclosure": "business",
+          "efiling": "technology",
+          "recordkeeping": "operations",
+          "escalation": "compliance"
+        },
+        "falseOutputs": [
+          "Access denied. Incorrect mapping.",
+          "Wrong assignment. Think about who owns what."
+        ]
+      },
+      "hints": [
+        "Each change belongs to one team. Who handles disclosures? Who handles systems?",
+        "Disclosure → Business. Systems → Technology. Records → Operations. Monitoring → Compliance.",
+        "Wire: disclosure→Business, e-Filing→Technology, record-keeping→Operations, escalation→Compliance."
+      ]
+    },
+    {
+      "id": "process-sequence",
+      "type": "timeline_lock",
+      "card_ref": 30,
+      "description": "Drag the process steps into the correct order.",
+      "ui": "timeline-lock",
+      "config": {
+        "events": [
+          { "id": "circular", "label": "Circular Published", "time": "Day 0" },
+          { "id": "impact", "label": "Impact Assessment", "time": "Day 1–2" },
+          { "id": "gap", "label": "Gap Analysis", "time": "Day 3–5" },
+          { "id": "remediation", "label": "Remediation Plan", "time": "Day 6–8" },
+          { "id": "filing", "label": "Filing Submission", "time": "Day 10" }
+        ],
+        "answer": ["circular", "impact", "gap", "remediation", "filing"]
+      },
+      "hints": [
+        "Check the lifecycle poster on the wall.",
+        "Order: Published → Assessment → Gap Analysis → Remediation → Filing.",
+        "Drag: Circular Published first, Filing Submission last."
+      ]
+    },
+    {
+      "id": "submission-code",
+      "type": "keypad_lock",
+      "card_ref": 50,
+      "description": "Enter the 3-digit submission code.",
+      "ui": "keypad-lock",
+      "config": {
+        "preamble": "PROJECT TRACKER\n━━━━━━━━━━━━━━━\nSign-offs required: 2\nBusiness days to effective: 5",
+        "answer": "352",
+        "length": 3,
+        "falseOutputs": [
+          "Invalid code.",
+          "Rejected. Check the Post-it note."
+        ]
+      },
+      "hints": [
+        "The intern's Post-it has the formula.",
+        "Code = chapters + days + signoffs. Find each number from earlier cards.",
+        "3 chapters + 5 days + 2 sign-offs = 352."
+      ]
+    }
+  ]
+}

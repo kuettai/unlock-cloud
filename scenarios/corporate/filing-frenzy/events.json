@@ -1,0 +1,71 @@
+{
+  "timed_events": [
+    {
+      "id": "mid-warning",
+      "time_remaining": 420,
+      "message": "Seven minutes remaining. Submission incomplete.",
+      "type": "atmosphere",
+      "voice": "system",
+      "triggers_narrative": "mid_event"
+    },
+    {
+      "id": "five-min-warning",
+      "time_remaining": 300,
+      "message": "Five minutes remaining. The terminal screen flickers impatiently.",
+      "type": "atmosphere",
+      "voice": "system"
+    },
+    {
+      "id": "two-min-warning",
+      "time_remaining": 120,
+      "message": "Two minutes remaining. Final warning.",
+      "type": "alarm",
+      "voice": "system"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "template-unlocked",
+      "trigger": "combination",
+      "card_ids": [32, 51],
+      "result_card": 53,
+      "message": "Signature accepted. Submission code field activated.",
+      "type": "reveal"
+    },
+    {
+      "id": "filing-submitted",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "submission-code",
+      "result_card": 99,
+      "message": "Submission received. Reference number generated. Have a good weekend.",
+      "type": "ending"
+    },
+    {
+      "id": "version-mismatch",
+      "trigger": "combination",
+      "card_ids": [34, 51],
+      "result_card": 55,
+      "message": "ERROR: Document version mismatch. The system rejects v3.",
+      "type": "penalty",
+      "penalty_seconds": 30
+    },
+    {
+      "id": "meeting-trap",
+      "trigger": "discovery",
+      "card_id": 56,
+      "result_card": 56,
+      "message": "You accepted a meeting with no agenda. Time wasted.",
+      "type": "penalty",
+      "penalty_seconds": 20
+    },
+    {
+      "id": "reply-all-trap",
+      "trigger": "discovery",
+      "card_id": 57,
+      "result_card": 57,
+      "message": "You hit Reply All. The email thread spirals.",
+      "type": "penalty",
+      "penalty_seconds": 30
+    }
+  ]
+}

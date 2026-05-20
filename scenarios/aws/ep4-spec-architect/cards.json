@@ -9,45 +9,12 @@
       "image": "assets/the-desk.png",
       "reveals": [],
       "discoveries": [
-        {
-          "label": "Talk to Pip",
-          "card_id": 2,
-          "puzzle": "npc-pip"
-        },
-        {
-          "label": "Try talking to the golem",
-          "card_id": 4,
-          "puzzle": "npc-golem"
-        },
-        {
-          "label": "Read Marcus's farewell note",
-          "card_id": 6
-        },
-        {
-          "label": "Sort the desk papers",
-          "card_id": 5,
-          "puzzle": "sort-priorities"
-        },
-        {
-          "label": "Pick up the guild badge",
-          "card_id": 3,
-          "requires_item": [
-            5
-          ]
-        },
-        {
-          "label": "Enter the Drafting Hall",
-          "card_id": 10,
-          "requires_item": [
-            3
-          ],
-          "consumes_item": [
-            3,
-            4,
-            5,
-            6
-          ]
-        }
+        { "label": "Talk to Pip", "card_id": 2, "puzzle": "npc-pip" },
+        { "label": "Try talking to the golem", "card_id": 4, "puzzle": "npc-golem" },
+        { "label": "Read Marcus's farewell note", "card_id": 6 },
+        { "label": "Sort the desk papers", "card_id": 5, "puzzle": "sort-priorities" },
+        { "label": "Pick up the guild badge", "card_id": 3, "requires_item": [5] },
+        { "label": "Enter the Drafting Hall", "card_id": 10, "requires_item": [3], "consumes_item": [3, 4, 5, 6] }
       ],
       "visible_to": "all",
       "room": "desk"
@@ -118,35 +85,10 @@
       "image": "assets/drafting-hall.png",
       "reveals": [],
       "discoveries": [
-        {
-          "label": "Talk to Lord Ashford (screen)",
-          "card_id": 11,
-          "puzzle": "npc-ashford"
-        },
-        {
-          "label": "Read Marcus's sticky notes",
-          "card_id": 13
-        },
-        {
-          "label": "Write the specs",
-          "card_id": 12,
-          "requires_item": [
-            11
-          ],
-          "puzzle": "spec-requirements"
-        },
-        {
-          "label": "Go to the Golem Workshop",
-          "card_id": 30,
-          "requires_item": [
-            12
-          ],
-          "consumes_item": [
-            12,
-            11,
-            13
-          ]
-        }
+        { "label": "Talk to Lord Ashford (screen)", "card_id": 11, "puzzle": "npc-ashford" },
+        { "label": "Read Marcus's sticky notes", "card_id": 13 },
+        { "label": "Write the specs", "card_id": 12, "requires_item": [11], "puzzle": "spec-requirements" },
+        { "label": "Go to the Golem Workshop", "card_id": 30, "requires_item": [12], "consumes_item": [12, 11, 13] }
       ],
       "visible_to": "all",
       "room": "drafting"
@@ -170,7 +112,7 @@
       "title": "Project Specs",
       "description": "Three structured requirements converted from Ashford's vague demands: user posting, following/feed, and responsive mobile performance. The golem can now build with precision.",
       "image": "assets/card-project-specs.png",
-      "reveals": [],
+      "reveals": [15],
       "visible_to": "all",
       "room": "drafting"
     },
@@ -195,28 +137,9 @@
       "image": "assets/golem-workshop.png",
       "reveals": [],
       "discoveries": [
-        {
-          "label": "Load the golem's memory",
-          "card_id": 31,
-          "puzzle": "context-memory"
-        },
-        {
-          "label": "Wire the MCP conduits",
-          "card_id": 32,
-          "puzzle": "wire-mcp"
-        },
-        {
-          "label": "Go to the Build Yard",
-          "card_id": 50,
-          "requires_item": [
-            31,
-            32
-          ],
-          "consumes_item": [
-            31,
-            32
-          ]
-        }
+        { "label": "Load the golem's memory", "card_id": 31, "puzzle": "context-memory" },
+        { "label": "Wire the MCP conduits", "card_id": 32, "puzzle": "wire-mcp" },
+        { "label": "Go to the Build Yard", "card_id": 50, "requires_item": [31, 32], "consumes_item": [31, 32] }
       ],
       "visible_to": "all",
       "room": "workshop"
@@ -228,7 +151,7 @@
       "title": "Context Loaded",
       "description": "The golem's memory is loaded with the correct documents — requirements.md, design.md, and tasks.md — fitting within its 2000-token context window. Poisoned docs excluded.",
       "image": "assets/card-context-loaded.png",
-      "reveals": [],
+      "reveals": [35],
       "visible_to": "all",
       "room": "workshop"
     },
@@ -252,43 +175,10 @@
       "image": "assets/build-yard.png",
       "reveals": [],
       "discoveries": [
-        {
-          "label": "Issue first build command",
-          "card_id": 51,
-          "puzzle": "terminal-build"
-        },
-        {
-          "label": "Place the architecture",
-          "card_id": 52,
-          "requires_item": [
-            51
-          ],
-          "consumes_item": [
-            51
-          ],
-          "puzzle": "blueprint-arch"
-        },
-        {
-          "label": "Navigate the codebase",
-          "card_id": 53,
-          "requires_item": [
-            52
-          ],
-          "consumes_item": [
-            52
-          ],
-          "puzzle": "path-codebase"
-        },
-        {
-          "label": "Go to the Launch Tower",
-          "card_id": 70,
-          "requires_item": [
-            53
-          ],
-          "consumes_item": [
-            53
-          ]
-        }
+        { "label": "Issue first build command", "card_id": 51, "puzzle": "terminal-build" },
+        { "label": "Place the architecture", "card_id": 52, "requires_item": [51], "consumes_item": [51], "puzzle": "blueprint-arch" },
+        { "label": "Navigate the codebase", "card_id": 53, "requires_item": [52], "consumes_item": [52], "puzzle": "path-codebase" },
+        { "label": "Go to the Launch Tower", "card_id": 70, "requires_item": [53], "consumes_item": [53] }
       ],
       "visible_to": "all",
       "room": "build"
@@ -311,7 +201,7 @@
       "title": "Architecture Done",
       "description": "Eight components placed on correct layers: React+Next.js and CloudFront on Presentation, Lambda and API Routes on Application, DynamoDB on Data, CDK Stack and IAM Roles on Infrastructure.",
       "image": "assets/card-architecture-done.png",
-      "reveals": [],
+      "reveals": [55],
       "visible_to": "all",
       "room": "build"
     },
@@ -335,44 +225,11 @@
       "image": "assets/launch-tower.png",
       "reveals": [],
       "discoveries": [
-        {
-          "label": "Build the test pipeline",
-          "card_id": 71,
-          "puzzle": "match-tests"
-        },
-        {
-          "label": "Order the deployment",
-          "card_id": 72,
-          "requires_item": [
-            71
-          ],
-          "consumes_item": [
-            71
-          ],
-          "puzzle": "timeline-deploy"
-        },
-        {
-          "label": "Check the deploy logs",
-          "card_id": 73,
-          "requires_item": [
-            72
-          ],
-          "consumes_item": [
-            72
-          ],
-          "puzzle": "log-bug"
-        },
-        {
-          "label": "Ship it!",
-          "card_id": 99,
-          "requires_item": [
-            73
-          ],
-          "consumes_item": [
-            73
-          ],
-          "puzzle": "defuse-ship"
-        }
+        { "label": "Read the deployment runbook", "card_id": 74 },
+        { "label": "Build the test pipeline", "card_id": 71, "puzzle": "match-tests" },
+        { "label": "Order the deployment", "card_id": 72, "requires_item": [71], "consumes_item": [71], "puzzle": "timeline-deploy" },
+        { "label": "Check the deploy logs", "card_id": 73, "requires_item": [72], "consumes_item": [72], "puzzle": "log-bug" },
+        { "label": "Ship it!", "card_id": 99, "requires_item": [73], "consumes_item": [73], "puzzle": "defuse-ship" }
       ],
       "visible_to": "all",
       "room": "launch"
@@ -395,7 +252,7 @@
       "title": "Deploy Sequence",
       "description": "Two-phase deployment ordered correctly: CDK deploy infrastructure, extract API URL, rebuild frontend, deploy to S3, invalidate CloudFront cache. Ready to execute.",
       "image": "assets/card-deploy-sequence.png",
-      "reveals": [],
+      "reveals": [75],
       "visible_to": "all",
       "room": "launch"
     },
@@ -417,6 +274,50 @@
       "title": "Deployment Runbook",
       "description": "A laminated card pinned to the console: 'TWO-PHASE DEPLOY: 1) CDK deploy infrastructure (Lambda, DynamoDB, API Gateway). 2) Extract the API Gateway URL from CDK output. 3) Rebuild frontend with the real API URL baked in. 4) Deploy static assets to S3. 5) Invalidate CloudFront cache so users get the new version.'",
       "image": "assets/card-deploy-runbook.png",
+      "reveals": [],
+      "visible_to": "all",
+      "room": "launch"
+    },
+    {
+      "id": 15,
+      "type": "lore",
+      "color": "purple",
+      "title": "Lore: The Vibe Coder's Downfall",
+      "description": "A crumpled page from Marcus's journal: 'Day 1: told the golem to build something social. Got a cat site. Day 5: said make it like Twitter. Got a clone with a lawsuit attached. Day 12: just said PLEASE BUILD WHAT THE CLIENT WANTS. Got a meditation app. The golem isn't broken — I am. It builds exactly what you describe. I just never described anything.'",
+      "image": null,
+      "reveals": [],
+      "visible_to": "all",
+      "room": "drafting"
+    },
+    {
+      "id": 35,
+      "type": "lore",
+      "color": "purple",
+      "title": "Lore: Context Window Economics",
+      "description": "A faded diagram on the workshop wall: 'The golem's memory is finite. Every token matters. Loading outdated docs doesn't just waste space — it actively poisons output. The golem can't distinguish current specs from deprecated ones. It treats everything in context as equally true. Curate ruthlessly: only load what's relevant to the current task. Think of context as expensive real estate, not free storage.'",
+      "image": null,
+      "reveals": [],
+      "visible_to": "all",
+      "room": "workshop"
+    },
+    {
+      "id": 55,
+      "type": "lore",
+      "color": "purple",
+      "title": "Lore: The Three-Layer Handshake",
+      "description": "Scratched into the Build Yard wall: 'A well-structured app has clear boundaries. Presentation never talks to Data directly. Application mediates everything. Infrastructure exists beneath all layers but none depend on its specifics. This is why CDK works — you describe WHAT you want, not HOW to provision it. The layers protect you from vendor lock-in and make testing possible.'",
+      "image": null,
+      "reveals": [],
+      "visible_to": "all",
+      "room": "build"
+    },
+    {
+      "id": 75,
+      "type": "lore",
+      "color": "purple",
+      "title": "Lore: Why Two Phases?",
+      "description": "A sticky note on the Launch Tower console: 'You can't deploy frontend and backend in one shot because of the URL chicken-and-egg problem. The frontend needs to KNOW the API URL at build time (it's baked into the JavaScript bundle). But the API URL only EXISTS after CDK deploys it. So: Phase 1 creates infrastructure and outputs the URL. Phase 2 injects that URL into the frontend build. Skip this and you get CORS errors, 404s, or localhost references in production.'",
+      "image": null,
       "reveals": [],
       "visible_to": "all",
       "room": "launch"

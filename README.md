@@ -1,6 +1,6 @@
 # re:Solve
 
-An escape room card game that teaches through immersive storytelling. Currently features **Miracles of Jesus** — a Bible-based puzzle adventure.
+A mobile-first escape room card game that teaches through immersive storytelling. Players explore rooms, collect items, solve puzzles, and piece together narratives — all within a timed session.
 
 ## Play Online
 
@@ -8,61 +8,83 @@ https://beta.re-solve.cloud/app/home.html
 
 ## Run Locally
 
-### Quick Start (no install needed)
+1. Start a local server:
 
-1. Open a terminal in this folder
-2. Start a local server:
-
-   **Using npx (Node.js):**
    ```
    npx http-server -p 8080 -c-1
    ```
 
-   **Using Python:**
+   or with Python:
+
    ```
    python -m http.server 8080
    ```
 
-3. Open http://localhost:8080/app/home.html
+2. Open http://localhost:8080/app/home.html
 
-### Requirements
+Requires any modern browser. The game loads JSON via fetch, so `file://` won't work.
 
-- Any modern browser (Chrome, Firefox, Edge, Safari)
-- A local HTTP server (the game loads JSON files via fetch, so `file://` won't work)
+## How It Works
 
-### Available Episodes
+Each **category** contains multiple **episodes**. An episode is a self-contained escape room with:
 
-**Miracles of Jesus**
-- EP0: The Master of the Feast's Investigation (John 2:1-11 — Wedding at Cana)
-- EP1: Philip's Impossible Math (John 6:1-14 — Feeding the Five Thousand)
+- **Rooms** — locations the player unlocks and explores
+- **Cards** — items (red), objects (blue), events (yellow), penalties (black)
+- **Puzzles** — interactive lock components that gate progression
+- **Combinations** — item + object pairings that trigger discoveries
+- **Narrative** — voice-narrated story segments (intro, mid-event, endings)
+- **Scoring** — stars based on time, penalties, and hints used
 
-**Amazon Web Services**
-- EP0: Boot Sequence (Tutorial)
-- EP1: Awakening (VPC Networking)
-- EP2: Day One (AI/ML Incident Response)
+Episodes are data-driven — the engine renders any scenario from JSON. Adding a new episode requires no code changes.
 
 ## Project Structure
 
 ```
-app/                    Game engine, UI, puzzle components
-  index.html            Main game (single page app)
-  home.html             Episode selection
-  engine.js             Core game engine
-  puzzle/               Puzzle lock components
-  tools/                In-game tools (decoders, viewers)
-scenarios/              All episode data
-  categories.json       Category list
-  bible-jesus-miracles/ Bible episodes
-  aws/                  AWS episodes
-tests/                  Happy-path tests
-docs/                   Blueprints and fact-check reports
-tools/                  Build tools (voice generation, image generation)
+app/
+  engine.js             Core game engine (state, scoring, leaderboard)
+  index.html / .js      Main game UI (single page app)
+  home.html / .js       Episode selection with category browsing
+  puzzle/               60+ puzzle lock components
+  tools/                In-game tools (decoders, cipher wheel, etc.)
+scenarios/
+  categories.json       Category registry
+  <category>/
+    index.json          Episode list for category
+    <episode>/
+      meta.json         Title, difficulty, duration, player count
+      cards.json        All cards (items, objects, locations, events)
+      rooms.json        Room graph and unlock conditions
+      puzzles.json      Puzzle configurations
+      combinations.json Item + object interactions
+      events.json       Timed events and penalties
+      narrative.json    Voice segments and dialog
+      scoring.json      Star thresholds
+      image-style.json  Art style for image generation
+      assets/           Cover, room, and ending images + voice audio
+server/
+  dev-server.js         Backend for multiplayer leaderboard
+tests/
+  happy-path.test.js    Unit tests (Node.js)
+  *.spec.js             E2E tests (Playwright)
+tools/
+  cards_to_images.py    Generate card art via OpenAI gpt-image-1
+  narrative_to_voice.py Generate voice audio via Amazon Polly
+  resize_images.py      Optimize images for mobile
+docs/                   Episode blueprints and fact-check reports
 ```
 
-## Run Tests
+## Adding a New Episode
 
-```
-node --test tests/happy-path.test.js
-```
+1. Create `scenarios/<category>/<episode-slug>/`
+2. Add JSON files: `meta.json`, `cards.json`, `rooms.json`, `puzzles.json`, `combinations.json`, `events.json`, `narrative.json`, `scoring.json`, `image-style.json`
+3. Register the episode slug in `scenarios/<category>/index.json`
+4. Generate assets: `python tools/cards_to_images.py scenarios/<category>/<episode>`
+5. Generate voice: `python tools/narrative_to_voice.py scenarios/<category>/<episode>`
 
-Requires Node.js 18+.
+## Tests
+
+```bash
+npm test                 # Unit tests (Node 18+)
+npm run test:e2e         # E2E tests (Playwright)
+npm run test:all         # Both
+```

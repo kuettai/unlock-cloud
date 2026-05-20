@@ -102,6 +102,25 @@ For tools/NPCs: add `config` with dialog trees.
 }
 ```
 
+#### Timed event types
+- `"atmosphere"` — flavor text, no gameplay effect
+- `"alarm"` — urgent warning, visual/audio alert
+- `"lockout"` — temporarily locks a room (`locks_rooms: [roomId]`)
+- `"unlock"` — re-opens a locked room (`unlocks_rooms: [roomId]`)
+- `"narrative"` — triggers a narrative segment (`narrative_key: "mid_event"`)
+
+#### Triggered event triggers
+- `"puzzle_solved"` — fires when `puzzle_id` is solved. Fields: `puzzle_id`, `result_card`, `message`, `type`, `unlocks_room`, `awards_card`
+- `"card_discovered"` — fires when `card_id` is discovered. Fields: `card_id`, `message`, `type`
+- `"combination"` — fires when a specific combination result appears
+- `"first_hint_request"` — fires on first hint use
+
+#### Triggered event types
+- `"reveal"` — reveals result_card, shows message
+- `"room_unlock"` — unlocks a room (`unlocks_room: roomId`)
+- `"act_transition"` — changes game act (`act: N`)
+- `"ending"` — triggers game completion
+
 ### scoring.json
 ```json
 {

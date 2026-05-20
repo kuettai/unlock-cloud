@@ -1,0 +1,12 @@
+{
+  "base_score": 1000,
+  "time_bonus_per_second": 5,
+  "hint_penalty": -75,
+  "wrong_combination_penalty": -100,
+  "trap_penalty": -100,
+  "stars": [
+    { "min": 1200, "stars": 3 },
+    { "min": 900, "stars": 2 },
+    { "min": 0, "stars": 1 }
+  ]
+}

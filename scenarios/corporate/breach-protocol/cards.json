@@ -1,0 +1,284 @@
+{
+  "cards": [
+    {
+      "id": 10,
+      "type": "location",
+      "color": "green",
+      "title": "Your Inbox",
+      "description": "Monday morning. One unread email marked URGENT. Anonymous sender.",
+      "image": "assets/inbox.png",
+      "image_prompt": "A corporate email inbox on a monitor, single unread email highlighted in red marked URGENT, dark office, Monday morning light through blinds, tense atmosphere.",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 11, "label": "Read the anonymous tip", "puzzle": "tip-extraction" },
+        { "card_id": 16, "label": "Mark as spam and delete" },
+        { "card_id": 17, "label": "Report as phishing" },
+        { "card_id": 15, "label": "Forward tip to Legal", "requires_item": [11] },
+        { "card_id": 18, "label": "Escalate to CEO", "requires_item": [11] },
+        { "card_id": 30, "label": "Access Transaction Records", "requires_item": [11] }
+      ],
+      "visible_to": "all",
+      "room": "inbox"
+    },
+    {
+      "id": 11,
+      "type": "object",
+      "color": "blue",
+      "title": "Urgent Escalation",
+      "description": "From: company.secretary@firm.hk | Subject: Urgent — Review Required: CR-2026-0312. A connected transaction executed last week may not have followed the prescribed disclosure process. Please conduct an immediate review and confirm whether a Chapter 14A notification is required. HKEX filing window is active.",
+      "visible_to": "all",
+      "room": "inbox"
+    },
+    {
+      "id": 15,
+      "type": "penalty",
+      "color": "black",
+      "title": "Legal Hold",
+      "description": "Legal puts a 48-hour hold on all communications. Time wasted.",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "inbox"
+    },
+    {
+      "id": 16,
+      "type": "penalty",
+      "color": "black",
+      "title": "Deleted Evidence",
+      "description": "You deleted the email. Records Management restored it within 30 seconds — the item is subject to a regulatory retention obligation. 'Deletion of flagged correspondence is not permitted under the firm's document retention policy.'",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "inbox"
+    },
+    {
+      "id": 17,
+      "type": "penalty",
+      "color": "black",
+      "title": "Not Phishing",
+      "description": "Information Security reviewed the flagged item and confirmed: 'This is not a phishing attempt. The correspondence has been verified as legitimate. Please action accordingly.'",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "inbox"
+    },
+    {
+      "id": 18,
+      "type": "penalty",
+      "color": "black",
+      "title": "CEO Unavailable",
+      "description": "The CEO is on a golf trip in Phuket. His PA replies: 'He'll circle back next quarter.'",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "inbox"
+    },
+    {
+      "id": 30,
+      "type": "location",
+      "color": "green",
+      "title": "Transaction Records",
+      "description": "Four transactions flagged under the connected party register. Determine which one requires mandatory disclosure.",
+      "image": "assets/transaction-records.png",
+      "image_prompt": "A corporate computer screen displaying four transaction file folders, spreadsheet data visible, dark office with blue monitor glow, financial documents scattered.",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 31, "label": "Review Transaction A" },
+        { "card_id": 32, "label": "Review Transaction B" },
+        { "card_id": 33, "label": "Review Transaction C" },
+        { "card_id": 34, "label": "Review Transaction D" },
+        { "card_id": 35, "label": "Flag the transaction", "requires_item": [31, 32, 33, 34], "puzzle": "breach-identification" },
+        { "card_id": 50, "label": "Enter Interview Room", "requires_item": [35] }
+      ],
+      "visible_to": "all",
+      "room": "transaction-records"
+    },
+    {
+      "id": 31,
+      "type": "object",
+      "color": "blue",
+      "title": "Transaction A",
+      "description": "NT-2026-0847. Connected party: Director Zhang. Amount: HK$52M. Market cap: HK$900M.",
+      "visible_to": "all",
+      "room": "transaction-records"
+    },
+    {
+      "id": 32,
+      "type": "object",
+      "color": "blue",
+      "title": "Transaction B",
+      "description": "NT-2026-0912. Connected party: Director Lee. Amount: HK$48M. Market cap: HK$1.1B.",
+      "visible_to": "all",
+      "room": "transaction-records"
+    },
+    {
+      "id": 33,
+      "type": "object",
+      "color": "blue",
+      "title": "Transaction C",
+      "description": "NT-2026-0853. Connected party: Director Wong. Amount: HK$15M. Market cap: HK$400M.",
+      "visible_to": "all",
+      "room": "transaction-records"
+    },
+    {
+      "id": 34,
+      "type": "object",
+      "color": "blue",
+      "title": "Transaction D",
+      "description": "NT-2026-0891. Connected party: Director Chan. Amount: HK$30M. Market cap: HK$750M.",
+      "visible_to": "all",
+      "room": "transaction-records"
+    },
+    {
+      "id": 35,
+      "type": "object",
+      "color": "blue",
+      "title": "Breach Identified",
+      "description": "Transaction A confirmed: 5.78% exceeds the 5% connected transaction threshold.",
+      "visible_to": "all",
+      "room": "transaction-records"
+    },
+    {
+      "id": 36,
+      "type": "penalty",
+      "color": "black",
+      "title": "False Alarm",
+      "description": "Transaction B is 4.36% — within threshold. HKEX responds: 'Not a breach.' Credibility lost.",
+      "visible_to": "all",
+      "room": "transaction-records"
+    },
+    {
+      "id": 37,
+      "type": "penalty",
+      "color": "black",
+      "title": "Wrong Transaction",
+      "description": "Transaction C is 3.75% — well within threshold. You flagged the wrong one. Back to the calculator.",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "transaction-records"
+    },
+    {
+      "id": 38,
+      "type": "penalty",
+      "color": "black",
+      "title": "Reference Mismatch",
+      "description": "Transaction D's reference is NT-0891, not NT-0847. Close reading matters.",
+      "penalty_seconds": 30,
+      "visible_to": "all",
+      "room": "transaction-records"
+    },
+    {
+      "id": 50,
+      "type": "location",
+      "color": "green",
+      "title": "Interview Room",
+      "description": "Three department heads were involved in the transaction approval chain. Determine each person's level of knowledge regarding the undisclosed connected transaction.",
+      "image": "assets/interview-room.png",
+      "image_prompt": "A corporate interview room with three chairs occupied by silhouetted figures, glass table, dim overhead lighting, interrogation atmosphere, corporate thriller mood.",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 51, "label": "Interview Head of Finance" },
+        { "card_id": 52, "label": "Interview Head of Operations" },
+        { "card_id": 53, "label": "Interview Head of Compliance" },
+        { "card_id": 55, "label": "Identify who knew", "requires_item": [51, 52, 53], "puzzle": "who-knew" },
+        { "card_id": 70, "label": "Proceed to Classification", "requires_item": [55] }
+      ],
+      "visible_to": "all",
+      "room": "interview-room"
+    },
+    {
+      "id": 51,
+      "type": "object",
+      "color": "blue",
+      "title": "Finance Head Statement",
+      "description": "\"I approved NT-0847 on Tuesday. Standard process. Nothing unusual.\"",
+      "visible_to": "all",
+      "room": "interview-room"
+    },
+    {
+      "id": 52,
+      "type": "object",
+      "color": "blue",
+      "title": "Operations Head Statement",
+      "description": "\"Nothing crossed my desk regarding NT-0847. First I'm hearing of it.\"",
+      "visible_to": "all",
+      "room": "interview-room"
+    },
+    {
+      "id": 53,
+      "type": "object",
+      "color": "blue",
+      "title": "Compliance Head Statement",
+      "description": "\"Finance told me Thursday that NT-0847 was approved Tuesday. I asked why I wasn't notified.\"",
+      "visible_to": "all",
+      "room": "interview-room"
+    },
+    {
+      "id": 55,
+      "type": "object",
+      "color": "blue",
+      "title": "Concealment Identified",
+      "description": "Finance Head approved it Tuesday but told Compliance on Thursday — a 2-day delay. Deliberate concealment.",
+      "visible_to": "all",
+      "room": "interview-room"
+    },
+    {
+      "id": 56,
+      "type": "penalty",
+      "color": "black",
+      "title": "Wrong Timeline",
+      "description": "You cited Finance's timeline. HKEX cross-checks — the notification gap proves concealment, not compliance.",
+      "visible_to": "all",
+      "room": "interview-room"
+    },
+    {
+      "id": 70,
+      "type": "location",
+      "color": "green",
+      "title": "Classification Terminal",
+      "description": "Final step. Classify the breach and file. No hints. Get it right.",
+      "image": "assets/classification-terminal.png",
+      "image_prompt": "A secure terminal screen showing a breach classification form with dropdown fields, dark room, red warning indicators, corporate high-security atmosphere.",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 71, "label": "View filing requirements" },
+        { "card_id": 72, "label": "File the breach notification", "requires_item": [71], "puzzle": "breach-filing" },
+        { "card_id": 99, "label": "Submit", "requires_item": [72] }
+      ],
+      "visible_to": "all",
+      "room": "classification-terminal"
+    },
+    {
+      "id": 71,
+      "type": "object",
+      "color": "blue",
+      "title": "Filing Requirements",
+      "description": "Select: Chapter violated, Severity, Classification, Deadline. All must be correct.",
+      "visible_to": "all",
+      "room": "classification-terminal"
+    },
+    {
+      "id": 72,
+      "type": "event",
+      "color": "yellow",
+      "title": "Filing Complete",
+      "description": "All fields validated. Breach notification has been prepared and is ready for submission to the Exchange.",
+      "visible_to": "all",
+      "room": "classification-terminal"
+    },
+    {
+      "id": 73,
+      "type": "penalty",
+      "color": "black",
+      "title": "Wrong Classification",
+      "description": "Negligence? The evidence shows deliberate concealment. SFC wants a word.",
+      "visible_to": "all",
+      "room": "classification-terminal"
+    },
+    {
+      "id": 99,
+      "type": "event",
+      "color": "yellow",
+      "title": "Congratulations",
+      "description": "Filing confirmed. The breach notification has been accepted by HKEX. Your team correctly identified the undisclosed transaction, established the approval chain, and submitted within the mandatory disclosure window.",
+      "visible_to": "all",
+      "room": "classification-terminal"
+    }
+  ]
+}

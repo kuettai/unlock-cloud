@@ -16,5 +16,14 @@
     "color": "#a855f7",
     "episodes": 3,
     "description": "Walk through the miracles of Jesus — discover, solve, and learn the stories that changed the world."
+  },
+  {
+    "id": "corporate",
+    "title": "HKEX Regulatory",
+    "subtitle": "Compliance, filings, and regulatory change",
+    "icon": "📋",
+    "color": "#dc2626",
+    "episodes": 2,
+    "description": "Navigate regulatory deadlines, impact assessments, and filing workflows under pressure."
   }
 ]

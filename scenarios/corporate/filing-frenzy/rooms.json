@@ -1,0 +1,28 @@
+{
+  "rooms": [
+    {
+      "card_id": 10,
+      "name": "Your Workstation",
+      "description": "Your desk — the starting point",
+      "connects_to": [30],
+      "unlocked_by": null,
+      "unlock_text": "Starting room"
+    },
+    {
+      "card_id": 30,
+      "name": "Compliance Vault",
+      "description": "Secure filing room with regulatory documents",
+      "connects_to": [50],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "impact-mapping" },
+      "unlock_text": "Accessed the Compliance Vault"
+    },
+    {
+      "card_id": 50,
+      "name": "e-Filing Terminal",
+      "description": "The submission terminal — final room",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "process-sequence" },
+      "unlock_text": "Reached the e-Filing Terminal"
+    }
+  ]
+}

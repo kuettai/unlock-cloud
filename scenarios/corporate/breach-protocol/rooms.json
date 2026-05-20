@@ -1,0 +1,36 @@
+{
+  "rooms": [
+    {
+      "card_id": 10,
+      "name": "Your Inbox",
+      "description": "Monday morning. One unread email marked URGENT.",
+      "connects_to": [30],
+      "unlocked_by": null,
+      "unlock_text": "Starting room"
+    },
+    {
+      "card_id": 30,
+      "name": "Transaction Records",
+      "description": "Four transaction files on screen",
+      "connects_to": [50],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "tip-extraction" },
+      "unlock_text": "Accessed Transaction Records"
+    },
+    {
+      "card_id": 50,
+      "name": "Interview Room",
+      "description": "Three department heads in the approval chain",
+      "connects_to": [70],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "breach-identification" },
+      "unlock_text": "Entered the Interview Room"
+    },
+    {
+      "card_id": 70,
+      "name": "Classification Terminal",
+      "description": "Final step — classify and file",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "who-knew" },
+      "unlock_text": "Reached the Classification Terminal"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "timed_events": [
+    {
+      "id": "mid-warning",
+      "time_remaining": 420,
+      "message": "Disclosure window: 7 minutes remaining.",
+      "type": "atmosphere",
+      "voice": "system",
+      "triggers_narrative": "mid_event"
+    },
+    {
+      "id": "five-min",
+      "time_remaining": 300,
+      "message": "Five minutes. Classification terminal is waiting.",
+      "type": "atmosphere",
+      "voice": "system"
+    },
+    {
+      "id": "two-min",
+      "time_remaining": 120,
+      "message": "Two minutes. File now or face the consequences.",
+      "type": "alarm",
+      "voice": "system"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "breach-filed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "breach-filing",
+      "result_card": 99,
+      "message": "Breach notification filed successfully.",
+      "type": "ending"
+    },
+    {
+      "id": "legal-hold",
+      "trigger": "discovery",
+      "card_id": 15,
+      "result_card": 15,
+      "message": "Legal puts a 48-hour hold on all communications. Time wasted.",
+      "type": "penalty",
+      "penalty_seconds": 30
+    },
+    {
+      "id": "deleted-evidence",
+      "trigger": "discovery",
+      "card_id": 16,
+      "result_card": 16,
+      "message": "You deleted the email. Records Management restored it within 30 seconds — the item is subject to a regulatory retention obligation.",
+      "type": "penalty",
+      "penalty_seconds": 30
+    },
+    {
+      "id": "not-phishing",
+      "trigger": "discovery",
+      "card_id": 17,
+      "result_card": 17,
+      "message": "Information Security reviewed the flagged item and confirmed: 'This is not a phishing attempt. The correspondence has been verified as legitimate. Please action accordingly.'",
+      "type": "penalty",
+      "penalty_seconds": 30
+    },
+    {
+      "id": "ceo-unavailable",
+      "trigger": "discovery",
+      "card_id": 18,
+      "result_card": 18,
+      "message": "CEO is on a golf trip. His PA replies: 'He'll circle back next quarter.'",
+      "type": "penalty",
+      "penalty_seconds": 30
+    },
+    {
+      "id": "wrong-transaction-c",
+      "trigger": "discovery",
+      "card_id": 37,
+      "result_card": 37,
+      "message": "Transaction C is 3.75% — well within threshold. Wrong one.",
+      "type": "penalty",
+      "penalty_seconds": 30
+    },
+    {
+      "id": "wrong-transaction-d",
+      "trigger": "discovery",
+      "card_id": 38,
+      "result_card": 38,
+      "message": "Transaction D's reference is NT-0891, not NT-0847. Read more carefully.",
+      "type": "penalty",
+      "penalty_seconds": 30
+    }
+  ]
+}

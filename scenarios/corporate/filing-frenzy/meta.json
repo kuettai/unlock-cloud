@@ -1,0 +1,14 @@
+{
+  "id": "filing-frenzy",
+  "title": "Filing Frenzy — The HKEX Deadline",
+  "episode": 1,
+  "arc": "Corporate Compliance",
+  "description": "It's Friday at 3:45 PM. HKEX just published a rule amendment effective next week. Your team must complete and file the regulatory impact assessment before the e-Filing system locks at 4 PM. Fifteen minutes. No extensions.",
+  "difficulty": { "tier": 1, "label": "Accessible" },
+  "duration_minutes": 15,
+  "players": { "min": 2, "max": 4, "recommended": 3 },
+  "topics": ["HKEX Listing Rules", "Regulatory Change Management", "Impact Assessment", "Gap Analysis", "Filing Workflow"],
+  "mechanics_taught": ["wire_lock", "timeline_lock", "keypad_lock", "card_combination", "penalty_traps", "timed_countdown"],
+  "version": "0.1",
+  "start_button": "Start Filing"
+}

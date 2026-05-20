@@ -1546,98 +1546,98 @@
       "config": {
         "slots": [
           {
-            "id": "weapon",
+            "id": "core",
             "base": {
-              "name": "🗡️ Wooden Stick",
+              "name": "🗡️ Dull Model Shard",
               "effect": 2,
               "type": "flat"
             },
             "upgraded": {
-              "name": "🐉 Dragon Lance",
+              "name": "🐉 Foundation Model Core",
               "effect": 2,
               "type": "mult"
             },
             "quest": "bazaar-recruit"
           },
           {
-            "id": "armor",
+            "id": "gateway",
             "base": {
-              "name": "🛡️ Broken Heavy Armor",
+              "name": "🛡️ Severed Conduit",
               "effect": 3,
               "type": "div"
             },
             "upgraded": {
-              "name": "🧥 Light Armor",
+              "name": "🌐 MCP Gateway Link",
               "effect": 4,
               "type": "flat"
             },
             "quest": "gate-wiring"
           },
           {
-            "id": "boots",
+            "id": "protocol",
             "base": {
-              "name": "👢 Rusty Greaves",
+              "name": "👢 Broken Protocol",
               "effect": 3,
               "type": "neg"
             },
             "upgraded": {
-              "name": "🥾 Windwalker Boots",
+              "name": "🤝 Negotiation Protocol",
               "effect": 6,
               "type": "flat"
             },
             "quest": "negotiation"
           },
           {
-            "id": "helm",
+            "id": "policy",
             "base": {
-              "name": "⛑️ Cracked Visor",
+              "name": "⛑️ Unsigned Decree",
               "effect": 1,
               "type": "neg"
             },
             "upgraded": {
-              "name": "👑 Crown of Clarity",
+              "name": "👑 Cedar Seal",
               "effect": 1.5,
               "type": "mult"
             },
             "quest": "kings-seal"
           },
           {
-            "id": "ring",
+            "id": "prompt",
             "base": {
-              "name": "💍 Cursed Band",
+              "name": "💍 Vague Command",
               "effect": 2,
               "type": "div"
             },
             "upgraded": {
-              "name": "💎 Ring of Focus",
+              "name": "💎 Instruction Schema",
               "effect": 8,
               "type": "flat"
             },
             "quest": "recipe-sort"
           },
           {
-            "id": "cloak",
+            "id": "guard",
             "base": {
-              "name": "🧣 Tattered Cloak",
+              "name": "🧣 Unfiltered Cloak",
               "effect": 1,
               "type": "flat"
             },
             "upgraded": {
-              "name": "🦅 Cloak of Soaring",
+              "name": "🛡️ Guardrail Mantle",
               "effect": 1.3,
               "type": "mult"
             },
             "quest": "code-of-honor"
           },
           {
-            "id": "amulet",
+            "id": "memory",
             "base": {
-              "name": "📿 Dull Pendant",
+              "name": "📿 Faded Crystal",
               "effect": 0,
               "type": "flat"
             },
             "upgraded": {
-              "name": "🔮 Amulet of Insight",
+              "name": "🔮 Memory Crystal",
               "effect": 5,
               "type": "flat"
             },
@@ -1681,9 +1681,9 @@
         ]
       },
       "hints": [
-        "Some equipment is cursed — it drags the Champion down. Try disabling items that sound broken.",
-        "Complete errands to upgrade gear. The Bazaar upgrades your weapon, the Gate upgrades your armor.",
-        "Once you can see the numbers (Observability), arrange flat bonuses before multipliers for maximum power."
+        "Some components are broken — they drag the Champion down. Try disabling items that sound severed, unsigned, or vague.",
+        "Complete errands to upgrade capabilities. The Bazaar upgrades your Model Core, the Gate upgrades your Gateway Link.",
+        "Once you can see the numbers (Observability), arrange flat bonuses (+N) before multipliers (×N) for maximum power."
       ],
       "mandatory": true
     },
@@ -1696,98 +1696,98 @@
       "config": {
         "slots": [
           {
-            "id": "weapon",
+            "id": "core",
             "base": {
-              "name": "🗡️ Wooden Stick",
+              "name": "🗡️ Dull Model Shard",
               "effect": 2,
               "type": "flat"
             },
             "upgraded": {
-              "name": "🐉 Dragon Lance",
+              "name": "🐉 Foundation Model Core",
               "effect": 2,
               "type": "mult"
             },
             "quest": "bazaar-recruit"
           },
           {
-            "id": "armor",
+            "id": "gateway",
             "base": {
-              "name": "🛡️ Broken Heavy Armor",
+              "name": "🛡️ Severed Conduit",
               "effect": 3,
               "type": "div"
             },
             "upgraded": {
-              "name": "🧥 Light Armor",
+              "name": "🌐 MCP Gateway Link",
               "effect": 4,
               "type": "flat"
             },
             "quest": "gate-wiring"
           },
           {
-            "id": "boots",
+            "id": "protocol",
             "base": {
-              "name": "👢 Rusty Greaves",
+              "name": "👢 Broken Protocol",
               "effect": 3,
               "type": "neg"
             },
             "upgraded": {
-              "name": "🥾 Windwalker Boots",
+              "name": "🤝 Negotiation Protocol",
               "effect": 6,
               "type": "flat"
             },
             "quest": "negotiation"
           },
           {
-            "id": "helm",
+            "id": "policy",
             "base": {
-              "name": "⛑️ Cracked Visor",
+              "name": "⛑️ Unsigned Decree",
               "effect": 1,
               "type": "neg"
             },
             "upgraded": {
-              "name": "👑 Crown of Clarity",
+              "name": "👑 Cedar Seal",
               "effect": 1.5,
               "type": "mult"
             },
             "quest": "kings-seal"
           },
           {
-            "id": "ring",
+            "id": "prompt",
             "base": {
-              "name": "💍 Cursed Band",
+              "name": "💍 Vague Command",
               "effect": 2,
               "type": "div"
             },
             "upgraded": {
-              "name": "💎 Ring of Focus",
+              "name": "💎 Instruction Schema",
               "effect": 8,
               "type": "flat"
             },
             "quest": "recipe-sort"
           },
           {
-            "id": "cloak",
+            "id": "guard",
             "base": {
-              "name": "🧣 Tattered Cloak",
+              "name": "🧣 Unfiltered Cloak",
               "effect": 1,
               "type": "flat"
             },
             "upgraded": {
-              "name": "🦅 Cloak of Soaring",
+              "name": "🛡️ Guardrail Mantle",
               "effect": 1.3,
               "type": "mult"
             },
             "quest": "code-of-honor"
           },
           {
-            "id": "amulet",
+            "id": "memory",
             "base": {
-              "name": "📿 Dull Pendant",
+              "name": "📿 Faded Crystal",
               "effect": 0,
               "type": "flat"
             },
             "upgraded": {
-              "name": "🔮 Amulet of Insight",
+              "name": "🔮 Memory Crystal",
               "effect": 5,
               "type": "flat"
             },
@@ -1831,9 +1831,9 @@
         ]
       },
       "hints": [
-        "You need ALL equipment upgraded and properly ordered to reach Soars.",
+        "You need ALL capabilities upgraded and properly ordered to reach Soars.",
         "With Observability enabled, you can see the numbers. Put flat bonuses (+N) before multipliers (×N).",
-        "Optimal order: all +N items first (Armor, Boots, Ring, Amulet, Cloak), then ×N items (Lance, Crown, Cloak). Score: 128."
+        "Optimal order: +N first (Gateway, Protocol, Instruction Schema, Memory Crystal), then ×N (Model Core, Cedar Seal, Guardrail Mantle). Score: 128."
       ],
       "mandatory": true,
       "isFinal": true

@@ -554,6 +554,142 @@ Both tools and NPCs appear in the 🔧 Tools screen, grouped by room. NPCs show 
 - Sequence lock `blind` mode — no pattern shown.
 - Morse lock `showReference: false` — no alphabet hint.
 
+## Scenario-Specific Locks
+
+### Spec Lock (`spec-lock.js`)
+Multi-round spec writing. Each round shows a vague client request + golem chaos results, player selects structured Who/What/Why from dropdowns.
+```js
+new SpecLock(el, {
+  rounds: [{ vibe: '...', golemChaos: [...], spec: [{label,prompt,answer,options}], correctScene: [...] }],
+  falseOutputs: [...], onSubmit() {}, onWrong(msg) {}
+});
+```
+Used in: EP4 (turning vague requests into user stories)
+
+### Context Lock (`context-lock.js`)
+Document loader with token budget. Drag docs into memory, avoid poisoned/outdated docs.
+```js
+new ContextLock(el, {
+  documents: [{ id, label, icon, desc, tokens, status: 'required'|'poison'|'safe', poisonLine, missingLine }],
+  capacity: 2000, onSubmit() {}, onWrong(msg) {}
+});
+```
+Used in: EP4 (loading correct specs within token limit)
+
+### Blueprint Lock (`blueprint-lock.js`)
+Drag components onto architecture layers. Layer-specific wrong-answer feedback.
+```js
+new BlueprintLock(el, {
+  layers: [{ id, label, icon, color }],
+  components: [{ id, label, layer, hint }],
+  falseOutputs: { layerId: 'message' }, onSubmit() {}
+});
+```
+Used in: EP4 (placing AWS services on correct architecture tiers)
+
+### Scroll Lock (`scroll-lock.js`)
+Fill-in-the-blank policy document. Each clause has a dropdown of options.
+```js
+new ScrollLock(el, {
+  title: '...', clauses: [{ text: 'The bearer may ___ performers.', options: [...], answer: 'book' }],
+  onSubmit() {}, onWrong(msg) {}
+});
+```
+Used in: EP3 (writing Cedar policy as the King's Seal)
+
+### Bazaar Lock (`bazaar-lock.js`)
+Recruit an ally from merchant stalls. Budget-aware, tier-based results (gold/silver/bronze/fail).
+```js
+new BazaarLock(el, {
+  budget: 100,
+  stalls: [{ id, name, icon, specialty, cost }],
+  quests: [{ label, results: { stallId: { tier, message } } }],
+  tier_effects: { gold: '...', silver: '...', bronze: '...' },
+  onSubmit() {}
+});
+```
+Used in: EP3 (selecting the right Bedrock model for a task)
+
+### Prompt Lock (`prompt-lock.js`)
+Construct a structured prompt from drag-and-drop fragments. Tier-based scoring by fragment combination.
+```js
+new PromptLock(el, {
+  npc: { name, portrait },
+  fragments: [{ id, text, type: 'action'|'what'|'where'|'format'|'detail' }],
+  answers: [{ required: ['id1','id2'], tier: 'gold'|'silver'|'bronze'|'fail', response: '...' }],
+  onSubmit() {}, onWrong(msg) {}
+});
+```
+Used in: EP3 (prompt engineering for recipe search)
+
+### Booking Run Lock (`booking-run-lock.js`)
+Watch an NPC make tool calls, fix the broken parameters. Narrative-driven with per-call failure messages.
+```js
+new BookingRunLock(el, {
+  npc: { name, portrait },
+  calls: [{ fn, params: {}, broken: 'paramName', answer: 'value', options: [...], narrate: '...', fail: '...', success: '...' }],
+  onSubmit() {}
+});
+```
+Used in: EP3 (Artificer makes booking API calls with wrong params, player corrects)
+
+### Image Prompt Lock (`image-prompt-lock.js`)
+Specify design attributes (color/material/style) per commission. Character-specific wrong feedback.
+```js
+new ImagePromptLock(el, {
+  commissions: [{ noble, target: {color,material,style}, desc, feedback: {color:{},material:{},style:{}} }],
+  options: { color: [...], material: [...], style: [...] },
+  maxAttempts: 5, onSubmit() {}, onWrong(msg) {}
+});
+```
+Used in: EP3 (designing stall visuals for feuding nobles)
+
+### Deck Battle Lock (`deck-battle-lock.js`)
+Card-based negotiation. Play Persuasion (attack conviction) and Composure (block gold loss) cards against a merchant's pattern.
+```js
+new DeckBattleLock(el, {
+  merchant: { name, conviction: 8, pattern: [{ attack, block, text }] },
+  startingDeck: [{ id, name, type: 'persuasion'|'composure', value }],
+  gold: 80, onSubmit() {}, onWrong(msg) {}
+});
+```
+Used in: EP3 (negotiating with foreign traders — 3 escalating battles)
+
+### Equipment Rack Lock (`equipment-rack-lock.js`)
+Equip items, arrange order, deploy. Score calculated by applying flat/mult/div/neg effects sequentially.
+```js
+new EquipmentRackLock(el, {
+  slots: [{ id, base: {name,effect,type}, upgraded: {name,effect,type}, quest: 'puzzleId' }],
+  observability: false, cooldown: 30, target: 'strides',
+  tiers: [{ min, icon, label, text }],
+  onSubmit() {}
+});
+```
+Effect types: `flat` (+N), `mult` (×N), `div` (÷N), `neg` (-N). Optimal strategy: flats before mults.
+Used in: EP3 (Champion assembly — teaches agent deployment ordering and observability)
+
+### Witness Lock (`witness-lock.js`)
+Match testimonies to chronological moments. Used for investigation recaps.
+```js
+new WitnessLock(el, {
+  testimonies: [{ id, text, moment }],
+  moments: [{ id, label }],
+  onSubmit() {}
+});
+```
+Used in: Bible EP0 (matching witness accounts to timeline)
+
+### Evidence Board Lock (`evidence-board-lock.js`)
+Connect investigation steps to findings. Recap puzzle that tests accumulated knowledge.
+```js
+new EvidenceBoardLock(el, {
+  steps: [{ id, label, finding }],
+  findings: [{ id, text }],
+  onSubmit() {}
+});
+```
+Used in: Bible EP0 (investigation summary)
+
 ## Test Pages
 
 - `app/puzzle-test.html` — generic locks (digit, word, wire, sequence, slider, rotation, binary, jigsaw, morse)

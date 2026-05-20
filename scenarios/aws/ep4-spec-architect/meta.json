@@ -36,7 +36,6 @@
     "path-lock",
     "timeline-lock",
     "chain-lock",
-    "pipe-lock",
     "log-lock",
     "sort-lock",
     "defuse-lock",

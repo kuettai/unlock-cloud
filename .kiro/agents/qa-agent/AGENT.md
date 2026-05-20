@@ -181,3 +181,16 @@ await expect(page.locator('#end-title')).toContainText('complete', { ignoreCase:
 - Check no `prompt` fields in NPC lines (should be `label`)
 - Check no `requires` arrays in state_lines (should be `requires_card` single number)
 - Validate JSON files parse correctly in Node.js (not just Python — encoding differences matter)
+
+## Episode Review Integration
+
+Before running tests on a new or modified episode, perform the technical validation from `.kiro/skills/episode-review/SKILL.md` Phase 2:
+- All puzzle IDs in discoveries exist in puzzles.json
+- All card_ref and success_card references are valid
+- All triggered events reference existing puzzle_ids
+- All reveals/requires_item/consumes_item reference existing cards
+- All lore cards are reachable (revealed by at least one other card)
+- At least one puzzle has `isFinal: true`
+- Scoring `lore_ids` all exist
+
+This catches broken references before the happy-path test runs into unexplained failures.

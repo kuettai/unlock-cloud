@@ -36,7 +36,7 @@ Fields:
 - `style_prefix` — default prefix for all card types.
 - `style_prefix_location` / `style_prefix_item` / `style_prefix_object` — type-specific overrides. The tool picks the prefix matching the card's `type` field, falling back to `style_prefix`.
 - `negative_prompt` — appended as "Do NOT include: ..." to the prompt.
-- `aspect_ratio` — mapped to OpenAI sizes: `16:9` → `1536x1024`, `9:16` → `1024x1536`, `1:1` → `1024x1024`. Images are auto-resized after generation to display-optimized sizes (768×432 for rooms, 320×320 for cards).
+- `aspect_ratio` — mapped to OpenAI sizes: `16:9` → `1536x1024`, `9:16` → `1024x1536`, `1:1` → `1024x1024`. Images are auto-resized after generation to display-optimized sizes (768×432 for rooms, 320×320 for cards). Cover and ending images use 9:16 portrait (1024×1536) for mobile full-screen display.
 
 If `image-style.json` is missing, defaults are used (generic game card art, 16:9).
 
@@ -44,16 +44,19 @@ If `image-style.json` is missing, defaults are used (generic game card art, 16:9
 
 All images generated manually via ChatGPT. Always include exact pixel size in the prompt.
 
-| Image Type | Size | Prompt prefix |
-|---|---|---|
-| **Cover** | 1024×576 | "Generate a 1024x576 image:" |
-| **Ending** | 1024×576 | "Generate a 1024x576 image:" |
-| **Room** | 768×432 | "Generate a 768x432 image:" |
-| **Card** (item/object/NPC) | 320×320 | "Generate a 320x320 image:" |
+| Image Type | Size | Aspect | Prompt prefix |
+|---|---|---|---|
+| **Cover** | 1024×1536 | 9:16 portrait | "Generate a 1024x1536 image:" |
+| **Ending** | 1024×1536 | 9:16 portrait | "Generate a 1024x1536 image:" |
+| **Room** | 768×432 | 16:9 landscape | "Generate a 768x432 image:" |
+| **Card** (item/object/NPC) | 320×320 | 1:1 | "Generate a 320x320 image:" |
+
+Cover and ending images are displayed as full-screen backgrounds on mobile (`object-fit:cover` / `background-size:cover`). Portrait orientation ensures the key composition isn't cropped on phone viewports.
 
 Always include the resolution in the prompt when generating manually. Example:
-> "Generate a 1280x720 image: Digital illustration, wide angle..."
-> "Generate a 480x480 image: Single object, clean icon style..."
+> "Generate a 1024x1536 image: Digital illustration, cinematic..."
+> "Generate a 768x432 image: Digital illustration, wide angle..."
+> "Generate a 320x320 image: Single object, clean icon style..."
 
 ## Prompt Construction
 

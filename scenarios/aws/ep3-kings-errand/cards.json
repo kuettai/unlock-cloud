@@ -371,6 +371,7 @@
       "description": "A royal scroll sealed with the King's wax stamp. Five errands listed, each requiring a knight of increasing rank. \"Solve all five before sundown.\"",
       "image": "assets/card-kings-orders.png",
       "image_prompt": "A rolled royal parchment scroll with a large red wax seal bearing a crown emblem. Gold ribbon ties the scroll. Rich aged parchment, regal and official.",
+      "reveals": [106],
       "visible_to": "all",
       "room": "throne-room"
     },
@@ -383,6 +384,7 @@
       "image": "assets/card-festival-schedule.png",
       "image_prompt": "A detailed parchment schedule with a grid of tasks and times, written in neat calligraphy. Small colored dots mark priorities. A corner is folded. Warm parchment tones, organized and official.",
       "consumes": [104],
+      "reveals": [206],
       "visible_to": "all",
       "room": "stewards-study"
     },
@@ -429,7 +431,7 @@
       "image": "assets/card-chronicle-report.png",
       "image_prompt": "A glowing parchment report with a reconstructed festival layout diagram. Faint crystal-blue light emanates from the page. A wax seal at the bottom. Mystical yet official, chronicle archive aesthetic.",
       "consumes": [405],
-      "reveals": [900],
+      "reveals": [900, 407],
       "visible_to": "all",
       "room": "chronicle-hall"
     },
@@ -442,7 +444,7 @@
       "image": "assets/card-gate-pass.png",
       "image_prompt": "A heavy iron-and-parchment gate pass with a portcullis emblem stamped in wax. A copper key is attached by a chain. Official and sturdy, medieval gatehouse aesthetic.",
       "consumes": [205],
-      "reveals": [600, 505],
+      "reveals": [600, 505, 506],
       "visible_to": "all",
       "room": "castle-gate"
     },
@@ -477,7 +479,7 @@
       "image": "assets/card-ally-contract.png",
       "image_prompt": "A formal parchment contract with two signatures at the bottom and a wax seal. A handshake illustration in the header. Neat calligraphy, official merchant document aesthetic.",
       "consumes": [301, 501, 601],
-      "reveals": [700],
+      "reveals": [700, 607],
       "visible_to": "all",
       "room": "bedrock-bazaar"
     },
@@ -546,6 +548,7 @@
       "image": "assets/card-kings-seal.png",
       "image_prompt": "A heavy wax seal pressed into a royal document — a golden crown emblem with a cedar tree beneath it. Rich red wax, gold leaf on the parchment edges. Regal, authoritative, policy document aesthetic.",
       "consumes": [803],
+      "reveals": [807],
       "visible_to": "all",
       "room": "entertainment-guild"
     },
@@ -604,6 +607,7 @@
       "description": "The assembled Champion — every capability combined: Model, Gateway, Memory, Policy, Guardrails, Observability, Runtime. Ready for the final rehearsal.",
       "image": "assets/card-champions-crest.png",
       "image_prompt": "A magnificent golden crest with seven gemstones arranged in a circle — each a different color representing a capability. A crown sits atop the crest. Radiant golden light, ultimate achievement, champion's heraldic emblem.",
+      "reveals": [1006],
       "visible_to": "all",
       "room": "proving-ground"
     },

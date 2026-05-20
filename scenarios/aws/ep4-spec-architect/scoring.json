@@ -6,6 +6,9 @@
   ],
   "hint_penalty": -25,
   "wrong_answer_penalty": -10,
+  "lore_bonus": 3,
+  "lore_ids": [15, 35, 55, 75],
+  "all_lore_bonus": 5,
   "stars": [
     { "min": 1100, "stars": 3 },
     { "min": 800, "stars": 2 },
