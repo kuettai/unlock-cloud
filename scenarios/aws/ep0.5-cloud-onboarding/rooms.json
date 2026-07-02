@@ -1,0 +1,49 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Lobby",
+      "description": "Step 1 — Find your desk assignment",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "Starting room",
+      "map_pos": [180, 360]
+    },
+    {
+      "card_id": 200,
+      "name": "IT Setup",
+      "description": "Step 2 — Connect your EC2 workstation",
+      "connects_to": [300],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "jigsaw-welcome" },
+      "unlock_text": "Solved the welcome poster",
+      "map_pos": [180, 270]
+    },
+    {
+      "card_id": 300,
+      "name": "Security Office",
+      "description": "Step 3 — Activate your IAM badge",
+      "connects_to": [400],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "wire-laptop" },
+      "unlock_text": "Wired up the EC2 workstation",
+      "map_pos": [180, 180]
+    },
+    {
+      "card_id": 400,
+      "name": "Break Room",
+      "description": "Step 4 — Meet Alex, your buddy",
+      "connects_to": [500],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "keypad-iam" },
+      "unlock_text": "Got the badge from Frank",
+      "map_pos": [180, 90]
+    },
+    {
+      "card_id": 500,
+      "name": "Server Room",
+      "description": "Step 5 — Initialize your S3 Locker",
+      "connects_to": [],
+      "unlocked_by": { "type": "discovery", "from_room": 400 },
+      "unlock_text": "Got the boot sequence from Alex",
+      "map_pos": [180, 0]
+    }
+  ]
+}

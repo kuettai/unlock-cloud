@@ -1,0 +1,262 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "The War Room — Inception",
+      "description": "A modern startup war room. Whiteboards run wall-to-wall, covered in sticky notes and napkin sketches. A wall monitor reads: \"BOLT #001 — STARTED. Time remaining: 15:00.\"\n\nIn the corner, your AI partner — \"The Agent\" — is leaning against a digital whiteboard with a draft spec already pulled up. The Product Owner is pacing. They've given the Agent a one-line brief — \"customer feedback portal\" — and the Agent has expanded it into a full spec: three user stories, each with who/what/why. Some of those who/what/why options were invented from thin air.\n\nThe AI-DLC loop starts here: AI Proposes → Human Verifies. Trust, but verify.",
+      "image": "assets/war-room.png",
+      "image_prompt": "Modern startup war room with whiteboards covered in sticky notes, large wall monitor showing a project plan and countdown timer, glass walls, ergonomic chairs, warm lighting, mid-century modern aesthetic, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 101, "label": "Greet the Agent 🤖", "puzzle": "npc-agent-war" },
+        { "card_id": 102, "label": "Listen to the PO 📋", "puzzle": "npc-po" },
+        { "card_id": 105, "label": "Review the Spec Board", "puzzle": "spec-stories" },
+        { "card_id": 110, "label": "Read the dog-eared 'AI-DLC Loop' card on the desk" }
+      ],
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 101,
+      "type": "tool",
+      "color": "orange",
+      "title": "The Agent 🤖",
+      "description": "Your AI collaborator. Friendly, confident, occasionally wrong. It has already drafted a spec from the PO's intent — but it knows the rule: AI proposes, you decide.",
+      "image": "assets/card-agent.png",
+      "image_prompt": "Friendly humanoid AI assistant with soft glowing blue accents, casual hoodie over translucent chassis, holding a tablet with a draft plan, slight head tilt, warm office background, single character portrait",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 102,
+      "type": "tool",
+      "color": "orange",
+      "title": "The PO 📋",
+      "description": "The Product Owner. Smart, busy, vague. Cares about outcomes — not technology. Will absolutely give you a one-line spec and expect a working product by EOD.",
+      "image": "assets/card-po.png",
+      "image_prompt": "Confident product owner in a smart-casual blazer holding a coffee cup and a sticky note, mid-explanation, modern office background, single character portrait",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 103,
+      "type": "object",
+      "color": "blue",
+      "title": "Spec Board",
+      "description": "The Agent's draft spec: three user stories pulled out of the PO's one-line brief (\"customer feedback portal\"). For each story, the Agent has listed plausible-looking options for WHO uses it, WHAT they do, and WHY it matters.\n\nSome options are exactly right. Others are pure invention — crypto rewards, surveillance, social auto-posting, things the PO never asked for. Your job: pick the option that matches the PO's actual intent for every who/what/why, across every story.\n\nThis is the AI-DLC verify-the-plan step. AI proposed. You decide.",
+      "image": "assets/card-stories-board.png",
+      "image_prompt": "Digital whiteboard displaying three user-story panels, each with a who/what/why row of options, some options glowing faintly red as if uncertain, modern UI, soft blue ambient light, single object on dark background",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 105,
+      "type": "event",
+      "color": "yellow",
+      "title": "Specs Validated.",
+      "description": "Every who/what/why locks in green. Customer submits feedback. Customer sees confirmation. Admin reads the list. The hallucinated options — crypto, surveillance, auto-post — grey out and slide off the board. The Agent nods: \"Three valid specs. Hallucinations rejected. Plan locked in.\"\n\nA door opens to The Design Lab.",
+      "reveals": [200],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 110,
+      "type": "lore",
+      "color": "purple",
+      "title": "Lore Card — \"The Loop\"",
+      "description": "AI-DLC core loop:\n\n1. AI Creates Plan\n2. Human Verifies\n3. AI Refines\n4. AI Executes\n5. Human Verifies Outcome\n\nAI proposes. Humans decide. Repeat at every step. Skip a verify step and you ship the wrong thing — fast.",
+      "image": "assets/card-lore-loop.png",
+      "image_prompt": "Stylized infographic card showing a five-step circular loop labeled AI-DLC, alternating human and robot icons, blue and orange gradient, single object on dark background",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "The Design Lab — Context Management",
+      "description": "A bright design studio. A glass wall shows the Agent's working memory — a stack of documents it pulled in to design the Feedback Portal. The stack is too tall. A capacity gauge on the side reads OVER BUDGET. A live build stream below it stutters with contradictions: \"wiring MongoDB next to DynamoDB… adding crypto rewards… social auto-post…\"\n\nThe Agent's whiteboard note reads: \"I loaded everything I could find. I think most of it is stale. Help me trim it.\"\n\nThis is the AI-DLC anti-pattern in action: more context is not better context. The Agent over-loaded; you curate.",
+      "image": "assets/design-lab.png",
+      "image_prompt": "Modern architecture design studio with a large glass wall displaying a stack of document icons next to a capacity gauge and a live scrolling build log, some documents marked with red warning halos, sketches on the floor, holographic UI, blue and orange accent lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 201, "label": "Check in with the Agent 🤖", "puzzle": "npc-agent-design" },
+        { "card_id": 205, "label": "Trim the Agent's Context", "puzzle": "wire-arch" },
+        { "card_id": 210, "label": "Pick up the 'Context is King' card pinned to the wall" }
+      ],
+      "visible_to": "all",
+      "room": "design-lab"
+    },
+    {
+      "id": 201,
+      "type": "tool",
+      "color": "orange",
+      "title": "The Agent 🤖 (Design Lab)",
+      "description": "Same Agent, new room. Slightly humbled — it admits it loaded every doc it could find and is now drowning in stale context.",
+      "image": "assets/card-agent-design.png",
+      "image_prompt": "Friendly humanoid AI assistant sitting on the floor surrounded by a tall stack of glowing document icons, head tilted in mild embarrassment, soft glowing blue chassis, design studio background, single character portrait",
+      "visible_to": "all",
+      "room": "design-lab"
+    },
+    {
+      "id": 202,
+      "type": "object",
+      "color": "blue",
+      "title": "Agent Memory Panel",
+      "description": "The Agent's working memory, exposed. A scrolling build stream shows what it's producing right now — and right now it's producing contradictions, because half the docs in its head are stale or off-spec.\n\n• Current docs (requirements, architecture, API contract) — the ones you want loaded.\n• Stale docs (Marcus's MongoDB design, v1 draft with cut features) — actively poisoning the output.\n• Off-spec docs (brainstorm with crypto/AR, social auto-post spec) — features the PO explicitly killed.\n\nRemove docs until the build stream goes green and the capacity gauge fits within budget. Garbage in → confident garbage out. Curate the context.",
+      "image": "assets/card-arch-diagram.png",
+      "image_prompt": "Tech context panel on a glass surface showing a vertical list of document cards next to a vertical capacity bar, with a scrolling stream of build log lines below, some entries red and some green, modern UI, single object on dark background",
+      "visible_to": "all",
+      "room": "design-lab"
+    },
+    {
+      "id": 205,
+      "type": "event",
+      "color": "yellow",
+      "title": "Context Validated.",
+      "description": "Stale docs vanish from the panel. The capacity gauge drops back into the green. The build stream stabilizes — every line now reads ✅ on a real component of the actual spec. The Agent exhales: \"Right. Less context, better context. Got it.\"\n\nA door opens to The Build Floor.",
+      "reveals": [300],
+      "visible_to": "all",
+      "room": "design-lab"
+    },
+    {
+      "id": 210,
+      "type": "lore",
+      "color": "purple",
+      "title": "Lore Card — \"Context is King\"",
+      "description": "Most AI failures aren't IQ failures — they're context failures.\n\nLoad the right docs (current specs, current code) and the agent is brilliant. Feed it stale or missing context and it confidently builds the wrong thing. Feed it too much context and the relevant docs get crowded out by the irrelevant ones.\n\nA good prompt + the right context > a clever prompt + everything-and-the-kitchen-sink.",
+      "image": "assets/card-lore-context.png",
+      "image_prompt": "Stylized infographic card with a stack of documents flowing into a robot's open chest panel, blue and gold gradient, 'CONTEXT' label, single object on dark background",
+      "visible_to": "all",
+      "room": "design-lab"
+    },
+
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "The Build Floor — Architecture",
+      "description": "An open workshop floor. The Agent has drafted code AND a layered architecture diagram — presentation, application, data, infrastructure, top to bottom. Eight AWS components sit in a queue, waiting to be placed on the correct floor of the diagram.\n\nThe Agent has labeled each component with what it does, but it's stopped short of locking in the layers. Its whiteboard reads: \"I'm not 100% on the boundaries. Verify each placement before I commit.\"\n\nIf DynamoDB ends up in presentation, the frontend talks straight to the database with no auth. If S3 lands in infrastructure, the architecture doesn't know where files live. Layering matters.\n\nHumans verify the outcome.",
+      "image": "assets/build-floor.png",
+      "image_prompt": "Modern developer workshop with a large vertical architecture diagram showing four labeled layers stacked top-to-bottom, a queue of unplaced AWS component cards waiting on the side, AI agent at a standing desk, warm overhead lights, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 301, "label": "Talk with the Agent 🤖", "puzzle": "npc-agent-build" },
+        { "card_id": 305, "label": "Verify the Architecture", "puzzle": "match-tests" },
+        { "card_id": 310, "label": "Read the 'Anti-Patterns' card on the wall" }
+      ],
+      "visible_to": "all",
+      "room": "build-floor"
+    },
+    {
+      "id": 301,
+      "type": "tool",
+      "color": "orange",
+      "title": "The Agent 🤖 (Build Floor)",
+      "description": "The Agent has drafted the layered architecture but won't lock it in until you walk every placement. It admits the infra-y components blur for it.",
+      "image": "assets/card-agent-build.png",
+      "image_prompt": "Friendly humanoid AI assistant standing at a developer desk pointing at a layered architecture diagram with one floor highlighted, soft glowing blue chassis, single character portrait",
+      "visible_to": "all",
+      "room": "build-floor"
+    },
+    {
+      "id": 302,
+      "type": "object",
+      "color": "blue",
+      "title": "Architecture Diagram",
+      "description": "A four-layer architecture stack: Presentation on top, then Application, then Data, then Infrastructure at the foundation. Eight AWS components — React, CloudFront, API Gateway, Lambda, DynamoDB, S3, CDK Stack, IAM Roles — are queued, one at a time, for placement.\n\nFor each, decide which layer it belongs on. If you misplace one, the Agent explains why it doesn't fit. Verify every component. Build the building.",
+      "image": "assets/card-test-suite.png",
+      "image_prompt": "A vertical cross-section of a building with four labeled floors — Presentation, Application, Data, Infrastructure — each containing AWS service icons, blueprint aesthetic, single object on dark background",
+      "visible_to": "all",
+      "room": "build-floor"
+    },
+    {
+      "id": 305,
+      "type": "event",
+      "color": "yellow",
+      "title": "Architecture Verified.",
+      "description": "Every component locks onto its correct floor. React and CloudFront glow at the top. API Gateway and Lambda settle in the middle. DynamoDB and S3 anchor the data layer. CDK and IAM hold the foundation.\n\nThe Agent: \"Layers clean. Boundaries solid. Outcome verified — not just promised. Loading deploy plan now.\"\n\nA door opens to The Launch Pad.",
+      "reveals": [400],
+      "visible_to": "all",
+      "room": "build-floor"
+    },
+    {
+      "id": 310,
+      "type": "lore",
+      "color": "purple",
+      "title": "Lore Card — \"Anti-Patterns\"",
+      "description": "Common AI-DLC anti-patterns:\n\n• Single-shotting a multi-step problem — let the agent break it down.\n• Skipping the verify step — \"it looked right\" ≠ \"it is right.\"\n• Stale or oversized context — the agent will gladly build last week's design today.\n• Trusting a hallucinated test — green CI on fake tests is still green CI.\n\nThe loop exists because every one of these has shipped to prod somewhere.",
+      "image": "assets/card-lore-antipatterns.png",
+      "image_prompt": "Stylized infographic card with four warning icons arranged as a 2x2 grid, each labeled with a different AI anti-pattern, red and amber accents, single object on dark background",
+      "visible_to": "all",
+      "room": "build-floor"
+    },
+
+    {
+      "id": 400,
+      "type": "location",
+      "color": "green",
+      "title": "The Launch Pad — Operations",
+      "description": "A small mission-control style room. A wall of monitors shows the deploy already in flight — CDK stack pushed, frontend uploaded — but two indicators are flashing red. CORS errors. Missing env var. A timer above the console reads \"DEFUSE: 0:45\" and ticks downward.\n\nThe Agent stands at the console: \"I kicked it off automatically. Two things broke. There's also a 'skip tests' switch I drafted — leave it alone, that's exactly the wrong shortcut. Drive. I'll watch.\"\n\nLast verify. Last decision. Don't skip the loop.",
+      "image": "assets/launch-pad.png",
+      "image_prompt": "Mission control style room with a wall of monitors showing a live deploy console with two red error indicators, a large defuse-style countdown timer reading 0:45, AI agent standing center-room, dramatic cool lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 401, "label": "Get the briefing from the Agent 🤖", "puzzle": "npc-agent-launch" },
+        { "card_id": 499, "label": "Fix the deploy and ship", "puzzle": "sort-deploy" },
+        { "card_id": 410, "label": "Read the 'Bolts not Sprints' card on the wall" }
+      ],
+      "visible_to": "all",
+      "room": "launch-pad"
+    },
+    {
+      "id": 401,
+      "type": "tool",
+      "color": "orange",
+      "title": "The Agent 🤖 (Launch Pad)",
+      "description": "The Agent has the deploy console up. It flags exactly what's broken — and warns you not to take the 'skip tests' shortcut it accidentally drafted.",
+      "image": "assets/card-agent-launch.png",
+      "image_prompt": "Friendly humanoid AI assistant standing in a mission control room pointing at a deploy console with two red error markers, glowing blue chassis, single character portrait",
+      "visible_to": "all",
+      "room": "launch-pad"
+    },
+    {
+      "id": 402,
+      "type": "object",
+      "color": "blue",
+      "title": "Deploy Console (Live)",
+      "description": "The deploy is in flight and broken. Forty-five seconds on the defuse timer.\n\nFour switches and one input:\n• Add CORS headers to Lambda response — needed (browser preflight is failing)\n• Redeploy API Gateway stage — needed (so the new headers take effect)\n• Skip integration tests — TRAP (never skip verify, especially under pressure)\n• API Gateway stage name — needs the standard prod stage value\n\nFix the deploy before the Bolt ends.",
+      "image": "assets/card-pipeline.png",
+      "image_prompt": "Digital deploy console with toggle switches and a single text input, two red error indicators above, a countdown timer in the corner, single object on dark background",
+      "visible_to": "all",
+      "room": "launch-pad"
+    },
+    {
+      "id": 410,
+      "type": "lore",
+      "color": "purple",
+      "title": "Lore Card — \"Bolts not Sprints\"",
+      "description": "In AI-DLC, the unit of work is the Bolt — measured in hours, not weeks.\n\nA Bolt is a complete loop: Intent → Plan → Verify → Build → Verify → Ship. Small, end-to-end, validated. You don't gather requirements for two weeks before writing code. You ship a thin slice in an afternoon, then run the next Bolt.\n\nVelocity comes from many small loops, not one big plan.",
+      "image": "assets/card-lore-bolts.png",
+      "image_prompt": "Stylized infographic card showing a small lightning bolt overlapping a calendar grid with one cell highlighted, blue and yellow accents, single object on dark background",
+      "visible_to": "all",
+      "room": "launch-pad"
+    },
+    {
+      "id": 499,
+      "type": "event",
+      "color": "yellow",
+      "title": "Shipped! The Bolt is complete.",
+      "description": "CORS headers go on. The API redeploys with the new headers active. Tests run (you didn't skip them, and they pass). The stage name fills in. The defuse timer freezes with seconds to spare and flips to ✅ DEFUSED.\n\nThe Feedback Portal goes live. The PO refreshes their browser. Customer feedback starts flowing in. The Customer 👔 smiles: \"This is exactly what I asked for.\"\n\nThe Agent: \"Bolt complete. Want to run the next one?\"\n\nYou close the laptop. Today, you shipped. AI proposed. You decided. And it worked.",
+      "is_ending": true,
+      "reveals": [],
+      "visible_to": "all",
+      "room": "launch-pad"
+    }
+  ]
+}

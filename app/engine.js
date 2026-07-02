@@ -466,6 +466,9 @@ class LeaderboardClient {
     this._flushInterval = null;
     this._storageKey = 'utc_lb_queue';
     this._loadQueue();
+    // Server-driven end detection
+    this._lastGameStatus = null;       // last status seen from GET /games/{id}
+    this.onGameEnded = null;           // callback(game) — fired once when server flips status to 'ended'
   }
 
   // Legacy compat
@@ -481,11 +484,31 @@ class LeaderboardClient {
   }
 
   startPeriodicFlush(intervalMs) {
-    this._flushInterval = setInterval(() => this.flush(), intervalMs || 10000);
+    this._flushInterval = setInterval(() => {
+      this.flush();
+      // Always poll game status, even when the event queue is empty,
+      // so we can detect server-driven game ends (timeout / host force-close).
+      this._pollGameStatus();
+    }, intervalMs || 10000);
   }
 
   stopPeriodicFlush() {
     if (this._flushInterval) { clearInterval(this._flushInterval); this._flushInterval = null; }
+  }
+
+  async _pollGameStatus() {
+    const game = await this.getGame();
+    this._handleGameState(game);
+  }
+
+  _handleGameState(game) {
+    if (!game || !game.status) return;
+    const prev = this._lastGameStatus;
+    this._lastGameStatus = game.status;
+    // Fire the ended callback exactly once on the transition into 'ended'.
+    if (prev !== 'ended' && game.status === 'ended' && typeof this.onGameEnded === 'function') {
+      try { this.onGameEnded(game); } catch (e) { /* swallow — UI handler errors must not break polling */ }
+    }
   }
 
   push(event, payload) {
@@ -583,6 +606,7 @@ class LeaderboardClient {
       this._flushing = false;
       // Return timer from game state
       const game = await this.getGame();
+      this._handleGameState(game);
       return game ? { timer: this._calcTimer(game) } : null;
     } catch {
       this.queue.unshift(...batch);

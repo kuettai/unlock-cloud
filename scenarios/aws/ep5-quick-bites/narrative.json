@@ -1,0 +1,58 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Story narrator — warm, comedic timing" },
+    "system": { "voice_id": "Matthew", "role": "System alerts — corporate memo style" },
+    "marco": { "voice_id": "Brian", "role": "Chef Marco — passionate, scattered, loud" },
+    "diana": { "voice_id": "Amy", "role": "Diana — fast, dry, skeptical" },
+    "raj": { "voice_id": "Raveena", "role": "Raj — anxious, apologetic, technical" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "narrator", "text": "QuickBite HQ. A cramped co-working space that smells like test-kitchen grease and ambition. Whiteboards everywhere. Post-its on the ceiling.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "You're the new Executive Assistant. Your first day. You don't even have a login yet.", "pause_after_ms": 600 },
+      { "voice": "marco", "text": "YOU! New person! I need the food cost ratio for the Volcano Burger BY NOON or Diana will kill the launch!", "pause_after_ms": 1000 },
+      { "voice": "diana", "text": "Ignore him. I need a competitive analysis deck for the investor call. Which is in — fifty-five minutes. With citations.", "pause_after_ms": 1000 },
+      { "voice": "raj", "text": "Hi! Sorry! Also the POS system is down at Store #4. And Store #7's fryer is literally on fire. Not metaphorically. Welcome aboard!", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "Three founders. Ten stores. One investor call in fifty-five minutes. And nobody can answer a single question because the data lives in fifteen different places.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "Your sixty minutes start now." }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 1500,
+    "segments": [
+      { "voice": "system", "text": "INCOMING: Investor call moved up. Diana needs you in the War Room in 2 minutes.", "pause_after_ms": 800, "emphasis": "strong" },
+      { "voice": "diana", "text": "They moved it up! The call is NOW! Get in here — do you have the numbers? Do you have the deck?", "pause_after_ms": 600 },
+      { "voice": "marco", "text": "TELL THEM ABOUT THE VOLCANO BURGER!", "pause_after_ms": 400 },
+      { "voice": "narrator", "text": "Diana's already dialing. The boardroom screen blinks to life. Three investors stare back. This is happening." }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "The investor call ends. Diana's face cracks — is that a smile? That might be a smile.", "pause_after_ms": 800 },
+        { "voice": "system", "text": "INVESTMENT CONFIRMED. Series C secured.", "pause_after_ms": 600, "emphasis": "strong" },
+        { "voice": "marco", "text": "I TOLD you. The Volcano Burger! They loved the numbers! They said 'impressive margins!' That's the sauce!", "pause_after_ms": 800 },
+        { "voice": "diana", "text": "They loved the research. The competitive analysis. The fact that we had CITATIONS. On your first day.", "pause_after_ms": 600 },
+        { "voice": "raj", "text": "Store #10's opening sequence just ran automatically. Every step. No tickets. No scramble. I didn't get a single phone call.", "pause_after_ms": 800 },
+        { "voice": "raj", "text": "That's... that's never happened before.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "Three founders look at you. The new hire. Who organized the chaos, researched the market, automated the opening, and won the money. On day one.", "pause_after_ms": 800 },
+        { "voice": "marco", "text": "So. Chief Operating Officer. Interested?", "pause_after_ms": 400 },
+        { "voice": "narrator", "text": "You take a bite of the Volcano Burger. It's perfect." }
+      ],
+      "audio": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "system", "text": "Time expired. Investor call: incomplete.", "pause_after_ms": 800, "emphasis": "strong" },
+        { "voice": "narrator", "text": "The investors smile politely. 'Send us the deck when it's ready.' The kind of polite that means no.", "pause_after_ms": 600 },
+        { "voice": "diana", "text": "We'll get them next time. The data was there — we just need to be faster at connecting it.", "pause_after_ms": 600 },
+        { "voice": "raj", "text": "Store #10 opened anyway. There were... issues. But nobody got hurt. Mostly.", "pause_after_ms": 400 },
+        { "voice": "marco", "text": "The Volcano Burger was still perfect. That part went great.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "Tomorrow you'll know where to find everything. How to research faster. How to automate instead of scramble. Quick learns, and so do you." }
+      ],
+      "audio": null
+    }
+  }
+}

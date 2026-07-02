@@ -1,0 +1,22 @@
+{
+  "id": "ep0.5-cloud-onboarding",
+  "title": "Cloud Onboarding",
+  "episode": 0.5,
+  "arc": "tutorial",
+  "category": "aws",
+  "description": "Day one at NovaCloud, an AWS-powered startup. Your onboarding checklist exploded, your buddy left clues, and your badge won't activate. Get cleared for cloud access in 10 minutes — finish, grab your swag, and become one of us.",
+  "difficulty": { "tier": 0, "label": "Booth Qualifier" },
+  "duration_minutes": 10,
+  "players": { "min": 1, "max": 6, "recommended": 2 },
+  "aws_topics": ["VPC", "EC2", "IAM", "Lambda", "S3"],
+  "mechanics_taught": [
+    "card_combination",
+    "navigation",
+    "puzzle_solving",
+    "hints",
+    "scoring"
+  ],
+  "version": "0.1",
+  "start_button": "Clock In",
+  "lore_label": "Sticky Note"
+}

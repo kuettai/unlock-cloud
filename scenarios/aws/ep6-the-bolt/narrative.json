@@ -1,0 +1,50 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna",  "role": "Narrator — sets scene, explains AI-DLC briefly, modern startup energy" },
+    "agent":    { "voice_id": "Matthew", "role": "The Agent — your AI partner, confident, fallible, gracious in correction" },
+    "po":       { "voice_id": "Salli",   "role": "The Product Owner — delivers vague intent, validates at end" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "narrator", "text": "Welcome to your first Bolt.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "In AI-DLC — the AI Development Lifecycle — the unit of work isn't a two-week sprint. It's a Bolt. Hours, not weeks. One full loop: intent, plan, verify, build, verify, ship.", "pause_after_ms": 1000 },
+      { "voice": "narrator", "text": "Your AI partner has already drafted a plan from the Product Owner's intent. But the core rule of AI-DLC is simple: AI proposes, you decide.", "pause_after_ms": 900 },
+      { "voice": "agent", "text": "Hey! Good to meet you. I'm your Agent. I've got a draft plan, a draft architecture, draft code, and a draft deploy pipeline. I'm probably wrong about something in each of those. Help me find out where.", "pause_after_ms": 1000 },
+      { "voice": "po", "text": "I want a customer feedback portal. Customers submit feedback, support reads it, customers know we received it. That's the brief. Don't over-build.", "pause_after_ms": 1000 },
+      { "voice": "narrator", "text": "Fifteen minutes on the clock. Four rooms. One loop, repeated four times: AI creates plan, you verify; AI refines, AI executes; you verify the outcome.", "pause_after_ms": 900 },
+      { "voice": "narrator", "text": "Ship the portal before the Bolt ends. Your Bolt starts now.", "emphasis": "moderate" }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 450,
+    "segments": [
+      { "voice": "narrator", "text": "Halfway through the Bolt. Seven-and-a-half minutes remaining.", "pause_after_ms": 800 },
+      { "voice": "agent", "text": "We're past plan and design. Code and tests are next — and this is where context really matters. I'll show you which docs I loaded and which I didn't.", "pause_after_ms": 900 },
+      { "voice": "po", "text": "Looking good from over here. Just remember — verify each step. Don't take my Agent's word for it. Even mine.", "emphasis": "moderate" }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "The pipeline turns green, step by step. The Feedback Portal goes live.", "pause_after_ms": 800 },
+        { "voice": "agent", "text": "Bolt complete. Code shipped. Tests passing. Customers can submit feedback. We did this in fifteen minutes — together.", "pause_after_ms": 900, "emphasis": "moderate" },
+        { "voice": "po", "text": "That's exactly what I asked for. Not what I almost asked for. Not what an AI thought I asked for. What I actually asked for. Good work.", "pause_after_ms": 900 },
+        { "voice": "narrator", "text": "The Customer opens the portal, leaves the first piece of feedback, and smiles. The Bolt closes.", "pause_after_ms": 800 },
+        { "voice": "agent", "text": "Ready to run the next one when you are.", "emphasis": "subtle" }
+      ],
+      "audio": null,
+      "next_episode": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "narrator", "text": "Time expired. The Bolt closed before the deploy did.", "pause_after_ms": 900, "emphasis": "moderate" },
+        { "voice": "agent", "text": "On me. I proposed; you verified. We just ran out of clock. We learned what to keep, what to drop, and what to verify faster next time.", "pause_after_ms": 900 },
+        { "voice": "po", "text": "It happens. The point of Bolts is that the next one is right around the corner. Tomorrow we ship.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "AI proposes. Humans decide. And humans, sometimes, run out of minutes. Next Bolt, next chance." }
+      ],
+      "audio": null
+    }
+  }
+}

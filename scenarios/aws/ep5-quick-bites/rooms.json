@@ -1,0 +1,103 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Reception",
+      "description": "A cramped desk near the entrance with an overflowing whiteboard task board",
+      "connects_to": [200, 300, 400],
+      "unlocked_by": null,
+      "unlock_text": "You arrive at QuickBite HQ. Three founders are already yelling.",
+      "map_pos": [140, 400]
+    },
+    {
+      "card_id": 200,
+      "name": "Marco's Kitchen Lab",
+      "description": "A test kitchen that doubles as an office, grease-stained recipe binders everywhere",
+      "connects_to": [100],
+      "unlocked_by": { "type": "discovery", "from_room": 100 },
+      "unlock_text": "You push through the kitchen door into Marco's domain.",
+      "map_pos": [40, 280]
+    },
+    {
+      "card_id": 300,
+      "name": "Diana's Corner Office",
+      "description": "Dual monitors showing spreadsheets, whiteboards covered in numbers with red circles",
+      "connects_to": [100],
+      "unlocked_by": { "type": "discovery", "from_room": 100 },
+      "unlock_text": "Diana waves you in without looking up from her screens.",
+      "map_pos": [140, 280]
+    },
+    {
+      "card_id": 400,
+      "name": "Raj's Server Closet",
+      "description": "A standing desk crammed between two server racks with monitors in various states of green and red",
+      "connects_to": [100],
+      "unlocked_by": { "type": "discovery", "from_room": 100 },
+      "unlock_text": "You squeeze into the server closet. Raj apologizes for the cables.",
+      "map_pos": [240, 280]
+    },
+    {
+      "card_id": 500,
+      "name": "Break Room",
+      "description": "A kitchenette with a bulletin board overflowing with notes, business cards, and competitor menus",
+      "connects_to": [600, 700, 800, 900],
+      "unlocked_by": { "type": "items", "card_ids": [210, 310, 410] },
+      "unlock_text": "You have data from all three founders. Time to piece it together.",
+      "map_pos": [140, 180]
+    },
+    {
+      "card_id": 600,
+      "name": "Chocolot",
+      "description": "A sleek, dimly-lit chocolate dessert bar with mood lighting and a suspicious barista",
+      "connects_to": [500],
+      "unlocked_by": { "type": "item", "card_id": 510 },
+      "unlock_text": "Research Briefing in hand, you head to the first competitor.",
+      "map_pos": [0, 60]
+    },
+    {
+      "card_id": 700,
+      "name": "Panini Gemelli",
+      "description": "A bright Italian fast-casual spot with checkered tablecloths and twin owners",
+      "connects_to": [500],
+      "unlocked_by": { "type": "item", "card_id": 510 },
+      "unlock_text": "The Gemelli brothers' shop. One twin waves. The other glares.",
+      "map_pos": [100, 60]
+    },
+    {
+      "card_id": 800,
+      "name": "Tabouleh Express",
+      "description": "The loading dock behind a Mediterranean restaurant at 6 AM, delivery vans idling",
+      "connects_to": [500],
+      "unlocked_by": { "type": "item", "card_id": 510 },
+      "unlock_text": "The delivery dock is buzzing. Time to buy some intel.",
+      "map_pos": [200, 60]
+    },
+    {
+      "card_id": 900,
+      "name": "The Cooker",
+      "description": "A trendy gastropub with a live social wall cycling through customer posts and reviews",
+      "connects_to": [500],
+      "unlocked_by": { "type": "item", "card_id": 510 },
+      "unlock_text": "The Cooker's social wall flickers. Posts are disappearing in real-time.",
+      "map_pos": [300, 60]
+    },
+    {
+      "card_id": 1000,
+      "name": "War Room",
+      "description": "A glass-walled conference room with a speakerphone already ringing",
+      "connects_to": [1100],
+      "unlocked_by": { "type": "items_any_3", "card_ids": [610, 710, 810, 910] },
+      "unlock_text": "Diana needs you. The investor call is happening NOW.",
+      "map_pos": [340, 180]
+    },
+    {
+      "card_id": 1100,
+      "name": "Store #10",
+      "description": "An empty restaurant with bare concrete floors and wires hanging from the ceiling",
+      "connects_to": [],
+      "unlocked_by": { "type": "item", "card_id": 1010 },
+      "unlock_text": "Investment secured. Now automate the store opening before morning.",
+      "map_pos": [340, 320]
+    }
+  ]
+}

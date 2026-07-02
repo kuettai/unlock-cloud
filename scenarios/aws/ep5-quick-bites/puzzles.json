@@ -1,0 +1,1210 @@
+{
+  "puzzles": [
+    {
+      "id": "npc-marco",
+      "type": "tool",
+      "card_ref": 202,
+      "description": "Chef Marco \u2014 creative genius, terrible with numbers, passionate about the Volcano Burger",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Chef Marco",
+        "portrait": "\ud83d\udc68\u200d\ud83c\udf73",
+        "greeting": "NEW RECRUIT! Perfect timing \u2014 taste this. No wait, don't taste that one, that's batch seven. Or was it nine? Anyway, WELCOME! Have you heard about the Volcano Burger? Of course you haven't. Nobody has. That's the POINT. It's going to change everything.",
+        "lines": [
+          {
+            "label": "Where's the recipe binder?",
+            "response": "The binder? Oh, the binder. See, the thing about the binder is... it's not really a binder anymore. It's more of a... concept? Some of it's on sticky notes in the walk-in. Some's in my head. There might be a spreadsheet somewhere \u2014 Raj set something up, but it tasted wrong so I stopped using it. Check the prep stations, the whiteboard, maybe the supplier invoices? The INGREDIENTS are what matter, not the filing system!"
+          },
+          {
+            "label": "Tell me about the Volcano Burger.",
+            "response": "Oh. OH. You want to know about the Volcano Burger? It's not just a burger. It's a STATEMENT. Three layers of smoked brisket, a chipotle crumble that caramelizes on contact, and the sauce \u2014 THE SAUCE \u2014 I ferment it myself for eleven days. Eleven! Not ten. Not twelve. Eleven. The acidity peaks at day eleven. I ran four hundred and thirty-seven trials. It's not food. It's edible architecture."
+          },
+          {
+            "label": "The investor call is coming up...",
+            "response": "Diana handles the boring stuff. Numbers, projections, whatever. I told her \u2014 put the Volcano Burger on screen. Let them TASTE it through the pitch deck. She said that's 'not how investor calls work.' But you know what's not how things work? Putting chocolate in a PANINI. And Chocolot's doing fine! ...Anyway, talk to Diana. She loves that stuff."
+          },
+          {
+            "label": "What do you think about the competitors?",
+            "response": "Competitors?! COMPETITORS?! Chocolot is a CHOCOLATE SHOP that got confused! They put ganache on a croissant and call it 'fast food innovation.' And Panini Gemelli \u2014 don't even \u2014 those twins haven't changed their menu since 2019. Tabouleh Express? Delivery only! Where's the CRAFT? Where's the LOVE? None of them have anything close to the Volcano Burger. Not even in the same postcode."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 210,
+            "label": "I found the financial data. Your food costs are...",
+            "response": "Okay. OKAY. Fine. Yes. The wagyu costs more than Diana thinks. I may have... been ordering the A5 grade instead of the A3. And the truffle oil isn't 'optional garnish' \u2014 it's STRUCTURAL. Look, the food cost ratio is forty-three percent. I know that's high. But when people taste it? They won't care about margins. They'll care about FLAVOR. Just... maybe don't lead with that number on the investor call."
+          },
+          {
+            "requires_card": 510,
+            "label": "I've finished the competitor research.",
+            "response": "HA! I KNEW IT! None of them have a signature item with this kind of margin potential once we scale. Chocolot's bestseller costs them MORE than ours per unit! And Gemelli's kitchen throughput is \u2014 what did you say \u2014 half of ours? The Volcano Burger isn't just delicious. It's a competitive WEAPON. Tell Diana. Tell EVERYONE."
+          },
+          {
+            "requires_card": 1010,
+            "label": "The investor call went great!",
+            "response": "They said yes? THEY SAID YES! I need to \u2014 someone get me my good spatula \u2014 we're celebrating! Volcano Burgers for the whole team! This is it. This is the beginning. First QuickBite, then the WORLD. ...Okay maybe first QuickBite then Store #10, THEN the world. But you get it. YOU GET IT!"
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-diana",
+      "type": "tool",
+      "card_ref": 302,
+      "description": "Diana \u2014 data-obsessed CFO, needs everything with citations",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Diana",
+        "portrait": "\ud83d\udc69\u200d\ud83d\udcbc",
+        "greeting": "Mm-hm. One second. ...Okay. You're the new person. Great. Do you have numbers? Any numbers? Because I have a pitch deck with seventeen blank cells and an investor call in \u2014 *checks watch* \u2014 not enough time. If you don't have numbers, get numbers. If you do have numbers, sit down.",
+        "lines": [
+          {
+            "label": "What data do you need?",
+            "response": "Everything. But let's prioritize. I need three things: one, the actual food cost ratio \u2014 Marco swears it's thirty percent but I can smell wagyu on the invoices. Two, customer acquisition metrics from the POS system \u2014 Raj says it's 'in there somewhere.' Three, growth projections that aren't just Marco writing 'VOLCANO' in increasingly large font sizes. Get me those and we have a pitch. Without them, we have a wish."
+          },
+          {
+            "label": "What will the investors ask about?",
+            "response": "Unit economics first \u2014 they always do. Then scalability: can Store #10 replicate Store #1 without Marco personally seasoning every patty? Then competitive landscape. They'll want to know why we win when Chocolot raised twice what we're asking. I need hard numbers, not vibes. The call is soon and I refuse to say 'we believe' more than once."
+          },
+          {
+            "label": "What's Marco's deal?",
+            "response": "*barely concealed eye roll* Marco is... brilliant. Genuinely. The food is extraordinary. But he thinks passion is a business metric. Last week he submitted an expense report that just said 'R&D - trust me' with a hot sauce stain on it. I love the man. But if he tells the investors about 'edible architecture' one more time, I'm going to put myself on mute permanently."
+          },
+          {
+            "label": "What about the competitors?",
+            "response": "We need EVIDENCE, not opinions. Marco yelling 'Chocolot is chocolate!' isn't a competitive analysis. I need their price points, their throughput estimates, their expansion footprint. Public data \u2014 reviews, menu boards, delivery radius. Get me something I can put in a chart. Charts are how adults communicate."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 310,
+            "label": "I pulled the recipe cost data from the systems.",
+            "response": "Wait. This cross-references with \u2014 *pulls up spreadsheet* \u2014 yes! If the prep station data is accurate, I can back-calculate the actual per-unit food cost from these ingredient quantities. This is the missing link. Marco's been hiding the wagyu grade, hasn't he? ...Forty-three percent. Of course. Okay. We can work with this. At scale it drops to thirty-one. THAT'S a pitch number."
+          },
+          {
+            "requires_card": 510,
+            "label": "Here's the competitor research, with citations.",
+            "response": "...You cited sources. You actually cited sources. *takes off glasses, pinches bridge of nose* I could cry. This is... this is what a professional deliverable looks like. Chocolot's cost structure, Gemelli's expansion timeline, Tabouleh's delivery margins \u2014 all verified. You might be the first person in this building who understands that 'I heard' is not a citation format. Thank you. Genuinely."
+          },
+          {
+            "requires_card": 1010,
+            "label": "We did it. The investors are in.",
+            "response": "Term sheet's coming Tuesday. *leans back in chair* You know, when I joined this startup, Marco pitched me by literally cooking a burger in my office. Set off the smoke alarm. I thought \u2014 this is either going to be incredible or a complete disaster. *small smile* Today it's incredible. Good work. Don't tell Marco I said this, but... the Volcano Burger actually is pretty special."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-raj",
+      "type": "tool",
+      "card_ref": 402,
+      "description": "Raj \u2014 anxious CIO, systems held together with duct tape",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Raj",
+        "portrait": "\ud83d\udc68\u200d\ud83d\udcbb",
+        "greeting": "GAH! Oh \u2014 oh, sorry, you scared me. I didn't hear the \u2014 is the door supposed to be open? Sorry about the cables. And the monitors. And the \u2014 is that coffee still dripping? Anyway, hi! Welcome! Sorry! Everything's fine except the POS sync is seventeen minutes behind and I think the scheduling module is throwing phantom shifts again. But otherwise \u2014 fine! Totally fine.",
+        "lines": [
+          {
+            "label": "Can you give me an overview of the systems?",
+            "response": "Right, okay, so \u2014 sorry \u2014 we have the POS system, that's SquareBite, handles orders and payments. Then there's SupplyTrack for ingredients and vendor orders \u2014 separate login, separate database, sorry. Scheduling is on ShiftWorks, also separate. Accounting is Diana's spreadsheets which technically count as a system. And then there's... the Thing I Built. The middleware that connects them. It's not pretty. But it works. Mostly. Usually. Today."
+          },
+          {
+            "label": "What's the deal with the automation panel?",
+            "response": "Oh! The Quick Automate panel! Right, so, I built it to handle the routine stuff \u2014 reordering, shift coverage, daily reports. There's a manual but... *gestures at coffee-stained document* ...the pages got stuck together after the Incident. The redacted sections aren't redacted on purpose \u2014 that's just coffee damage. If you can figure out the sequence, the panel does amazing things. Sorry it's not more... labeled."
+          },
+          {
+            "label": "How's Store #10 looking?",
+            "response": "Store \u2014 Store #10? *stress level visibly increases* Okay so the thing about Store #10 is that every other store, I was physically there for launch. Running cables. Fixing the printer. Resetting the fryer timer that Marco keeps setting to 'intuition.' If #10 has to run without me on-site, we need the Quick Automate system ACTUALLY working. Not 'working with Raj on speed-dial.' Actually working. Which means someone needs to fix the panel. Is that... is that you? Please say yes."
+          },
+          {
+            "label": "Tell me about Quick Automate.",
+            "response": "*eyes light up* Oh! Oh, you actually want to \u2014 yes! Okay! So Quick Automate is my baby. It's supposed to handle all the cross-system orchestration \u2014 when an order hits the POS, it auto-updates inventory in SupplyTrack, adjusts tomorrow's prep list, flags if we're running low on anything. Right now it's... mostly manual. I have seventeen browser tabs open doing what the panel should do automatically. If someone could just get the sequence right, it would save me \u2014 *voice cracks* \u2014 a lot of three AM wake-ups."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 410,
+            "label": "I got the automation panel working!",
+            "response": "You \u2014 wait. WAIT. *pushes back from chair* You actually got it? The full sequence? On your FIRST DAY? I've been meaning to fix that for \u2014 *counts on fingers* \u2014 seven months? It took me two weeks to build and I couldn't remember the startup sequence because I documented it DURING the coffee incident and \u2014 you're amazing. You're actually amazing. Can you... can you stay? Like, permanently?"
+          },
+          {
+            "requires_card": 510,
+            "label": "I researched the competitors' tech setups.",
+            "response": "Oh this is \u2014 okay so Chocolot is using a monolith POS with zero integration? And Gemelli's running everything through ONE iPad? That's \u2014 I mean I feel better about our spaghetti, honestly. At least our spaghetti has multiple threads. Tabouleh's delivery system is impressive though. I should look at their API structure. But for the pitch \u2014 yeah, we're actually ahead on infrastructure. Just, you know... messy ahead."
+          },
+          {
+            "requires_card": 1010,
+            "label": "Store #10 just opened. How's it going?",
+            "response": "*staring at monitoring dashboard* It's... working. The POS synced on first boot. The supply order went out automatically. The shift schedule populated. Nobody called me. Nobody. *voice breaks slightly* I've been staring at this screen for two hours waiting for something to break and... nothing. This is what it feels like? When things just... work? *sniff* I'm not crying. The server closet is just dusty. It's always dusty in here."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-barista",
+      "type": "tool",
+      "card_ref": 601,
+      "description": "Suspicious Barista \u2014 notices you taking photos, reports suspicious activity",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Suspicious Barista",
+        "portrait": "\u2615",
+        "greeting": "Welcome to Chocolot. What can I get you? ...You're going to order something, right? We do have a minimum.",
+        "lines": [
+          {
+            "label": "What do you recommend?",
+            "response": "The Dark Truffle Mocha is our bestseller. Nine-fifty. But honestly? The Ganache Croissant Melt at fourteen-twenty is where the margin \u2014 I mean, the FLAVOR \u2014 really is. We move about two hundred a day at peak. Manager says it's our 'anchor item.' Whatever that means. *polishes counter aggressively*"
+          },
+          {
+            "label": "This place has a nice setup...",
+            "response": "*stops wiping* ...Are you taking photos? I saw you with your phone earlier near the menu board. We've had people from other chains in here before. Corporate said to report anything suspicious. You're not from that burger place down the street, are you? ...You know what, forget I said anything. Do you want the mocha or not?"
+          }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-gemelli-friendly",
+      "type": "tool",
+      "card_ref": 701,
+      "description": "The friendly Gemelli twin \u2014 talks too much about expansion plans",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Gemelli Twin (Friendly)",
+        "portrait": "\ud83d\udc68\u200d\ud83c\udf73",
+        "greeting": "Ciao! Welcome, welcome! First time here? You GOTTA try the gemelli special \u2014 pressed fresh, mozzarella still steaming! Sit, sit!",
+        "lines": [
+          {
+            "label": "Tell me about the business!",
+            "response": "Business is BEAUTIFUL! We just signed the lease for location number four \u2014 over on Fifth Street? My brother says I talk too much but I can't help it, I'm excited! By October we'll have five spots. All the same menu, all the same quality. The secret? Keep it simple. Three paninis, two soups, one salad. That's it. No volcano burgers or whatever the competition is doing. *laughs*"
+          },
+          {
+            "label": "Can I see the kitchen?",
+            "response": "The kitchen? Sure, sure! Well \u2014 actually, my brother would kill me. He's very private about the process. But I can tell you \u2014 everything is the same press, same timing, same ingredients at every location. We run it all from one iPad, if you can believe it. Very efficient! My brother set it up. He's the smart one. I'm the handsome one. *winks*"
+          }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-gemelli-suspicious",
+      "type": "tool",
+      "card_ref": 702,
+      "description": "The suspicious Gemelli twin \u2014 watches you, catches inconsistencies",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Gemelli Twin (Suspicious)",
+        "portrait": "\ud83e\uddd0",
+        "greeting": "... *stares* Can I help you with something?",
+        "lines": [
+          {
+            "label": "Just checking out the menu!",
+            "response": "You were 'checking out the menu' yesterday too. And Tuesday. My brother doesn't notice these things but I do. You ask a lot of questions for someone who never orders more than a water. What exactly are you researching? *crosses arms*"
+          },
+          {
+            "label": "Your brother mentioned the expansion...",
+            "response": "*jaw tightens* My brother talks too much. Our expansion plans are not public information. Fifth Street isn't confirmed. The lease isn't \u2014 *catches himself* ...You should order something or leave. And tell whoever sent you that our paninis are ORIGINAL recipes. We don't copy. We don't NEED to copy."
+          }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-tony",
+      "type": "tool",
+      "card_ref": 801,
+      "description": "Tony the Driver \u2014 gossipy, knows every restaurant's business",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Tony the Driver",
+        "portrait": "\ud83d\ude9a",
+        "greeting": "Hey buddy, you the new delivery guy? No? Then why you hanging around my dock? I got twelve orders going cold and a route that makes no sense.",
+        "lines": [
+          {
+            "label": "Need a hand with those boxes?",
+            "response": "Yeah actually \u2014 grab that stack? Thanks. *while you help* Man, you wouldn't believe how busy we've been. There's some big new catering order coming in \u2014 corporate thing, like two hundred meals twice a week starting next month. Boss is already talking about adding another truck. Between you and me, the margins on delivery-only are insane. No rent, no tables, no dishwasher breaking every Tuesday. Just cook and drive. *hands you a dolly*"
+          },
+          {
+            "label": "How's the delivery business treating you?",
+            "response": "Don't get me started on the traffic. But the BUSINESS? Golden. We cover a twelve-block radius and we're the only ones doing hot delivery under eighteen minutes. That burger place \u2014 QuickBite? \u2014 they don't even deliver yet. Chocolot delivers but it takes forty minutes and the chocolate melts. *laughs* We own this neighborhood for speed. For now, anyway. Boss keeps saying someone's gonna wise up eventually."
+          }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-socialmedia",
+      "type": "tool",
+      "card_ref": 901,
+      "description": "Social Media Manager \u2014 stressed, deleting reviews, reveals staffing problems",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Social Media Manager",
+        "portrait": "\ud83d\ude30",
+        "greeting": "*doesn't look up from laptop* Kitchen's that way. If you're the DoorDash guy, the orders are on the counter. If you're a food blogger, please \u2014 PLEASE \u2014 don't post anything from today.",
+        "lines": [
+          {
+            "label": "Rough day?",
+            "response": "We got three one-star reviews this week. THREE. Someone said the mac and cheese tasted 'algorithmically optimized.' What does that even MEAN? Our engagement is down forty percent since \u2014 *stops* \u2014 since some staffing changes. I'm handling the social AND the PR AND the email campaigns now because apparently 'content is content.' *stress-laughs* It's FINE."
+          },
+          {
+            "label": "What staffing changes?",
+            "response": "*finally looks up* Why do you \u2014 okay, it's not a secret, it's on LinkedIn anyway. Chef Reeves is... exploring opportunities. His words. Our words are 'please don't leave before the winter menu launch.' But someone \u2014 allegedly a burger startup \u2014 has been posting sous chef positions at quote 'triple the creative freedom.' So. Yeah. If you know anyone who can make a bechamel and also not quit, send them my way. *puts head in hands*"
+          }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "reception-sort",
+      "type": "puzzle",
+      "card_ref": 110,
+      "description": "Prioritize the chaotic task board into the Amazon Quick journey order",
+      "ui": "sort-lock",
+      "config": {
+        "items": [
+          "Build the investor deck with Diana's numbers",
+          "Set up auto-open so stores launch at 5 AM",
+          "Find where Marco hid the recipe files",
+          "Hook up the supplier ordering portal",
+          "Dig into what competitors charge for delivery",
+          "Sort the shared drive before it eats itself"
+        ],
+        "answer": [
+          "Find where Marco hid the recipe files",
+          "Sort the shared drive before it eats itself",
+          "Hook up the supplier ordering portal",
+          "Dig into what competitors charge for delivery",
+          "Build the investor deck with Diana's numbers",
+          "Set up auto-open so stores launch at 5 AM"
+        ]
+      },
+      "hints": [
+        "Think about the logical order: you need to FIND data before you can ORGANIZE it.",
+        "The Amazon Quick journey: Index (find) -> Spaces (organize) -> Automate (connect) -> Research (investigate) -> Sight (present) -> Flows (orchestrate).",
+        "Order: Find recipe files, Sort shared drive, Hook up supplier portal, Dig into competitors, Build investor deck, Set up auto-open."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "craft-kitchen",
+      "type": "puzzle",
+      "card_ref": 210,
+      "description": "Combine Marco's scattered data by tags to produce the Food Cost Analysis",
+      "ui": "craft-lock",
+      "config": {
+        "materials": [
+          {
+            "id": "recipe-card",
+            "label": "Recipe Card",
+            "tags": [
+              "food",
+              "raw"
+            ]
+          },
+          {
+            "id": "cost-sheet",
+            "label": "Cost Sheet",
+            "tags": [
+              "financial",
+              "raw"
+            ]
+          },
+          {
+            "id": "supplier-list",
+            "label": "Supplier List",
+            "tags": [
+              "vendor",
+              "raw"
+            ]
+          },
+          {
+            "id": "calculator",
+            "label": "Calculator",
+            "tags": [
+              "math"
+            ],
+            "permanent": true
+          },
+          {
+            "id": "marcos-notebook",
+            "label": "Marco's Notebook",
+            "tags": [
+              "food",
+              "secret"
+            ]
+          },
+          {
+            "id": "pos-export",
+            "label": "POS Export",
+            "tags": [
+              "financial",
+              "digital"
+            ]
+          }
+        ],
+        "rules": [
+          {
+            "inputs": [
+              "food",
+              "secret"
+            ],
+            "output": {
+              "id": "full-recipe",
+              "label": "\ud83d\udcd6 Complete Recipe",
+              "tags": [
+                "recipe",
+                "detailed"
+              ]
+            }
+          },
+          {
+            "inputs": [
+              "financial",
+              "vendor"
+            ],
+            "output": {
+              "id": "vendor-pricing",
+              "label": "\ud83c\udff7\ufe0f Vendor Pricing Matrix",
+              "tags": [
+                "pricing",
+                "detailed"
+              ]
+            }
+          },
+          {
+            "inputs": [
+              "recipe",
+              "pricing"
+            ],
+            "output": {
+              "id": "cost-per-item",
+              "label": "\ud83d\udcca Cost per Menu Item",
+              "tags": [
+                "analysis",
+                "partial"
+              ]
+            }
+          },
+          {
+            "inputs": [
+              "digital",
+              "pricing"
+            ],
+            "output": {
+              "id": "cost-per-item",
+              "label": "\ud83d\udcca Cost per Menu Item",
+              "tags": [
+                "analysis",
+                "partial"
+              ]
+            }
+          },
+          {
+            "inputs": [
+              "analysis",
+              "math"
+            ],
+            "output": {
+              "id": "food-cost-analysis",
+              "label": "\u2705 Food Cost Analysis",
+              "tags": [
+                "final"
+              ]
+            }
+          }
+        ],
+        "goal": "food-cost-analysis"
+      },
+      "hints": [
+        "Start by combining items with matching tags. Recipe Card + Marco's Notebook both have 'food' tags.",
+        "Build intermediates: food+secret -> Complete Recipe. financial+vendor -> Vendor Pricing. Then combine the detailed outputs.",
+        "Full chain: Recipe+Notebook -> Complete Recipe. Cost+Supplier -> Pricing. Then intermediates combine into Cost per Item, then add Calculator for final analysis."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "wire-diana",
+      "type": "puzzle",
+      "card_ref": 310,
+      "description": "Link Diana's data sources to the investor questions they answer",
+      "ui": "wire-lock",
+      "config": {
+        "wires": [
+          {
+            "id": "pos-revenue",
+            "color": "#22c55e",
+            "label": "POS Revenue"
+          },
+          {
+            "id": "staff-hours",
+            "color": "#3b82f6",
+            "label": "Staff Hours"
+          },
+          {
+            "id": "supplier-invoices",
+            "color": "#eab308",
+            "label": "Supplier Invoices"
+          },
+          {
+            "id": "customer-ratings",
+            "color": "#a855f7",
+            "label": "Customer Ratings"
+          },
+          {
+            "id": "delivery-times",
+            "color": "#ef4444",
+            "label": "Delivery Times"
+          }
+        ],
+        "sockets": [
+          {
+            "id": "profit-margin",
+            "label": "What's our profit margin?"
+          },
+          {
+            "id": "overstaffed",
+            "label": "Are we overstaffed?"
+          },
+          {
+            "id": "cheapest-supplier",
+            "label": "Who's our cheapest supplier?"
+          },
+          {
+            "id": "customers-happy",
+            "label": "Are customers happy?"
+          },
+          {
+            "id": "delivery-slow",
+            "label": "Is delivery too slow?"
+          },
+          {
+            "id": "decoy-color",
+            "label": "What's Marco's favorite color?"
+          },
+          {
+            "id": "decoy-birthday",
+            "label": "When is Raj's birthday?"
+          }
+        ],
+        "solution": {
+          "pos-revenue": "profit-margin",
+          "staff-hours": "overstaffed",
+          "supplier-invoices": "cheapest-supplier",
+          "customer-ratings": "customers-happy",
+          "delivery-times": "delivery-slow"
+        },
+        "falseOutputs": [
+          "That data doesn't answer that question. Think about what each number measures.",
+          "Diana sighs: 'Match the DATA to the QUESTION it answers.'",
+          "That's like using a thermometer to measure distance."
+        ]
+      },
+      "hints": [
+        "Match each data source to the business question it directly answers. Revenue data answers revenue questions.",
+        "POS Revenue -> profit margin. Staff Hours -> overstaffing. Supplier Invoices -> cheapest supplier. Ignore the decoy questions.",
+        "Solution: POS Revenue->Profit Margin, Staff Hours->Overstaffed, Supplier Invoices->Cheapest Supplier, Customer Ratings->Happy, Delivery Times->Too Slow."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "trap-raj",
+      "type": "puzzle",
+      "card_ref": 410,
+      "description": "Deduce the correct system activation sequence from the partially redacted manual",
+      "ui": "trap-disarm-lock",
+      "config": {
+        "wires": [
+          {
+            "id": "pos",
+            "color": "red",
+            "label": "POS System",
+            "position": 1
+          },
+          {
+            "id": "supplier",
+            "color": "blue",
+            "label": "Supplier Portal",
+            "position": 2
+          },
+          {
+            "id": "scheduler",
+            "color": "yellow",
+            "label": "Staff Scheduler",
+            "position": 3
+          },
+          {
+            "id": "delivery",
+            "color": "green",
+            "label": "Delivery Tracker",
+            "position": 4
+          },
+          {
+            "id": "payment",
+            "color": "white",
+            "label": "Payment Gateway",
+            "position": 5
+          }
+        ],
+        "rules": [
+          {
+            "text": "Payment Gateway must be activated before [STAIN] Portal.",
+            "hint": "Supplier"
+          },
+          {
+            "text": "The POS System must come online before the [STAIN] Tracker.",
+            "hint": "Delivery"
+          },
+          {
+            "text": "Never activate Staff Scheduler first \u2014 it depends on [STAIN] data.",
+            "hint": "POS"
+          },
+          {
+            "text": "The wire in position [STAIN] is always activated second.",
+            "hint": "1"
+          },
+          {
+            "text": "Delivery Tracker is the last system to go live.",
+            "hint": null
+          }
+        ],
+        "solution": [
+          "payment",
+          "pos",
+          "scheduler",
+          "supplier",
+          "delivery"
+        ],
+        "maxStrikes": 3
+      },
+      "hints": [
+        "Rule 5 is clear: Delivery Tracker is LAST. Rule 3 says Scheduler can't be first \u2014 it needs POS data.",
+        "Rule 1: Payment before Supplier. Rule 4: position 1 (POS) is second. So Payment must be first.",
+        "Full sequence: Payment Gateway, POS System, Staff Scheduler, Supplier Portal, Delivery Tracker."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "match-breakroom",
+      "type": "puzzle",
+      "card_ref": 510,
+      "description": "Categorize the collected data fragments into Quick Spaces",
+      "ui": "match-lock",
+      "config": {
+        "pairs": [
+          [
+            "Volcano Burger needs 340g patty \u2014 Marco",
+            "\ud83c\udf73 Recipe & Portions"
+          ],
+          [
+            "Fryer oil swap every 3 days max \u2014 Marco",
+            "\ud83c\udf73 Kitchen Safety"
+          ],
+          [
+            "We're bleeding $200/day on spoilage \u2014 Diana",
+            "\ud83d\udcb0 Cost Control"
+          ],
+          [
+            "Investor meeting Friday, need P&L \u2014 Diana",
+            "\ud83d\udcb0 Investor Reporting"
+          ],
+          [
+            "POS drops WiFi after 11pm \u2014 Raj",
+            "\ud83d\udda5\ufe0f Infrastructure"
+          ],
+          [
+            "Auto-order triggers at 20% stock \u2014 Raj",
+            "\ud83d\udda5\ufe0f Automation Rules"
+          ],
+          [
+            "Yelp says wait times over 8 mins \u2014 Diana",
+            "\ud83d\udc65 Service Feedback"
+          ],
+          [
+            "Regulars want spicy option, 12 asks this week \u2014 Marco",
+            "\ud83d\udc65 Customer Requests"
+          ]
+        ],
+        "cols": 4,
+        "faceUp": true
+      },
+      "hints": [
+        "Group by topic: food/recipe items go to Kitchen Ops, money items go to Finance.",
+        "Systems = tech issues (POS, auto-order). Customer Intel = feedback from customers (Yelp, requests).",
+        "Marco's food notes -> Kitchen Ops. Diana's money notes -> Finance. Raj's tech notes -> Systems. Customer feedback -> Customer Intel."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "pushluck-chocolot",
+      "type": "puzzle",
+      "card_ref": 610,
+      "description": "Photograph pricing intel at Chocolot without getting caught by security",
+      "ui": "push-luck-lock",
+      "config": {
+        "target": 25,
+        "maxRounds": 4,
+        "bag": [
+          {
+            "type": "gem",
+            "value": 3,
+            "label": "Menu photo +3",
+            "weight": 3
+          },
+          {
+            "type": "gem",
+            "value": 5,
+            "label": "Sales board +5",
+            "weight": 2
+          },
+          {
+            "type": "gem",
+            "value": 8,
+            "label": "Pricing doc +8",
+            "weight": 1
+          },
+          {
+            "type": "bust",
+            "value": 0,
+            "label": "\"Hey! No photos!\"",
+            "weight": 2
+          }
+        ]
+      },
+      "hints": [
+        "You need 25 points in 4 rounds. Bank early if you've got a good haul \u2014 getting caught resets the round.",
+        "The bag has more low-value items (weight 3) and fewer high-value ones (weight 1). Busts have weight 2.",
+        "Push your luck when you're behind target, bank when you're close. One bust won't end the game \u2014 it just loses that round's draws."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "wager-gemelli",
+      "type": "puzzle",
+      "card_ref": 710,
+      "description": "Social-engineer conversations with the Gemelli twins to gather expansion intel",
+      "ui": "wager-lock",
+      "config": {
+        "target": 7,
+        "stakes": [
+          {
+            "label": "Mumble",
+            "wager": 1,
+            "penalty": 0,
+            "color": "#22c55e",
+            "showOptions": 2
+          },
+          {
+            "label": "Smooth Talk",
+            "wager": 2,
+            "penalty": -1,
+            "color": "#eab308",
+            "showOptions": 4
+          },
+          {
+            "label": "Brazen Lie",
+            "wager": 4,
+            "penalty": -3,
+            "color": "#ef4444",
+            "showOptions": 6
+          }
+        ],
+        "questions": [
+          {
+            "question": "The friendly twin asks what brings you in today. What do you say?",
+            "options": [
+              "Just grabbing lunch, heard great things online",
+              "I'm a food blogger reviewing the neighborhood",
+              "Scoping out franchise opportunities in the area",
+              "My office is nearby, first time here",
+              "I'm writing an article on Italian fast-casual trends",
+              "A friend recommended your paninis specifically"
+            ],
+            "answer": "Just grabbing lunch, heard great things online"
+          },
+          {
+            "question": "A regular mentions they come every day. How do you learn about peak hours?",
+            "options": [
+              "Ask what time the line is shortest so you can \"avoid the rush\"",
+              "Demand to know their daily sales volume",
+              "Complain loudly about the current wait time",
+              "Ask if they noticed any new menu items recently",
+              "Say you're from the health department doing a survey",
+              "Tell them you work for a competing restaurant"
+            ],
+            "answer": "Ask what time the line is shortest so you can \"avoid the rush\""
+          },
+          {
+            "question": "The suspicious twin is restocking napkins nearby. How do you learn about supplier costs?",
+            "options": [
+              "Comment that their ingredients taste premium and ask where they source",
+              "Grab a napkin and read the supplier label while chatting",
+              "Offer to sell them cheaper supplies from a fake wholesaler",
+              "Ask directly what their food cost percentage is",
+              "Snap a photo of the supply boxes behind the counter",
+              "Tell him you're an investor and demand financials"
+            ],
+            "answer": "Comment that their ingredients taste premium and ask where they source"
+          },
+          {
+            "question": "You overhear staff mentioning a second location. How do you confirm expansion plans?",
+            "options": [
+              "Casually ask the cashier if they're hiring for \"the new spot\"",
+              "Follow the staff member into the back room",
+              "Call the landlord pretending to be the twin",
+              "Ask loudly whether they deliver to the east side yet",
+              "Mention you saw a job posting and ask which location",
+              "Congratulate the friendly twin on \"the expansion\" and gauge his reaction"
+            ],
+            "answer": "Casually ask the cashier if they're hiring for \"the new spot\""
+          },
+          {
+            "question": "The friendly twin offers a loyalty card. How do you learn their retention strategy?",
+            "options": [
+              "Accept and ask how many stamps until free \u2014 \"my old place did 8\"",
+              "Refuse and say loyalty programs are scams",
+              "Take a photo of the terms and conditions",
+              "Ask how many active loyalty members they have total",
+              "Pocket it and say your \"marketing team\" would love the design",
+              "Ask what percentage of customers use theirs"
+            ],
+            "answer": "Accept and ask how many stamps until free \u2014 \"my old place did 8\""
+          },
+          {
+            "question": "The suspicious twin catches you staring at the specials board. What do you say?",
+            "options": [
+              "Smile and say you can't decide \u2014 everything looks too good",
+              "Pretend you were reading the WiFi password above it",
+              "Pull out your phone and start taking notes openly",
+              "Ask him to explain every item for your \"dietary restrictions\"",
+              "Say you're comparing prices for your office catering order",
+              "Freeze and stammer about looking at the wall art"
+            ],
+            "answer": "Smile and say you can't decide \u2014 everything looks too good"
+          }
+        ]
+      },
+      "hints": [
+        "Higher wagers show more options but penalize wrong answers heavily. Start with Mumble to see fewer options safely.",
+        "The correct answers are always the most natural, casual responses. Avoid anything that would blow your cover.",
+        "Think like a spy: the best intel comes from innocent-sounding questions. 'Just grabbing lunch' is better than 'I'm a food blogger.'"
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "auction-tabouleh",
+      "type": "puzzle",
+      "card_ref": 810,
+      "description": "Buy intel from gossipy contacts at the Tabouleh Express loading dock",
+      "ui": "auction-lock",
+      "config": {
+        "budget": 100,
+        "requiredItems": 3,
+        "lots": [
+          {
+            "id": "tony-driver",
+            "label": "Tony the Driver",
+            "hint": "Leaning against his van checking a clipboard. Mutters about \"three new catering drops this week.\"",
+            "value": "key",
+            "minBid": 18,
+            "idealBid": 25
+          },
+          {
+            "id": "line-cook",
+            "label": "Line Cook on Break",
+            "hint": "Sitting on a milk crate scrolling his phone. Yawns about being here since 4 AM.",
+            "value": "decoy",
+            "minBid": 8,
+            "idealBid": 12
+          },
+          {
+            "id": "produce-guy",
+            "label": "Produce Delivery Guy",
+            "hint": "Unloading twice the usual crate count. Whistles while stacking bulk-labeled boxes.",
+            "value": "key",
+            "minBid": 20,
+            "idealBid": 30
+          },
+          {
+            "id": "owners-assistant",
+            "label": "Owner's Assistant",
+            "hint": "On the phone near the office, flipping through lease agreements and renovation quotes.",
+            "value": "key",
+            "minBid": 25,
+            "idealBid": 35
+          },
+          {
+            "id": "night-cleaner",
+            "label": "Night Cleaner",
+            "hint": "Heading home with earbuds in, barely awake. Nods but keeps walking to the bus stop.",
+            "value": "decoy",
+            "minBid": 5,
+            "idealBid": 10
+          },
+          {
+            "id": "health-inspector",
+            "label": "Health Inspector",
+            "hint": "Crisp polo, lanyard badge, writing on a form. Radiates 'don't talk to me' energy.",
+            "value": "decoy",
+            "minBid": 30,
+            "idealBid": 40
+          },
+          {
+            "id": "pastry-supplier",
+            "label": "Pastry Supplier",
+            "hint": "Loading empty trays into her van. Checks phone \u2014 a spreadsheet of standing orders from five restaurants.",
+            "value": "key",
+            "minBid": 15,
+            "idealBid": 22
+          }
+        ]
+      },
+      "hints": [
+        "You need 3 key contacts but have limited budget. Read the hints carefully \u2014 who mentions business expansion or orders?",
+        "Decoys: the Line Cook (just complaining), Night Cleaner (leaving, knows nothing), Health Inspector (won't talk). Don't waste budget on them.",
+        "Key contacts: Tony (catering drops), Produce Guy (bulk orders), Owner's Assistant (lease agreements), Pastry Supplier (standing orders). Pick any 3 of these 4."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "decay-cooker",
+      "type": "puzzle",
+      "card_ref": 910,
+      "description": "Read disappearing social media posts to identify The Cooker's biggest vulnerability",
+      "ui": "decay-lock",
+      "config": {
+        "fragments": [
+          {
+            "text": "@hangry_hannah: Waited 40 mins for a burger at The Cooker. Came out cold. Staff looked overwhelmed. Never again.",
+            "decayAfter": 5
+          },
+          {
+            "text": "Anonymous (Glassdoor): Head chef has been interviewing downtown. Morale in the kitchen is rock bottom. Management doesn't care.",
+            "decayAfter": 9
+          },
+          {
+            "text": "ForkAndKnifeBlog: Tried The Cooker vs QuickBite side by side. QuickBite wins on speed, consistency, and value. Their only edge is desserts.",
+            "decayAfter": 14
+          },
+          {
+            "text": "@local_eats_watchdog: Tip that The Cooker failed last kitchen temp check. Walk-in at 48F. Health dept flagged it, no closure yet.",
+            "decayAfter": 6
+          },
+          {
+            "text": "@dessert_queen_99: The Cooker molten lava cake is INCREDIBLE but $18 for dessert?? Only reason I still go honestly.",
+            "decayAfter": 10
+          }
+        ],
+        "question": "Based on what you saw, what is The Cooker's biggest operational vulnerability?",
+        "answers": [
+          "head chef leaving",
+          "chef leaving",
+          "understaffed",
+          "staffing",
+          "losing their chef",
+          "head chef",
+          "chef interviewing",
+          "staff shortage"
+        ],
+        "decayRate": 1.5
+      },
+      "hints": [
+        "Read the posts quickly before they get deleted. Look for a common thread connecting multiple complaints.",
+        "Overwhelmed staff + chef interviewing elsewhere + quality dropping = one root cause. What happens when the key person leaves?",
+        "The answer relates to their head chef. They're losing their head chef, which causes all the other problems."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "wager-warroom",
+      "type": "puzzle",
+      "card_ref": 1010,
+      "description": "Answer investor questions under pressure \u2014 higher confidence means better impression but wrong answers tank trust",
+      "ui": "wager-lock",
+      "config": {
+        "target": 8,
+        "stakes": [
+          {
+            "label": "Conservative",
+            "wager": 1,
+            "penalty": 0,
+            "color": "#22c55e",
+            "showOptions": 2
+          },
+          {
+            "label": "Confident",
+            "wager": 2,
+            "penalty": -1,
+            "color": "#eab308",
+            "showOptions": 4
+          },
+          {
+            "label": "Bold Claim",
+            "wager": 4,
+            "penalty": -3,
+            "color": "#ef4444",
+            "showOptions": 6
+          }
+        ],
+        "questions": [
+          {
+            "question": "What is QuickBite's current food cost ratio?",
+            "options": [
+              "28%",
+              "32%",
+              "37%",
+              "41%",
+              "24%",
+              "45%"
+            ],
+            "answer": "32%"
+          },
+          {
+            "question": "Who is your biggest competitive threat right now?",
+            "options": [
+              "Chocolot",
+              "Panini Gemelli",
+              "Tabouleh Express",
+              "The Cooker",
+              "GrabGo",
+              "NomNom Express"
+            ],
+            "answer": "Panini Gemelli"
+          },
+          {
+            "question": "What is your current customer satisfaction score?",
+            "options": [
+              "4.6 out of 5",
+              "4.2 out of 5",
+              "3.9 out of 5",
+              "4.8 out of 5",
+              "3.7 out of 5",
+              "4.0 out of 5"
+            ],
+            "answer": "4.6 out of 5"
+          },
+          {
+            "question": "How many new stores can you realistically open next year?",
+            "options": [
+              "4 stores",
+              "6 stores",
+              "8 stores",
+              "10 stores",
+              "3 stores",
+              "12 stores"
+            ],
+            "answer": "6 stores"
+          },
+          {
+            "question": "What is your average ticket size per customer?",
+            "options": [
+              "$9.40",
+              "$11.20",
+              "$14.80",
+              "$7.60",
+              "$16.50",
+              "$12.90"
+            ],
+            "answer": "$11.20"
+          },
+          {
+            "question": "What's QuickBite's monthly revenue run rate?",
+            "options": [
+              "$180K",
+              "$240K",
+              "$310K",
+              "$140K",
+              "$420K",
+              "$95K"
+            ],
+            "answer": "$240K"
+          },
+          {
+            "question": "What percentage of orders come through your mobile app?",
+            "options": [
+              "62% mobile",
+              "45% mobile",
+              "78% mobile",
+              "34% mobile",
+              "51% mobile",
+              "88% mobile"
+            ],
+            "answer": "62% mobile"
+          },
+          {
+            "question": "What is your break-even timeline per new store?",
+            "options": [
+              "14 months",
+              "9 months",
+              "6 months",
+              "18 months",
+              "24 months",
+              "11 months"
+            ],
+            "answer": "9 months"
+          }
+        ]
+      },
+      "hints": [
+        "The answers come from data you gathered throughout the episode. Food cost ratio was 32% from Marco's kitchen puzzle.",
+        "Panini Gemelli is the biggest threat (expansion speed). Customer satisfaction 4.6 from Diana's data. 6 stores is realistic growth.",
+        "Key answers: 32%, Panini Gemelli, 4.6/5, 6 stores, $11.20, $240K, 62% mobile, 9 months."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "fogmap-store10",
+      "type": "puzzle",
+      "card_ref": 1101,
+      "description": "Explore the unfinished Store #10 to discover what's needed for opening",
+      "ui": "fog-map-lock",
+      "config": {
+        "cols": 5,
+        "rows": 5,
+        "energy": 12,
+        "intelNeeded": 3,
+        "tiles": [
+          {
+            "x": 0,
+            "y": 4,
+            "type": "start"
+          },
+          {
+            "x": 2,
+            "y": 3,
+            "type": "intel",
+            "label": "WiFi Router location mapped"
+          },
+          {
+            "x": 4,
+            "y": 3,
+            "type": "intel",
+            "label": "Health Certificate found"
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "type": "intel",
+            "label": "Staff Locker Keys retrieved"
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "type": "intel",
+            "label": "POS Terminal located"
+          },
+          {
+            "x": 1,
+            "y": 3,
+            "type": "trap",
+            "label": "Broken freezer \u2014 time lost",
+            "cost": 2
+          },
+          {
+            "x": 3,
+            "y": 2,
+            "type": "trap",
+            "label": "Flooded bathroom \u2014 detour",
+            "cost": 1
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "type": "trap",
+            "label": "Electrical short \u2014 danger",
+            "cost": 2
+          },
+          {
+            "x": 0,
+            "y": 2,
+            "type": "bonus",
+            "label": "Tables already assembled",
+            "gain": 2
+          },
+          {
+            "x": 4,
+            "y": 1,
+            "type": "bonus",
+            "label": "Signage delivered early",
+            "gain": 1
+          },
+          {
+            "x": 4,
+            "y": 0,
+            "type": "exit"
+          }
+        ]
+      },
+      "hints": [
+        "You start bottom-left and need to reach top-right. Collect 3 of 4 intel tiles along the way.",
+        "Avoid traps (they cost energy). The broken freezer and electrical short cost 2 energy each. Bonuses give energy back.",
+        "Efficient path: go right to WiFi (2,3), then up-left to Tables bonus (0,2), then to Keys (1,1), then across to POS (3,0) and exit (4,0)."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "sort-store10",
+      "type": "puzzle",
+      "card_ref": 999,
+      "description": "Sequence the store opening automation steps in the correct dependency order",
+      "ui": "sort-lock",
+      "config": {
+        "items": [
+          "Send social media announcement",
+          "Test POS system",
+          "Order opening-day inventory",
+          "Print menus",
+          "Set up WiFi and tablets",
+          "Marco approves menu",
+          "Confirm health inspection",
+          "Calculate food cost"
+        ],
+        "answer": [
+          "Confirm health inspection",
+          "Set up WiFi and tablets",
+          "Test POS system",
+          "Calculate food cost",
+          "Marco approves menu",
+          "Print menus",
+          "Order opening-day inventory",
+          "Send social media announcement"
+        ]
+      },
+      "hints": [
+        "Think about dependencies: what MUST happen before other things can start? Health inspection is always first \u2014 you can't operate without it.",
+        "WiFi enables POS. POS data enables food cost calculation. Food cost enables Marco's approval. Approval enables printing menus.",
+        "Full order: Health inspection, WiFi, Test POS, Calculate food cost, Marco approves, Print menus, Order inventory, Social media announcement."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}

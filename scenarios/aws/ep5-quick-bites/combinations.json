@@ -1,0 +1,18 @@
+{
+  "combinations": [
+    {
+      "card_a": 210,
+      "card_b": 310,
+      "result_card": 511,
+      "type": "item_item",
+      "description": "Recipe data and financial data combined — two pieces of the puzzle connected."
+    },
+    {
+      "card_a": 511,
+      "card_b": 410,
+      "result_card": 510,
+      "type": "item_item",
+      "description": "All three data sets unified. The Research Briefing is complete — you can now investigate competitors."
+    }
+  ]
+}

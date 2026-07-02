@@ -1,0 +1,881 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Reception / Your Desk",
+      "description": "A cramped desk near the entrance. A whiteboard task board is already overflowing with sticky notes from three different handwriting styles. Post-its on every surface. Your laptop isn't even set up yet.",
+      "image": "assets/reception.png",
+      "image_prompt": "A cluttered startup reception desk with an overflowing whiteboard task board covered in colorful sticky notes in three different handwriting styles. Post-its on the ceiling, a laptop still in its box, coffee cups everywhere. Warm orange lighting, comedic chaos, flat illustration style.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 101,
+          "label": "Examine the whiteboard task board"
+        },
+        {
+          "card_id": 110,
+          "label": "Prioritize the task board",
+          "puzzle": "reception-sort"
+        },
+        {
+          "card_id": 200,
+          "label": "Go to Marco's Kitchen Lab"
+        },
+        {
+          "card_id": 300,
+          "label": "Go to Diana's Corner Office"
+        },
+        {
+          "card_id": 400,
+          "label": "Go to Raj's Server Closet"
+        }
+      ],
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "Marco's Kitchen Lab",
+      "description": "A test kitchen that doubles as an office. Grease-stained recipe binders lean against a monitor showing food photos. The sauce wall has 47 labeled bottles. Somewhere under the chili flakes is a cost spreadsheet.",
+      "image": "assets/marcos-kitchen.png",
+      "image_prompt": "A chaotic startup test kitchen with grease-stained recipe binders, a wall of 47 labeled sauce bottles, food photos on a monitor, chili flakes scattered over papers. A cost spreadsheet buried under ingredients. Warm oranges and reds, comedic clutter, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 201,
+          "label": "Examine the recipe binder"
+        },
+        {
+          "card_id": 202,
+          "label": "Talk to Marco",
+          "puzzle": "npc-marco"
+        },
+        {
+          "card_id": 203,
+          "label": "Check the POS export terminal"
+        },
+        {
+          "card_id": 210,
+          "label": "Combine the food data",
+          "puzzle": "craft-kitchen",
+          "requires_item": [
+            201,
+            203
+          ]
+        }
+      ],
+      "visible_to": "all",
+      "room": "marcos-kitchen"
+    },
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "Diana's Corner Office",
+      "description": "Dual monitors, both showing spreadsheets. Whiteboards covered in numbers with red circles around alarming ones. A countdown timer on her desk shows minutes until the investor call. Stacks of printed reports marked 'DRAFT \u2014 DO NOT SHARE.'",
+      "image": "assets/dianas-office.png",
+      "image_prompt": "A startup CFO's corner office with dual monitors showing spreadsheets, whiteboards covered in numbers circled in red, a countdown timer on the desk, stacks of draft reports. Clean but stressed. Cool blues and whites with red warning accents, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 301,
+          "label": "Examine the data sources whiteboard"
+        },
+        {
+          "card_id": 302,
+          "label": "Talk to Diana",
+          "puzzle": "npc-diana"
+        },
+        {
+          "card_id": 303,
+          "label": "Look at the investor questions list"
+        },
+        {
+          "card_id": 310,
+          "label": "Link metrics to questions",
+          "puzzle": "wire-diana",
+          "requires_item": [
+            301,
+            303
+          ]
+        }
+      ],
+      "visible_to": "all",
+      "room": "dianas-office"
+    },
+    {
+      "id": 400,
+      "type": "location",
+      "color": "green",
+      "title": "Raj's Server Closet",
+      "description": "A standing desk crammed between two server racks. Monitors show dashboards in various states of green and red. Sticky notes with passwords everywhere. A coffee-stained manual is taped to the wall with several sections unreadable.",
+      "image": "assets/rajs-closet.png",
+      "image_prompt": "A cramped server closet with a standing desk between two blinking server racks. Monitors showing green and red dashboards. Password sticky notes everywhere. A coffee-stained manual taped to the wall with redacted sections. Greens and reds from LEDs, dim lighting, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 401,
+          "label": "Read the coffee-stained manual"
+        },
+        {
+          "card_id": 402,
+          "label": "Talk to Raj",
+          "puzzle": "npc-raj"
+        },
+        {
+          "card_id": 403,
+          "label": "Check the automation panel"
+        },
+        {
+          "card_id": 410,
+          "label": "Connect the automation panel",
+          "puzzle": "trap-raj",
+          "requires_item": [
+            401,
+            403
+          ]
+        }
+      ],
+      "visible_to": "all",
+      "room": "rajs-closet"
+    },
+    {
+      "id": 500,
+      "type": "location",
+      "color": "green",
+      "title": "Break Room",
+      "description": "A kitchenette with a bulletin board overflowing with notes, business cards, clipped articles, and a passive-aggressive sign about labeling your food. The fridge has menus from competitors magneted to it. Someone wrote 'KNOW THY ENEMY' on a sticky note above them.",
+      "image": "assets/break-room.png",
+      "image_prompt": "A startup break room kitchenette with an overflowing bulletin board, competitor menus on the fridge, a passive-aggressive food labeling sign, scattered business cards. A sticky note reading 'KNOW THY ENEMY' above the competitor menus. Warm fluorescent lighting, comedic office culture, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 501,
+          "label": "Read the bulletin board fragments"
+        },
+        {
+          "card_id": 502,
+          "label": "Look at competitor menus on the fridge"
+        },
+        {
+          "card_id": 510,
+          "label": "Categorize the fragments into Spaces",
+          "puzzle": "match-breakroom",
+          "requires_item": [
+            210,
+            310,
+            410
+          ]
+        }
+      ],
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 600,
+      "type": "location",
+      "color": "green",
+      "title": "Chocolot",
+      "description": "A sleek, dimly-lit chocolate dessert bar. Mood lighting. Leather booths. The menu is on a backlit board \u2014 their 'AI-Powered Flavor Matching' is suspiciously similar to QuickBite's recommendation engine. A barista polishes glasses while watching the room. Security cameras blink red.",
+      "image": "assets/chocolot.png",
+      "image_prompt": "A sleek dimly-lit chocolate dessert bar with mood lighting, leather booths, and a backlit menu board. A suspicious barista polishes glasses while watching. Security cameras blink red. Dark chocolate browns with neon accents, spy-comedy noir atmosphere, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 601,
+          "label": "Talk to the Barista",
+          "puzzle": "npc-barista"
+        },
+        {
+          "card_id": 602,
+          "label": "Study the backlit menu board"
+        },
+        {
+          "card_id": 610,
+          "label": "Photograph the intel",
+          "puzzle": "pushluck-chocolot"
+        }
+      ],
+      "visible_to": "all",
+      "room": "chocolot"
+    },
+    {
+      "id": 700,
+      "type": "location",
+      "color": "green",
+      "title": "Panini Gemelli",
+      "description": "A bright Italian fast-casual spot. Checkered tablecloths. A chalkboard menu with hand-drawn pasta illustrations. Two identical men in matching aprons work the floor \u2014 one waves warmly, the other scans the room with narrow eyes. A 'NOW HIRING \u2014 2ND LOCATION' sign just got flipped face-down.",
+      "image": "assets/panini-gemelli.png",
+      "image_prompt": "A bright Italian fast-casual restaurant with checkered tablecloths and a chalkboard menu. Two identical twin owners in matching aprons \u2014 one waving warmly, one suspicious. A hiring sign being flipped face-down. Warm Italian reds and greens, spy-comedy atmosphere, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 701,
+          "label": "Talk to the Friendly Twin",
+          "puzzle": "npc-gemelli-friendly"
+        },
+        {
+          "card_id": 702,
+          "label": "Talk to the Suspicious Twin",
+          "puzzle": "npc-gemelli-suspicious"
+        },
+        {
+          "card_id": 703,
+          "label": "Observe the chalkboard specials"
+        },
+        {
+          "card_id": 710,
+          "label": "Gather expansion intel",
+          "puzzle": "wager-gemelli"
+        }
+      ],
+      "visible_to": "all",
+      "room": "panini-gemelli"
+    },
+    {
+      "id": 800,
+      "type": "location",
+      "color": "green",
+      "title": "Tabouleh Express",
+      "description": "The loading dock behind a Mediterranean restaurant, 6 AM. Fluorescent dock lights buzz. Delivery vans idle. Stacks of ingredient crates labeled in three languages. People mill about \u2014 drivers checking phones, kitchen staff grabbing coffee, a woman with a binder near the office door.",
+      "image": "assets/tabouleh-express.png",
+      "image_prompt": "A busy delivery dock behind a Mediterranean restaurant at dawn. Fluorescent lights buzzing, delivery vans idling, stacks of crates in three languages. Various workers milling about \u2014 a driver with a clipboard, a cook on break, an assistant with a binder. Dawn blues and oranges, spy-comedy noir, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 801,
+          "label": "Talk to Tony the Driver",
+          "puzzle": "npc-tony"
+        },
+        {
+          "card_id": 802,
+          "label": "Observe the delivery schedule board"
+        },
+        {
+          "card_id": 810,
+          "label": "Buy intel from contacts",
+          "puzzle": "auction-tabouleh"
+        }
+      ],
+      "visible_to": "all",
+      "room": "tabouleh-express"
+    },
+    {
+      "id": 900,
+      "type": "location",
+      "color": "green",
+      "title": "The Cooker",
+      "description": "A trendy gastropub with exposed brick and Edison bulbs. Above the bar: a massive screen cycling through customer posts, reviews, and blog mentions \u2014 'The Cooker Social Wall.' In a corner booth, a young woman frantically types on a laptop, occasionally groaning and hitting delete. Posts on the wall are disappearing mid-sentence.",
+      "image": "assets/the-cooker.png",
+      "image_prompt": "A trendy gastropub with exposed brick and Edison bulbs. A massive screen above the bar shows social media posts that are flickering and disappearing. A stressed young woman in a corner booth frantically types on a laptop. Dark moody lighting with screen glow, spy-comedy noir, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 901,
+          "label": "Talk to the Social Media Manager",
+          "puzzle": "npc-socialmedia"
+        },
+        {
+          "card_id": 902,
+          "label": "Watch the social wall"
+        },
+        {
+          "card_id": 910,
+          "label": "Read the reviews before they vanish",
+          "puzzle": "decay-cooker"
+        }
+      ],
+      "visible_to": "all",
+      "room": "the-cooker"
+    },
+    {
+      "id": 1000,
+      "type": "location",
+      "color": "green",
+      "title": "War Room",
+      "description": "A glass-walled conference room. The speakerphone is already ringing. Diana stands at the head of the table, slides loaded on the big screen. Three investor faces appear \u2014 polite smiles that could turn skeptical any second. Marco hovers in the doorway with a Volcano Burger sample 'just in case.'",
+      "image": "assets/war-room.png",
+      "image_prompt": "A glass-walled corporate conference room with a speakerphone ringing. A woman stands at the head with slides on a big screen. Three investor faces on a video call with polite smiles. A chef hovers in the doorway holding a burger. Clean professional space, tension and pressure, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 1001,
+          "label": "Review the pitch deck"
+        },
+        {
+          "card_id": 1002,
+          "label": "Check your research notes"
+        },
+        {
+          "card_id": 1010,
+          "label": "Answer investor questions",
+          "puzzle": "wager-warroom"
+        }
+      ],
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 1100,
+      "type": "location",
+      "color": "green",
+      "title": "Store #10",
+      "description": "An empty restaurant. Bare concrete floors with tape marking where booths will go. Wires hang from the ceiling. A stack of flat-pack tables sits in the corner. The walk-in fridge hums but the door is propped open. Everything COULD be ready by tomorrow \u2014 if someone figures out what's missing and automates the rest.",
+      "image": "assets/store-10.png",
+      "image_prompt": "An unfinished restaurant with bare concrete floors marked with tape, wires hanging from the ceiling, flat-pack furniture stacked in corners. A humming walk-in fridge with its door propped open. The skeleton of a restaurant waiting to be born. Construction yellows and concrete grays, hopeful potential, flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 1101,
+          "label": "Explore the unfinished store",
+          "puzzle": "fogmap-store10"
+        },
+        {
+          "card_id": 1102,
+          "label": "Check the opening checklist"
+        },
+        {
+          "card_id": 999,
+          "label": "Sequence the store opening",
+          "puzzle": "sort-store10",
+          "requires_item": [
+            1101
+          ]
+        }
+      ],
+      "visible_to": "all",
+      "room": "store-10"
+    },
+    {
+      "id": 101,
+      "type": "object",
+      "color": "blue",
+      "title": "Whiteboard Task Board",
+      "description": "A chaotic whiteboard with tasks in three handwriting styles. Marco's (large, exclamation marks): 'VOLCANO BURGER LAUNCH!!!' Diana's (precise, red ink): 'Investor deck \u2014 55 min.' Raj's (cramped, apologetic): 'Fix POS sync, sorry.'\n\nPinned in the corner: a faded sticky note from the previous assistant who quit. It reads:\n\n\"Day 1 survival guide: (1) Find where everything IS before doing anything. (2) Organize the mess so you can actually find things later. (3) Get connected to the vendor systems. (4) THEN go gather intel on competitors. (5) Only build the investor deck once you have real data. (6) Automation is always the last step \u2014 you can't automate chaos.\n\nGood luck. I lasted 3 weeks. \u2014 Alex\"",
+      "image": "assets/card-whiteboard.png",
+      "image_prompt": "A chaotic whiteboard covered in sticky notes and three different handwriting styles \u2014 one large and excited, one precise in red ink, one cramped and apologetic. No clear organization. Startup chaos aesthetic, warm palette, flat illustration.",
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 201,
+      "type": "item",
+      "color": "red",
+      "title": "Recipe Data Fragments",
+      "description": "Grease-stained recipe cards, Marco's secret notebook, supplier invoices, and a POS export buried under chili flakes. Raw ingredients for calculating the true food cost.",
+      "image": "assets/card-recipe-data.png",
+      "image_prompt": "A collection of grease-stained recipe cards, a small notebook, supplier invoices, and a computer printout. All slightly messy and food-stained. Warm kitchen tones, startup chaos, flat illustration.",
+      "visible_to": "all",
+      "room": "marcos-kitchen"
+    },
+    {
+      "id": 203,
+      "type": "object",
+      "color": "blue",
+      "title": "POS Export Terminal",
+      "description": "A greasy monitor showing the SquareBite POS dashboard. Sales data, transaction logs, and unit costs \u2014 all exportable. The keyboard has hot sauce on the space bar.",
+      "image": "assets/card-pos-terminal.png",
+      "image_prompt": "A greasy computer monitor showing a POS dashboard with sales data and charts. The keyboard has a hot sauce stain on the space bar. Kitchen setting, tech meets food chaos, flat illustration.",
+      "visible_to": "all",
+      "room": "marcos-kitchen"
+    },
+    {
+      "id": 210,
+      "type": "item",
+      "color": "red",
+      "title": "Food Cost Analysis",
+      "description": "The complete food cost breakdown for QuickBite's menu. Volcano Burger: 32% food cost ratio at scale. Marco's wagyu habit exposed \u2014 but the numbers work.",
+      "image": "assets/card-food-cost.png",
+      "image_prompt": "A clean analysis document showing food cost breakdowns with charts and percentages. A burger illustration with cost arrows. Professional but with a coffee ring stain. Warm tones, data visualization, flat illustration.",
+      "reveals": [
+        1200
+      ],
+      "visible_to": "all",
+      "room": "marcos-kitchen"
+    },
+    {
+      "id": 301,
+      "type": "object",
+      "color": "blue",
+      "title": "Data Sources Whiteboard",
+      "description": "Diana's whiteboard listing five data sources: POS Revenue, Staff Hours, Supplier Invoices, Customer Ratings, Delivery Times. Arrows point to question marks. She needs them CONNECTED to investor questions.",
+      "image": "assets/card-data-sources.png",
+      "image_prompt": "A whiteboard with five data source labels connected by arrows to question marks. Clean handwriting in red and blue markers. Financial office setting, organized but incomplete, flat illustration.",
+      "visible_to": "all",
+      "room": "dianas-office"
+    },
+    {
+      "id": 303,
+      "type": "object",
+      "color": "blue",
+      "title": "Investor Questions List",
+      "description": "Diana's prep sheet: 'What's our profit margin?' 'Are we overstaffed?' 'Who's our cheapest supplier?' 'Are customers happy?' 'Is delivery too slow?' Plus two decoys Diana crossed out: 'Marco's favorite color?' and 'When's Raj's birthday?'",
+      "image": "assets/card-investor-questions.png",
+      "image_prompt": "A printed list of investor questions with checkboxes. Five serious business questions and two silly ones crossed out in red. Professional but humorous. Clean paper with red pen marks, flat illustration.",
+      "visible_to": "all",
+      "room": "dianas-office"
+    },
+    {
+      "id": 310,
+      "type": "item",
+      "color": "red",
+      "title": "Financial Data Card",
+      "description": "Data sources linked to the right questions. POS answers profit margin. Staff Hours answers overstaffing. Supplier Invoices reveals cheapest supplier. Diana nods: 'Finally. Someone who gets it.'",
+      "image": "assets/card-financial-data.png",
+      "image_prompt": "A structured document with data sources connected by colored lines to business questions. Clean and organized, with a small 'approved' stamp. Blue and green tones, professional data visualization, flat illustration.",
+      "reveals": [
+        1201
+      ],
+      "visible_to": "all",
+      "room": "dianas-office"
+    },
+    {
+      "id": 401,
+      "type": "object",
+      "color": "blue",
+      "title": "Coffee-Stained Manual",
+      "description": "The Quick Automate connection manual. Most of it is readable, but key sections are obscured by coffee damage. Visible rules hint at the correct activation sequence. 'Payment Gateway must be activated before [STAIN] Portal.'",
+      "image": "assets/card-stained-manual.png",
+      "image_prompt": "A technical manual taped to a wall with large coffee stains obscuring portions of text. Visible text shows connection rules. Server closet setting, dim lighting, flat illustration.",
+      "visible_to": "all",
+      "room": "rajs-closet"
+    },
+    {
+      "id": 403,
+      "type": "object",
+      "color": "blue",
+      "title": "Automation Panel",
+      "description": "Five colored wires labeled: POS System (red), Supplier Portal (blue), Staff Scheduler (yellow), Delivery Tracker (green), Payment Gateway (white). They need to be activated in the correct sequence.",
+      "image": "assets/card-automation-panel.png",
+      "image_prompt": "A panel with five colored wires \u2014 red, blue, yellow, green, white \u2014 each labeled with a system name. Numbered positions 1-5. Server closet setting with blinking LEDs, flat illustration.",
+      "visible_to": "all",
+      "room": "rajs-closet"
+    },
+    {
+      "id": 410,
+      "type": "item",
+      "color": "red",
+      "title": "Systems Data Card",
+      "description": "Automation panel connected in correct sequence: Payment, POS, Scheduler, Supplier, Delivery. All systems online. Raj is tearing up. 'It works. It actually works.'",
+      "image": "assets/card-systems-data.png",
+      "image_prompt": "A systems dashboard showing five connected services all glowing green with checkmarks. A small tear-drop emoji in the corner. Dark background with green status lights, flat illustration.",
+      "reveals": [
+        1202
+      ],
+      "visible_to": "all",
+      "room": "rajs-closet"
+    },
+    {
+      "id": 501,
+      "type": "object",
+      "color": "blue",
+      "title": "Bulletin Board Fragments",
+      "description": "Scraps of paper, Post-its, and torn printouts from all three founders. Quotes about food costs, system crashes, customer complaints, and kitchen operations \u2014 all jumbled together. Needs organizing into categories.",
+      "image": "assets/card-bulletin-fragments.png",
+      "image_prompt": "A cluttered bulletin board with scraps of paper, Post-its, and torn printouts in various handwriting styles. Pins, tape, and coffee rings. Break room setting, organized chaos, flat illustration.",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 502,
+      "type": "object",
+      "color": "blue",
+      "title": "Competitor Menus",
+      "description": "Four competitor menus stuck to the fridge: Chocolot (desserts, premium pricing), Panini Gemelli (Italian, simple menu), Tabouleh Express (delivery-only Mediterranean), The Cooker (gastropub, expensive). Someone circled their prices in red.",
+      "image": "assets/card-competitor-menus.png",
+      "image_prompt": "Four restaurant menus stuck to a fridge with magnets. Each has different styling and price points circled in red marker. A sticky note above says 'KNOW THY ENEMY.' Break room setting, flat illustration.",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 510,
+      "type": "item",
+      "color": "red",
+      "title": "Research Briefing",
+      "description": "All data organized into Quick Spaces: Kitchen Ops, Finance, Systems, Customer Intel. The combined view reveals four competitor locations worth investigating. Diana: 'Now go get me citations.'",
+      "image": "assets/card-research-briefing.png",
+      "image_prompt": "A professional briefing document with four color-coded sections and a map showing four competitor locations marked with pins. Clean layout with the QuickBite logo. Professional tones, organized from chaos, flat illustration.",
+      "reveals": [
+        600,
+        700,
+        800,
+        900,
+        1203
+      ],
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 511,
+      "type": "item",
+      "color": "red",
+      "title": "Combined Data (Partial)",
+      "description": "Recipe data and financial data merged \u2014 food costs meet revenue metrics. Still missing systems data from Raj to complete the picture.",
+      "image": "assets/card-combined-partial.png",
+      "image_prompt": "Two overlapping documents merging together with a progress bar showing 2/3 complete. Warm and cool tones blending, flat illustration.",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 601,
+      "type": "tool",
+      "color": "orange",
+      "title": "Suspicious Barista",
+      "description": "The Chocolot barista \u2014 polishes glasses while watching the room. Notices everything.",
+      "visible_to": "all",
+      "room": "chocolot"
+    },
+    {
+      "id": 602,
+      "type": "object",
+      "color": "blue",
+      "title": "Chocolot Menu Board",
+      "description": "Backlit menu: 'AI-Powered Flavor Matching' (suspicious). Dark Truffle Mocha $9.50. Ganache Croissant Melt $14.20 (anchor item). Co-Pilot Truffle: 'Our algorithm chose this flavor for you.' Premium pricing across the board.",
+      "image": "assets/card-chocolot-menu.png",
+      "image_prompt": "A sleek backlit menu board with premium chocolate dessert items and suspicious AI-themed names. Dark chocolate aesthetic with neon accents, spy-comedy noir, flat illustration.",
+      "visible_to": "all",
+      "room": "chocolot"
+    },
+    {
+      "id": 610,
+      "type": "item",
+      "color": "red",
+      "title": "Pricing Intel (Chocolot)",
+      "description": "Complete pricing structure photographed: anchor item margins, loyalty tiers, seasonal promo calendar. Their AI branding is marketing fluff \u2014 same desserts, fancier names. Cost structure higher than QuickBite per unit.",
+      "image": "assets/card-pricing-intel.png",
+      "image_prompt": "A collection of covertly taken phone photos showing menu prices, a loyalty card, and a promotional calendar. Spy-camera aesthetic with slightly tilted angles. Dark mood, flat illustration.",
+      "reveals": [
+        1204,
+        1000
+      ],
+      "visible_to": "all",
+      "room": "chocolot"
+    },
+    {
+      "id": 701,
+      "type": "tool",
+      "color": "orange",
+      "title": "Gemelli Twin (Friendly)",
+      "description": "The friendly Gemelli twin \u2014 waves at every customer, talks too much about business plans.",
+      "visible_to": "all",
+      "room": "panini-gemelli"
+    },
+    {
+      "id": 702,
+      "type": "tool",
+      "color": "orange",
+      "title": "Gemelli Twin (Suspicious)",
+      "description": "The suspicious Gemelli twin \u2014 watches you with narrow eyes, catches inconsistencies.",
+      "visible_to": "all",
+      "room": "panini-gemelli"
+    },
+    {
+      "id": 703,
+      "type": "object",
+      "color": "blue",
+      "title": "Chalkboard Specials",
+      "description": "Hand-drawn pasta illustrations and daily specials. Three paninis, two soups, one salad \u2014 that's the whole menu. A 'NOW HIRING' sign was recently flipped face-down. Simple operations, clearly scalable.",
+      "image": "assets/card-chalkboard.png",
+      "image_prompt": "A charming Italian chalkboard menu with hand-drawn pasta illustrations. Simple menu with only six items. A hiring sign visible face-down nearby. Warm Italian restaurant tones, flat illustration.",
+      "visible_to": "all",
+      "room": "panini-gemelli"
+    },
+    {
+      "id": 710,
+      "type": "item",
+      "color": "red",
+      "title": "Expansion Intel (Gemelli)",
+      "description": "Confirmed: location #4 on Fifth Street signed, targeting 5 by October. Everything runs from one iPad. Simple menu = easy replication. Biggest competitive threat for expansion speed.",
+      "image": "assets/card-expansion-intel.png",
+      "image_prompt": "A dossier page with expansion timeline, a map with four location pins, and a quote about 'simple menu, easy replication.' Spy-dossier aesthetic with stamped classifications, flat illustration.",
+      "visible_to": "all",
+      "room": "panini-gemelli",
+      "reveals": [
+        1000
+      ]
+    },
+    {
+      "id": 801,
+      "type": "tool",
+      "color": "orange",
+      "title": "Tony the Driver",
+      "description": "Tony \u2014 gossipy delivery driver. Loves to chat while loading crates. Knows every restaurant's business.",
+      "visible_to": "all",
+      "room": "tabouleh-express"
+    },
+    {
+      "id": 802,
+      "type": "object",
+      "color": "blue",
+      "title": "Delivery Schedule Board",
+      "description": "A whiteboard showing delivery routes, timing slots, and a new 'CORPORATE CATERING' column with 200-meal orders twice weekly. Twelve-block delivery radius mapped. Under-18-minute delivery guarantee circled.",
+      "image": "assets/card-delivery-schedule.png",
+      "image_prompt": "A delivery dock whiteboard with route maps, time slots, and a new corporate catering column highlighted. A 12-block radius map with a circled delivery guarantee. Dawn lighting, industrial setting, flat illustration.",
+      "visible_to": "all",
+      "room": "tabouleh-express"
+    },
+    {
+      "id": 810,
+      "type": "item",
+      "color": "red",
+      "title": "Supply Chain Intel (Tabouleh)",
+      "description": "Key findings: new 200-meal corporate catering contract, expansion via delivery trucks not storefronts, 12-block radius monopoly on fast delivery. Delivery-only model means insane margins \u2014 no rent, no tables.",
+      "image": "assets/card-supply-intel.png",
+      "image_prompt": "A intelligence report with supply chain diagrams, delivery radius maps, and margin calculations. Coffee cup ring on one corner. Spy-dossier aesthetic, dawn colors, flat illustration.",
+      "visible_to": "all",
+      "room": "tabouleh-express",
+      "reveals": [
+        1000
+      ]
+    },
+    {
+      "id": 901,
+      "type": "tool",
+      "color": "orange",
+      "title": "Social Media Manager",
+      "description": "The Cooker's social media manager \u2014 stressed, deleting bad reviews in real-time, accidentally reveals staffing problems.",
+      "visible_to": "all",
+      "room": "the-cooker"
+    },
+    {
+      "id": 902,
+      "type": "object",
+      "color": "blue",
+      "title": "The Social Wall",
+      "description": "A massive screen cycling reviews, social posts, and blog mentions. Posts are disappearing \u2014 the marketing manager is deleting negative ones in real-time. Some flash by quickly: bad reviews, staff complaints, a food blogger comparison, a health inspection note.",
+      "image": "assets/card-social-wall.png",
+      "image_prompt": "A massive screen above a bar showing social media posts that are flickering and being deleted. Some posts are highlighted in red before vanishing. A stressed figure types frantically below. Moody pub lighting with screen glow, flat illustration.",
+      "visible_to": "all",
+      "room": "the-cooker"
+    },
+    {
+      "id": 910,
+      "type": "item",
+      "color": "red",
+      "title": "Weakness Intel (Cooker)",
+      "description": "Critical finding: The Cooker's head chef is interviewing elsewhere. Staff overwhelmed, quality dropping, health complaints rising. Their only edge (desserts) won't survive without leadership. Biggest vulnerability in the competitive landscape.",
+      "image": "assets/card-weakness-intel.png",
+      "image_prompt": "An intelligence report with highlighted weakness findings \u2014 a chef silhouette walking away, declining quality graphs, and health warning flags. Dark moody tones with red warning highlights, flat illustration.",
+      "reveals": [
+        1205,
+        1000
+      ],
+      "visible_to": "all",
+      "room": "the-cooker"
+    },
+    {
+      "id": 1001,
+      "type": "object",
+      "color": "blue",
+      "title": "Pitch Deck",
+      "description": "Diana's investor slides loaded on the big screen. Seventeen cells filled with your research data. Food cost: 32%. Biggest threat: Panini Gemelli. Satisfaction: 4.6/5. The numbers are all here \u2014 now defend them.",
+      "image": "assets/card-pitch-deck.png",
+      "image_prompt": "A presentation slide on a large conference room screen showing graphs, charts, and key metrics filled in. Clean professional design with QuickBite branding. Conference room setting, flat illustration.",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 1002,
+      "type": "object",
+      "color": "blue",
+      "title": "Research Notes",
+      "description": "Your compiled research from all four competitor locations. Chocolot's high costs, Gemelli's expansion plans, Tabouleh's delivery monopoly, The Cooker's staffing crisis. Everything the investors might ask about.",
+      "image": "assets/card-research-notes.png",
+      "image_prompt": "A notebook with four tabbed sections of competitor research, each color-coded. Key findings highlighted. A pen rests on top. Professional but slightly rushed, flat illustration.",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 1010,
+      "type": "item",
+      "color": "red",
+      "title": "Investor Secured",
+      "description": "Series C confirmed. The investors were impressed by the data, the citations, and the competitive positioning. Diana almost smiled. Marco is already planning the celebration menu.",
+      "image": "assets/card-investor-secured.png",
+      "image_prompt": "A term sheet document with a large green 'CONFIRMED' stamp. Handshake silhouettes on a video call screen. Champagne emoji sticky note from Marco. Triumphant gold and green tones, flat illustration.",
+      "reveals": [
+        1100,
+        1206
+      ],
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 1101,
+      "type": "item",
+      "color": "red",
+      "title": "Store Layout Map",
+      "description": "The unfinished store explored: WiFi router location mapped, health certificate found, staff locker keys retrieved, POS terminal located. You know what's here and what's missing.",
+      "image": "assets/card-store-layout.png",
+      "image_prompt": "A hand-drawn store floor plan with discovered items marked \u2014 WiFi router, health certificate, locker keys, POS terminal. Some areas still foggy. Blueprint aesthetic with discovery markers, flat illustration.",
+      "visible_to": "all",
+      "room": "store-10"
+    },
+    {
+      "id": 1102,
+      "type": "object",
+      "color": "blue",
+      "title": "Opening Checklist",
+      "description": "A crumpled checklist from Store #9's opening, crossed out and annotated: 'NEVER AGAIN do this manually.' Eight critical steps, no clear order. Previous stores forgot freezers, forgot napkins. This time, automate it right.",
+      "image": "assets/card-opening-checklist.png",
+      "image_prompt": "A crumpled paper checklist with crossed-out items and frustrated annotations. 'NEVER AGAIN' written in red at the top. Eight steps listed without clear ordering. Startup chaos meets determination, flat illustration.",
+      "visible_to": "all",
+      "room": "store-10"
+    },
+    {
+      "id": 110,
+      "type": "event",
+      "color": "yellow",
+      "title": "Task Board Prioritized",
+      "description": "Tasks arranged in Amazon Quick journey order: Index (find), Spaces (organize), Automate (connect), Research (investigate), Sight (present), Flows (orchestrate). Now you know the path.",
+      "visible_to": "all",
+      "room": "reception",
+      "reveals": [
+        200,
+        300,
+        400,
+        500
+      ]
+    },
+    {
+      "id": 999,
+      "type": "event",
+      "color": "yellow",
+      "title": "Store #10 Automated (ENDING)",
+      "description": "The automation flow triggers perfectly. Health inspection confirmed. WiFi online. POS tested. Food cost calculated. Marco approves. Menus printed. Inventory ordered. Social media announced. Store #10 opens without a single phone call to Raj.",
+      "is_ending": true,
+      "visible_to": "all",
+      "room": "store-10"
+    },
+    {
+      "id": 102,
+      "type": "tool",
+      "color": "orange",
+      "title": "Chef Marco (Reception)",
+      "description": "Chef Marco \u2014 bursts through the kitchen door in a hot-sauce-stained apron, demanding food cost data.",
+      "reveals": [
+        200
+      ],
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 103,
+      "type": "tool",
+      "color": "orange",
+      "title": "Diana (Reception)",
+      "description": "Diana \u2014 appears from her office with a phone in each hand, needs competitive analysis with citations.",
+      "reveals": [
+        300
+      ],
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 104,
+      "type": "tool",
+      "color": "orange",
+      "title": "Raj (Reception)",
+      "description": "Raj \u2014 pokes head out of server closet, apologizes for the chaos, mentions everything is on fire.",
+      "reveals": [
+        400
+      ],
+      "visible_to": "all",
+      "room": "reception"
+    },
+    {
+      "id": 202,
+      "type": "tool",
+      "color": "orange",
+      "title": "Chef Marco",
+      "description": "Chef Marco \u2014 creative genius, terrible with numbers. Passionate about the Volcano Burger.",
+      "visible_to": "all",
+      "room": "marcos-kitchen"
+    },
+    {
+      "id": 302,
+      "type": "tool",
+      "color": "orange",
+      "title": "Diana",
+      "description": "Diana \u2014 data-obsessed CFO. Needs everything with citations. The investor call countdown is ticking.",
+      "visible_to": "all",
+      "room": "dianas-office"
+    },
+    {
+      "id": 402,
+      "type": "tool",
+      "color": "orange",
+      "title": "Raj",
+      "description": "Raj \u2014 anxious CIO who built everything in his garage. Systems held together with duct tape.",
+      "visible_to": "all",
+      "room": "rajs-closet"
+    },
+    {
+      "id": 1200,
+      "type": "lore",
+      "color": "purple",
+      "title": "The Searchable Pantry (Quick Index)",
+      "description": "\"You know how I can never find my own recipes? Diana wanted the food cost but the recipe was in my binder, the portions were in my notebook, and the prices were in her spreadsheet. Quick Index is like having one giant searchable pantry \u2014 you tell it where all your ingredients live, and it finds them when you need them. No more digging through drawers.\" \u2014 Marco",
+      "visible_to": "all",
+      "room": "marcos-kitchen"
+    },
+    {
+      "id": 1201,
+      "type": "lore",
+      "color": "purple",
+      "title": "Numbers Into Answers (Quick Sight)",
+      "description": "\"Numbers without context are noise. Quick Sight takes your raw data \u2014 sales, costs, ratings \u2014 and turns them into answers. Not just charts. Answers. I ask 'which store has the best margin?' and it tells me. In English. With a chart I can show investors who think Excel is cutting-edge technology.\" \u2014 Diana",
+      "visible_to": "all",
+      "room": "dianas-office"
+    },
+    {
+      "id": 1202,
+      "type": "lore",
+      "color": "purple",
+      "title": "The System That Orders Buns (Quick Automate)",
+      "description": "\"Every one of these systems \u2014 POS, suppliers, scheduling, delivery \u2014 used to be a phone call. Or a ticket. Or a sticky note that fell behind the rack. Quick Automate connects them so actions happen automatically. Not 'I'll get to it Thursday' automatically. Actually automatically. The system that orders buns when stock hits 20%? That's Automate.\" \u2014 Raj",
+      "visible_to": "all",
+      "room": "rajs-closet"
+    },
+    {
+      "id": 1203,
+      "type": "lore",
+      "color": "purple",
+      "title": "Label Your Lunch (Spaces)",
+      "description": "\"This bulletin board? It's the analogue version of Spaces. Kitchen stuff, money stuff, tech stuff, customer stuff \u2014 all jumbled together. Quick Spaces lets you create dedicated areas: Kitchen Ops space, Finance space, Systems space. Everyone puts their stuff in the right place, and anyone can find it. Revolutionary? No. But neither is labeling your lunch, and nobody does that either.\" \u2014 Raj",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 1204,
+      "type": "lore",
+      "color": "purple",
+      "title": "Citations, Citations, Citations (Quick Research)",
+      "description": "\"What you just did in there \u2014 observing, gathering data points, noting patterns \u2014 that's Quick Research. Except Quick Research does it with documents, databases, and public sources instead of a phone camera. It synthesizes everything into a report with citations. Diana's favorite word: citations.\" \u2014 Narrator",
+      "visible_to": "all",
+      "room": "chocolot"
+    },
+    {
+      "id": 1205,
+      "type": "lore",
+      "color": "purple",
+      "title": "Selling The Future (Quick Sight Scenarios)",
+      "description": "\"What-if analysis. That's the part that wins the money. Not 'here's what happened' \u2014 investors know the past. 'Here's what happens IF we open 6 stores, IF chicken prices rise 15%, IF the Volcano Burger does what we think.' Quick Sight Scenarios let you adjust the variables and show them the future. A future where they make money.\" \u2014 Diana",
+      "visible_to": "all",
+      "room": "war-room"
+    },
+    {
+      "id": 1206,
+      "type": "lore",
+      "color": "purple",
+      "title": "The Checklist That Runs Itself (Quick Flows)",
+      "description": "\"Every store opening used to be a scramble. Store #6 opened without a freezer. Store #8 forgot napkins for a WEEK. Quick Flows is the checklist that runs itself. Step 1 triggers step 2. Step 2 won't run until step 1 actually completes. Conditions, dependencies, automatic triggers. You design it once \u2014 every future store opens the same way. No scramble. No forgotten napkins.\" \u2014 Raj",
+      "visible_to": "all",
+      "room": "store-10"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 3300,
+      "message": "Welcome chaos — all three founders need you simultaneously.",
+      "type": "atmosphere",
+      "voice": "narrator"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 2100,
+      "message": "Diana: \"The investor call is in twenty minutes. Do you have ANYTHING?\"",
+      "type": "atmosphere",
+      "voice": "diana"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 1500,
+      "message": "Investor call moved up! Get to the War Room NOW.",
+      "type": "lockout",
+      "triggers_narrative": "mid_event",
+      "voice": "system"
+    },
+    {
+      "id": "TE-04",
+      "time_remaining": 600,
+      "message": "Store #10 opens in the morning. The automation must be ready tonight.",
+      "type": "atmosphere",
+      "voice": "narrator"
+    },
+    {
+      "id": "TE-05",
+      "time_remaining": 120,
+      "message": "Raj: \"Two minutes! Is the flow running?!\"",
+      "type": "urgency",
+      "voice": "raj"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "reception-sorted",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "reception-sort",
+      "result_card": 110,
+      "message": "Task board prioritized. You now know the Amazon Quick journey order.",
+      "type": "reveal"
+    },
+    {
+      "id": "kitchen-crafted",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "craft-kitchen",
+      "result_card": 210,
+      "message": "Food Cost Analysis complete. Marco's data is organized.",
+      "awards_card": 210,
+      "type": "reveal"
+    },
+    {
+      "id": "diana-wired",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "wire-diana",
+      "result_card": 310,
+      "message": "Financial metrics linked to questions. Diana's data is structured.",
+      "awards_card": 310,
+      "type": "reveal"
+    },
+    {
+      "id": "raj-disarmed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "trap-raj",
+      "result_card": 410,
+      "message": "Automation panel connected. Raj's systems are online.",
+      "awards_card": 410,
+      "type": "reveal"
+    },
+    {
+      "id": "breakroom-matched",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "match-breakroom",
+      "result_card": 510,
+      "message": "Fragments categorized into Spaces. Research Briefing ready.",
+      "awards_card": 510,
+      "type": "reveal"
+    },
+    {
+      "id": "chocolot-recon",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "pushluck-chocolot",
+      "result_card": 610,
+      "message": "Pricing intel gathered from Chocolot. Phone safely pocketed.",
+      "awards_card": 610,
+      "type": "reveal"
+    },
+    {
+      "id": "gemelli-recon",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "wager-gemelli",
+      "result_card": 710,
+      "message": "Expansion intel gathered from Panini Gemelli. Cover intact.",
+      "awards_card": 710,
+      "type": "reveal"
+    },
+    {
+      "id": "tabouleh-recon",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "auction-tabouleh",
+      "result_card": 810,
+      "message": "Supply chain intel gathered from Tabouleh Express.",
+      "awards_card": 810,
+      "type": "reveal"
+    },
+    {
+      "id": "cooker-recon",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "decay-cooker",
+      "result_card": 910,
+      "message": "Weakness intel gathered from The Cooker. Their head chef is leaving.",
+      "awards_card": 910,
+      "type": "reveal"
+    },
+    {
+      "id": "investor-call",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "wager-warroom",
+      "result_card": 1010,
+      "message": "Investment CONFIRMED. Series C secured. Diana almost smiles.",
+      "awards_card": 1010,
+      "type": "reveal"
+    },
+    {
+      "id": "store-opened",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "sort-store10",
+      "result_card": 999,
+      "message": "Store #10's opening sequence runs automatically. Every step. No scramble.",
+      "type": "ending"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "base_score": 50,
+  "time_bonus_per_minute": 2,
+  "hint_penalty": -3,
+  "wrong_combination_penalty": -2,
+  "lore_bonus": 3,
+  "lore_ids": [1200, 1201, 1202, 1203, 1204, 1205, 1206],
+  "all_lore_bonus": 5,
+  "research_bonus": {
+    "description": "All 4 research rooms completed",
+    "card_ids": [610, 710, 810, 910],
+    "bonus": 10
+  },
+  "stars": [
+    { "min": 40, "label": "★" },
+    { "min": 65, "label": "★★" },
+    { "min": 90, "label": "★★★" }
+  ]
+}

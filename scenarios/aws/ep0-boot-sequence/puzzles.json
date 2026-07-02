@@ -259,8 +259,14 @@
       "card_ref": 50,
       "description": "Base64 Decoder",
       "ui": "base64-decoder",
-      "config": {},
-      "hints": [],
+      "config": {
+        "initialValue": "dW5sb2Nr"
+      },
+      "hints": [
+        "Type or paste a Base64 string into the input. The decoded text appears below the moment you stop typing.",
+        "Use the Copy button to grab the decoded output, then bring it back to the locked puzzle.",
+        "Valid Base64 only contains A–Z, a–z, 0–9, '+' and '/', and may end with '=' padding. Stray spaces or quotes will make the output blank."
+      ],
       "mandatory": false
     },
     {

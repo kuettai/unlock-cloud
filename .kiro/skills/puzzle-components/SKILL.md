@@ -461,6 +461,181 @@ new PillarLock(el, {
 });
 ```
 
+## Strategy & Deduction Locks
+
+### Deduction Grid Lock (`deduction-grid-lock.js`)
+Logic grid elimination (Clue/Cryptid style). Players receive clues and mark cells YES (O) / NO (X) to deduce which item belongs to which category. Tap cells to cycle: empty → O → X.
+```js
+new DeductionGridLock(el, {
+  categories: ['Suspect', 'System', 'Time'],
+  items: [
+    ['Alice', 'Bob', 'Carol'],
+    ['Database', 'Firewall', 'API Gateway'],
+    ['9 AM', '1 PM', '6 PM'],
+  ],
+  solution: {
+    'Alice': ['Firewall', '1 PM'],
+    'Bob': ['API Gateway', '6 PM'],
+    'Carol': ['Database', '9 AM'],
+  },
+  clues: [
+    'Carol accessed her system before anyone else.',
+    'The Database was accessed at 9 AM.',
+    'Alice did not touch the Database or API Gateway.',
+  ],
+  onSubmit(correct) { }
+});
+```
+First category in `items` is the "primary" (rows). Remaining categories become separate grid sections. Solution maps primary items → their values in each secondary category.
+
+### Push-Your-Luck Lock (`push-luck-lock.js`)
+Draw tokens from a weighted bag. Each consecutive draw increases a multiplier AND bust chance. Bank to lock in (pending × multiplier). Bust = lose all pending. Visual scene escalates with CCTV cameras, guards, dogs, spotlights.
+```js
+new PushLuckLock(el, {
+  target: 30,
+  maxRounds: 5,
+  bag: [
+    { type: 'gem', value: 3, label: '📄 +3', weight: 3 },
+    { type: 'gem', value: 5, label: '📂 +5', weight: 2 },
+    { type: 'gem', value: 8, label: '💾 +8', weight: 1 },
+    { type: 'bust', value: 0, label: '🚨 Caught!', weight: 2 },
+  ],
+  onSubmit(correct) { },
+  onPenalty(rounds) { }
+});
+```
+`weight` determines bag frequency. Bust chance formula: `min(0.85, 0.125 + streak × 0.125)`. Multiplier: `1 + streak × 0.5`. `onPenalty` fires when `maxRounds` exhausted without reaching target.
+
+### Decay Lock (`decay-lock.js`)
+Text fragments visually corrupt over time. Player must read/memorize information before it disappears, then answer from memory.
+```js
+new DecayLock(el, {
+  fragments: [
+    { text: 'Access granted to user: KESTREL', decayAfter: 5 },
+    { text: 'Ignore entries from user FALCON — cleared', decayAfter: 8 },
+    { text: 'Breach originated from port 4471', decayAfter: 6 },
+  ],
+  question: 'Who is the intruder?',
+  answer: 'KESTREL',
+  decayRate: 1.5,
+  corruptChar: '█',
+  onSubmit(correct) { }
+});
+```
+`decayAfter` = seconds before that fragment starts corrupting. `decayRate` = seconds between corruption ticks. Each tick corrupts ~20% of remaining characters. Player can still submit after full decay (memory-based). Supports `answers` array for multiple valid answers.
+
+### Fog Map Lock (`fog-map-lock.js`)
+Grid covered in fog. Player spends energy to reveal adjacent tiles. Collect required intel items, then reach the exit. Traps drain energy, bonuses restore it.
+```js
+new FogMapLock(el, {
+  cols: 9,
+  rows: 5,
+  energy: 18,
+  intelNeeded: 4,
+  tiles: [
+    { x: 0, y: 4, type: 'start' },
+    { x: 2, y: 1, type: 'intel', label: '🔑 Access Card A' },
+    { x: 3, y: 3, type: 'trap', label: '⚡ Motion Sensor', cost: 2 },
+    { x: 4, y: 2, type: 'bonus', label: '🔋 Generator', gain: 2 },
+    { x: 8, y: 0, type: 'exit' },
+  ],
+  onSubmit(correct) { }
+});
+```
+Tile types: `start`, `intel`, `trap` (with `cost`), `bonus` (with `gain`), `exit`, `empty` (auto-filled). Player can only reveal tiles adjacent to already-revealed tiles. Exit only unlocks when `intelNeeded` are collected. Energy balance: aim for ~45% tile exploration budget.
+
+### Craft Lock (`craft-lock.js`)
+Tag-based crafting. Combine two items by matching their tags against rules. Produces new items. Chain combinations to reach the goal item.
+```js
+new CraftLock(el, {
+  materials: [
+    { id: 'chip', label: '💾 Memory Chip', tags: ['electronic', 'raw'] },
+    { id: 'soldering', label: '🔥 Soldering Iron', tags: ['heat'], permanent: true },
+  ],
+  rules: [
+    { inputs: ['conductive', 'heat'], output: { id: 'joint', label: '🔗 Solder Joint', tags: ['connector'] } },
+    { inputs: ['connector', 'optic'], output: { id: 'antenna', label: '📡 Antenna', tags: ['receiver'] } },
+    { inputs: ['program', 'receiver'], output: { id: 'decoder', label: '🔑 Key', tags: ['final'] } },
+  ],
+  goal: 'decoder',
+  onSubmit(correct) { }
+});
+```
+`permanent: true` = tool, not consumed on use (shown with ∞ badge). Rules match on tags, not exact IDs — any item with a matching tag qualifies. Non-permanent inputs are consumed. Select two items to attempt a combination.
+
+### Trap Disarm Lock (`trap-disarm-lock.js`)
+Wire-cutting puzzle with partially redacted instructions (Keep Talking and Nobody Explodes style). Cut wires in the correct order using deduction from incomplete rules. Wrong cuts = strikes.
+```js
+new TrapDisarmLock(el, {
+  wires: [
+    { id: 'w1', color: 'red', label: 'MAIN PWR', position: 1 },
+    { id: 'w2', color: 'blue', label: 'AUX SYS', position: 2 },
+    { id: 'w3', color: 'yellow', label: 'BACKUP', position: 3 },
+    { id: 'w4', color: 'green', label: 'GROUND', position: 4 },
+  ],
+  rules: [
+    { text: 'Cut the wire labeled "███ SYS" first.', hint: 'AUX' },
+    { text: 'Never cut GROUND — it triggers the alarm.', hint: null },
+    { text: 'The ██████ wire must be cut immediately after position 2.', hint: 'yellow' },
+  ],
+  solution: ['w2', 'w3', 'w1'],
+  maxStrikes: 3,
+  onSubmit(correct) { },
+  onFail() { }
+});
+```
+Wire properties (color, label, position) are visible. Rules contain redacted sections (█). `hint` field is for scenario designers (not shown to player). `solution` = ordered array of wire IDs to cut. Wrong order = strike (wire not consumed). `onFail` fires at max strikes.
+
+### Wager Lock (`wager-lock.js`)
+Risk-reward quiz. Player chooses confidence level BEFORE seeing answer choices. Higher stakes = more reward but more penalty on wrong, AND more options to pick from.
+```js
+new WagerLock(el, {
+  target: 6,
+  questions: [
+    { question: '"Where were you at 9 PM?"',
+      options: ['Server room maintenance', 'Office working late', 'At home', 'Cafeteria', 'Gym', 'Meeting'],
+      answer: 'Server room maintenance' },
+  ],
+  stakes: [
+    { label: 'Mumble', wager: 1, penalty: 0, color: '#22c55e', showOptions: 2 },
+    { label: 'Smooth Talk', wager: 2, penalty: -1, color: '#eab308', showOptions: 4 },
+    { label: 'Brazen Lie', wager: 4, penalty: -3, color: '#ef4444', showOptions: 6 },
+  ],
+  onSubmit(correct) { }
+});
+```
+`showOptions` controls how many answer choices are displayed (always includes the correct answer + random decoys). Accumulate score to reach `target`. Questions loop/shuffle when exhausted.
+
+### Auction Lock (`auction-lock.js`)
+Bid on mystery items with limited budget. Some are keys (required), some are decoys. Read hints to judge value. Haggling mechanic with seller mood.
+```js
+new AuctionLock(el, {
+  budget: 100,
+  requiredItems: 3,
+  lots: [
+    { id: 'a', label: '📦 Crate A', hint: 'Heavy. Metallic clinking.', value: 'key', minBid: 15, idealBid: 25 },
+    { id: 'b', label: '📦 Crate B', hint: 'Light. Rattles like plastic.', value: 'decoy', minBid: 10, idealBid: 20 },
+  ],
+  onSubmit(correct) { }
+});
+```
+`minBid` = minimum the seller accepts. Below = haggle (costs 2 budget per attempt, max 3 before walkaway). `idealBid` = "fair" price (overpaying > idealBid+10 triggers feedback). `value: 'key'|'decoy'` — must acquire `requiredItems` keys before lots run out. Values revealed at end.
+
+### Streak Lock (`streak-lock.js`)
+Rapid-fire quiz with countdown timer. Consecutive correct answers build a combo multiplier (score += streak). One wrong or timeout resets streak to 0.
+```js
+new StreakLock(el, {
+  target: 20,
+  timePerQuestion: 4,
+  questions: [
+    { question: '1010 in decimal?', answer: '10', decoys: ['8', '12', '5'] },
+    { question: 'NOT 0 = ?', answer: '1', decoys: ['0', '-1', '2'] },
+  ],
+  onSubmit(correct) { }
+});
+```
+Points per correct answer = current streak count (streak 1 = +1, streak 3 = +3, etc.). Timer bar shows remaining time with color shift (green → yellow → red). Questions shuffle and loop. Visual: combo counter pulses at ×3+.
+
 ## Tools & NPCs
 
 Tools and NPCs share the same engine mechanic: `type: "tool"` in puzzles.json. They appear in the 🔧 Tools footer panel and can be opened from room discoveries or the Tools screen.
@@ -698,6 +873,7 @@ Used in: Bible EP0 (investigation summary)
 - `app/puzzle-test-4.html` — AWS deep-dive locks (sg, cidr, waf, task, chain, lifecycle, query, alarm, timeline, pillar)
 - `app/puzzle-test-maze.html` — maze lock (grid navigation with turn/forward controls)
 - `app/puzzle-test-ep153.html` — EP153 café locks (grinder, stock memory, spelling, evidence, milk jug, cascade, dial, café orders)
+- `app/puzzle-test-claude-v1.html` — strategy & deduction locks (deduction grid, push luck, decay, fog map, craft, trap disarm, wager, auction, streak)
 - `app/maps-test.html` — isometric 2.5D map view prototype
 
 ## Conventions

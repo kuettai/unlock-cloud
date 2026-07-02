@@ -1,0 +1,40 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "The War Room",
+      "description": "Step 1 — Inception. Validate the AI's plan against the PO's intent.",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "The Bolt begins. Your AI partner is waiting with a plan.",
+      "map_pos": [180, 360]
+    },
+    {
+      "card_id": 200,
+      "name": "The Design Lab",
+      "description": "Step 2 — Context Management. Trim the AI's working memory so it builds the right thing.",
+      "connects_to": [300],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "spec-stories" },
+      "unlock_text": "Specs locked in. The Agent over-loaded its memory — help it trim.",
+      "map_pos": [180, 270]
+    },
+    {
+      "card_id": 300,
+      "name": "The Build Floor",
+      "description": "Step 3 — Architecture Verification. Place each component on the correct layer.",
+      "connects_to": [400],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "wire-arch" },
+      "unlock_text": "Context curated. The Agent has drafted a layered architecture for review.",
+      "map_pos": [180, 180]
+    },
+    {
+      "card_id": 400,
+      "name": "The Launch Pad",
+      "description": "Step 4 — Operations. Fix the broken deploy under time pressure and ship.",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "match-tests" },
+      "unlock_text": "Architecture verified. Final stop: fix the deploy and ship.",
+      "map_pos": [180, 90]
+    }
+  ]
+}

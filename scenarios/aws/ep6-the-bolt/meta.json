@@ -1,0 +1,35 @@
+{
+  "id": "ep6-the-bolt",
+  "title": "The Bolt",
+  "episode": 6,
+  "arc": "AI Unit",
+  "category": "aws",
+  "description": "You're a developer starting your first Bolt — the AI-DLC sprint equivalent, measured in hours, not weeks. Your AI agent has already drafted a plan from the product owner's intent. But AI proposes, YOU decide. Validate the agent's work at every step — stories, architecture, tests, deploy — and ship the Feedback Portal before the Bolt ends.",
+  "difficulty": { "tier": 1, "label": "Apprentice" },
+  "duration_minutes": 15,
+  "players": { "min": 1, "max": 6, "recommended": 3 },
+  "aws_topics": [
+    "AI-DLC",
+    "Spec-Driven Development",
+    "Amazon Q Developer",
+    "Kiro",
+    "Context Management",
+    "MCP Servers",
+    "CDK"
+  ],
+  "mechanics_taught": [
+    "ai_dlc_loop",
+    "humans_verify_plan",
+    "humans_verify_outcome",
+    "context_management",
+    "spec-lock",
+    "context-lock",
+    "blueprint-lock",
+    "defuse-lock",
+    "npc-dialog"
+  ],
+  "version": "0.1",
+  "start_button": "Start the Bolt",
+  "lore_label": "Lore Card",
+  "end_title": "The Bolt is Complete"
+}

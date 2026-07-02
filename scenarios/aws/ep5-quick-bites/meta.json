@@ -1,0 +1,37 @@
+{
+  "id": "ep5-quick-bites",
+  "title": "Quick Bites",
+  "episode": 5,
+  "arc": "AI Unit",
+  "description": "Your first day at QuickBite — a fast-food startup opening their 10th store. Three founders, ten stores, one investor call in 55 minutes. Discover Amazon Quick to go from drowning in chaos to running the company from one screen.",
+  "difficulty": { "tier": 3, "label": "Specialist" },
+  "duration_minutes": 60,
+  "players": { "min": 2, "max": 6, "recommended": 4 },
+  "aws_topics": [
+    "Amazon Quick",
+    "Quick Spaces",
+    "Quick Index",
+    "Quick Research",
+    "Quick Sight",
+    "Quick Flows",
+    "Quick Automate",
+    "Chat Agents"
+  ],
+  "mechanics_used": [
+    "craft-lock",
+    "trap-disarm-lock",
+    "push-luck-lock",
+    "wager-lock",
+    "auction-lock",
+    "decay-lock",
+    "fog-map-lock",
+    "sort-lock",
+    "wire-lock",
+    "match-lock",
+    "npc-dialog",
+    "card-combinations",
+    "timed-mid-event"
+  ],
+  "end_title": "Quick Bites Complete",
+  "lore_label": "Quick Features Discovered"
+}

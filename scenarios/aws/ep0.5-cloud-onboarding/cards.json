@@ -1,0 +1,288 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Lobby — NovaCloud HQ",
+      "description": "A sunlit lobby. A neon sign hums: \"NovaCloud — Built on AWS. Powered by caffeine.\" On the opposite wall, a second neon sign reads: \"NovaCloud — Powering Ideas Since 2006.\" The receptionist's desk is empty. A note taped to the monitor reads: \"Be right back — coffee machine triggered an alarm. -Kim.\" On the wall: a fragmented WELCOME poster, scrambled tiles waiting to be solved. Somewhere in here is the desk you've been assigned.\n\nYour orientation buddy Alex left a sticky on the door: \"Solve the poster, learn your bay. Trust me. -A\"",
+      "image": "assets/lobby.png",
+      "image_prompt": "Bright modern startup lobby, glass walls, neon AWS-orange accent sign reading 'NovaCloud', clean minimalist reception desk, scattered welcome balloons, fragmented welcome poster on wall, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 105, "label": "Examine the WELCOME poster", "puzzle": "jigsaw-welcome" },
+        { "card_id": 110, "label": "Look behind the welcome balloons" }
+      ],
+      "visible_to": "all",
+      "room": "lobby"
+    },
+    {
+      "id": 101,
+      "type": "object",
+      "color": "blue",
+      "title": "Welcome Poster",
+      "description": "A 9-tile poster scrambled into nonsense. Once it reads correctly, the poster will display your desk assignment.",
+      "flavor_text": "Blue cards are things you interact WITH.",
+      "image": "assets/card-welcome-poster.png",
+      "image_prompt": "Scrambled corporate welcome poster, 9 jumbled puzzle tiles, AWS-orange and white color scheme, sticker-style icons of cloud, key, badge, mug",
+      "visible_to": "all",
+      "room": "lobby"
+    },
+    {
+      "id": 102,
+      "type": "item",
+      "color": "red",
+      "title": "Desk Assignment Slip",
+      "description": "Welcome to NovaCloud!\n\nName: YOU\nDesk: 7B\nBay: VPC-3\nIAM PIN: the year AWS launched\n\n(IT will scream if you lose this. — HR)",
+      "flavor_text": "Red cards are things you USE. Bring this to Security.",
+      "image": "assets/card-desk-slip.png",
+      "image_prompt": "Crisp printed onboarding slip on bright paper, NovaCloud logo header, fields filled in marker, holographic security strip, top-down view",
+      "visible_to": "all",
+      "room": "lobby"
+    },
+    {
+      "id": 105,
+      "type": "event",
+      "color": "yellow",
+      "title": "Onboarding Step 1: Complete.",
+      "description": "The poster snaps into place. \"WELCOME TO VPC-3, DESK 7B.\" A panel slides aside in the back wall, revealing a corridor to IT Setup. The HR system pings: \"Step 1 complete. Proceed to IT.\"",
+      "reveals": [200, 102],
+      "consumes": [],
+      "awards": [102],
+      "visible_to": "all",
+      "room": "lobby"
+    },
+    {
+      "id": 110,
+      "type": "lore",
+      "color": "purple",
+      "title": "Jeff B's Lost Mug",
+      "description": "A chipped mug, half-hidden behind welcome balloons. Faded Sharpie: \"PROPERTY OF JEFF B. DO NOT LOSE.\" Inside: a dried tea bag and a sticker that reads \"Day 1.\"\n\nLore: NovaCloud's founders inherited this mug from a previous startup. Nobody knows who Jeff is. Everyone's afraid to throw it out.",
+      "image": "assets/card-mug.png",
+      "image_prompt": "Chipped white ceramic mug with faded sharpie marker text, dried tea bag inside, slightly sad lighting, single object on dark background",
+      "visible_to": "all",
+      "room": "lobby"
+    },
+
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "IT Setup — EC2 Workstation Bay",
+      "description": "A row of identical desks. One has a sticker that reads \"7B\" — yours. A laptop sits closed on the desk, lid sealed shut by a tangle of unplugged cables. A handwritten sign on the wall: \"CONNECT YOUR EC2 WORKSTATION. WIRES MATTER. CABLE MANAGEMENT IS NOT OPTIONAL. — IT.\"\n\nA small bundle of color-coded cables is coiled on the desk.",
+      "image": "assets/it-setup.png",
+      "image_prompt": "Open-plan startup IT bay, rows of standing desks, one desk highlighted with sticker '7B', tangle of network cables, monitors, AWS-themed posters, fluorescent overhead lights, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 202, "label": "Pick up the cable bundle" },
+        { "card_id": 205, "label": "Open the laptop and connect cables", "requires_item": 202, "consumes_item": 202, "puzzle": "wire-laptop" }
+      ],
+      "visible_to": "all",
+      "room": "it-setup"
+    },
+    {
+      "id": 201,
+      "type": "object",
+      "color": "blue",
+      "title": "Your Laptop (EC2-7B)",
+      "description": "A standard-issue laptop. Stickers: \"NOVACLOUD\" / \"I 💜 LAMBDAS\" / \"TURN IT OFF AND ON AGAIN.\" Four ports glow softly, waiting for the right cables.",
+      "image": "assets/card-laptop.png",
+      "image_prompt": "Modern laptop covered in tech stickers, four glowing colored ports on the side, dark cyberpunk-startup aesthetic, neon highlights",
+      "visible_to": "all",
+      "room": "it-setup"
+    },
+    {
+      "id": 202,
+      "type": "item",
+      "color": "red",
+      "title": "Cable Bundle",
+      "description": "Four cables: green (Power), blue (Data), gray (Ground), orange (Network). Each labeled in tiny print. They want to be plugged in.",
+      "image": "assets/card-cables.png",
+      "image_prompt": "Bundle of four color-coded computer cables, green blue gray orange, neatly coiled, single object on dark background, neon highlights",
+      "visible_to": "all",
+      "room": "it-setup"
+    },
+    {
+      "id": 205,
+      "type": "event",
+      "color": "yellow",
+      "title": "Onboarding Step 2: Complete.",
+      "description": "The laptop boots. NovaCloud logo. A Slack notification: \"Welcome aboard! Frank's expecting you in Security to activate your badge. Bring your desk slip.\" A door opposite slides open.",
+      "reveals": [300],
+      "visible_to": "all",
+      "room": "it-setup"
+    },
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "Security Office — IAM Checkpoint",
+      "description": "A small office, suspiciously tidy. Behind the desk: Frank — Head of Security. Stern. He does not smile. Above his head: a poster that reads \"LOOSE LIPS SINK LAMBDAS.\" On the desk: a badge terminal with a 4-digit keypad. Frank speaks without looking up: \"Slip. Keypad. PIN. In that order. Don't make me explain IAM.\"\n\n(Your IAM PIN is on your Desk Assignment Slip — but you'll need to remember the year AWS launched.)",
+      "image": "assets/security-office.png",
+      "image_prompt": "Sparse security office interior, gray desk with badge terminal and keypad, stern poster reading 'LOOSE LIPS SINK LAMBDAS', single bald guard silhouetted, fluorescent lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 305, "label": "Approach the badge terminal", "requires_item": 102, "consumes_item": 102, "puzzle": "keypad-iam" },
+        { "card_id": 310, "label": "Read the security poster" }
+      ],
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 301,
+      "type": "object",
+      "color": "blue",
+      "title": "Badge Terminal",
+      "description": "A glass podium with a 4-digit keypad and a slot for a fresh badge. The screen reads: \"ENTER IAM PIN.\"",
+      "image": "assets/card-badge-terminal.png",
+      "image_prompt": "Sleek glass security terminal with glowing 4-digit keypad and badge slot, AWS-orange accent light, single object on dark background",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 302,
+      "type": "item",
+      "color": "red",
+      "title": "Activated Badge",
+      "description": "Your badge, freshly minted. Photo: a startled blur. Status: ACTIVE. Tier: ONBOARDING. Frank stamps it twice and slides it across the desk without making eye contact.",
+      "image": "assets/card-badge.png",
+      "image_prompt": "Crisp employee badge on lanyard, NovaCloud logo, holographic security strip, slightly blurred ID photo, single object on dark background",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 305,
+      "type": "event",
+      "color": "yellow",
+      "title": "Onboarding Step 3: Complete.",
+      "description": "The keypad chirps. The terminal prints your badge. Frank, almost smiling: \"You'll do. Break Room's down the hall — go meet Alex before they drink all the cold brew.\" A door clicks open behind you.",
+      "reveals": [400, 302],
+      "awards": [302],
+      "visible_to": "all",
+      "room": "security-office"
+    },
+    {
+      "id": 310,
+      "type": "lore",
+      "color": "purple",
+      "title": "Loose Lips Sink Lambdas",
+      "description": "A laminated poster, peeling at the corners. \"LOOSE LIPS SINK LAMBDAS. Don't paste credentials in Slack. Don't email keys. Don't write passwords on sticky notes. (Looking at you, Marcus.) — Frank.\"\n\nLore: Frank designed this poster himself in PowerPoint over a weekend. He is very proud of it.",
+      "image": "assets/card-poster-lambda.png",
+      "image_prompt": "Laminated wartime-style propaganda poster reading 'LOOSE LIPS SINK LAMBDAS', cartoon lambda function symbol sinking into ocean, peeling corners, single object on dark background",
+      "visible_to": "all",
+      "room": "security-office"
+    },
+
+    {
+      "id": 400,
+      "type": "location",
+      "color": "green",
+      "title": "Break Room — The Lambda Café",
+      "description": "Mid-century modern break room. A coffee machine hums proudly, plastered in stickers: \"Lambda-powered. Brew time: 200ms.\" A cold-brew tap labeled \"S3 Cold Storage.\" A whiteboard covered in barely-readable scribbles.\n\nAt a corner table, your orientation buddy Alex waves you over with both hands.",
+      "image": "assets/break-room.png",
+      "image_prompt": "Cozy startup break room, mid-century furniture, espresso machine covered in stickers, whiteboard wall, cold-brew tap labeled 'S3', warm lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 401, "label": "Sit down with Alex", "puzzle": "npc-alex" },
+        { "card_id": 405, "label": "Head to the Server Room", "requires_item": 402, "consumes_item": 402 },
+        { "card_id": 410, "label": "Read the coffee machine manual" }
+      ],
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 401,
+      "type": "tool",
+      "color": "orange",
+      "title": "Alex (Orientation Buddy)",
+      "description": "Alex — your orientation buddy, energy drink in one hand, sticky notes in the other. They've prepared. Aggressively.",
+      "reveals": [402],
+      "image": "assets/card-alex.png",
+      "image_prompt": "Cheerful 20-something tech employee in casual hoodie holding energy drink, sticky notes stuck to sleeve, friendly smile, single character portrait on dark background",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 402,
+      "type": "item",
+      "color": "red",
+      "title": "Alex's Boot Sequence Note",
+      "description": "Alex hands you a sticky note with the boot order for the S3 Locker, scrawled fast:\n\n\"IAM first — auth before anything fun. Then VPC — gotta have a network. EC2 — your workstation. S3 — storage. Lambda — the fun stuff.\"\n\n\"Memorize and trash. Frank hates paper. — A\"",
+      "image": "assets/card-bootnote.png",
+      "image_prompt": "Hand-scrawled sticky note with numbered list of AWS service names, hurried handwriting, slightly bent corners, single object on dark background",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 405,
+      "type": "event",
+      "color": "yellow",
+      "title": "Onboarding Step 4: Complete.",
+      "description": "Alex slaps your shoulder. \"Server Room's the last stop. Boot the S3 Locker, you're cleared. Don't reorder the steps. People reorder the steps. Don't.\" A door at the back of the break room slides open.",
+      "reveals": [500],
+      "visible_to": "all",
+      "room": "break-room"
+    },
+    {
+      "id": 410,
+      "type": "lore",
+      "color": "purple",
+      "title": "Coffee Machine Manual",
+      "description": "Laminated, sticky, half-covered in espresso splatter:\n\n\"NovaCloud Brew-3000 — Powered by Lambda.\n• Brew time: 200ms (cold start: 4 minutes, please be patient)\n• Beans auto-scale based on Slack volume.\n• Do NOT touch the red button. (We don't know what it does. Marcus pressed it once.)\"",
+      "image": "assets/card-coffee-manual.png",
+      "image_prompt": "Laminated coffee machine instruction card, espresso splatter stains, glossy plastic, top-down view, single object on dark background",
+      "visible_to": "all",
+      "room": "break-room"
+    },
+
+    {
+      "id": 500,
+      "type": "location",
+      "color": "green",
+      "title": "Server Room — S3 Locker",
+      "description": "Cold air. Blue LED strips. A wall of server racks hums in harmony. A single terminal stands center-room with five service tiles glowing soft white: EC2, VPC, IAM, S3, LAMBDA. Above it, etched in steel: \"INITIALIZE YOUR S3 LOCKER. BOOT ORDER MATTERS.\"\n\nA reader awaits your activated badge.",
+      "image": "assets/server-room.png",
+      "image_prompt": "Sleek modern server room, towering racks with blue LED lighting, central holographic terminal with five glowing service tiles, cold cinematic lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 599, "label": "Tap badge and boot the S3 Locker", "requires_item": 302, "consumes_item": 302, "puzzle": "sort-boot" },
+        { "card_id": 510, "label": "Look at the founding photo on the wall" }
+      ],
+      "visible_to": "all",
+      "room": "server-room"
+    },
+    {
+      "id": 501,
+      "type": "object",
+      "color": "blue",
+      "title": "S3 Locker Terminal",
+      "description": "A holographic console with five draggable service tiles. The screen reads: \"ARRANGE BOOT ORDER. ONE SHOT.\"",
+      "image": "assets/card-locker-terminal.png",
+      "image_prompt": "Holographic touch-screen terminal with five floating AWS service tiles labeled EC2, VPC, IAM, S3, LAMBDA, blue and orange glow, single object on dark background",
+      "visible_to": "all",
+      "room": "server-room"
+    },
+    {
+      "id": 510,
+      "type": "lore",
+      "color": "purple",
+      "title": "The Founding Photo",
+      "description": "A grainy framed photo: three founders huddled around a laptop in a garage. Caption: \"NovaCloud — Day One. November 2006.\" The date matches your IAM PIN. (Coincidence? They love that joke.)",
+      "image": "assets/card-founding-photo.png",
+      "image_prompt": "Grainy black-and-white framed startup founding photo, three young founders huddled around an old laptop in a garage, dated nameplate, single object on dark background",
+      "visible_to": "all",
+      "room": "server-room"
+    },
+    {
+      "id": 599,
+      "type": "event",
+      "color": "yellow",
+      "title": "Welcome to the cloud.",
+      "description": "The S3 Locker hums green. Five tiles light in sequence — EC2, VPC, IAM, S3, LAMBDA. Confetti pops from a hidden vent. A voice over the PA:\n\n\"Welcome to the cloud. You're cleared for access.\"\n\nAlex sprints in with a NovaCloud t-shirt, a sticker pack, and a high-five. You earned the swag. You earned the badge. You earned the Lambda-powered cold brew.",
+      "is_ending": true,
+      "reveals": [],
+      "visible_to": "all",
+      "room": "server-room"
+    }
+  ]
+}

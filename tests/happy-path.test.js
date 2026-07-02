@@ -567,3 +567,104 @@ describe('EP4 — The Spec Architect', () => {
     assertCompleted(engine);
   });
 });
+
+// ============================================================
+// EP0.5 — Cloud Onboarding (Booth Qualifier)
+// ============================================================
+describe('EP0.5 — Cloud Onboarding', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep0.5-cloud-onboarding'); engine.start(); });
+
+  test('Lobby: solve jigsaw → Step 1 event reveals IT Setup, awards Desk Slip', () => {
+    assert.equal(engine.currentRoom, 100);
+    solvePuzzle(engine, 'jigsaw-welcome', 105, 'Step 1 Complete');
+    assert.ok(engine.unlockedRooms.includes(200), 'IT Setup should be unlocked');
+    assert.ok(engine.inventory.includes(102), 'Desk Slip should be in inventory');
+    // Optional bonus lore
+    discover(engine, 110, 'Jeff B Mug');
+  });
+
+  test('IT Setup: pick up cables, solve wire-lock → Step 2 reveals Security', () => {
+    engine.navigateToRoom(200);
+    assert.equal(engine.currentRoom, 200);
+    discover(engine, 202, 'Cable Bundle');
+    solvePuzzle(engine, 'wire-laptop', 205, 'Step 2 Complete');
+    assert.ok(engine.unlockedRooms.includes(300), 'Security Office should be unlocked');
+  });
+
+  test('Security Office: solve keypad with Desk Slip → Step 3 reveals Break Room, awards Badge', () => {
+    engine.navigateToRoom(300);
+    assert.equal(engine.currentRoom, 300);
+    solvePuzzle(engine, 'keypad-iam', 305, 'Step 3 Complete');
+    assert.ok(engine.unlockedRooms.includes(400), 'Break Room should be unlocked');
+    assert.ok(engine.inventory.includes(302), 'Activated Badge should be in inventory');
+    discover(engine, 310, 'Lambdas Poster');
+  });
+
+  test('Break Room: meet Alex → Boot Note → Step 4 reveals Server Room', () => {
+    engine.navigateToRoom(400);
+    assert.equal(engine.currentRoom, 400);
+    discover(engine, 401, 'Alex');
+    // Alex reveals 402 automatically; player picks "Head to Server Room" awarding 405
+    assert.ok(engine.revealedCards.has(402) || engine.inventory.includes(402),
+      'Boot Sequence Note should be revealed by Alex');
+    discover(engine, 405, 'Step 4 Complete');
+    assert.ok(engine.unlockedRooms.includes(500), 'Server Room should be unlocked');
+    discover(engine, 410, 'Coffee Manual');
+  });
+
+  test('Server Room: solve sort-lock → Welcome to the cloud (ending)', () => {
+    engine.navigateToRoom(500);
+    assert.equal(engine.currentRoom, 500);
+    solvePuzzle(engine, 'sort-boot', 599, 'Welcome to the cloud');
+    discover(engine, 510, 'Founding Photo');
+    assertCompleted(engine);
+  });
+});
+
+
+
+// ============================================================
+// EP6 — The Bolt (AI-DLC Apprentice)
+// ============================================================
+describe('EP6 — The Bolt', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep6-the-bolt'); engine.start(); });
+
+  test('War Room: talk to Agent/PO, solve spec-stories → Step 1 reveals Design Lab', () => {
+    assert.equal(engine.currentRoom, 100);
+    discover(engine, 101, 'The Agent (War Room)');
+    discover(engine, 102, 'The PO');
+    solvePuzzle(engine, 'spec-stories', 105, 'Stories Validated');
+    assert.ok(engine.unlockedRooms.includes(200), 'Design Lab should be unlocked');
+    // Optional lore
+    discover(engine, 110, 'Lore — The Loop');
+  });
+
+  test('Design Lab: talk to Agent, solve wire-arch → Step 2 reveals Build Floor', () => {
+    engine.navigateToRoom(200);
+    assert.equal(engine.currentRoom, 200);
+    discover(engine, 201, 'The Agent (Design Lab)');
+    solvePuzzle(engine, 'wire-arch', 205, 'Architecture Validated');
+    assert.ok(engine.unlockedRooms.includes(300), 'Build Floor should be unlocked');
+    discover(engine, 210, 'Lore — Context is King');
+  });
+
+  test('Build Floor: talk to Agent, solve match-tests → Step 3 reveals Launch Pad', () => {
+    engine.navigateToRoom(300);
+    assert.equal(engine.currentRoom, 300);
+    discover(engine, 301, 'The Agent (Build Floor)');
+    solvePuzzle(engine, 'match-tests', 305, 'Tests Verified');
+    assert.ok(engine.unlockedRooms.includes(400), 'Launch Pad should be unlocked');
+    discover(engine, 310, 'Lore — Anti-Patterns');
+  });
+
+  test('Launch Pad: talk to Agent, solve sort-deploy → Shipped! (ending)', () => {
+    engine.navigateToRoom(400);
+    assert.equal(engine.currentRoom, 400);
+    discover(engine, 401, 'The Agent (Launch Pad)');
+    solvePuzzle(engine, 'sort-deploy', 499, 'Shipped!');
+    discover(engine, 410, 'Lore — Bolts not Sprints');
+    assertCompleted(engine);
+  });
+});

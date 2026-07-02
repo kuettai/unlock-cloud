@@ -36,6 +36,21 @@ engine.onLeaderboardEvent = (event, payload) => {
   _historyLog(event, payload);
 };
 
+// Server-driven end: when EventBridge Scheduler times the game out or the host
+// force-closes it, GET /games/{id}.status flips to 'ended'. The leaderboard's
+// periodic poll detects that transition and invokes this callback exactly once.
+// Without this, the player's client would sit in a phantom session — updateTimer()
+// only knows about local time and just toasts "Time expired! You can keep playing..."
+leaderboard.onGameEnded = (game) => {
+  if (engine.finished) return; // already ended client-side (player completed normally)
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  engine.finished = true;
+  engine._timerExpired = true; // routes showEndScreen() into the "Overtime"/failure branch
+  if (!engine.endTime) engine.endTime = Date.now();
+  showToast("Game Over — Time's up!", true);
+  showEndScreen();
+};
+
 // Flush events on page close/hide to prevent data loss
 window.addEventListener('beforeunload', () => { if (!GUEST_MODE) leaderboard.flush(); });
 document.addEventListener('visibilitychange', () => { if (document.hidden && !GUEST_MODE) leaderboard.flush(); });
@@ -678,7 +693,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       onSubmit() { onSolve(); }
     });
   } else if (puzzle.ui === 'base64-decoder') {
-    new Base64Decoder(mount);
+    new Base64Decoder(mount, { initialValue: cfg.initialValue || '' });
     // Tool popup — no solve, just close manually
     const closeBtn = document.createElement('button');
     closeBtn.className = 'btn btn-primary';
@@ -855,12 +870,14 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     });
   } else if (puzzle.ui === 'sort-lock') {
     new SortLock(mount, {
-      items: cfg.items, answer: cfg.answer,
+      items: cfg.items, answer: cfg.answer, distractors: cfg.distractors || [],
       onSubmit(correct) { correct ? onSolve() : onFail('Wrong order. Try again.'); }
     });
   } else if (puzzle.ui === 'match-lock') {
     new MatchLock(mount, {
       pairs: cfg.pairs, cols: cfg.cols || 4,
+      revealed: cfg.revealed || false,
+      faceUp: cfg.faceUp || false,
       onSubmit() { onSolve(); }
     });
   } else if (puzzle.ui === 'word-lock') {
@@ -1184,6 +1201,78 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       tasks: cfg.tasks || [],
       onSubmit() { onSolve(); },
       onTimeout() { onFail('Time ran out! The deployment failed.'); }
+    });
+  } else if (puzzle.ui === 'craft-lock') {
+    new CraftLock(mount, {
+      materials: cfg.materials || [],
+      rules: cfg.rules || [],
+      goal: cfg.goal,
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'trap-disarm-lock') {
+    new TrapDisarmLock(mount, {
+      wires: cfg.wires || [],
+      rules: cfg.rules || [],
+      solution: cfg.solution || [],
+      maxStrikes: cfg.maxStrikes || 3,
+      onSubmit() { onSolve(); },
+      onFail() { onFail('Trap triggered! Try again.'); }
+    });
+  } else if (puzzle.ui === 'push-luck-lock') {
+    new PushLuckLock(mount, {
+      target: cfg.target || 30,
+      maxRounds: cfg.maxRounds || 5,
+      bag: cfg.bag || [],
+      onSubmit() { onSolve(); },
+      onPenalty() { onFail('Out of rounds! Security is closing in.'); }
+    });
+  } else if (puzzle.ui === 'wager-lock') {
+    new WagerLock(mount, {
+      target: cfg.target || 10,
+      questions: cfg.questions || [],
+      stakes: cfg.stakes || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'auction-lock') {
+    new AuctionLock(mount, {
+      budget: cfg.budget || 100,
+      requiredItems: cfg.requiredItems || 3,
+      lots: cfg.lots || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'decay-lock') {
+    new DecayLock(mount, {
+      fragments: cfg.fragments || [],
+      question: cfg.question || 'What is the answer?',
+      answer: cfg.answer,
+      answers: cfg.answers,
+      decayRate: cfg.decayRate || 1,
+      corruptChar: cfg.corruptChar,
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'fog-map-lock') {
+    new FogMapLock(mount, {
+      cols: cfg.cols || 5,
+      rows: cfg.rows || 5,
+      energy: cfg.energy || 8,
+      intelNeeded: cfg.intelNeeded || 3,
+      tiles: cfg.tiles || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'deduction-grid-lock') {
+    new DeductionGridLock(mount, {
+      categories: cfg.categories || [],
+      items: cfg.items || [],
+      solution: cfg.solution || {},
+      clues: cfg.clues || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'streak-lock') {
+    new StreakLock(mount, {
+      target: cfg.target || 20,
+      timePerQuestion: cfg.timePerQuestion || 5,
+      questions: cfg.questions || [],
+      onSubmit() { onSolve(); }
     });
   }
 
@@ -1765,7 +1854,9 @@ function showEndScreen() {
     <div class="score-row"><span class="label">Penalties</span><span>${score.penalties}</span></div>`;
 
   // View Artwork button
+  document.getElementById('end-art-btn')?.remove();
   const artBtn = document.createElement('button');
+  artBtn.id = 'end-art-btn';
   artBtn.className = 'btn btn-secondary';
   artBtn.style.cssText = 'width:100%;margin:16px 0;padding:12px;font-size:14px;background:var(--surface,#141b2d);border:1px solid var(--border,#1e2a45);color:var(--text,#e0e6f0);border-radius:8px;cursor:pointer';
   artBtn.textContent = '🖼️ View Artwork';

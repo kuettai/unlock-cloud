@@ -1,0 +1,604 @@
+{
+  "puzzles": [
+    {
+      "id": "npc-agent-war",
+      "type": "tool",
+      "card_ref": 101,
+      "description": "Talk with the Agent in the War Room",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "The Agent",
+        "portrait": "🤖",
+        "greeting": "Hey! Great to meet you. I'm your AI partner for this Bolt. The PO gave us a brief — \"I want a customer feedback portal.\" That's one line. I've already drafted full specs from it — three user stories with who/what/why. Before we build anything, I'd love you to verify them. AI proposes, you decide — yeah?",
+        "lines": [
+          {
+            "label": "What's a Bolt?",
+            "response": "In AI-DLC, a Bolt is one full loop — Intent → Plan → Verify → Build → Verify → Ship — done in hours, not weeks. We've got fifteen minutes for this one. Plenty of time, if we don't single-shot it."
+          },
+          {
+            "label": "Why do we need to verify your specs?",
+            "response": "Because I'm fast, not infallible. The PO gave one sentence; I expanded that into a full spec. For each user story I generated plausible-looking who/what/why options. Some are spot-on. Some I made up. Hallucinations are normal — that's exactly why we have a human-verify step."
+          },
+          {
+            "label": "How should we approach this?",
+            "response": "Talk to the PO first to lock in actual intent. Then open the Spec Board and walk each story's who/what/why. For each field, pick the option that matches what the PO actually asked for. Reject the inventions."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 105,
+            "label": "We caught the hallucinations.",
+            "response": "Great catch. Three specs validated, every who/what/why grounded in what the PO actually said. The Design Lab door is open — let's load my memory with the right docs next. I'll propose, you verify. Same loop."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "npc-po",
+      "type": "tool",
+      "card_ref": 102,
+      "description": "Talk with the Product Owner",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "The PO",
+        "portrait": "📋",
+        "greeting": "Right — I want a customer feedback portal. Customers submit feedback, our support team reads it, customers know we received it. That's it. Don't over-build.",
+        "lines": [
+          {
+            "label": "What exactly do customers do?",
+            "response": "They submit feedback. Short comments. We give them a confirmation that we got it. That's the whole loop from their side."
+          },
+          {
+            "label": "What does the support team need?",
+            "response": "They need to read incoming feedback and spot patterns over time. A simple admin view. No fancy analytics. Not yet."
+          },
+          {
+            "label": "Anything we should NOT build?",
+            "response": "Do not auto-post anything to social media. Do not, under any circumstances, do anything with cryptocurrency. Do not track customer locations. If your AI suggests any of those, ignore it — it's hallucinating."
+          },
+          {
+            "label": "When do you need this live?",
+            "response": "End of Bolt. Fifteen minutes. I trust you and the Agent — but verify each step. I've been burned by single-shot AI before."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "spec-stories",
+      "type": "spec_lock",
+      "card_ref": 103,
+      "description": "Validate the Agent's draft specs. Pick the correct who/what/why for each story; reject the hallucinated options.",
+      "ui": "spec-lock",
+      "config": {
+        "rounds": [
+          {
+            "vibe": "I want a customer feedback portal",
+            "golemChaos": [
+              "🪙 Drafted a crypto rewards portal",
+              "📣 Added social-media auto-posting",
+              "🛰️ Built customer location tracking",
+              "🤖 Generated AI-personality feedback bots"
+            ],
+            "spec": [
+              {
+                "label": "Who",
+                "prompt": "As a ___",
+                "answer": "customer",
+                "options": [
+                  "customer",
+                  "crypto miner",
+                  "social-media bot",
+                  "location tracker"
+                ]
+              },
+              {
+                "label": "What",
+                "prompt": "I want to ___",
+                "answer": "submit a feedback comment",
+                "options": [
+                  "submit a feedback comment",
+                  "earn crypto for posting",
+                  "auto-share my feedback to Twitter",
+                  "broadcast my GPS coordinates"
+                ]
+              },
+              {
+                "label": "Why",
+                "prompt": "So that ___",
+                "answer": "support can respond to my issue",
+                "options": [
+                  "support can respond to my issue",
+                  "I get paid in tokens",
+                  "everyone sees my opinion",
+                  "the company knows where I am"
+                ]
+              }
+            ],
+            "correctScene": [
+              "👤 Customer identity",
+              "✍️ Feedback comment form",
+              "📨 Routed to support queue"
+            ]
+          },
+          {
+            "vibe": "and people should know we got their message",
+            "golemChaos": [
+              "🚨 Built an SMS spam blaster",
+              "📧 Email-marketing opt-in flow",
+              "🎉 Confetti animations for every click",
+              "📺 Pushed feedback to a public TV display"
+            ],
+            "spec": [
+              {
+                "label": "Who",
+                "prompt": "As a ___",
+                "answer": "customer who just submitted feedback",
+                "options": [
+                  "customer who just submitted feedback",
+                  "marketing email subscriber",
+                  "live-stream viewer",
+                  "anonymous internet stranger"
+                ]
+              },
+              {
+                "label": "What",
+                "prompt": "I want ___",
+                "answer": "a confirmation message on screen",
+                "options": [
+                  "a confirmation message on screen",
+                  "to be added to a marketing list",
+                  "my feedback shown on a public TV",
+                  "a confetti shower every time"
+                ]
+              },
+              {
+                "label": "Why",
+                "prompt": "So that ___",
+                "answer": "I know my feedback was received",
+                "options": [
+                  "I know my feedback was received",
+                  "I get more marketing emails",
+                  "strangers can see what I wrote",
+                  "the app feels exciting"
+                ]
+              }
+            ],
+            "correctScene": [
+              "✅ Confirmation banner",
+              "🔁 Idempotent submit (no duplicates)",
+              "🆔 Reference ID shown to customer"
+            ]
+          },
+          {
+            "vibe": "and our support team should be able to use it somehow",
+            "golemChaos": [
+              "🕵️ Built a customer surveillance dashboard",
+              "🎯 Auto-targeted ads from feedback content",
+              "🧠 Sentiment-scored every customer's IQ",
+              "📊 Generated 47 unrequested KPI charts"
+            ],
+            "spec": [
+              {
+                "label": "Who",
+                "prompt": "As an ___",
+                "answer": "internal support admin",
+                "options": [
+                  "internal support admin",
+                  "external ad-targeting bot",
+                  "IQ-scoring AI",
+                  "BI consultant on retainer"
+                ]
+              },
+              {
+                "label": "What",
+                "prompt": "I want to ___",
+                "answer": "view incoming feedback in a list",
+                "options": [
+                  "view incoming feedback in a list",
+                  "target customers with ads based on mood",
+                  "rank customers by intelligence",
+                  "see 47 auto-generated dashboards"
+                ]
+              },
+              {
+                "label": "Why",
+                "prompt": "So that ___",
+                "answer": "I can spot patterns and respond",
+                "options": [
+                  "I can spot patterns and respond",
+                  "marketing can monetize the data",
+                  "we filter out 'dumb' customers",
+                  "the dashboard looks impressive"
+                ]
+              }
+            ],
+            "correctScene": [
+              "🔒 Admin-only view",
+              "📋 Chronological feedback list",
+              "🔍 Simple search & filter"
+            ]
+          }
+        ],
+        "falseOutputs": [
+          "The Agent winces. \"That option is one I extrapolated. The PO never said it.\"",
+          "Hallucination flagged. Try again — what did the PO ACTUALLY ask for?",
+          "Spec mismatch. That's a feature I invented, not one the PO requested.",
+          "The PO frowns from across the room. \"I did NOT ask for that.\""
+        ]
+      },
+      "hints": [
+        "Three rounds — one per user story. For each, pick the who/what/why that matches what the PO literally said: submit feedback, see confirmation, admin can read it.",
+        "Anything mentioning crypto, surveillance, location tracking, social auto-posting, or 47 dashboards is an Agent hallucination. The PO explicitly warned against most of these.",
+        "Round 1: customer / submit feedback comment / support responds. Round 2: customer who just submitted / confirmation on screen / knows feedback received. Round 3: support admin / view feedback list / spot patterns and respond."
+      ],
+      "success_card": 105,
+      "mandatory": true
+    },
+
+    {
+      "id": "npc-agent-design",
+      "type": "tool",
+      "card_ref": 201,
+      "description": "Check in with the Agent in the Design Lab",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "The Agent",
+        "portrait": "🤖",
+        "greeting": "OK so — before I sketch the architecture, I loaded my memory with every doc I could find on this project. Including some I probably shouldn't have. My context is over budget and my build stream is glitching. Anti-pattern alert: more context isn't always better context. Can you trim my memory with me?",
+        "lines": [
+          {
+            "label": "What did you load?",
+            "response": "Everything I could grep. Current specs, sure — but also Marcus's old design notes from when this was going to be a chat app, last quarter's brainstorm transcript with the crypto rewards idea, and a stale draft of the requirements from before the PO trimmed scope. All of it is in my head right now. That's the problem."
+          },
+          {
+            "label": "Why does that break things?",
+            "response": "Two reasons. One: I'm over my context budget — the relevant docs get crowded out. Two: stale and irrelevant docs poison the output. If I see Marcus's MongoDB design alongside the current DynamoDB design, I'll cheerfully merge them into something that can't exist. Garbage in, confident garbage out."
+          },
+          {
+            "label": "How do I trim it?",
+            "response": "Remove anything that doesn't match the locked-in spec. Marcus's notes are dead — he's gone, the design changed. Brainstorm notes have ideas the PO killed. Old draft requirements describe features that no longer exist. Keep only what's current. Watch my build stream stabilize as you do it."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 205,
+            "label": "Context cleaned up.",
+            "response": "My head feels lighter. The build stream is steady — only real components coming through. Lesson logged: I'll resist the urge to load 'just in case' docs next time. Build Floor's open — I drafted an architecture next, but you'll have to verify my layering."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "wire-arch",
+      "type": "context_lock",
+      "card_ref": 202,
+      "description": "Trim the Agent's memory. Keep current docs; remove stale, irrelevant, and poisoned context until the build stream stabilizes.",
+      "ui": "context-lock",
+      "config": {
+        "capacity": 2000,
+        "documents": [
+          {
+            "id": "req",
+            "label": "feedback-portal-requirements.md",
+            "icon": "📋",
+            "desc": "Current spec — submit, confirm, admin view (this Bolt)",
+            "tokens": 500,
+            "status": "required",
+            "poisonLine": null,
+            "missingLine": "❓ What am I building? No current requirements loaded..."
+          },
+          {
+            "id": "arch",
+            "label": "architecture.md",
+            "icon": "🏗️",
+            "desc": "Current AWS design — Lambda, DynamoDB, API Gateway, CloudFront",
+            "tokens": 700,
+            "status": "required",
+            "poisonLine": null,
+            "missingLine": "❓ No architecture doc — guessing the stack..."
+          },
+          {
+            "id": "openapi",
+            "label": "openapi.yaml",
+            "icon": "📐",
+            "desc": "Locked API contract for /feedback endpoints",
+            "tokens": 600,
+            "status": "required",
+            "poisonLine": null,
+            "missingLine": "❓ No API contract — inventing endpoints..."
+          },
+          {
+            "id": "old-req",
+            "label": "requirements-v1-draft.md",
+            "icon": "📋",
+            "desc": "Pre-trim draft with chat + admin moderation tools",
+            "tokens": 450,
+            "status": "poison",
+            "poisonLine": "❌ Adding cut chat feature and admin moderation tools..."
+          },
+          {
+            "id": "marcus-design",
+            "label": "design-marcus.md",
+            "icon": "🏗️",
+            "desc": "Old design from Marcus (Express + MongoDB era)",
+            "tokens": 650,
+            "status": "poison",
+            "poisonLine": "❌ Wiring MongoDB next to DynamoDB — conflicting data layers!"
+          },
+          {
+            "id": "brainstorm",
+            "label": "brainstorm-q3.md",
+            "icon": "🗒️",
+            "desc": "Unfiltered ideation session — crypto rewards, AR feedback",
+            "tokens": 400,
+            "status": "poison",
+            "poisonLine": "❌ Adding crypto rewards and AR mode — the PO killed these!"
+          },
+          {
+            "id": "social-spec",
+            "label": "social-autopost-spec.md",
+            "icon": "📣",
+            "desc": "Speculative integration with Twitter/X (never approved)",
+            "tokens": 350,
+            "status": "poison",
+            "poisonLine": "❌ Wiring social auto-post — explicitly forbidden by the PO!"
+          },
+          {
+            "id": "readme",
+            "label": "README.md",
+            "icon": "📖",
+            "desc": "Project overview and setup instructions",
+            "tokens": 150,
+            "status": "safe",
+            "poisonLine": null
+          },
+          {
+            "id": "changelog",
+            "label": "CHANGELOG.md",
+            "icon": "📝",
+            "desc": "Version history and release notes",
+            "tokens": 200,
+            "status": "safe",
+            "poisonLine": null
+          }
+        ]
+      },
+      "hints": [
+        "The Agent has a 2000-token budget. Keep only the three CURRENT docs that match the locked-in spec: requirements, architecture, and the API contract.",
+        "Drop anything stale or off-spec: Marcus's old MongoDB design, the v1 draft with cut features, the brainstorm with crypto/AR ideas, and the social auto-post spec the PO killed. README and CHANGELOG can stay or go — they're harmless either way.",
+        "Keep loaded: feedback-portal-requirements.md (500) + architecture.md (700) + openapi.yaml (600) = 1800 tokens. Remove everything tagged as poisoned (the v1 draft, marcus design, brainstorm, social-autopost)."
+      ],
+      "success_card": 205,
+      "mandatory": true
+    },
+
+    {
+      "id": "npc-agent-build",
+      "type": "tool",
+      "card_ref": 301,
+      "description": "Talk with the Agent on the Build Floor",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "The Agent",
+        "portrait": "🤖",
+        "greeting": "Code's drafted. While I was coding I also sketched out where each piece sits in the architecture — presentation, application, data, infrastructure. Confession: I'm not 100% sure I got every layer right. Some of these I placed by reflex. Walk through it with me — AI proposes, you verify.",
+        "lines": [
+          {
+            "label": "Why does layering matter?",
+            "response": "If I put DynamoDB in the presentation layer, my frontend ends up talking to the database directly — no auth, no validation, no API. The layers exist so failures stay contained and concerns don't leak. Get this wrong and the architecture looks fine on paper but explodes the first time it's load-tested."
+          },
+          {
+            "label": "Which ones are you unsure about?",
+            "response": "Honestly? The infra-y ones. I know what React and Lambda do. CDK and IAM blur for me — they describe and permit the system, but they aren't the system. And S3 — I keep wanting to put it in presentation because it serves files, but it's storage. Verify each one before I lock it in."
+          },
+          {
+            "label": "What if I place wrong?",
+            "response": "I'll tell you why it doesn't fit and you can try a different layer. No penalty — this IS the verify step. Better to be wrong here than in production at 3am."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 305,
+            "label": "Architecture verified, ready to deploy.",
+            "response": "All eight components on the right floors. Layer boundaries clean. Outcome verified — not just promised. Launch Pad's open. Two minutes on the clock. Last verify, then we ship."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "match-tests",
+      "type": "blueprint_lock",
+      "card_ref": 302,
+      "description": "Place each AWS component on the correct architecture layer. Verify the Agent's proposed layering before it locks in.",
+      "ui": "blueprint-lock",
+      "config": {
+        "layers": [
+          {
+            "id": "presentation",
+            "label": "Presentation",
+            "icon": "🖥️",
+            "color": "#22c55e"
+          },
+          {
+            "id": "application",
+            "label": "Application",
+            "icon": "⚙️",
+            "color": "#3b82f6"
+          },
+          {
+            "id": "data",
+            "label": "Data",
+            "icon": "🗄️",
+            "color": "#8b5cf6"
+          },
+          {
+            "id": "infrastructure",
+            "label": "Infrastructure",
+            "icon": "☁️",
+            "color": "#6366f1"
+          }
+        ],
+        "components": [
+          {
+            "id": "react",
+            "label": "React Frontend",
+            "icon": "⚛️",
+            "layer": "presentation",
+            "hint": "What customers see in the browser"
+          },
+          {
+            "id": "cloudfront",
+            "label": "CloudFront CDN",
+            "icon": "🌐",
+            "layer": "presentation",
+            "hint": "Edge delivery — serves the UI to users"
+          },
+          {
+            "id": "apigw",
+            "label": "API Gateway",
+            "icon": "🚪",
+            "layer": "application",
+            "hint": "HTTP entry point — routes /feedback requests"
+          },
+          {
+            "id": "lambda",
+            "label": "Lambda Functions",
+            "icon": "λ",
+            "layer": "application",
+            "hint": "Business logic — validates and processes feedback"
+          },
+          {
+            "id": "dynamodb",
+            "label": "DynamoDB Table",
+            "icon": "📊",
+            "layer": "data",
+            "hint": "Stores feedback records — id, comment, status"
+          },
+          {
+            "id": "s3",
+            "label": "S3 Bucket",
+            "icon": "🪣",
+            "layer": "data",
+            "hint": "Object storage — feedback exports and attachments"
+          },
+          {
+            "id": "cdk",
+            "label": "CDK Stack",
+            "icon": "📐",
+            "layer": "infrastructure",
+            "hint": "Defines the AWS resources — not a runtime component"
+          },
+          {
+            "id": "iam",
+            "label": "IAM Roles",
+            "icon": "🔑",
+            "layer": "infrastructure",
+            "hint": "Permissions scaffolding — controls who can call what"
+          }
+        ],
+        "falseOutputs": {
+          "presentation": "That component isn't user-facing. Presentation is what the browser renders or what serves it to the browser.",
+          "application": "Application is business logic — request handling, validation, processing. This component doesn't run that.",
+          "data": "Data layer is for persistence — tables, buckets, stores. That isn't where this lives.",
+          "infrastructure": "Infrastructure describes and permits the system but isn't the system. This is a runtime component, not scaffolding."
+        }
+      },
+      "hints": [
+        "Four layers: Presentation (what users see), Application (business logic), Data (persistence), Infrastructure (scaffolding & permissions).",
+        "React and CloudFront serve the UI → Presentation. API Gateway and Lambda handle requests → Application. DynamoDB and S3 store stuff → Data. CDK and IAM describe/permit the system → Infrastructure.",
+        "Placement: Presentation = React, CloudFront. Application = API Gateway, Lambda. Data = DynamoDB, S3. Infrastructure = CDK Stack, IAM Roles."
+      ],
+      "success_card": 305,
+      "mandatory": true
+    },
+
+    {
+      "id": "npc-agent-launch",
+      "type": "tool",
+      "card_ref": 401,
+      "description": "Get the launch briefing from the Agent",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "The Agent",
+        "portrait": "🤖",
+        "greeting": "Final stretch. I already kicked off the deploy automatically — CDK pushed the stack, frontend uploaded — but two things broke. CORS is blocking the API from the browser, and the Lambda is missing an env var. I've laid out the fix in the console. Forty-five seconds on the clock. You drive — I'll watch.",
+        "lines": [
+          {
+            "label": "What broke?",
+            "response": "Two issues. One: I forgot to set Access-Control-Allow-Origin on the Lambda response — browser preflight is failing on POST /feedback. Two: the API Gateway stage name isn't in the Lambda env, so the URL resolver is returning undefined. Both fixable in under a minute. But the clock is running."
+          },
+          {
+            "label": "Why is there a 'skip tests' switch?",
+            "response": "Honestly? I drafted that as a shortcut to save time and immediately hated myself. Leave it OFF. Under pressure is exactly when you should NOT skip the verify step. That's how AI-DLC ships broken code with a green pipeline. The whole point of the loop is you don't skip the loop."
+          },
+          {
+            "label": "What if I run out of time?",
+            "response": "Then we don't ship this Bolt. The PO sees nothing. We start the next Bolt tomorrow with everything we learned. Bolts not sprints — even the failures are small. But let's just not, yeah?"
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 499,
+            "label": "Did we really just ship?",
+            "response": "We really did. The Bolt is closed. Ready when you are for the next intent — but take a breath first."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "sort-deploy",
+      "type": "defuse_lock",
+      "card_ref": 402,
+      "description": "Timed final deployment — fix CORS, fix config, don't skip tests, and ship before the Bolt ends.",
+      "ui": "defuse-lock",
+      "config": {
+        "timeSeconds": 45,
+        "tasks": [
+          {
+            "id": "cors",
+            "type": "toggle",
+            "label": "Add CORS headers to Lambda response",
+            "answer": true
+          },
+          {
+            "id": "redeploy",
+            "type": "toggle",
+            "label": "Redeploy API Gateway stage",
+            "answer": true
+          },
+          {
+            "id": "skip-tests",
+            "type": "toggle",
+            "label": "Skip integration tests (save time)",
+            "answer": false
+          },
+          {
+            "id": "stage",
+            "type": "code",
+            "label": "Enter API Gateway stage name",
+            "answer": "prod",
+            "accept_contains": true
+          }
+        ]
+      },
+      "hints": [
+        "Flip ON: Add CORS headers, Redeploy API. Leave OFF: Skip tests (it's a trap — you never skip verify, especially under pressure). The stage name is the standard production stage.",
+        "CORS=ON to allow the browser to call the API. Redeploy=ON so the new headers actually take effect. Skip tests=OFF — green CI on skipped tests is meaningless. Stage name is the conventional 'prod'.",
+        "Answers: CORS=ON, Redeploy=ON, Skip tests=OFF, Stage name = prod"
+      ],
+      "success_card": 499,
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}

@@ -22,6 +22,7 @@ class MatchLock {
     this.pairs = opts.pairs || [];
     this.cols = opts.cols || 4;
     this.revealed = opts.revealed || false;
+    this.faceUp = opts.faceUp || false; // All cards always visible — no memory, just match pairs by clicking
     this.onSubmit = opts.onSubmit || (() => {});
     this.cards = this._buildCards();
     this.flipped = [];
@@ -73,7 +74,7 @@ class MatchLock {
       el.addEventListener('click', () => this._flip(i));
       this.grid.appendChild(el);
       this.cellEls.push(el);
-      if (this.revealed) el.classList.add('mtchlk-flipped');
+      if (this.revealed || this.faceUp) el.classList.add('mtchlk-flipped');
     });
 
     wrap.appendChild(this.grid);
@@ -84,9 +85,15 @@ class MatchLock {
   _flip(i) {
     if (this.busy) return;
     if (this.matched.has(i)) return;
-    if (this.flipped.includes(i)) return;
+    if (this.flipped.includes(i)) {
+      // Deselect on second tap
+      this.cellEls[i].classList.remove('mtchlk-selected');
+      this.flipped = this.flipped.filter(x => x !== i);
+      return;
+    }
 
     this.cellEls[i].classList.add('mtchlk-flipped');
+    if (this.faceUp) this.cellEls[i].classList.add('mtchlk-selected');
     this.flipped.push(i);
 
     if (this.flipped.length === 2) {
@@ -97,6 +104,8 @@ class MatchLock {
         this.matched.add(b);
         this.cellEls[a].classList.add('mtchlk-matched');
         this.cellEls[b].classList.add('mtchlk-matched');
+        this.cellEls[a].classList.remove('mtchlk-selected');
+        this.cellEls[b].classList.remove('mtchlk-selected');
         this.flipped = [];
         this.busy = false;
         if (this.matched.size === this.cards.length) {
@@ -104,8 +113,12 @@ class MatchLock {
         }
       } else {
         setTimeout(() => {
-          this.cellEls[a].classList.remove('mtchlk-flipped');
-          this.cellEls[b].classList.remove('mtchlk-flipped');
+          if (!this.faceUp) {
+            this.cellEls[a].classList.remove('mtchlk-flipped');
+            this.cellEls[b].classList.remove('mtchlk-flipped');
+          }
+          this.cellEls[a].classList.remove('mtchlk-selected');
+          this.cellEls[b].classList.remove('mtchlk-selected');
           this.flipped = [];
           this.busy = false;
         }, 800);
@@ -135,6 +148,7 @@ class MatchLock {
 .mtchlk-front{background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);color:var(--muted,#7a8ba8)}
 .mtchlk-back{background:var(--accent,#3b82f6);border:2px solid var(--accent,#3b82f6);color:#fff;transform:rotateY(180deg);padding:4px;text-align:center;word-break:break-word;font-size:11px}
 .mtchlk-matched .mtchlk-back{background:var(--green,#22c55e);border-color:var(--green,#22c55e)}
+.mtchlk-selected .mtchlk-back{border-color:var(--accent,#3b82f6);box-shadow:0 0 0 3px rgba(59,130,246,.4)}
 `;
     document.head.appendChild(s);
   }

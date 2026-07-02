@@ -7,15 +7,22 @@
  *   new SortLock(containerEl, {
  *     items: ['Step 3','Step 1','Step 2'],  // initial (scrambled) order
  *     answer: ['Step 1','Step 2','Step 3'], // correct order
+ *     distractors: ['Decoy A'],             // optional decoys; mixed into items but ignored when validating
  *     onSubmit(correct) { ... }
  *   });
+ *
+ * Validation: items are filtered to remove any value present in `distractors`,
+ * and the remaining sequence must match `answer` exactly. Distractors may sit
+ * anywhere in the list without affecting correctness.
  */
 
 class SortLock {
   constructor(container, opts = {}) {
     this.container = container;
     this.answer = opts.answer || [];
-    this.items = opts.items ? [...opts.items] : this._shuffle([...this.answer]);
+    this.distractors = opts.distractors || [];
+    const pool = [...this.answer, ...this.distractors];
+    this.items = opts.items ? [...opts.items] : this._shuffle(pool);
     this.onSubmit = opts.onSubmit || (() => {});
     this._render();
   }
@@ -64,6 +71,7 @@ class SortLock {
       row.className = 'srtlk-item';
       row.draggable = true;
       row.dataset.idx = i;
+      row.dataset.value = item;
 
       const grip = document.createElement('span');
       grip.className = 'srtlk-grip';
@@ -129,10 +137,16 @@ class SortLock {
   }
 
   _test() {
-    const correct = this.items.every((v, i) => v === this.answer[i]);
+    const filtered = this.items.filter(v => !this.distractors.includes(v));
+    const correct = filtered.length === this.answer.length
+      && filtered.every((v, i) => v === this.answer[i]);
     if (correct) {
       this.statusEl.textContent = '✅ Correct order!';
-      this.list.querySelectorAll('.srtlk-item').forEach(el => el.classList.add('srtlk-done'));
+      this.list.querySelectorAll('.srtlk-item').forEach(el => {
+        if (!this.distractors.includes(el.dataset.value)) {
+          el.classList.add('srtlk-done');
+        }
+      });
       setTimeout(() => this.onSubmit(true), 400);
     } else {
       this.statusEl.textContent = '❌ Wrong order — try again';
@@ -142,7 +156,8 @@ class SortLock {
   }
 
   reset() {
-    this.items = this._shuffle([...this.answer]);
+    const pool = [...this.answer, ...this.distractors];
+    this.items = this._shuffle(pool);
     this.statusEl.textContent = 'Drag items into the correct order';
     this._renderItems();
   }

@@ -1,0 +1,146 @@
+{
+  "puzzles": [
+    {
+      "id": "jigsaw-welcome",
+      "type": "jigsaw_lock",
+      "card_ref": 101,
+      "description": "Arrange the 9 tiles to reveal your desk assignment",
+      "ui": "jigsaw-lock",
+      "config": {
+        "cols": 3,
+        "rows": 3,
+        "tiles": [
+          "W", "E", "L",
+          "C", "O", "M",
+          "E", "7", "B"
+        ],
+        "revealCorrect": true
+      },
+      "hints": [
+        "Tap two tiles to swap them. The poster spells WELCOME, then your desk number.",
+        "Top row spells 'WEL'. Middle row spells 'COM'. Last row finishes the word and the number.",
+        "Row 1: W E L / Row 2: C O M / Row 3: E 7 B"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "wire-laptop",
+      "type": "wire_lock",
+      "card_ref": 201,
+      "description": "Match each cable to the correct port on your EC2 workstation",
+      "ui": "wire-lock",
+      "config": {
+        "wires": [
+          { "id": "power",   "color": "#22c55e", "label": "Power"   },
+          { "id": "data",    "color": "#3b82f6", "label": "Data"    },
+          { "id": "ground",  "color": "#7a8ba8", "label": "Ground"  },
+          { "id": "network", "color": "#f97316", "label": "Network" }
+        ],
+        "sockets": [
+          { "id": "pwr_port", "label": "PWR" },
+          { "id": "io_port",  "label": "I/O" },
+          { "id": "gnd_port", "label": "GND" },
+          { "id": "net_port", "label": "NET" }
+        ],
+        "solution": {
+          "power":   "pwr_port",
+          "data":    "io_port",
+          "ground":  "gnd_port",
+          "network": "net_port"
+        },
+        "submitLabel": "Boot Workstation",
+        "falseOutputs": [
+          "Sparks. The laptop sighs.",
+          "A faint smell of plastic. Try again."
+        ]
+      },
+      "hints": [
+        "Match each color/label to its obvious port. Power → PWR.",
+        "Power → PWR, Data → I/O, Ground → GND. One left.",
+        "Power → PWR, Data → I/O, Ground → GND, Network → NET."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "keypad-iam",
+      "type": "keypad_lock",
+      "card_ref": 301,
+      "description": "Enter your 4-digit IAM PIN — the year AWS launched",
+      "ui": "keypad-lock",
+      "config": {
+        "answer": "2006",
+        "case_sensitive": false
+      },
+      "hints": [
+        "Your Desk Assignment Slip has the PIN. It's the year AWS launched as a service.",
+        "AWS S3 launched in March 2006 — the same year AWS itself officially started selling cloud services.",
+        "The PIN is 2006."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "npc-alex",
+      "type": "tool",
+      "card_ref": 401,
+      "description": "Talk to Alex, your orientation buddy",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Alex",
+        "portrait": "🧑‍💻",
+        "greeting": "FINALLY. I thought Frank ate you. Sit. I made you a sticky note. I make these for everyone — it's my thing now.",
+        "lines": [
+          {
+            "label": "What's the boot sequence?",
+            "response": "IAM first, ALWAYS — no auth, no party. Then VPC, gotta have a network or your packets just sit there crying. Then EC2 — your workstation comes online. Then S3 — locker mounts. Then Lambda — let the functions cook. Memorize it. Trust me. Don't reorder. Karen reordered. Karen got reset."
+          },
+          {
+            "label": "Wait — what happens if you reorder?",
+            "response": "Skip IAM and the locker just… ignores you forever. Boot EC2 before VPC and your workstation has no network — just yells into the void. Lambda before S3 and your functions have nowhere to write, they spiral, it's tragic. Pick your disaster. Don't reorder."
+          },
+          {
+            "label": "Who's Karen?",
+            "response": "Karen was the orientation buddy before me. Reordered the boot sequence on day one. Now she works in… 'Compliance.' We don't talk about it."
+          },
+          {
+            "label": "Any tips for Frank?",
+            "response": "Frank looks scary. Frank is scary. But he made the LAMBDAS poster himself in PowerPoint and he is incredibly proud. Compliment the poster. He'll cry. Lovely man."
+          },
+          {
+            "label": "Got it. Heading to the Server Room.",
+            "response": "Go go go. Tap badge, drag tiles, hit confirm. Once you boot it, swag's yours. T-shirt, stickers, the cold brew on tap. We'll celebrate at the Lambda Café. GO."
+          }
+        ]
+      },
+      "hints": [
+        "Click each dialog option to learn the boot order before heading to the Server Room.",
+        "Alex tells you the order on the very first option: IAM, VPC, EC2, S3, Lambda.",
+        "Read the sticky note Alex hands you (card 402) — it lists the boot order verbatim."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "sort-boot",
+      "type": "sort_lock",
+      "card_ref": 501,
+      "description": "Drag the five service tiles into the correct boot order",
+      "ui": "sort-lock",
+      "config": {
+        "answer": [
+          "IAM — authenticate the badge",
+          "VPC — bring up the network",
+          "EC2 — power on the workstation",
+          "S3 — mount the locker",
+          "Lambda — spin up functions"
+        ],
+        "distractors": ["RDS"]
+      },
+      "hints": [
+        "Auth first, then network, then compute, then storage, then functions.",
+        "IAM must come before everything (no auth, no access). Lambda comes last (it depends on everything).",
+        "Order: IAM → VPC → EC2 → S3 → Lambda."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "style_prefix": "Digital illustration, modern AI-native startup interior, bright clean aesthetic, blue and orange accent palette, holographic UI overlays, friendly tech-office vibe, soft shadows, 'tech startup standup' energy, game card art.",
+  "style_prefix_location": "Digital illustration, modern AI-native startup office, isometric wide-angle, blue and orange accent palette, holographic UI overlays on glass walls, friendly clean tech aesthetic, soft natural lighting, mid-century modern furniture mixed with screens and code displays, game environment art.",
+  "style_prefix_item": "Digital illustration, single tech-office prop on dark gradient background, blue and orange highlights, clean icon style, slightly cartoonish, centered, game inventory art.",
+  "style_prefix_object": "Digital illustration, AI/tech interactive prop, soft moody background, blue and orange accents, close-up detail, friendly tech vibe, game card art.",
+  "style_prefix_character": "Digital illustration, single character portrait, friendly AI assistant or modern tech worker, warm cartoon-realistic style, dark gradient background, expressive pose, game NPC art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, dystopian, horror, gore, fantasy, medieval, magic",
+  "aspect_ratio": "16:9"
+}

@@ -1,0 +1,218 @@
+[
+  {
+    "name": "Chef Marco",
+    "portrait": "👨‍🍳",
+    "location": "Marco's Kitchen Lab",
+    "role": "CEO",
+    "greeting": "NEW RECRUIT! Perfect timing — taste this. No wait, don't taste that one, that's batch seven. Or was it nine? Anyway, WELCOME! Have you heard about the Volcano Burger? Of course you haven't. Nobody has. That's the POINT. It's going to change everything.",
+    "lines": [
+      {
+        "label": "Where's the recipe binder?",
+        "response": "The binder? Oh, the binder. See, the thing about the binder is... it's not really a binder anymore. It's more of a... concept? Some of it's on sticky notes in the walk-in. Some's in my head. There might be a spreadsheet somewhere — Raj set something up, but it tasted wrong so I stopped using it. Check the prep stations, the whiteboard, maybe the supplier invoices? The INGREDIENTS are what matter, not the filing system!"
+      },
+      {
+        "label": "Tell me about the Volcano Burger.",
+        "response": "Oh. OH. You want to know about the Volcano Burger? It's not just a burger. It's a STATEMENT. Three layers of smoked brisket, a chipotle crumble that caramelizes on contact, and the sauce — THE SAUCE — I ferment it myself for eleven days. Eleven! Not ten. Not twelve. Eleven. The acidity peaks at day eleven. I ran four hundred and thirty-seven trials. It's not food. It's edible architecture."
+      },
+      {
+        "label": "The investor call is coming up...",
+        "response": "Diana handles the boring stuff. Numbers, projections, whatever. I told her — put the Volcano Burger on screen. Let them TASTE it through the pitch deck. She said that's 'not how investor calls work.' But you know what's not how things work? Putting chocolate in a PANINI. And Chocolot's doing fine! ...Anyway, talk to Diana. She loves that stuff."
+      },
+      {
+        "label": "What do you think about the competitors?",
+        "response": "Competitors?! COMPETITORS?! Chocolot is a CHOCOLATE SHOP that got confused! They put ganache on a croissant and call it 'fast food innovation.' And Panini Gemelli — don't even — those twins haven't changed their menu since 2019. Tabouleh Express? Delivery only! Where's the CRAFT? Where's the LOVE? None of them have anything close to the Volcano Burger. Not even in the same postcode."
+      }
+    ],
+    "state_lines": [
+      {
+        "requires_card": 42,
+        "label": "I found the financial data. Your food costs are...",
+        "response": "Okay. OKAY. Fine. Yes. The wagyu costs more than Diana thinks. I may have... been ordering the A5 grade instead of the A3. And the truffle oil isn't 'optional garnish' — it's STRUCTURAL. Look, the food cost ratio is forty-three percent. I know that's high. But when people taste it? They won't care about margins. They'll care about FLAVOR. Just... maybe don't lead with that number on the investor call."
+      },
+      {
+        "requires_card": 55,
+        "label": "I've finished the competitor research.",
+        "response": "HA! I KNEW IT! None of them have a signature item with this kind of margin potential once we scale. Chocolot's bestseller costs them MORE than ours per unit! And Gemelli's kitchen throughput is — what did you say — half of ours? The Volcano Burger isn't just delicious. It's a competitive WEAPON. Tell Diana. Tell EVERYONE."
+      },
+      {
+        "requires_card": 70,
+        "label": "The investor call went great!",
+        "response": "They said yes? THEY SAID YES! I need to — someone get me my good spatula — we're celebrating! Volcano Burgers for the whole team! This is it. This is the beginning. First QuickBite, then the WORLD. ...Okay maybe first QuickBite then Store #10, THEN the world. But you get it. YOU GET IT!"
+      }
+    ]
+  },
+  {
+    "name": "Diana",
+    "portrait": "👩‍💼",
+    "location": "Diana's Corner Office",
+    "role": "CFO",
+    "greeting": "Mm-hm. One second. ...Okay. You're the new person. Great. Do you have numbers? Any numbers? Because I have a pitch deck with seventeen blank cells and an investor call in — *checks watch* — not enough time. If you don't have numbers, get numbers. If you do have numbers, sit down.",
+    "lines": [
+      {
+        "label": "What data do you need?",
+        "response": "Everything. But let's prioritize. I need three things: one, the actual food cost ratio — Marco swears it's thirty percent but I can smell wagyu on the invoices. Two, customer acquisition metrics from the POS system — Raj says it's 'in there somewhere.' Three, growth projections that aren't just Marco writing 'VOLCANO' in increasingly large font sizes. Get me those and we have a pitch. Without them, we have a wish."
+      },
+      {
+        "label": "What will the investors ask about?",
+        "response": "Unit economics first — they always do. Then scalability: can Store #10 replicate Store #1 without Marco personally seasoning every patty? Then competitive landscape. They'll want to know why we win when Chocolot raised twice what we're asking. I need hard numbers, not vibes. The call is soon and I refuse to say 'we believe' more than once."
+      },
+      {
+        "label": "What's Marco's deal?",
+        "response": "*barely concealed eye roll* Marco is... brilliant. Genuinely. The food is extraordinary. But he thinks passion is a business metric. Last week he submitted an expense report that just said 'R&D - trust me' with a hot sauce stain on it. I love the man. But if he tells the investors about 'edible architecture' one more time, I'm going to put myself on mute permanently."
+      },
+      {
+        "label": "What about the competitors?",
+        "response": "We need EVIDENCE, not opinions. Marco yelling 'Chocolot is chocolate!' isn't a competitive analysis. I need their price points, their throughput estimates, their expansion footprint. Public data — reviews, menu boards, delivery radius. Get me something I can put in a chart. Charts are how adults communicate."
+      }
+    ],
+    "state_lines": [
+      {
+        "requires_card": 38,
+        "label": "I pulled the recipe cost data from the systems.",
+        "response": "Wait. This cross-references with — *pulls up spreadsheet* — yes! If the prep station data is accurate, I can back-calculate the actual per-unit food cost from these ingredient quantities. This is the missing link. Marco's been hiding the wagyu grade, hasn't he? ...Forty-three percent. Of course. Okay. We can work with this. At scale it drops to thirty-one. THAT'S a pitch number."
+      },
+      {
+        "requires_card": 55,
+        "label": "Here's the competitor research, with citations.",
+        "response": "...You cited sources. You actually cited sources. *takes off glasses, pinches bridge of nose* I could cry. This is... this is what a professional deliverable looks like. Chocolot's cost structure, Gemelli's expansion timeline, Tabouleh's delivery margins — all verified. You might be the first person in this building who understands that 'I heard' is not a citation format. Thank you. Genuinely."
+      },
+      {
+        "requires_card": 70,
+        "label": "We did it. The investors are in.",
+        "response": "Term sheet's coming Tuesday. *leans back in chair* You know, when I joined this startup, Marco pitched me by literally cooking a burger in my office. Set off the smoke alarm. I thought — this is either going to be incredible or a complete disaster. *small smile* Today it's incredible. Good work. Don't tell Marco I said this, but... the Volcano Burger actually is pretty special."
+      }
+    ]
+  },
+  {
+    "name": "Raj",
+    "portrait": "👨‍💻",
+    "location": "Raj's Server Closet",
+    "role": "CIO",
+    "greeting": "GAH! Oh — oh, sorry, you scared me. I didn't hear the — is the door supposed to be open? Sorry about the cables. And the monitors. And the — is that coffee still dripping? Anyway, hi! Welcome! Sorry! Everything's fine except the POS sync is seventeen minutes behind and I think the scheduling module is throwing phantom shifts again. But otherwise — fine! Totally fine.",
+    "lines": [
+      {
+        "label": "Can you give me an overview of the systems?",
+        "response": "Right, okay, so — sorry — we have the POS system, that's SquareBite, handles orders and payments. Then there's SupplyTrack for ingredients and vendor orders — separate login, separate database, sorry. Scheduling is on ShiftWorks, also separate. Accounting is Diana's spreadsheets which technically count as a system. And then there's... the Thing I Built. The middleware that connects them. It's not pretty. But it works. Mostly. Usually. Today."
+      },
+      {
+        "label": "What's the deal with the automation panel?",
+        "response": "Oh! The Quick Automate panel! Right, so, I built it to handle the routine stuff — reordering, shift coverage, daily reports. There's a manual but... *gestures at coffee-stained document* ...the pages got stuck together after the Incident. The redacted sections aren't redacted on purpose — that's just coffee damage. If you can figure out the sequence, the panel does amazing things. Sorry it's not more... labeled."
+      },
+      {
+        "label": "How's Store #10 looking?",
+        "response": "Store — Store #10? *stress level visibly increases* Okay so the thing about Store #10 is that every other store, I was physically there for launch. Running cables. Fixing the printer. Resetting the fryer timer that Marco keeps setting to 'intuition.' If #10 has to run without me on-site, we need the Quick Automate system ACTUALLY working. Not 'working with Raj on speed-dial.' Actually working. Which means someone needs to fix the panel. Is that... is that you? Please say yes."
+      },
+      {
+        "label": "Tell me about Quick Automate.",
+        "response": "*eyes light up* Oh! Oh, you actually want to — yes! Okay! So Quick Automate is my baby. It's supposed to handle all the cross-system orchestration — when an order hits the POS, it auto-updates inventory in SupplyTrack, adjusts tomorrow's prep list, flags if we're running low on anything. Right now it's... mostly manual. I have seventeen browser tabs open doing what the panel should do automatically. If someone could just get the sequence right, it would save me — *voice cracks* — a lot of three AM wake-ups."
+      }
+    ],
+    "state_lines": [
+      {
+        "requires_card": 48,
+        "label": "I got the automation panel working!",
+        "response": "You — wait. WAIT. *pushes back from chair* You actually got it? The full sequence? On your FIRST DAY? I've been meaning to fix that for — *counts on fingers* — seven months? It took me two weeks to build and I couldn't remember the startup sequence because I documented it DURING the coffee incident and — you're amazing. You're actually amazing. Can you... can you stay? Like, permanently?"
+      },
+      {
+        "requires_card": 55,
+        "label": "I researched the competitors' tech setups.",
+        "response": "Oh this is — okay so Chocolot is using a monolith POS with zero integration? And Gemelli's running everything through ONE iPad? That's — I mean I feel better about our spaghetti, honestly. At least our spaghetti has multiple threads. Tabouleh's delivery system is impressive though. I should look at their API structure. But for the pitch — yeah, we're actually ahead on infrastructure. Just, you know... messy ahead."
+      },
+      {
+        "requires_card": 63,
+        "label": "Store #10 just opened. How's it going?",
+        "response": "*staring at monitoring dashboard* It's... working. The POS synced on first boot. The supply order went out automatically. The shift schedule populated. Nobody called me. Nobody. *voice breaks slightly* I've been staring at this screen for two hours waiting for something to break and... nothing. This is what it feels like? When things just... work? *sniff* I'm not crying. The server closet is just dusty. It's always dusty in here."
+      }
+    ]
+  },
+  {
+    "name": "Suspicious Barista",
+    "portrait": "☕",
+    "location": "Chocolot (Competitor)",
+    "role": "Minor NPC - Espionage",
+    "greeting": "Welcome to Chocolot. What can I get you? ...You're going to order something, right? We do have a minimum.",
+    "lines": [
+      {
+        "label": "What do you recommend?",
+        "response": "The Dark Truffle Mocha is our bestseller. Nine-fifty. But honestly? The Ganache Croissant Melt at fourteen-twenty is where the margin — I mean, the FLAVOR — really is. We move about two hundred a day at peak. Manager says it's our 'anchor item.' Whatever that means. *polishes counter aggressively*"
+      },
+      {
+        "label": "This place has a nice setup...",
+        "response": "*stops wiping* ...Are you taking photos? I saw you with your phone earlier near the menu board. We've had people from other chains in here before. Corporate said to report anything suspicious. You're not from that burger place down the street, are you? ...You know what, forget I said anything. Do you want the mocha or not?"
+      }
+    ],
+    "state_lines": []
+  },
+  {
+    "name": "Gemelli Twin (Friendly)",
+    "portrait": "👨‍🍳",
+    "location": "Panini Gemelli (Competitor)",
+    "role": "Minor NPC - Espionage",
+    "greeting": "Ciao! Welcome, welcome! First time here? You GOTTA try the gemelli special — pressed fresh, mozzarella still steaming! Sit, sit!",
+    "lines": [
+      {
+        "label": "Tell me about the business!",
+        "response": "Business is BEAUTIFUL! We just signed the lease for location number four — over on Fifth Street? My brother says I talk too much but I can't help it, I'm excited! By October we'll have five spots. All the same menu, all the same quality. The secret? Keep it simple. Three paninis, two soups, one salad. That's it. No volcano burgers or whatever the competition is doing. *laughs*"
+      },
+      {
+        "label": "Can I see the kitchen?",
+        "response": "The kitchen? Sure, sure! Well — actually, my brother would kill me. He's very private about the process. But I can tell you — everything is the same press, same timing, same ingredients at every location. We run it all from one iPad, if you can believe it. Very efficient! My brother set it up. He's the smart one. I'm the handsome one. *winks*"
+      }
+    ],
+    "state_lines": []
+  },
+  {
+    "name": "Gemelli Twin (Suspicious)",
+    "portrait": "🧐",
+    "location": "Panini Gemelli (Competitor)",
+    "role": "Minor NPC - Espionage",
+    "greeting": "... *stares* Can I help you with something?",
+    "lines": [
+      {
+        "label": "Just checking out the menu!",
+        "response": "You were 'checking out the menu' yesterday too. And Tuesday. My brother doesn't notice these things but I do. You ask a lot of questions for someone who never orders more than a water. What exactly are you researching? *crosses arms*"
+      },
+      {
+        "label": "Your brother mentioned the expansion...",
+        "response": "*jaw tightens* My brother talks too much. Our expansion plans are not public information. Fifth Street isn't confirmed. The lease isn't — *catches himself* ...You should order something or leave. And tell whoever sent you that our paninis are ORIGINAL recipes. We don't copy. We don't NEED to copy."
+      }
+    ],
+    "state_lines": []
+  },
+  {
+    "name": "Tony the Driver",
+    "portrait": "🚚",
+    "location": "Tabouleh Express (Competitor)",
+    "role": "Minor NPC - Espionage",
+    "greeting": "Hey buddy, you the new delivery guy? No? Then why you hanging around my dock? I got twelve orders going cold and a route that makes no sense.",
+    "lines": [
+      {
+        "label": "Need a hand with those boxes?",
+        "response": "Yeah actually — grab that stack? Thanks. *while you help* Man, you wouldn't believe how busy we've been. There's some big new catering order coming in — corporate thing, like two hundred meals twice a week starting next month. Boss is already talking about adding another truck. Between you and me, the margins on delivery-only are insane. No rent, no tables, no dishwasher breaking every Tuesday. Just cook and drive. *hands you a dolly*"
+      },
+      {
+        "label": "How's the delivery business treating you?",
+        "response": "Don't get me started on the traffic. But the BUSINESS? Golden. We cover a twelve-block radius and we're the only ones doing hot delivery under eighteen minutes. That burger place — QuickBite? — they don't even deliver yet. Chocolot delivers but it takes forty minutes and the chocolate melts. *laughs* We own this neighborhood for speed. For now, anyway. Boss keeps saying someone's gonna wise up eventually."
+      }
+    ],
+    "state_lines": []
+  },
+  {
+    "name": "Social Media Manager",
+    "portrait": "😰",
+    "location": "The Cooker (Competitor)",
+    "role": "Minor NPC - Espionage",
+    "greeting": "*doesn't look up from laptop* Kitchen's that way. If you're the DoorDash guy, the orders are on the counter. If you're a food blogger, please — PLEASE — don't post anything from today.",
+    "lines": [
+      {
+        "label": "Rough day?",
+        "response": "We got three one-star reviews this week. THREE. Someone said the mac and cheese tasted 'algorithmically optimized.' What does that even MEAN? Our engagement is down forty percent since — *stops* — since some staffing changes. I'm handling the social AND the PR AND the email campaigns now because apparently 'content is content.' *stress-laughs* It's FINE."
+      },
+      {
+        "label": "What staffing changes?",
+        "response": "*finally looks up* Why do you — okay, it's not a secret, it's on LinkedIn anyway. Chef Reeves is... exploring opportunities. His words. Our words are 'please don't leave before the winter menu launch.' But someone — allegedly a burger startup — has been posting sous chef positions at quote 'triple the creative freedom.' So. Yeah. If you know anyone who can make a bechamel and also not quit, send them my way. *puts head in hands*"
+      }
+    ],
+    "state_lines": []
+  }
+]

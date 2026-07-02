@@ -1,0 +1,9 @@
+{
+  "style_prefix": "Digital illustration, modern AWS startup interior, bright clean isometric style, AWS-orange and cloud-blue palette, friendly tech-office aesthetic, soft shadows, 'The Office' meets cloud computing, game card art.",
+  "style_prefix_location": "Digital illustration, modern AWS startup office interior, isometric wide-angle, AWS-orange and cloud-blue palette, friendly clean tech aesthetic, soft natural lighting, mid-century modern furniture mixed with screens and cables, game environment art.",
+  "style_prefix_item": "Digital illustration, single tech-office prop on dark gradient background, AWS-orange highlights, clean icon style, slightly cartoonish, centered, game inventory art.",
+  "style_prefix_object": "Digital illustration, sci-fi-meets-startup interactive prop, soft moody background, AWS-orange and cloud-blue accents, close-up detail, friendly tech vibe, game card art.",
+  "style_prefix_character": "Digital illustration, single character portrait, casual startup employee or stern security guard, friendly cartoon-realistic style, dark gradient background, expressive pose, game NPC art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, dark dystopian, horror, gore",
+  "aspect_ratio": "16:9"
+}
