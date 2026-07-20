@@ -278,7 +278,8 @@
       "title": "Congratulations",
       "description": "Filing confirmed. The breach notification has been accepted by HKEX. Your team correctly identified the undisclosed transaction, established the approval chain, and submitted within the mandatory disclosure window.",
       "visible_to": "all",
-      "room": "classification-terminal"
+      "room": "classification-terminal",
+      "is_ending": true
     }
   ]
 }

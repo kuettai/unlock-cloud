@@ -2,38 +2,50 @@
   "puzzles": [
     {
       "id": "tip-extraction",
-      "type": "terminal_lock",
+      "type": "keypad_lock",
       "card_ref": 10,
-      "description": "Enter the case reference from the escalation email.",
-      "ui": "terminal-lock",
+      "description": "Enter the 4-digit case reference number from the escalation email.\n\nFrom: company.secretary@firm.hk\nTo: transformation-team@firm.hk\nSubject: Urgent — Review Required: CR-2026-0312\n\nA connected transaction executed last week may not have followed the prescribed disclosure process. Please conduct an immediate review and confirm whether a Chapter 14A notification is required. HKEX filing window is active.",
+      "ui": "keypad-lock",
       "config": {
-        "preamble": "From: company.secretary@firm.hk\nTo: transformation-team@firm.hk\nSubject: Urgent — Review Required: CR-2026-0312\n\nA connected transaction executed last week may not have followed the prescribed disclosure process. Please conduct an immediate review and confirm whether a Chapter 14A notification is required. HKEX filing window is active.",
-        "prompt": "Case Reference:",
-        "answer": "CR-2026-0312",
-        "case_sensitive": false,
-        "accept_variations": ["CR-2026-0312", "cr-2026-0312", "CR20260312"]
+        "answer": "0312",
+        "length": 4,
+        "case_sensitive": false
       },
       "hints": [
-        "The escalation email mentions a specific case reference number.",
-        "Look at the subject line of the email from Company Secretary."
-      ]
+        "The escalation email subject contains a case reference. Look at the last 4 digits.",
+        "Reference format is CR-YYYY-NNNN. Enter only the final 4-digit sequence."
+      ],
+      "mandatory": true
     },
     {
       "id": "breach-identification",
-      "type": "match_lock",
+      "type": "wager_lock",
       "card_ref": 30,
       "description": "Which transaction breaches the 5% threshold?",
-      "ui": "dns-lock",
+      "ui": "wager-lock",
       "config": {
-        "preamble": "Chapter 14A — Connected Transactions: Where the value of a transaction with a connected person exceeds 5% of the listed issuer's market capitalisation, a disclosure obligation is triggered.\n\nA: HK$52M / HK$900M\nB: HK$48M / HK$1.1B\nC: HK$15M / HK$400M\nD: HK$30M / HK$750M",
-        "steps": [
-          { "label": "Breaching Transaction", "options": ["Transaction A", "Transaction B", "Transaction C", "Transaction D"], "answer": "Transaction A" },
-          { "label": "Breach Percentage", "options": ["3.75%", "4.00%", "4.36%", "5.78%"], "answer": "5.78%" }
+        "target": 2,
+        "stakes": [
+          { "label": "Answer", "wager": 1, "penalty": 0, "color": "#3b82f6", "showOptions": 4 }
+        ],
+        "questions": [
+          {
+            "question": "Chapter 14A — Connected Transactions: where the value of a transaction with a connected person exceeds 5% of the listed issuer's market capitalisation, a disclosure obligation is triggered.\n\nA: HK$52M / HK$900M\nB: HK$48M / HK$1.1B\nC: HK$15M / HK$400M\nD: HK$30M / HK$750M\n\nWhich transaction breaches the 5% threshold?",
+            "options": ["Transaction A", "Transaction B", "Transaction C", "Transaction D"],
+            "answer": "Transaction A"
+          },
+          {
+            "question": "What is the breach percentage for Transaction A (HK$52M / HK$900M)?",
+            "options": ["3.75%", "4.00%", "4.36%", "5.78%"],
+            "answer": "5.78%"
+          }
         ]
       },
       "hints": [
-        "Percentage ratio: Amount ÷ Market Cap × 100"
-      ]
+        "Percentage ratio: Amount ÷ Market Cap × 100.",
+        "52 ÷ 900 = 5.78%. That's above the 5% threshold."
+      ],
+      "mandatory": true
     },
     {
       "id": "who-knew",
@@ -64,24 +76,66 @@
       },
       "hints": [
         "Finance says Tuesday. Compliance says Finance told them Thursday. That's a 2-day gap."
-      ]
+      ],
+      "mandatory": true
     },
     {
       "id": "breach-filing",
-      "type": "dns_lock",
+      "type": "wager_lock",
       "card_ref": 70,
-      "description": "Complete the breach notification. No hints available.",
-      "ui": "dns-lock",
+      "description": "Complete the breach notification. All four fields must be correct.",
+      "ui": "wager-lock",
       "config": {
-        "preamble": "File the breach notification based on your investigation.\nAll four fields must be correct.",
-        "steps": [
-          { "label": "Chapter Violated", "options": ["Ch.13 Continuing Obligations", "Ch.14 Notifiable Transactions", "Ch.15 Options & Securities", "Ch.37 Debt Securities"], "answer": "Ch.14 Notifiable Transactions" },
-          { "label": "Breach Severity", "options": ["Minor (under 2.5%)", "Moderate (2.5-5%)", "Major (over 5%)", "Critical (over 25%)"], "answer": "Major (over 5%)" },
-          { "label": "Classification", "options": ["Administrative Error", "Negligence", "Concealment", "Fraud"], "answer": "Concealment" },
-          { "label": "Reporting Deadline", "options": ["Immediately", "2 business days", "5 business days", "30 calendar days"], "answer": "2 business days" }
+        "target": 4,
+        "stakes": [
+          { "label": "File", "wager": 1, "penalty": 0, "color": "#ef4444", "showOptions": 4 }
+        ],
+        "questions": [
+          {
+            "question": "Which chapter was violated?",
+            "options": [
+              "Ch.13 Continuing Obligations",
+              "Ch.14 Notifiable Transactions",
+              "Ch.15 Options & Securities",
+              "Ch.37 Debt Securities"
+            ],
+            "answer": "Ch.14 Notifiable Transactions"
+          },
+          {
+            "question": "What is the breach severity?",
+            "options": [
+              "Minor (under 2.5%)",
+              "Moderate (2.5-5%)",
+              "Major (over 5%)",
+              "Critical (over 25%)"
+            ],
+            "answer": "Major (over 5%)"
+          },
+          {
+            "question": "How should the breach be classified?",
+            "options": [
+              "Administrative Error",
+              "Negligence",
+              "Concealment",
+              "Fraud"
+            ],
+            "answer": "Concealment"
+          },
+          {
+            "question": "What is the reporting deadline?",
+            "options": [
+              "Immediately",
+              "2 business days",
+              "5 business days",
+              "30 calendar days"
+            ],
+            "answer": "2 business days"
+          }
         ]
       },
-      "hints": []
+      "hints": [],
+      "mandatory": true,
+      "isFinal": true
     }
   ]
 }

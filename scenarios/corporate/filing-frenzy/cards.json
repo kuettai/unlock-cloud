@@ -161,7 +161,8 @@
       "title": "Filing Submitted",
       "description": "Submission received. Have a good weekend.",
       "visible_to": "all",
-      "room": "efiling-terminal"
+      "room": "efiling-terminal",
+      "is_ending": true
     }
   ]
 }

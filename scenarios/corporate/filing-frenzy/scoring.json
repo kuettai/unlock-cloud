@@ -5,8 +5,10 @@
   "wrong_combination_penalty": -100,
   "trap_penalty": -75,
   "stars": [
-    { "min": 1200, "stars": 3 },
-    { "min": 900, "stars": 2 },
-    { "min": 600, "stars": 1 }
+    { "min": 1400, "stars": 5 },
+    { "min": 1200, "stars": 4 },
+    { "min": 1000, "stars": 3 },
+    { "min": 700, "stars": 2 },
+    { "min": 0, "stars": 1 }
   ]
 }
