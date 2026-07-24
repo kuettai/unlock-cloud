@@ -1,0 +1,112 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "The Gridlock",
+      "description": "Step 1 — A congested digital highway. Data packets frozen mid-transit under a giant sign: HUMAN VERIFICATION: QUEUE FULL.",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "Jakarta's MRT pipeline is stuck. The signage will go dark in 45 minutes.",
+      "map_pos": [40, 100]
+    },
+    {
+      "card_id": 200,
+      "name": "The Control Tower",
+      "description": "The glass-walled hub. Screens showing stage graphs and agent status. A conductor's podium waits in the center.",
+      "connects_to": [100, 300, 500],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "word-lock" },
+      "unlock_text": "The Old Way falls away. Only the Conductor can clear the traffic.",
+      "map_pos": [140, 100]
+    },
+    {
+      "card_id": 300,
+      "name": "The Stage Graph",
+      "description": "A wall-sized FSM diagram — 32 stages of AI-DLC V2. Two flash red. Route the agents. Compose the workflow.",
+      "connects_to": [200, 400, 450],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "defuse-restart" },
+      "unlock_text": "FSM engine restarted. The graph comes online.",
+      "map_pos": [240, 100]
+    },
+    {
+      "card_id": 400,
+      "name": "The Inner Loop",
+      "description": "Parallel path A — a testing lab where AI generates and AI verifies. The inner loop, if you can trust it.",
+      "connects_to": [300, 200],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "keypad-stages" },
+      "unlock_text": "The Composer scored the fix. 14 stages. Path A opens.",
+      "map_pos": [240, 20]
+    },
+    {
+      "card_id": 450,
+      "name": "The Memory Vault",
+      "description": "Parallel path B — a library of ORG / TEAM / PROJECT rules. Some drawers are open. Some text is corrupting.",
+      "connects_to": [300, 200],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "keypad-stages" },
+      "unlock_text": "The Composer scored the fix. 14 stages. Path B opens.",
+      "map_pos": [240, 180]
+    },
+    {
+      "card_id": 500,
+      "name": "The Composer's Studio",
+      "description": "A 32-channel mixing console. A holographic Golem overloaded with every stage. Right-size the workflow.",
+      "connects_to": [200, 600, 800],
+      "unlocked_by": { "type": "items", "card_ids": [410, 460] },
+      "unlock_text": "Sub-agents cleared. Raja: 'Go right-size the bloated workflow.'",
+      "map_pos": [340, 100]
+    },
+    {
+      "card_id": 600,
+      "name": "The Verification Lab",
+      "description": "Two glass chambers: LLM inference (blue) and computational tools (green). A prompt-assembly workbench between them.",
+      "connects_to": [500, 700, 750],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "context-golem" },
+      "unlock_text": "Golem unloaded. The verification chambers glow.",
+      "map_pos": [440, 100]
+    },
+    {
+      "card_id": 700,
+      "name": "The Sub-Agent Bay",
+      "description": "Parallel path A — deployment bay with specialist agent pods. Some powered on, some dark. Discover the ones you need.",
+      "connects_to": [500, 600],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "prompt-verify" },
+      "unlock_text": "Verification prompt assembled. Path A opens.",
+      "map_pos": [440, 20]
+    },
+    {
+      "card_id": 750,
+      "name": "The Audit Trail",
+      "description": "Parallel path B — a dark room, a single terminal streaming 72 event types. Some entries are corrupt — red glitches flicker through.",
+      "connects_to": [500, 600],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "prompt-verify" },
+      "unlock_text": "Verification prompt assembled. Path B opens.",
+      "map_pos": [440, 180]
+    },
+    {
+      "card_id": 800,
+      "name": "The Conductor's Podium",
+      "description": "The central podium. All agents await your signal. Verification protocol and memory rules slot into place.",
+      "connects_to": [500, 900],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "fogmap-agents" },
+      "unlock_text": "Sub-agents online. The podium awaits The Conductor.",
+      "map_pos": [540, 100]
+    },
+    {
+      "card_id": 900,
+      "name": "The Release Gate",
+      "description": "The pipeline turns green node by node. The Jakarta MRT map lights up station by station.",
+      "connects_to": [800, 1000],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "streak-conduct" },
+      "unlock_text": "The orchestra played. The release ships. The traffic clears.",
+      "map_pos": [640, 100]
+    },
+    {
+      "card_id": 1000,
+      "name": "The Learning Loop",
+      "description": "A quiet reflection room. The pipeline replays itself on a timeline. A final terminal asks: shall we encode what we learned?",
+      "connects_to": [900],
+      "unlocked_by": { "type": "event", "card_id": 910 },
+      "unlock_text": "The city is safe. Now — encode the learnings so tomorrow is faster.",
+      "map_pos": [740, 100]
+    }
+  ]
+}

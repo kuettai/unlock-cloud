@@ -1,0 +1,43 @@
+{
+  "id": "ep7-macet",
+  "title": "Macet",
+  "episode": 7,
+  "arc": "AI Unit",
+  "category": "aws",
+  "description": "Jakarta's MRT digital signage runs on an autonomous AI-DLC V2 pipeline — software that builds itself through a team of AI agents. Today the pipeline is gridlocked. The Conductor agent is stuck, the FSM is looping, verification agents argue with generation agents, and the adaptive composer bloated a one-line fix to 32 stages. You've been called in as The Conductor — orchestrate the agents, clear the bottlenecks, and ship the release before Jakarta's rail network loses its digital backbone in 45 minutes.",
+  "difficulty": { "tier": 4, "label": "Master" },
+  "duration_minutes": 45,
+  "players": { "min": 2, "max": 8, "recommended": 5 },
+  "aws_topics": [
+    "AI-DLC V2",
+    "Autonomous Pipelines",
+    "Finite State Machines",
+    "Adaptive Composition",
+    "Inner/Outer Verification Loop",
+    "Hierarchical Memory",
+    "Sub-Agents",
+    "Audit Trails"
+  ],
+  "mechanics_used": [
+    "word-lock",
+    "defuse-lock",
+    "blueprint-lock",
+    "keypad-lock",
+    "wager-lock",
+    "decay-lock",
+    "4digits-lock",
+    "context-lock",
+    "prompt-lock",
+    "fog-map-lock",
+    "evidence-lock",
+    "streak-lock",
+    "cascade-lock",
+    "npc-dialog",
+    "branching-map",
+    "revisit-rooms"
+  ],
+  "version": "0.1",
+  "start_button": "Take the Podium",
+  "lore_label": "Pipeline Insight",
+  "end_title": "Macet Selesai"
+}

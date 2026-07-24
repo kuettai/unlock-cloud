@@ -1,0 +1,21 @@
+{
+  "base_score": 50,
+  "time_bonus_per_minute": 2,
+  "hint_penalty": -3,
+  "wrong_combination_penalty": -2,
+  "lore_bonus": 3,
+  "lore_ids": [101, 102, 301, 401, 501, 601, 751, 901],
+  "all_lore_bonus": 5,
+  "parallel_completion_bonus": {
+    "description": "Both parallel paths completed (4A+4B or 7A+7B)",
+    "bonus": 8
+  },
+  "stars": [
+    { "min": 95, "stars": 5 },
+    { "min": 80, "stars": 4 },
+    { "min": 65, "stars": 3 },
+    { "min": 50, "stars": 2 },
+    { "min":  0, "stars": 1 }
+  ],
+  "notes": "Eight lore cards. A clean run — no hints, both parallel bonuses, all lore — with 5+ minutes left lands 5 stars. Grand finale (cascade-lock) is mandatory to complete the episode."
+}

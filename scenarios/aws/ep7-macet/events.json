@@ -1,0 +1,182 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 2400,
+      "message": "PIPELINE ALERT: FSM engine still looping. Audit hooks disabled. Restart required.",
+      "type": "atmosphere",
+      "voice": "system"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 1800,
+      "message": "Raja: \"Halfway. Split the room — one team to the Inner Loop, one to the Memory Vault. I need both keys back in ten minutes.\"",
+      "type": "atmosphere",
+      "voice": "raja"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 1200,
+      "message": "MID-EPISODE: 20 minutes remaining. The Composer's Studio is where teams converge. Right-size the workflow.",
+      "type": "narrative",
+      "triggers_narrative": "mid_event",
+      "voice": "narrator"
+    },
+    {
+      "id": "TE-04",
+      "time_remaining": 600,
+      "message": "MRT signage countdown: 10 minutes to blackout. Get to the Conductor's Podium.",
+      "type": "alarm",
+      "voice": "system"
+    },
+    {
+      "id": "TE-05",
+      "time_remaining": 180,
+      "message": "3 minutes. Final cascade. Trust the loop.",
+      "type": "alarm",
+      "voice": "narrator"
+    },
+    {
+      "id": "TE-06",
+      "time_remaining": 30,
+      "message": "30 seconds. Confirm the learnings. Ship the release.",
+      "type": "alarm",
+      "voice": "system"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "hint-tooltip",
+      "trigger": "first_hint_request",
+      "message": "Hints cost a small number of points but never block you. Most teams still finish at 4+ stars.",
+      "type": "tooltip",
+      "once": true
+    },
+    {
+      "id": "conductor-named",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "word-lock",
+      "result_card": 110,
+      "message": "Conductor named. The Control Tower opens.",
+      "type": "reveal"
+    },
+    {
+      "id": "fsm-restarted",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "defuse-restart",
+      "result_card": 210,
+      "message": "FSM engine restarted. Stage Graph unlocked.",
+      "type": "reveal"
+    },
+    {
+      "id": "agents-routed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "blueprint-route",
+      "result_card": 310,
+      "message": "Agents routed. Composer's stage-count slip printed.",
+      "awards_card": 311,
+      "type": "reveal"
+    },
+    {
+      "id": "stage-count-confirmed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "keypad-stages",
+      "result_card": 320,
+      "message": "Stage count locked at 14. Inner Loop and Memory Vault open.",
+      "type": "reveal"
+    },
+    {
+      "id": "inner-loop-solved",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "wager-verify",
+      "result_card": 410,
+      "message": "verification-key acquired. Bring it back to Raja.",
+      "awards_card": 410,
+      "type": "reveal"
+    },
+    {
+      "id": "state-observed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "decay-state",
+      "result_card": 452,
+      "message": "State fragments captured. Enter the position on the keypad.",
+      "awards_card": 453,
+      "type": "reveal"
+    },
+    {
+      "id": "memory-encoded",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "4digits-encode",
+      "result_card": 460,
+      "message": "memory.md printed. Return to Raja.",
+      "awards_card": 460,
+      "type": "reveal"
+    },
+    {
+      "id": "raja-report-back",
+      "trigger": "card_discovered",
+      "card_id": 220,
+      "result_card": 220,
+      "message": "Both packages delivered. Composer's Studio is open.",
+      "type": "reveal",
+      "unlocks_room": 500
+    },
+    {
+      "id": "golem-unloaded",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "context-golem",
+      "result_card": 510,
+      "message": "Golem right-sized to 3 stages. Verification Lab opens.",
+      "type": "reveal"
+    },
+    {
+      "id": "verify-prompt",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "prompt-verify",
+      "result_card": 610,
+      "message": "Verification prompt assembled. Two paths open — Sub-Agent Bay and Audit Trail.",
+      "type": "reveal"
+    },
+    {
+      "id": "subagents-dispatched",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "fogmap-agents",
+      "result_card": 710,
+      "message": "Sub-agents dispatched. The Conductor's Podium opens.",
+      "type": "reveal"
+    },
+    {
+      "id": "audit-traced",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "evidence-audit",
+      "result_card": 760,
+      "message": "Audit trail traced. The Conductor's Podium opens.",
+      "type": "reveal"
+    },
+    {
+      "id": "orchestra-played",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "streak-conduct",
+      "result_card": 810,
+      "message": "The orchestra played. Release Gate opens.",
+      "type": "reveal"
+    },
+    {
+      "id": "proceed-to-loop",
+      "trigger": "card_discovered",
+      "card_id": 910,
+      "result_card": 910,
+      "message": "The Learning Loop opens. Encode what you learned.",
+      "type": "reveal",
+      "unlocks_room": 1000
+    },
+    {
+      "id": "macet-selesai",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "cascade-learning",
+      "result_card": 999,
+      "message": "Macet selesai. Every learning encoded. The pipeline is smarter tomorrow.",
+      "type": "ending"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "style": "Cyberpunk Jakarta — neon-lit elevated rail system, holographic data streams, dark teal and amber palette, bustling streets below with digital traffic flow visualizations",
+  "mood": "Tense but hopeful — the city depends on you",
+  "palette": ["#0D1B2A", "#1B263B", "#415A77", "#778DA9", "#E0E1DD", "#FF6B35", "#00E5FF"],
+  "style_prefix": "Digital illustration, cyberpunk Jakarta interior with holographic UI overlays, dark teal navy background with amber and cyan neon accents, MRT elevated rail visible through windows, moody cinematic lighting, high-detail game card art.",
+  "style_prefix_location": "Digital illustration, cyberpunk Jakarta command interior, isometric wide-angle, dark teal navy palette with amber and cyan neon accents, holographic pipeline overlays on glass walls, neon-lit MRT rail visible outside, tense-but-hopeful lighting, game environment art.",
+  "style_prefix_item": "Digital illustration, single cyberpunk-tech prop on dark teal gradient background, cyan and amber neon highlights, clean icon style, centered, game inventory art.",
+  "style_prefix_object": "Digital illustration, cyberpunk interactive prop or console, moody dark teal background, cyan and amber accents, close-up detail, game card art.",
+  "style_prefix_character": "Digital illustration, single character portrait, tech-worker or architect, cinematic cyberpunk lighting, dark teal background with amber rim light, expressive pose, game NPC art.",
+  "style_prefix_lore": "Stylized infographic card, minimalist diagram or schematic, dark teal navy background with amber and cyan accents, small icon set, single lore card on dark gradient.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, dystopian, horror, gore, medieval, fantasy, cartoon",
+  "avoid": "text in images, words, letters, logos",
+  "aspect_ratio": "16:9",
+  "character_style": "Realistic-cartoon proportions, expressive faces, contemporary Jakarta tech-worker aesthetic, batik-inflected fashion accents on select characters"
+}

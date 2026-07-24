@@ -4,7 +4,7 @@
       "card_id": 100,
       "name": "Reception",
       "description": "A cramped desk near the entrance with an overflowing whiteboard task board",
-      "connects_to": [200, 300, 400],
+      "connects_to": [200, 300, 400, 500],
       "unlocked_by": null,
       "unlock_text": "You arrive at QuickBite HQ. Three founders are already yelling.",
       "map_pos": [140, 400]
@@ -40,10 +40,10 @@
       "card_id": 500,
       "name": "Break Room",
       "description": "A kitchenette with a bulletin board overflowing with notes, business cards, and competitor menus",
-      "connects_to": [600, 700, 800, 900],
+      "connects_to": [600, 700, 800, 900, 1000],
       "unlocked_by": { "type": "items", "card_ids": [210, 310, 410] },
       "unlock_text": "You have data from all three founders. Time to piece it together.",
-      "map_pos": [140, 180]
+      "map_pos": [80, 160]
     },
     {
       "card_id": 600,
@@ -52,7 +52,7 @@
       "connects_to": [500],
       "unlocked_by": { "type": "item", "card_id": 510 },
       "unlock_text": "Research Briefing in hand, you head to the first competitor.",
-      "map_pos": [0, 60]
+      "map_pos": [0, 0]
     },
     {
       "card_id": 700,
@@ -61,7 +61,7 @@
       "connects_to": [500],
       "unlocked_by": { "type": "item", "card_id": 510 },
       "unlock_text": "The Gemelli brothers' shop. One twin waves. The other glares.",
-      "map_pos": [100, 60]
+      "map_pos": [100, 0]
     },
     {
       "card_id": 800,
@@ -70,7 +70,7 @@
       "connects_to": [500],
       "unlocked_by": { "type": "item", "card_id": 510 },
       "unlock_text": "The delivery dock is buzzing. Time to buy some intel.",
-      "map_pos": [200, 60]
+      "map_pos": [200, 0]
     },
     {
       "card_id": 900,
@@ -79,14 +79,14 @@
       "connects_to": [500],
       "unlocked_by": { "type": "item", "card_id": 510 },
       "unlock_text": "The Cooker's social wall flickers. Posts are disappearing in real-time.",
-      "map_pos": [300, 60]
+      "map_pos": [300, 0]
     },
     {
       "card_id": 1000,
       "name": "War Room",
       "description": "A glass-walled conference room with a speakerphone already ringing",
       "connects_to": [1100],
-      "unlocked_by": { "type": "items_any_3", "card_ids": [610, 710, 810, 910] },
+      "unlocked_by": { "type": "items", "card_ids": [610, 710, 810, 910] },
       "unlock_text": "Diana needs you. The investor call is happening NOW.",
       "map_pos": [340, 180]
     },

@@ -128,11 +128,28 @@
       "type": "reveal"
     },
     {
+      "id": "store-wifi-connected",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "keypad-wifi",
+      "result_card": 1106,
+      "message": "WiFi connected. Store #10's network is live \u2014 tablets, POS, and automation systems online.",
+      "awards_card": 1106,
+      "type": "reveal"
+    },
+    {
+      "id": "store-launched",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "defuse-store10",
+      "result_card": 1103,
+      "message": "Store #10 launch console armed. Automation live.",
+      "type": "reveal"
+    },
+    {
       "id": "store-opened",
       "trigger": "puzzle_solved",
-      "puzzle_id": "sort-store10",
+      "puzzle_id": "cascade-finale",
       "result_card": 999,
-      "message": "Store #10's opening sequence runs automatically. Every step. No scramble.",
+      "message": "Quick executed the full chain. Store #10 opens without a single phone call.",
       "type": "ending"
     }
   ]

@@ -169,7 +169,19 @@
             210,
             310,
             410
+          ],
+          "consumes_item": [
+            210,
+            310,
+            410
           ]
+        },
+        {
+          "card_id": 950,
+          "label": "Compile the research briefing for Diana",
+          "requires_item": [610, 710, 810, 910],
+          "consumes_item": [610, 710, 810, 910],
+          "puzzle": null
         }
       ],
       "visible_to": "all",
@@ -241,7 +253,7 @@
       "type": "location",
       "color": "green",
       "title": "Tabouleh Express",
-      "description": "The loading dock behind a Mediterranean restaurant, 6 AM. Fluorescent dock lights buzz. Delivery vans idle. Stacks of ingredient crates labeled in three languages. People mill about \u2014 drivers checking phones, kitchen staff grabbing coffee, a woman with a binder near the office door.",
+      "description": "The loading dock behind a Mediterranean restaurant, 6 AM. Fluorescent dock lights buzz. Delivery vans idle. Stacks of ingredient crates labeled in three languages. People mill about \u2014 drivers checking phones, kitchen staff grabbing coffee, a woman with a binder near the office door. Seven people mill around the loading dock \u2014 drivers, cooks, suppliers. Some look like they know things. Others are clearly just clocking out.",
       "image": "assets/tabouleh-express.png",
       "image_prompt": "A busy delivery dock behind a Mediterranean restaurant at dawn. Fluorescent lights buzzing, delivery vans idling, stacks of crates in three languages. Various workers milling about \u2014 a driver with a clipboard, a cook on break, an assistant with a binder. Dawn blues and oranges, spy-comedy noir, flat illustration.",
       "reveals": [],
@@ -324,7 +336,7 @@
       "type": "location",
       "color": "green",
       "title": "Store #10",
-      "description": "An empty restaurant. Bare concrete floors with tape marking where booths will go. Wires hang from the ceiling. A stack of flat-pack tables sits in the corner. The walk-in fridge hums but the door is propped open. Everything COULD be ready by tomorrow \u2014 if someone figures out what's missing and automates the rest.",
+      "description": "An empty restaurant. Bare concrete floors with tape marking where booths will go. Wires hang from the ceiling. A stack of flat-pack tables sits in the corner. The walk-in fridge hums but the door is propped open. Everything COULD be ready by tomorrow \u2014 if someone figures out what's missing and automates the rest.\n\nA laminated poster on the wall shows the 8-step opening sequence from Store #9: 1. Confirm health inspection 2. Set up WiFi and tablets 3. Test POS system 4. Calculate food cost 5. Marco approves menu 6. Print menus 7. Order opening-day inventory 8. Send social media announcement. Someone scribbled underneath: 'This time, Quick automates ALL of it.'",
       "image": "assets/store-10.png",
       "image_prompt": "An unfinished restaurant with bare concrete floors marked with tape, wires hanging from the ceiling, flat-pack furniture stacked in corners. A humming walk-in fridge with its door propped open. The skeleton of a restaurant waiting to be born. Construction yellows and concrete grays, hopeful potential, flat illustration.",
       "reveals": [],
@@ -339,12 +351,22 @@
           "label": "Check the opening checklist"
         },
         {
-          "card_id": 999,
-          "label": "Sequence the store opening",
-          "puzzle": "sort-store10",
-          "requires_item": [
-            1101
-          ]
+          "card_id": 1106,
+          "label": "Connect to the store WiFi",
+          "requires_item": 1101,
+          "puzzle": "keypad-wifi"
+        },
+        {
+          "card_id": 1103,
+          "label": "Launch the store automation",
+          "requires_item": 1101,
+          "puzzle": "defuse-store10"
+        },
+        {
+          "card_id": 1104,
+          "label": "Watch Quick execute the full chain",
+          "requires_item": [1101, 1106, 1103],
+          "puzzle": "cascade-finale"
         }
       ],
       "visible_to": "all",
@@ -394,6 +416,10 @@
       "reveals": [
         1200
       ],
+      "consumes": [
+        201,
+        203
+      ],
       "visible_to": "all",
       "room": "marcos-kitchen"
     },
@@ -430,6 +456,10 @@
       "reveals": [
         1201
       ],
+      "consumes": [
+        301,
+        303
+      ],
       "visible_to": "all",
       "room": "dianas-office"
     },
@@ -465,6 +495,10 @@
       "image_prompt": "A systems dashboard showing five connected services all glowing green with checkmarks. A small tear-drop emoji in the corner. Dark background with green status lights, flat illustration.",
       "reveals": [
         1202
+      ],
+      "consumes": [
+        401,
+        403
       ],
       "visible_to": "all",
       "room": "rajs-closet"
@@ -505,6 +539,10 @@
         800,
         900,
         1203
+      ],
+      "consumes": [
+        501,
+        502
       ],
       "visible_to": "all",
       "room": "break-room"
@@ -549,8 +587,10 @@
       "image": "assets/card-pricing-intel.png",
       "image_prompt": "A collection of covertly taken phone photos showing menu prices, a loyalty card, and a promotional calendar. Spy-camera aesthetic with slightly tilted angles. Dark mood, flat illustration.",
       "reveals": [
-        1204,
-        1000
+        1204
+      ],
+      "consumes": [
+        602
       ],
       "visible_to": "all",
       "room": "chocolot"
@@ -594,8 +634,9 @@
       "image_prompt": "A dossier page with expansion timeline, a map with four location pins, and a quote about 'simple menu, easy replication.' Spy-dossier aesthetic with stamped classifications, flat illustration.",
       "visible_to": "all",
       "room": "panini-gemelli",
-      "reveals": [
-        1000
+      "reveals": [],
+      "consumes": [
+        703
       ]
     },
     {
@@ -623,13 +664,14 @@
       "type": "item",
       "color": "red",
       "title": "Supply Chain Intel (Tabouleh)",
-      "description": "Key findings: new 200-meal corporate catering contract, expansion via delivery trucks not storefronts, 12-block radius monopoly on fast delivery. Delivery-only model means insane margins \u2014 no rent, no tables.",
+      "description": "Seven people on the loading dock. Budget: $100. Only some of them know about Tabouleh's expansion plans \u2014 the rest are dead ends. Read the body language: who's carrying real intel, and who's just clocking out?",
       "image": "assets/card-supply-intel.png",
       "image_prompt": "A intelligence report with supply chain diagrams, delivery radius maps, and margin calculations. Coffee cup ring on one corner. Spy-dossier aesthetic, dawn colors, flat illustration.",
       "visible_to": "all",
       "room": "tabouleh-express",
-      "reveals": [
-        1000
+      "reveals": [],
+      "consumes": [
+        802
       ]
     },
     {
@@ -661,11 +703,21 @@
       "image": "assets/card-weakness-intel.png",
       "image_prompt": "An intelligence report with highlighted weakness findings \u2014 a chef silhouette walking away, declining quality graphs, and health warning flags. Dark moody tones with red warning highlights, flat illustration.",
       "reveals": [
-        1205,
-        1000
+        1205
+      ],
+      "consumes": [
+        902
       ],
       "visible_to": "all",
       "room": "the-cooker"
+    },
+    {
+      "id": 950,
+      "type": "event",
+      "color": "yellow",
+      "title": "Research Complete",
+      "description": "All four competitor intel reports compiled. Diana's calling \u2014 the War Room is ready.",
+      "reveals": [1000]
     },
     {
       "id": 1001,
@@ -691,7 +743,7 @@
     },
     {
       "id": 1010,
-      "type": "item",
+      "type": "lore",
       "color": "red",
       "title": "Investor Secured",
       "description": "Series C confirmed. The investors were impressed by the data, the citations, and the competitive positioning. Diana almost smiled. Marco is already planning the celebration menu.",
@@ -700,6 +752,11 @@
       "reveals": [
         1100,
         1206
+      ],
+      "consumes": [
+        510,
+        1001,
+        1002
       ],
       "visible_to": "all",
       "room": "war-room"
@@ -727,6 +784,15 @@
       "room": "store-10"
     },
     {
+      "id": 1106,
+      "type": "item",
+      "color": "red",
+      "title": "WiFi Connected",
+      "description": "Store #10's network is live. All tablets, POS terminals, and automation systems now have connectivity. The router label reads: SSID: QuickBite-S10 / Password=[REDACTED_PASSWORD]",
+      "visible_to": "all",
+      "room": "store-10"
+    },
+    {
       "id": 110,
       "type": "event",
       "color": "yellow",
@@ -734,6 +800,9 @@
       "description": "Tasks arranged in Amazon Quick journey order: Index (find), Spaces (organize), Automate (connect), Research (investigate), Sight (present), Flows (orchestrate). Now you know the path.",
       "visible_to": "all",
       "room": "reception",
+      "consumes": [
+        101
+      ],
       "reveals": [
         200,
         300,
@@ -746,8 +815,34 @@
       "type": "event",
       "color": "yellow",
       "title": "Store #10 Automated (ENDING)",
-      "description": "The automation flow triggers perfectly. Health inspection confirmed. WiFi online. POS tested. Food cost calculated. Marco approves. Menus printed. Inventory ordered. Social media announced. Store #10 opens without a single phone call to Raj.",
+      "description": "Quick executed the full chain. Store #10 opens. The investor is in. Marco, Diana, and Raj built something that runs without them.",
       "is_ending": true,
+      "visible_to": "all",
+      "room": "store-10",
+      "consumes": [
+        1102
+      ]
+    },
+    {
+      "id": 1103,
+      "type": "object",
+      "color": "blue",
+      "title": "Store Launch Console",
+      "description": "A control panel with automation toggles. Quick Flows, Quick Index, Quick Automate \u2014 all ready to connect. One wrong switch and the opening fails.",
+      "image": "assets/card-store-launch.png",
+      "image_prompt": "Digital control panel with colorful toggle switches labeled with cloud service icons, countdown timer, startup launch aesthetic",
+      "visible_to": "all",
+      "room": "store-10"
+    },
+    {
+      "id": 1104,
+      "type": "object",
+      "color": "blue",
+      "title": "Quick Execution Dashboard",
+      "description": "All six Quick features ready to fire in sequence. Each needs your confirmation. One wrong approval breaks the chain.",
+      "image": "assets/card-quick-dashboard.png",
+      "image_prompt": "Six-step automation pipeline visualization with checkmarks and service icons, modern dashboard style",
+      "reveals": [999],
       "visible_to": "all",
       "room": "store-10"
     },

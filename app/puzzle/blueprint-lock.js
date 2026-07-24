@@ -17,6 +17,8 @@ class BlueprintLock {
     this.onSubmit = opts.onSubmit || (() => {});
     this.onWrong = opts.onWrong || (() => {});
     this.falseOutputs = opts.falseOutputs || {};
+    this.successMessage = opts.successMessage || null;
+    this.successIcon = opts.successIcon || null;
     // Shuffle component order for variety
     this.queue = [...this.components].sort(() => Math.random() - 0.5);
     this.currentIdx = 0;
@@ -53,7 +55,7 @@ class BlueprintLock {
         <span class="bplk-incoming-icon">${comp.icon || '📦'}</span>
         <span class="bplk-incoming-name">${comp.label}</span>
       </div>
-      <div class="bplk-incoming-hint">${comp.hint || ''}</div>
+      <div class="bplk-incoming-hint"></div>
     `;
     wrap.appendChild(incoming);
 
@@ -146,7 +148,10 @@ class BlueprintLock {
 
     const msg = document.createElement('div');
     msg.className = 'bplk-success';
-    msg.innerHTML = `<div class="bplk-success-icon">🏗️✨</div><div class="bplk-success-text">Architecture solid! Building raised in ${this.mistakes === 0 ? 'perfect order — zero mistakes!' : `${this.mistakes} mistake${this.mistakes > 1 ? 's' : ''}. But it stands!`}</div>`;
+    const successIcon = this.successIcon || '✅';
+    const successMsg = this.successMessage || 'All components placed correctly!';
+    const mistakeNote = this.mistakes === 0 ? ' Perfect — zero mistakes!' : ` (${this.mistakes} mistake${this.mistakes > 1 ? 's' : ''})`;
+    msg.innerHTML = `<div class="bplk-success-icon">${successIcon}</div><div class="bplk-success-text">${successMsg}${mistakeNote}</div>`;
     wrap.appendChild(msg);
 
     setTimeout(() => this.onSubmit(), 3000);

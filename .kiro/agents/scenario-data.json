@@ -1,11 +1,16 @@
 {
-  "name": "scenario-data",
-  "description": "Converts validated blueprints into JSON data files (cards, puzzles, rooms, events, combinations, scoring, meta, narrative).",
-  "prompt": "file://.kiro/agents/scenario-data/AGENT.md",
-  "tools": ["fs_read", "fs_write", "execute_bash", "grep", "glob", "code"],
-  "resources": [
-    "skill://.kiro/skills/scenario-blueprint/SKILL.md"
-  ],
-  "keyboardShortcut": "ctrl+shift+4",
-  "welcomeMessage": "Scenario Data agent ready. Give me a validated blueprint and I'll generate all JSON files."
+  "name" : "scenario-data",
+  "description" : "Converts validated blueprints into JSON data files (cards, puzzles, rooms, events, combinations, scoring, meta, narrative).",
+  "prompt" : "file://.kiro/agents/scenario-data/AGENT.md",
+  "tools" : [ "fs_read", "fs_write", "execute_bash", "grep", "glob", "code", "@creds-agent" ],
+  "resources" : [ "skill://.kiro/skills/scenario-blueprint/SKILL.md" ],
+  "keyboardShortcut" : "ctrl+shift+4",
+  "welcomeMessage" : "Scenario Data agent ready. Give me a validated blueprint and I'll generate all JSON files.",
+  "mcpServers" : {
+    "creds-agent" : {
+      "command" : "aim",
+      "args" : [ "mcp", "start-server", "local-creds-agent-mcp" ]
+    }
+  },
+  "allowedTools" : [ "@creds-agent" ]
 }

@@ -1,11 +1,16 @@
 {
-  "name": "master",
-  "description": "Orchestrates all agents — delegates tasks, passes context, manages the end-to-end workflow.",
-  "prompt": "file://.kiro/agents/master/AGENT.md",
-  "tools": ["fs_read", "fs_write", "execute_bash", "grep", "glob", "code", "web_search", "web_fetch", "use_aws"],
-  "resources": [
-    "skill://.kiro/skills/**/SKILL.md"
-  ],
-  "keyboardShortcut": "ctrl+shift+0",
-  "welcomeMessage": "Master agent ready. What are we building or shipping today?"
+  "name" : "master",
+  "description" : "Orchestrates all agents — delegates tasks, passes context, manages the end-to-end workflow.",
+  "prompt" : "file://.kiro/agents/master/AGENT.md",
+  "tools" : [ "fs_read", "fs_write", "execute_bash", "grep", "glob", "code", "web_search", "web_fetch", "use_aws", "@creds-agent" ],
+  "resources" : [ "skill://.kiro/skills/**/SKILL.md" ],
+  "keyboardShortcut" : "ctrl+shift+0",
+  "welcomeMessage" : "Master agent ready. What are we building or shipping today?",
+  "mcpServers" : {
+    "creds-agent" : {
+      "command" : "aim",
+      "args" : [ "mcp", "start-server", "local-creds-agent-mcp" ]
+    }
+  },
+  "allowedTools" : [ "@creds-agent" ]
 }

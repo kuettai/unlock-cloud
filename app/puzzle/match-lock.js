@@ -148,7 +148,7 @@ class MatchLock {
 .mtchlk-front{background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);color:var(--muted,#7a8ba8)}
 .mtchlk-back{background:var(--accent,#3b82f6);border:2px solid var(--accent,#3b82f6);color:#fff;transform:rotateY(180deg);padding:4px;text-align:center;word-break:break-word;font-size:11px}
 .mtchlk-matched .mtchlk-back{background:var(--green,#22c55e);border-color:var(--green,#22c55e)}
-.mtchlk-selected .mtchlk-back{border-color:var(--accent,#3b82f6);box-shadow:0 0 0 3px rgba(59,130,246,.4)}
+.mtchlk-selected .mtchlk-back{border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.8);transform:rotateY(180deg) scale(1.08);background:#22c55e}
 `;
     document.head.appendChild(s);
   }

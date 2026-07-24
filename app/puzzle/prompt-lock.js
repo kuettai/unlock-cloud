@@ -19,6 +19,16 @@ class PromptLock {
     this.answers = opts.answers || [];
     this.onSubmit = opts.onSubmit || (() => {});
     this.selected = [];
+
+    // Row mode: `mode: "row"` with `rows: [{label, options: [...], answer: "..."}]`
+    // Player picks exactly one option per row (sentence builder).
+    this.mode = opts.mode === 'row' && Array.isArray(opts.rows) && opts.rows.length ? 'row' : 'fragments';
+    this.rows = opts.rows || [];
+    this.rowSelection = this.rows.map(() => null);
+    this.successResponse = opts.success_response || opts.successResponse || null;
+    this.partialResponse = opts.partial_response || opts.partialResponse || null;
+    this.failResponse    = opts.fail_response    || opts.failResponse    || null;
+
     this._render();
   }
 
@@ -33,9 +43,14 @@ class PromptLock {
     npcBox.innerHTML = `<span class="prlk-portrait">${this.npc.portrait}</span><strong>${this.npc.name}</strong>`;
     w.appendChild(npcBox); w.appendChild(this.responseEl);
 
-    // Fragments
-    this.fragEl = document.createElement('div'); this.fragEl.className = 'prlk-frags';
-    w.appendChild(this.fragEl);
+    if (this.mode === 'row') {
+      this.rowsEl = document.createElement('div'); this.rowsEl.className = 'prlk-rows';
+      w.appendChild(this.rowsEl);
+    } else {
+      // Fragments
+      this.fragEl = document.createElement('div'); this.fragEl.className = 'prlk-frags';
+      w.appendChild(this.fragEl);
+    }
 
     // Built prompt
     this.builtEl = document.createElement('div'); this.builtEl.className = 'prlk-built';
@@ -46,7 +61,11 @@ class PromptLock {
     const send = document.createElement('button'); send.className = 'prlk-btn'; send.textContent = '🔍 Send';
     send.addEventListener('click', () => this._submit());
     const clear = document.createElement('button'); clear.className = 'prlk-btn-sec'; clear.textContent = '✕ Clear';
-    clear.addEventListener('click', () => { this.selected = []; this._update(); });
+    clear.addEventListener('click', () => {
+      this.selected = [];
+      this.rowSelection = this.rows.map(() => null);
+      this._update();
+    });
     bar.appendChild(send); bar.appendChild(clear);
     w.appendChild(bar);
 
@@ -58,6 +77,14 @@ class PromptLock {
   }
 
   _update() {
+    if (this.mode === 'row') {
+      this._updateRows();
+    } else {
+      this._updateFragments();
+    }
+  }
+
+  _updateFragments() {
     const colors = { action: '#3b82f6', what: '#22c55e', where: '#f59e0b', format: '#a855f7', detail: '#ef4444' };
     this.fragEl.innerHTML = '';
     this.fragments.forEach(f => {
@@ -71,7 +98,42 @@ class PromptLock {
     this.builtEl.textContent = this.selected.map(id => this.fragments.find(f => f.id === id)?.text).join(' ') || '(tap fragments to build prompt)';
   }
 
+  _updateRows() {
+    this.rowsEl.innerHTML = '';
+    this.rows.forEach((row, rIdx) => {
+      const rowEl = document.createElement('div'); rowEl.className = 'prlk-row';
+      if (row.label) {
+        const lbl = document.createElement('div'); lbl.className = 'prlk-row-label';
+        lbl.textContent = row.label;
+        rowEl.appendChild(lbl);
+      }
+      const opts = document.createElement('div'); opts.className = 'prlk-row-opts';
+      (row.options || []).forEach(opt => {
+        const btn = document.createElement('button');
+        const isSelected = this.rowSelection[rIdx] === opt;
+        btn.className = 'prlk-row-opt' + (isSelected ? ' prlk-row-opt-on' : '');
+        btn.textContent = opt;
+        btn.addEventListener('click', () => {
+          this.rowSelection[rIdx] = isSelected ? null : opt;
+          this._update();
+        });
+        opts.appendChild(btn);
+      });
+      rowEl.appendChild(opts);
+      this.rowsEl.appendChild(rowEl);
+    });
+    const parts = this.rowSelection.filter(x => x !== null);
+    this.builtEl.textContent = parts.length ? parts.join(' ') : '(pick one option per row)';
+  }
+
   _submit() {
+    if (this.mode === 'row') {
+      return this._submitRow();
+    }
+    return this._submitFragments();
+  }
+
+  _submitFragments() {
     if (!this.selected.length) return;
     const match = this.answers.find(a => a.required.every(r => this.selected.includes(r)));
     if (match) {
@@ -80,6 +142,29 @@ class PromptLock {
       if (match.tier === 'gold') setTimeout(() => this.onSubmit(match.tier), 400);
     } else {
       this.responseEl.textContent = 'I don\'t understand what you want.';
+      this.responseEl.className = 'prlk-response prlk-fail';
+    }
+  }
+
+  _submitRow() {
+    // Must have picked one per row
+    if (this.rowSelection.some(x => x === null)) {
+      this.responseEl.textContent = 'Pick one option in every row before sending.';
+      this.responseEl.className = 'prlk-response prlk-fail';
+      return;
+    }
+    const total = this.rows.length;
+    let correct = 0;
+    this.rows.forEach((row, i) => { if (row.answer && this.rowSelection[i] === row.answer) correct++; });
+    if (correct === total) {
+      this.responseEl.textContent = this.successResponse || '✅ Perfect.';
+      this.responseEl.className = 'prlk-response prlk-gold';
+      setTimeout(() => this.onSubmit('gold'), 400);
+    } else if (correct >= Math.ceil(total / 2)) {
+      this.responseEl.textContent = this.partialResponse || `🥈 Close — ${correct}/${total} rows correct.`;
+      this.responseEl.className = 'prlk-response prlk-silver';
+    } else {
+      this.responseEl.textContent = this.failResponse || `❌ Only ${correct}/${total} rows correct.`;
       this.responseEl.className = 'prlk-response prlk-fail';
     }
   }
@@ -99,6 +184,13 @@ class PromptLock {
 .prlk-frags{display:flex;flex-wrap:wrap;gap:6px}
 .prlk-frag{padding:6px 10px;background:var(--bg,#0a0e17);border:2px solid var(--border,#1e2a45);border-radius:6px;font-size:12px;color:var(--muted,#7a8ba8);cursor:pointer;transition:all .15s}
 .prlk-frag.prlk-frag-on{background:var(--surface,#141b2d)}
+.prlk-rows{display:flex;flex-direction:column;gap:8px}
+.prlk-row{display:flex;flex-direction:column;gap:4px}
+.prlk-row-label{font-size:11px;color:var(--muted,#7a8ba8);letter-spacing:.5px;text-transform:uppercase;font-weight:600}
+.prlk-row-opts{display:flex;flex-wrap:wrap;gap:6px}
+.prlk-row-opt{flex:1 1 auto;min-width:0;padding:8px 10px;background:var(--bg,#0a0e17);border:2px solid var(--border,#1e2a45);border-radius:6px;font-size:12px;color:var(--muted,#7a8ba8);cursor:pointer;transition:all .15s;text-align:left}
+.prlk-row-opt:hover{border-color:var(--accent,#3b82f6);color:var(--text,#e0e6f0)}
+.prlk-row-opt.prlk-row-opt-on{background:var(--surface,#141b2d);border-color:var(--accent,#3b82f6);color:var(--text,#e0e6f0);font-weight:600}
 .prlk-built{padding:8px 12px;background:var(--bg,#0a0e17);border:1px solid var(--border,#1e2a45);border-radius:6px;font-size:12px;color:var(--text,#e0e6f0);min-height:32px}
 .prlk-bar{display:flex;gap:8px;justify-content:center}
 .prlk-btn,.prlk-btn-sec{padding:10px 16px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}

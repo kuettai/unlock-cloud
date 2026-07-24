@@ -29,13 +29,15 @@ class AuctionLock {
     this.container = container;
     this.budget = opts.budget || 100;
     this.requiredItems = opts.requiredItems || 3;
-    this.lots = opts.lots || [];
+    this._originalLots = opts.lots || [];
+    this.lots = [...this._originalLots].sort(() => Math.random() - 0.5);
     this.onSubmit = opts.onSubmit || (() => {});
 
     this._init();
   }
 
   _init() {
+    this.lots = [...this._originalLots].sort(() => Math.random() - 0.5);
     this.remaining = this.budget;
     this.currentLot = 0;
     this.won = false;
@@ -47,7 +49,7 @@ class AuctionLock {
     this.bidAmount = 0;
     this.haggleAttempts = 0;
     this.maxHaggle = 3;
-    this.haggleCost = 2;
+    this.haggleCost = 0;
     this.sellerMood = null; // null | 'firm' | 'annoyed' | 'walkaway'
     this._render();
   }
@@ -66,7 +68,6 @@ class AuctionLock {
     if (bid < lot.minBid) {
       // Haggle — seller counters
       this.haggleAttempts++;
-      this.remaining = Math.max(0, this.remaining - this.haggleCost);
 
       if (this.haggleAttempts >= this.maxHaggle) {
         // Seller walks away
@@ -109,9 +110,9 @@ class AuctionLock {
       return `"Almost. Just a little more and we have a deal."`;
     } else {
       // Second reject: more specific, annoyed
-      const hint = lot.minBid - Math.floor(Math.random() * 3);
-      if (gap > 10) return `"Final warning. I won't take less than ${hint}." (−${this.haggleCost} haggle cost)`;
-      return `"Look, ${hint} and it's yours. Last chance." (−${this.haggleCost} haggle cost)`;
+      const hint = lot.minBid;
+      if (gap > 10) return `"Final warning. I won't take less than ${hint}."`;
+      return `"Look, ${hint} and it's yours. Last chance."`;
     }
   }
 
@@ -120,7 +121,7 @@ class AuctionLock {
     const lot = this.lots[this.currentLot];
     this.passed.push(lot);
     this.history.push({ lot, action: 'passed', bid: 0 });
-    this.message = { text: `Passed on "${lot.label}".`, type: 'neutral' };
+    this.message = { text: `Skipped "${lot.label}".`, type: 'neutral' };
     this._advance();
   }
 
@@ -202,13 +203,13 @@ class AuctionLock {
       actions.className = 'aclk-actions';
       const bidBtn = document.createElement('button');
       bidBtn.className = 'aclk-btn aclk-btn-bid';
-      bidBtn.textContent = `Bid ${this.bidAmount}`;
+      bidBtn.textContent = `Bribe ${this.bidAmount}`;
       bidBtn.disabled = this.bidAmount === 0;
       bidBtn.addEventListener('click', () => this._bid());
       actions.appendChild(bidBtn);
       const passBtn = document.createElement('button');
       passBtn.className = 'aclk-btn aclk-btn-pass';
-      passBtn.textContent = 'Pass';
+      passBtn.textContent = 'Skip';
       passBtn.addEventListener('click', () => this._pass());
       actions.appendChild(passBtn);
       controls.appendChild(actions);
@@ -258,7 +259,7 @@ class AuctionLock {
         const display = this.container.querySelector('.aclk-bid-display');
         if (display) display.textContent = this.bidAmount;
         const bidBtn = this.container.querySelector('.aclk-btn-bid');
-        if (bidBtn) { bidBtn.textContent = `Bid ${this.bidAmount}`; bidBtn.disabled = this.bidAmount === 0; }
+        if (bidBtn) { bidBtn.textContent = `Bribe ${this.bidAmount}`; bidBtn.disabled = this.bidAmount === 0; }
       });
     }
   }

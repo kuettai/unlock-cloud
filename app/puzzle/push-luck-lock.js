@@ -67,7 +67,7 @@ class PushLuckLock {
   }
 
   _getMultiplier() {
-    return 1 + this.streak * 0.5;
+    return 1 + this.streak * 0.25;
   }
 
   _draw() {
