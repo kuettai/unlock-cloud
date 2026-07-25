@@ -10,9 +10,10 @@
       "image_prompt": "A corporate office workstation with three monitors, one flashing red. Cold coffee cup, Post-it notes. Secure door with keycard reader to the left. Warm fluorescent lighting, tense deadline atmosphere.",
       "reveals": [],
       "discoveries": [
-        { "card_id": 11, "label": "Open the HKEX circular", "puzzle": "circular-review" },
-        { "card_id": 14, "label": "Grab the Post-it note", "requires_item": [11] },
-        { "card_id": 30, "label": "Access Compliance Vault", "requires_item": [11], "puzzle": "impact-mapping" },
+        { "card_id": 11, "label": "Open the HKEX circular" },
+        { "card_id": 12, "label": "Complete the summary brief", "requires_item": [11], "puzzle": "circular-review" },
+        { "card_id": 14, "label": "Grab the Post-it note", "requires_item": [12] },
+        { "card_id": 30, "label": "Access Compliance Vault", "requires_item": [12], "puzzle": "impact-mapping" },
         { "card_id": 56, "label": "Reply to meeting invite" },
         { "card_id": 57, "label": "Forward to all stakeholders" }
       ],
@@ -24,7 +25,16 @@
       "type": "object",
       "color": "blue",
       "title": "HKEX Circular",
-      "description": "HKEX/RC-2026-017 — 3 chapters amended. Effective 12 May. 4 key changes.",
+      "description": "HKEX/RC-2026-017 — 3 chapters amended. Effective 12 May 2026.\n\n• Ch.13 Continuing Obligations\n• Ch.14 Notifiable Transactions\n• Ch.37 Debt Securities\n\nKey Changes:\n1. Enhanced disclosure format for connected transactions\n2. Updated e-Filing system integration\n3. Record-keeping period extended from 3 to 5 years\n4. Mandatory breach escalation within 2 business days",
+      "visible_to": "all",
+      "room": "workstation"
+    },
+    {
+      "id": 12,
+      "type": "object",
+      "color": "blue",
+      "title": "Summary Brief",
+      "description": "Brief completed. Key facts confirmed — 3 chapters, 12 May, 5 years, 2 business days.",
       "visible_to": "all",
       "room": "workstation"
     },
