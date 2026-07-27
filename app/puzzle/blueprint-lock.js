@@ -65,6 +65,20 @@ class BlueprintLock {
       wrap.appendChild(err);
     }
 
+    // Manifest — show ALL components up front so the player can see the full
+    // set and plan the ordering, instead of guessing one blind piece at a time.
+    const manifest = document.createElement('div');
+    manifest.className = 'bplk-manifest';
+    manifest.innerHTML = `<div class="bplk-manifest-label">All components — place each into the right step</div>`
+      + `<div class="bplk-manifest-items">`
+      + this.queue.map((c, i) => {
+          const st = i < this.currentIdx ? 'done' : (i === this.currentIdx ? 'current' : 'pending');
+          const mark = st === 'done' ? '✅ ' : st === 'current' ? '👉 ' : '';
+          return `<span class="bplk-manifest-chip bplk-manifest-${st}">${mark}${c.icon || '📦'} ${c.label}</span>`;
+        }).join('')
+      + `</div>`;
+    wrap.appendChild(manifest);
+
     // Building cross-section (tap floors to place)
     const building = document.createElement('div');
     building.className = 'bplk-building';
@@ -163,6 +177,13 @@ class BlueprintLock {
 .bplk-incoming-card{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--bg,#0a0e17);border:2px solid var(--accent,#3b82f6);border-radius:8px;font-size:15px;font-weight:700;color:var(--text,#e0e6f0)}
 .bplk-incoming-icon{font-size:1.3rem}
 .bplk-incoming-hint{font-size:11px;color:var(--muted,#7a8ba8);margin-top:8px;font-style:italic}
+.bplk-manifest{background:var(--surface,#141b2d);border:1px solid var(--border,#1e2a45);border-radius:10px;padding:10px 12px}
+.bplk-manifest-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted,#7a8ba8);margin-bottom:8px}
+.bplk-manifest-items{display:flex;flex-wrap:wrap;gap:6px}
+.bplk-manifest-chip{font-size:11px;padding:5px 10px;border-radius:6px;background:var(--bg,#0a0e17);border:1px solid var(--border,#1e2a45);color:var(--text,#e0e6f0)}
+.bplk-manifest-done{opacity:.55;border-color:var(--green,#22c55e);color:var(--green,#22c55e)}
+.bplk-manifest-current{border-color:var(--accent,#3b82f6);box-shadow:0 0 6px rgba(59,130,246,.3);font-weight:700}
+.bplk-manifest-pending{border-style:dashed}
 .bplk-error{font-size:12px;color:#e94560;padding:8px 12px;background:rgba(233,69,96,.08);border:1px solid rgba(233,69,96,.2);border-radius:6px;text-align:center}
 .bplk-building{display:flex;flex-direction:column;gap:4px}
 .bplk-building-done .bplk-floor{cursor:default}

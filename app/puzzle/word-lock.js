@@ -72,6 +72,36 @@ class WordLock {
 
     this.container.appendChild(wrapper);
     this._injectStyles();
+    this._maybeHint();
+  }
+
+  /* ── First-time instruction overlay ─────────────── */
+  _maybeHint() {
+    let shown = false;
+    try { shown = !!localStorage.getItem('resolve_hint_shown_wordlock'); } catch {}
+    if (shown) return;
+    try { localStorage.setItem('resolve_hint_shown_wordlock', '1'); } catch {}
+    const host = this.container;
+    if (typeof getComputedStyle === 'function' && getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    const ov = document.createElement('div');
+    ov.className = 'wlock-hint';
+    const inner = document.createElement('div');
+    inner.className = 'wlock-hint-inner';
+    inner.textContent = '↕ Swipe each reel up or down to change the letter';
+    ov.appendChild(inner);
+    host.appendChild(ov);
+    let done = false;
+    const finish = () => {
+      if (done) return; done = true;
+      clearTimeout(timer);
+      document.removeEventListener('touchstart', finish, true);
+      document.removeEventListener('mousedown', finish, true);
+      ov.style.opacity = '0';
+      setTimeout(() => { if (ov.parentNode) ov.remove(); }, 500);
+    };
+    const timer = setTimeout(finish, 2000);
+    document.addEventListener('touchstart', finish, true);
+    document.addEventListener('mousedown', finish, true);
   }
 
   _createReel(index) {
@@ -223,6 +253,8 @@ class WordLock {
 .wlock-fade-bot{bottom:0;background:linear-gradient(to top,var(--bg,#0a0e17) 30%,transparent)}
 .wlock-submit{padding:12px 32px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .2s;letter-spacing:.5px}
 .wlock-submit:active{opacity:.7}
+.wlock-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,9,17,.72);border-radius:10px;z-index:5;transition:opacity .5s;padding:16px;text-align:center;pointer-events:none}
+.wlock-hint-inner{color:#fff;font-size:14px;font-weight:600;line-height:1.4;max-width:240px}
 `;
     document.head.appendChild(s);
   }

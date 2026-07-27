@@ -20,9 +20,18 @@
 class TimelineLock {
   constructor(container, opts = {}) {
     this.container = container;
-    this.events = opts.events || [];
+    // Normalize events so the timestamp is separated from the visible label.
+    // Timestamps are hidden by default (the player sorts by logic/causality);
+    // an explicit "time" field wins, otherwise we peel a trailing "(HH:MM)".
+    this.events = (opts.events || []).map(e => {
+      if (e.time) return { id: e.id, label: e.label, time: String(e.time) };
+      const m = /^(.*?)\s*\(([^)]*\d[^)]*)\)\s*$/.exec(e.label || '');
+      if (m) return { id: e.id, label: m[1].trim(), time: m[2].trim() };
+      return { id: e.id, label: e.label, time: null };
+    });
     this.answer = opts.answer || [];
     this.onSubmit = opts.onSubmit || (() => {});
+    this.showTimes = false; // revealed via the "Check timestamps" action
     this.order = this._shuffle(this.events.map(e => e.id));
     this._render();
   }
@@ -47,6 +56,21 @@ class TimelineLock {
     this.listEl.className = 'tmlk-list';
     wrap.appendChild(this.listEl);
 
+    // "Check timestamps" — a free hint that reveals the hidden times. Only
+    // offered when the events actually carry timestamps.
+    if (this.events.some(e => e.time)) {
+      this.timesBtn = document.createElement('button');
+      this.timesBtn.className = 'tmlk-times-btn';
+      this.timesBtn.textContent = '🕐 Check timestamps';
+      this.timesBtn.addEventListener('click', () => {
+        this.showTimes = true;
+        this.timesBtn.textContent = '🕐 Timestamps revealed';
+        this.timesBtn.disabled = true;
+        this._renderItems();
+      });
+      wrap.appendChild(this.timesBtn);
+    }
+
     const btn = document.createElement('button');
     btn.className = 'tmlk-btn';
     btn.textContent = 'Confirm Timeline';
@@ -70,7 +94,8 @@ class TimelineLock {
       const ev = this.events.find(e => e.id === id);
       const el = document.createElement('div');
       el.className = 'tmlk-item';
-      el.innerHTML = `<span class="tmlk-dot"></span><span class="tmlk-ev-label">${ev.label}</span>`;
+      const timeHtml = (this.showTimes && ev.time) ? `<span class="tmlk-time">${ev.time}</span>` : '';
+      el.innerHTML = `<span class="tmlk-dot"></span><span class="tmlk-ev-label">${ev.label}</span>${timeHtml}`;
       el.addEventListener('click', () => this._tap(i));
       this.listEl.appendChild(el);
       this.itemEls.push(el);
@@ -120,6 +145,10 @@ class TimelineLock {
 .tmlk-dot{width:12px;height:12px;border-radius:50%;background:var(--accent,#3b82f6);flex-shrink:0;position:absolute;left:-27px}
 .tmlk-done .tmlk-dot{background:var(--green,#22c55e)}
 .tmlk-ev-label{font-size:13px;color:var(--text,#e0e6f0);font-weight:600}
+.tmlk-time{margin-left:auto;font-size:12px;color:var(--accent,#3b82f6);font-family:'Courier New',monospace;font-weight:700;white-space:nowrap}
+.tmlk-times-btn{padding:8px 16px;border:1px dashed var(--border,#1e2a45);border-radius:8px;background:transparent;color:var(--muted,#7a8ba8);font-size:12px;font-weight:600;cursor:pointer;align-self:center}
+.tmlk-times-btn:active{opacity:.7}
+.tmlk-times-btn:disabled{opacity:.7;cursor:default;border-style:solid;color:var(--accent,#3b82f6)}
 .tmlk-shake{animation:tmlk-sh .4s}
 @keyframes tmlk-sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 .tmlk-btn{padding:12px 28px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:14px;font-weight:600;cursor:pointer;align-self:center}

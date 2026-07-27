@@ -49,6 +49,10 @@ class MatchLock {
     const wrap = document.createElement('div');
     wrap.className = 'mtchlk';
 
+    this.statusEl = document.createElement('div');
+    this.statusEl.className = 'mtchlk-status';
+    wrap.appendChild(this.statusEl);
+
     this.grid = document.createElement('div');
     this.grid.className = 'mtchlk-grid';
     this.grid.style.gridTemplateColumns = `repeat(${this.cols}, 1fr)`;
@@ -80,6 +84,37 @@ class MatchLock {
     wrap.appendChild(this.grid);
     this.container.appendChild(wrap);
     this._injectStyles();
+    this._maybeHint();
+    this._updateStatus();
+  }
+
+  /* ── First-time instruction overlay ─────────────── */
+  _maybeHint() {
+    let shown = false;
+    try { shown = !!localStorage.getItem('resolve_hint_shown_matchlock'); } catch {}
+    if (shown) return;
+    try { localStorage.setItem('resolve_hint_shown_matchlock', '1'); } catch {}
+    const host = this.container;
+    if (typeof getComputedStyle === 'function' && getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    const ov = document.createElement('div');
+    ov.className = 'mtchlk-hint';
+    const inner = document.createElement('div');
+    inner.className = 'mtchlk-hint-inner';
+    inner.textContent = 'Tap one item on the left, then tap its match on the right';
+    ov.appendChild(inner);
+    host.appendChild(ov);
+    let done = false;
+    const finish = () => {
+      if (done) return; done = true;
+      clearTimeout(timer);
+      document.removeEventListener('touchstart', finish, true);
+      document.removeEventListener('mousedown', finish, true);
+      ov.style.opacity = '0';
+      setTimeout(() => { if (ov.parentNode) ov.remove(); }, 500);
+    };
+    const timer = setTimeout(finish, 2000);
+    document.addEventListener('touchstart', finish, true);
+    document.addEventListener('mousedown', finish, true);
   }
 
   _flip(i) {
@@ -89,6 +124,7 @@ class MatchLock {
       // Deselect on second tap
       this.cellEls[i].classList.remove('mtchlk-selected');
       this.flipped = this.flipped.filter(x => x !== i);
+      this._updateStatus();
       return;
     }
 
@@ -96,33 +132,55 @@ class MatchLock {
     if (this.faceUp) this.cellEls[i].classList.add('mtchlk-selected');
     this.flipped.push(i);
 
-    if (this.flipped.length === 2) {
-      this.busy = true;
-      const [a, b] = this.flipped;
-      if (this.cards[a].pairId === this.cards[b].pairId) {
-        this.matched.add(a);
-        this.matched.add(b);
-        this.cellEls[a].classList.add('mtchlk-matched');
-        this.cellEls[b].classList.add('mtchlk-matched');
-        this.cellEls[a].classList.remove('mtchlk-selected');
-        this.cellEls[b].classList.remove('mtchlk-selected');
+    if (this.flipped.length < 2) { this._updateStatus(); return; }
+
+    this.busy = true;
+    const [a, b] = this.flipped;
+    if (this.cards[a].pairId === this.cards[b].pairId) {
+      // Correct pair — flash green, checkmark, fade to done
+      this.cellEls[a].classList.remove('mtchlk-selected');
+      this.cellEls[b].classList.remove('mtchlk-selected');
+      this.cellEls[a].classList.add('mtchlk-matched');
+      this.cellEls[b].classList.add('mtchlk-matched');
+      this.matched.add(a);
+      this.matched.add(b);
+      this.flipped = [];
+      this.busy = false;
+      this._updateStatus();
+      if (this.matched.size === this.cards.length) {
+        setTimeout(() => this.onSubmit(true), 500);
+      }
+    } else {
+      // Wrong pair — shake red, then auto-deselect after 500ms
+      this.cellEls[a].classList.add('mtchlk-wrong');
+      this.cellEls[b].classList.add('mtchlk-wrong');
+      if (this.statusEl) { this.statusEl.textContent = '❌ Not a match — try again'; this.statusEl.classList.remove('mtchlk-status-hot'); }
+      setTimeout(() => {
+        [a, b].forEach(idx => {
+          this.cellEls[idx].classList.remove('mtchlk-wrong');
+          this.cellEls[idx].classList.remove('mtchlk-selected');
+          if (!this.faceUp) this.cellEls[idx].classList.remove('mtchlk-flipped');
+        });
         this.flipped = [];
         this.busy = false;
-        if (this.matched.size === this.cards.length) {
-          setTimeout(() => this.onSubmit(true), 400);
-        }
-      } else {
-        setTimeout(() => {
-          if (!this.faceUp) {
-            this.cellEls[a].classList.remove('mtchlk-flipped');
-            this.cellEls[b].classList.remove('mtchlk-flipped');
-          }
-          this.cellEls[a].classList.remove('mtchlk-selected');
-          this.cellEls[b].classList.remove('mtchlk-selected');
-          this.flipped = [];
-          this.busy = false;
-        }, 800);
-      }
+        this._updateStatus();
+      }, 500);
+    }
+  }
+
+  _updateStatus() {
+    if (!this.statusEl) return;
+    const total = this.pairs.length;
+    const done = this.matched.size / 2;
+    if (done >= total) {
+      this.statusEl.textContent = '✅ All pairs matched!';
+      this.statusEl.classList.remove('mtchlk-status-hot');
+    } else if (this.flipped.length === 1) {
+      this.statusEl.textContent = '👆 Now tap its match';
+      this.statusEl.classList.add('mtchlk-status-hot');
+    } else {
+      this.statusEl.textContent = `Tap a tile, then tap its match — ${done}/${total} pairs`;
+      this.statusEl.classList.remove('mtchlk-status-hot');
     }
   }
 
@@ -148,7 +206,18 @@ class MatchLock {
 .mtchlk-front{background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);color:var(--muted,#7a8ba8)}
 .mtchlk-back{background:var(--accent,#3b82f6);border:2px solid var(--accent,#3b82f6);color:#fff;transform:rotateY(180deg);padding:4px;text-align:center;word-break:break-word;font-size:11px}
 .mtchlk-matched .mtchlk-back{background:var(--green,#22c55e);border-color:var(--green,#22c55e)}
-.mtchlk-selected .mtchlk-back{border-color:var(--accent,#3b82f6);box-shadow:0 0 0 3px rgba(59,130,246,.4)}
+.mtchlk-matched .mtchlk-back::after{content:' ✓';font-weight:800}
+.mtchlk-matched{opacity:.55;transition:opacity .4s}
+.mtchlk-selected{transform:scale(1.05);z-index:3;transition:transform .2s ease}
+.mtchlk-selected .mtchlk-back{border:3px solid #4ADE80;background:rgba(74,222,128,.15);box-shadow:0 0 12px rgba(74,222,128,.6);color:#fff;transition:all .2s ease;animation:mtchlk-pulse 1.1s ease-in-out infinite}
+@keyframes mtchlk-pulse{0%,100%{box-shadow:0 0 8px rgba(74,222,128,.45)}50%{box-shadow:0 0 18px rgba(74,222,128,.85)}}
+.mtchlk-wrong{animation:mtchlk-sh .4s}
+.mtchlk-wrong .mtchlk-back{border:3px solid #ef4444 !important;background:rgba(239,68,68,.18) !important;box-shadow:0 0 12px rgba(239,68,68,.6) !important;color:#fff !important;animation:none !important}
+@keyframes mtchlk-sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.mtchlk-status{text-align:center;font-size:13px;font-weight:600;color:var(--muted,#7a8ba8);margin-bottom:10px;min-height:18px;transition:color .2s}
+.mtchlk-status.mtchlk-status-hot{color:#4ADE80}
+.mtchlk-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,9,17,.72);border-radius:10px;z-index:5;transition:opacity .5s;padding:16px;text-align:center;pointer-events:none}
+.mtchlk-hint-inner{color:#fff;font-size:14px;font-weight:600;line-height:1.4;max-width:260px}
 `;
     document.head.appendChild(s);
   }
