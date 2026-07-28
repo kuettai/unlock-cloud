@@ -1,13 +1,13 @@
 {
   "id": "breach-protocol",
-  "title": "Connected — The Undisclosed Transaction",
+  "title": "Undisclosed",
   "episode": 2,
   "arc": "Corporate Compliance",
-  "description": "An anonymous tip just hit your inbox. A connected transaction may have gone unreported. You have 48 hours — represented by 15 minutes — to investigate, classify, and file the breach notification before HKEX's mandatory disclosure window closes.",
+  "description": "An anonymous tip just hit your inbox. A connected transaction may have gone unreported. You have 48 hours — represented by 15 minutes — to investigate, classify, and file the breach notification before the Exchange's mandatory disclosure window closes.",
   "difficulty": { "tier": 2, "label": "Intermediate" },
   "duration_minutes": 15,
   "players": { "min": 2, "max": 4, "recommended": 3 },
-  "topics": ["HKEX Listing Rules", "Connected Transactions", "Breach Reporting", "Regulatory Investigation"],
+  "topics": ["Listing Rules", "Connected Transactions", "Breach Reporting", "Regulatory Investigation"],
   "mechanics_taught": ["terminal_lock", "match_lock", "wire_lock", "dns_lock", "progressive_stages", "penalty_traps"],
   "version": "0.1",
   "start_button": "Open Inbox"
