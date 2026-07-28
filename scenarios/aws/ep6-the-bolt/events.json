@@ -3,35 +3,35 @@
     {
       "id": "TE-01",
       "time_remaining": 720,
-      "message": "Slack ping: \"#bolt-001 — Agent has finished drafting. Awaiting human verify.\"",
+      "message": "Slack ping: \"#bolt-001 — Agent drafted spec, context, and architecture. Awaiting human verify.\"",
       "type": "atmosphere",
       "voice": "narrator"
     },
     {
       "id": "TE-02",
       "time_remaining": 450,
-      "message": "MID-BOLT: 7:30 remaining — context check.",
+      "message": "MID-BOLT: 7:30 remaining. Context and design tracks converging.",
       "type": "narrative",
       "triggers_narrative": "mid_event"
     },
     {
       "id": "TE-03",
       "time_remaining": 300,
-      "message": "The Agent: \"Five minutes. Code and tests are queued — let's verify and move.\"",
+      "message": "The Agent: \"Five minutes. Once you finish both packages, I'll start executing.\"",
       "type": "atmosphere",
       "voice": "agent"
     },
     {
       "id": "TE-04",
       "time_remaining": 120,
-      "message": "The Launch Pad's countdown turns amber. Two minutes. Final verify, final ship.",
+      "message": "The Launch Pad's countdown turns amber. Two minutes. Final ship.",
       "type": "alarm",
       "voice": "narrator"
     },
     {
       "id": "TE-05",
       "time_remaining": 30,
-      "message": "Thirty seconds on the Bolt. Hit deploy.",
+      "message": "Thirty seconds. Hit deploy.",
       "type": "alarm",
       "voice": "agent"
     }
@@ -45,37 +45,52 @@
       "once": true
     },
     {
-      "id": "stories-validated",
+      "id": "spec-validated",
       "trigger": "puzzle_solved",
-      "puzzle_id": "spec-stories",
+      "puzzle_id": "spec-lock",
       "result_card": 105,
-      "message": "Specs validated. The Design Lab door opens.",
-      "type": "reveal",
-      "unlocks_room": 200
+      "message": "Spec validated. Two doors open in parallel — Context Lab and Architecture Bay.",
+      "type": "reveal"
     },
     {
-      "id": "arch-validated",
+      "id": "context-curated",
       "trigger": "puzzle_solved",
-      "puzzle_id": "wire-arch",
+      "puzzle_id": "context-lock",
       "result_card": 205,
-      "message": "Context curated. The Build Floor door opens.",
-      "type": "reveal",
-      "unlocks_room": 300
+      "message": "Context curated. Context Package ready.",
+      "type": "reveal"
     },
     {
-      "id": "tests-verified",
+      "id": "arch-verified",
       "trigger": "puzzle_solved",
-      "puzzle_id": "match-tests",
+      "puzzle_id": "blueprint-lock",
       "result_card": 305,
-      "message": "Architecture verified. The Launch Pad door opens.",
+      "message": "Architecture verified. Architecture Package ready.",
+      "type": "reveal"
+    },
+    {
+      "id": "packages-converged",
+      "trigger": "card_discovered",
+      "card_id": 350,
+      "result_card": 350,
+      "message": "Both packages ready. The Review Room door opens.",
       "type": "reveal",
       "unlocks_room": 400
     },
     {
+      "id": "outcome-verified",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "cascade-lock",
+      "result_card": 405,
+      "message": "Outcome verified. The Launch Pad door opens.",
+      "type": "reveal",
+      "unlocks_room": 500
+    },
+    {
       "id": "bolt-shipped",
       "trigger": "puzzle_solved",
-      "puzzle_id": "sort-deploy",
-      "result_card": 499,
+      "puzzle_id": "defuse-lock",
+      "result_card": 599,
       "message": "Shipped! The Bolt is complete.",
       "type": "ending"
     }

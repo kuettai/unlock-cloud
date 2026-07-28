@@ -36,7 +36,28 @@ kuettai-unlock-asset/
     └── bible-jesus-miracles/
 ```
 
-## Deploy Process
+## Preferred: One-shot deploy with cache-bust
+
+**Always use this script.** It bumps the version, rewrites `?v=` on every CSS/JS reference in `app/index.html`, syncs both `app/` and `scenarios/`, and invalidates CloudFront.
+
+```
+bash tools/bump-and-deploy.sh
+```
+
+- Version source of truth: `app/VERSION` (single integer, incremented on each deploy).
+- On every run: `?v=<old>` in `app/index.html` is replaced with `?v=<new>` so browsers pull fresh CSS/JS after a CloudFront invalidation.
+- If you add a new `<script>` or `<link>` tag, initialize it with `?v=<current VERSION>` so the bump script's regex picks it up on the next deploy.
+
+## Manual deploy (fallback only)
+
+Only use raw `aws s3 sync` when the script is unavailable. If you do, **run the version bump manually first** so cache-busting still works:
+
+```
+CUR=$(cat app/VERSION); NEW=$((CUR+1)); echo $NEW > app/VERSION
+sed -i '' "s/\?v=[0-9]*/\?v=$NEW/g" app/index.html
+```
+
+Then run the three sync/invalidate commands below.
 
 ### Step 1: Sync app code
 
@@ -95,10 +116,8 @@ Output: `assets/voice/intro.wav`, `mid_event.wav`, `ending_success.wav`, `ending
 ## Quick Deploy (all-in-one)
 
 ```
-python tools/resize_images.py
-aws s3 sync app s3://kuettai-unlock-asset/app/ --delete --region ap-southeast-1
-aws s3 sync scenarios s3://kuettai-unlock-asset/scenarios/ --region ap-southeast-1
-aws cloudfront create-invalidation --distribution-id E2C30I0Z1TIG84 --paths "/*" --region us-east-1
+python tools/resize_images.py   # only if images changed
+bash tools/bump-and-deploy.sh
 ```
 
 ## Security Rules

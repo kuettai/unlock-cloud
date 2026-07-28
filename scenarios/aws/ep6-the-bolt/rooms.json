@@ -3,38 +3,47 @@
     {
       "card_id": 100,
       "name": "The War Room",
-      "description": "Step 1 — Inception. Validate the AI's plan against the PO's intent.",
-      "connects_to": [200],
+      "description": "Step 1 — Inception. Get the PO's real intent and validate the Agent's spec.",
+      "connects_to": [200, 300],
       "unlocked_by": null,
-      "unlock_text": "The Bolt begins. Your AI partner is waiting with a plan.",
-      "map_pos": [180, 360]
+      "unlock_text": "The Bolt begins. The PO has one line for you.",
+      "map_pos": [140, 360]
     },
     {
       "card_id": 200,
-      "name": "The Design Lab",
-      "description": "Step 2 — Context Management. Trim the AI's working memory so it builds the right thing.",
-      "connects_to": [300],
-      "unlocked_by": { "type": "puzzle", "puzzle_id": "spec-stories" },
-      "unlock_text": "Specs locked in. The Agent over-loaded its memory — help it trim.",
-      "map_pos": [180, 270]
+      "name": "The Context Lab",
+      "description": "Step 2A — Context Management. Trim the Agent's memory so it builds the right thing.",
+      "connects_to": [400],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "spec-lock" },
+      "unlock_text": "Spec locked. One of two parallel tracks: curate the Agent's memory.",
+      "map_pos": [60, 240]
     },
     {
       "card_id": 300,
-      "name": "The Build Floor",
-      "description": "Step 3 — Architecture Verification. Place each component on the correct layer.",
+      "name": "The Architecture Bay",
+      "description": "Step 2B — Construction Design. Verify the Agent's proposed layered architecture.",
       "connects_to": [400],
-      "unlocked_by": { "type": "puzzle", "puzzle_id": "wire-arch" },
-      "unlock_text": "Context curated. The Agent has drafted a layered architecture for review.",
-      "map_pos": [180, 180]
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "spec-lock" },
+      "unlock_text": "Spec locked. One of two parallel tracks: verify the architecture.",
+      "map_pos": [220, 240]
     },
     {
       "card_id": 400,
+      "name": "The Review Room",
+      "description": "Step 3 — Mob Construction. The Agent executes; you verify each step of the outcome.",
+      "connects_to": [500],
+      "unlocked_by": { "type": "items", "card_ids": [211, 311] },
+      "unlock_text": "Both packages ready. Time to watch the Agent execute end-to-end.",
+      "map_pos": [140, 140]
+    },
+    {
+      "card_id": 500,
       "name": "The Launch Pad",
-      "description": "Step 4 — Operations. Fix the broken deploy under time pressure and ship.",
+      "description": "Step 4 — Operations. Timed. Fix the deploy and ship before the Bolt ends.",
       "connects_to": [],
-      "unlocked_by": { "type": "puzzle", "puzzle_id": "match-tests" },
-      "unlock_text": "Architecture verified. Final stop: fix the deploy and ship.",
-      "map_pos": [180, 90]
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "cascade-lock" },
+      "unlock_text": "Outcome verified. Final stop: ship it under pressure.",
+      "map_pos": [140, 40]
     }
   ]
 }

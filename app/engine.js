@@ -79,11 +79,97 @@ class GameEngine {
         delete c.challenge;
       });
     }
+
+    // --- Locale support (opt-in per episode) ---
+    // Look for scenarios/<episode>/locales/index.json. If present, expose
+    // the available locales so the intro screen can render a toggle.
+    // English is always the base — no locale = no translation overlay.
+    this.localesAvailable = [];
+    this.activeLocale = null;
+    this.localeData = null;
+    try {
+      const localeIndex = await fetch(`${base}/locales/index.json${bust}`).then(r => r.ok ? r.json() : null);
+      if (localeIndex && Array.isArray(localeIndex.locales)) {
+        this.localesAvailable = localeIndex.locales;
+      }
+    } catch (e) { /* no locales — that's fine */ }
+  }
+
+  /**
+   * Load a locale overlay by language code (e.g. 'id'). Pass null or 'en' to
+   * clear the overlay and revert to the base English JSONs.
+   * Safe to call multiple times — later calls replace the active locale.
+   */
+  async applyLocale(langCode) {
+    if (!langCode || langCode === 'en') {
+      this.activeLocale = null;
+      this.localeData = null;
+      return;
+    }
+    const base = this.scenarioPath;
+    try {
+      const data = await fetch(`${base}/locales/${langCode}.json?v=${Date.now()}`).then(r => r.json());
+      this.activeLocale = langCode;
+      this.localeData = data;
+    } catch (e) {
+      console.warn(`Failed to load locale ${langCode}`, e);
+      this.activeLocale = null;
+      this.localeData = null;
+    }
+  }
+
+  /**
+   * Translated text lookup. Returns null when no translation is available
+   * (caller should fall back to the base English field).
+   *
+   *   type   'cards' | 'rooms' | 'puzzles' | 'meta' | 'narrative'
+   *   id     card_id / room_card_id / puzzle_id (ignored for meta and narrative)
+   *   field  'title' | 'description' | 'unlock_text' | 'start_button' | ...
+   *
+   * For 'narrative' the whole narrative overlay object is returned so the
+   * caller can pick out intro / ending / mid_event segments.
+   */
+  t(type, id, field) {
+    if (!this.localeData) return null;
+    const section = this.localeData[type];
+    if (!section) return null;
+    if (type === 'meta' || type === 'ui') return section[field] || null;
+    if (type === 'narrative') return section;
+    const entry = section[String(id)];
+    if (!entry) return null;
+    return field ? (entry[field] || null) : entry;
   }
 
   getPuzzleConfig(puzzleId) {
     const p = this.puzzles[puzzleId];
-    return p ? (p.config || {}) : {};
+    if (!p) return {};
+    const base = p.config || {};
+    // Merge locale overrides — only for display text (question, options, description).
+    // Answers/solutions are NEVER touched.
+    const overlay = this.t('puzzles', puzzleId);
+    if (!overlay || !overlay.config_overrides) return base;
+    const ov = overlay.config_overrides;
+    return this._mergePuzzleConfig(base, ov);
+  }
+
+  // Deep-merge puzzle config overrides. Arrays are index-aligned so a locale
+  // can supply `options: [...]` matching the same length as the base config.
+  // Reserved answer/solution keys are stripped from the overlay to prevent
+  // accidental translation of puzzle answers.
+  _mergePuzzleConfig(base, ov) {
+    const RESERVED = new Set(['answer', 'answers', 'accept', 'solution']);
+    if (Array.isArray(base) && Array.isArray(ov)) {
+      return base.map((b, i) => (ov[i] !== undefined ? this._mergePuzzleConfig(b, ov[i]) : b));
+    }
+    if (base && typeof base === 'object' && ov && typeof ov === 'object' && !Array.isArray(base)) {
+      const out = { ...base };
+      for (const [k, v] of Object.entries(ov)) {
+        if (RESERVED.has(k)) continue;
+        out[k] = this._mergePuzzleConfig(base[k], v);
+      }
+      return out;
+    }
+    return ov !== undefined ? ov : base;
   }
 
   start() {
@@ -181,15 +267,15 @@ class GameEngine {
       const isCurrent = id === this.currentRoom;
       const connectsTo = (roomDef?.connects_to || [])
         .filter(cid => this.unlockedRooms.includes(cid))
-        .map(cid => this.cards[cid]?.title || `Room #${cid}`);
+        .map(cid => this.t('cards', cid, 'title') || this.cards[cid]?.title || `Room #${cid}`);
       return {
         id,
-        title: roomDef?.name || card.title,
-        description: roomDef?.description || '',
+        title: this.t('cards', id, 'title') || roomDef?.name || card.title,
+        description: this.t('cards', id, 'description') || roomDef?.description || '',
         room: card.room,
         isCurrent,
         hasUnsolved: !!hasPuzzle,
-        unlockText: roomDef?.unlock_text || '',
+        unlockText: this.t('rooms', id, 'unlock_text') || roomDef?.unlock_text || '',
         connectsTo,
       };
     });

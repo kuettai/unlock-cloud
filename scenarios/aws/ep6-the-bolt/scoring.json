@@ -3,8 +3,8 @@
   "time_bonus_per_minute": 2,
   "hint_penalty": -2,
   "wrong_combination_penalty": -3,
-  "lore_bonus": 2,
-  "lore_ids": [110, 210, 310, 410],
+  "lore_bonus": 3,
+  "lore_ids": [210, 310, 410],
   "all_lore_bonus": 5,
   "stars": [
     { "min": 70, "stars": 5 },
@@ -13,5 +13,5 @@
     { "min": 25, "stars": 2 },
     { "min":  0, "stars": 1 }
   ],
-  "notes": "Generous tuning for a 15-minute Apprentice episode. A typical play (no hints, finish with 3+ minutes remaining, 2 lore cards) lands 4 stars. Pick up all 4 lore cards for the full +13."
+  "notes": "Three lore cards total (Context is King, Anti-Patterns, The Loop). Room 1 uses the PO dialog and Room 4 is pure action — no lore in those rooms. A typical play (no hints, finish with 3+ minutes remaining, all 3 lore) lands 4-5 stars."
 }

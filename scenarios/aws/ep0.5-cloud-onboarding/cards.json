@@ -10,8 +10,8 @@
       "image_prompt": "Bright modern startup lobby, glass walls, neon AWS-orange accent sign reading 'NovaCloud', clean minimalist reception desk, scattered welcome balloons, fragmented welcome poster on wall, isometric digital illustration",
       "reveals": [],
       "discoveries": [
-        { "card_id": 105, "label": "Examine the WELCOME poster", "puzzle": "jigsaw-welcome" },
-        { "card_id": 110, "label": "Look behind the welcome balloons" }
+        { "card_id": 110, "label": "Look behind the welcome balloons" },
+        { "card_id": 105, "label": "Examine the WELCOME poster", "puzzle": "jigsaw-welcome" }
       ],
       "visible_to": "all",
       "room": "lobby"
@@ -122,8 +122,8 @@
       "image_prompt": "Sparse security office interior, gray desk with badge terminal and keypad, stern poster reading 'LOOSE LIPS SINK LAMBDAS', single bald guard silhouetted, fluorescent lighting, isometric digital illustration",
       "reveals": [],
       "discoveries": [
-        { "card_id": 305, "label": "Approach the badge terminal", "requires_item": 102, "consumes_item": 102, "puzzle": "keypad-iam" },
-        { "card_id": 310, "label": "Read the security poster" }
+        { "card_id": 310, "label": "Read the security poster" },
+        { "card_id": 305, "label": "Approach the badge terminal", "requires_item": 102, "consumes_item": 102, "puzzle": "keypad-iam" }
       ],
       "visible_to": "all",
       "room": "security-office"
@@ -183,9 +183,9 @@
       "image_prompt": "Cozy startup break room, mid-century furniture, espresso machine covered in stickers, whiteboard wall, cold-brew tap labeled 'S3', warm lighting, isometric digital illustration",
       "reveals": [],
       "discoveries": [
+        { "card_id": 410, "label": "Read the coffee machine manual" },
         { "card_id": 401, "label": "Sit down with Alex", "puzzle": "npc-alex" },
-        { "card_id": 405, "label": "Head to the Server Room", "requires_item": 402, "consumes_item": 402 },
-        { "card_id": 410, "label": "Read the coffee machine manual" }
+        { "card_id": 405, "label": "Head to the Server Room", "requires_item": 402, "consumes_item": 402 }
       ],
       "visible_to": "all",
       "room": "break-room"
@@ -245,8 +245,8 @@
       "image_prompt": "Sleek modern server room, towering racks with blue LED lighting, central holographic terminal with five glowing service tiles, cold cinematic lighting, isometric digital illustration",
       "reveals": [],
       "discoveries": [
-        { "card_id": 599, "label": "Tap badge and boot the S3 Locker", "requires_item": 302, "consumes_item": 302, "puzzle": "sort-boot" },
-        { "card_id": 510, "label": "Look at the founding photo on the wall" }
+        { "card_id": 510, "label": "Look at the founding photo on the wall" },
+        { "card_id": 599, "label": "Tap badge and boot the S3 Locker", "requires_item": 302, "consumes_item": 302, "puzzle": "sort-boot" }
       ],
       "visible_to": "all",
       "room": "server-room"

@@ -1,9 +1,16 @@
 {
-  "name": "qa-agent",
-  "description": "Owns all testing — Node engine tests and Playwright browser tests. Validates changes and gates deployment.",
-  "prompt": "file://.kiro/agents/qa-agent/AGENT.md",
-  "tools": ["fs_read", "fs_write", "execute_bash", "grep", "glob", "code"],
-  "resources": [],
-  "keyboardShortcut": "ctrl+shift+7",
-  "welcomeMessage": "QA Agent ready. What needs testing?"
+  "name" : "qa-agent",
+  "description" : "Owns all testing — Node engine tests and Playwright browser tests. Validates changes and gates deployment.",
+  "prompt" : "file://.kiro/agents/qa-agent/AGENT.md",
+  "tools" : [ "fs_read", "fs_write", "execute_bash", "grep", "glob", "code", "@creds-agent" ],
+  "resources" : [ ],
+  "keyboardShortcut" : "ctrl+shift+7",
+  "welcomeMessage" : "QA Agent ready. What needs testing?",
+  "mcpServers" : {
+    "creds-agent" : {
+      "command" : "aim",
+      "args" : [ "mcp", "start-server", "local-creds-agent-mcp" ]
+    }
+  },
+  "allowedTools" : [ "@creds-agent" ]
 }

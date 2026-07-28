@@ -52,14 +52,14 @@ class CascadeLock {
   _render() {
     if (this.step >= this.steps.length) {
       const oc = this.cfg.onComplete || {};
+      const emojis = oc.emojis || '🌅🔥🍞🐟';
+      const mainText = oc.text || 'Complete.';
+      const subText = oc.subtext || '';
       this.el.innerHTML = `<div class="cslk-wrap">${this._renderCups()}<div class="cslk-scene">
-        <div class="cslk-scene-emoji">${oc.emojis || '🌅🔥🍞🐟'}</div>
+        <div class="cslk-scene-emoji">${emojis}</div>
         <div class="cslk-scene-text">
-          He had breakfast ready. Before they even landed. Before they asked.<br><br>
-          A charcoal fire. Bread. Fish.<br>
-          <span class="cslk-scene-highlight">"${oc.text || 'Come and have breakfast.'}"</span><br><br>
-          <span class="cslk-scene-sub">And you look around the café. The tables. The cups. The names.</span><br><br>
-          <span class="cslk-scene-big">${oc.subtext || 'This isn\'t just a café. This is the shore.'}</span>
+          <span class="cslk-scene-highlight">${mainText}</span><br><br>
+          <span class="cslk-scene-big">${subText}</span>
         </div>
         <button id="cslk-continue" style="margin-top:16px;padding:10px 24px;border:2px solid #f39c12;background:transparent;color:#f39c12;border-radius:8px;font-size:14px;cursor:pointer">Continue...</button>
       </div></div>`;

@@ -71,7 +71,8 @@ class SpecLock {
     }
 
     if (this.currentRound >= this.rounds.length) {
-      wrap.innerHTML += `<div class="speclk-done"><div class="speclk-done-icon">🤖✨</div><div class="speclk-done-text">${this._txt.done}</div></div>`;
+      const doneText = this.cfg.doneText || 'All specs validated! The golem knows exactly what to build.';
+      wrap.innerHTML += `<div class="speclk-done"><div class="speclk-done-icon">🤖✨</div><div class="speclk-done-text">${doneText}</div></div>`;
       this.container.appendChild(wrap);
       this._injectStyles();
       setTimeout(() => this.onSubmit(), 600);
@@ -92,7 +93,8 @@ class SpecLock {
 
     const intro = document.createElement('div');
     intro.className = 'speclk-intro';
-    intro.innerHTML = `<div class="speclk-intro-icon">🤖</div><div class="speclk-intro-text">${this._txt.awaiting}</div>`;
+    const introText = this.cfg.introText || 'The golem awaits your command. What do you want it to build?';
+    intro.innerHTML = `<div class="speclk-intro-icon">🤖</div><div class="speclk-intro-text">${introText}</div>`;
     wrap.appendChild(intro);
 
     // Fake terminal with the vibe prompt pre-filled
@@ -114,7 +116,7 @@ class SpecLock {
 
     const btn = document.createElement('button');
     btn.className = 'speclk-btn speclk-btn-send';
-    btn.textContent = this._txt.send;
+    btn.textContent = this.cfg.sendButton || '⏎ Send to Golem';
     btn.addEventListener('click', () => { this.phase = 'chaos'; this._render(); });
     wrap.appendChild(btn);
   }

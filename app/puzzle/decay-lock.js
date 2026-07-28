@@ -31,8 +31,53 @@ class DecayLock {
     this.decayRate = (opts.decayRate || 1) * 1000;
     this.corruptChar = opts.corruptChar || '█';
     this.onSubmit = opts.onSubmit || (() => {});
+    this.allowRetry = opts.allowRetry === true;
+    this.onPenalty = typeof opts.onPenalty === 'function' ? opts.onPenalty : (() => {});
+    this.options = opts.options || null;
 
     this._init();
+  }
+
+  /**
+   * "Circle Back" — safety net that resets all fragment decay in exchange for
+   * a time penalty. The engine wires up onPenalty to deduct via the backend.
+   * Rebuilds fragStates from the pristine originals (not from current, which
+   * may already contain corruptChar) and restarts the tick loop from elapsed=0.
+   */
+  _circleBack() {
+    if (!this.allowRetry || this.solved) return;
+    this.onPenalty(30);
+    this._stopTimer();
+    this.elapsed = 0;
+    this.failed = false;
+    this.fragStates = this.fragments.map(f => ({
+      original: f.text,
+      current: f.text.split(''),
+      decayAfter: f.decayAfter,
+      decayProgress: 0,
+      fullyDecayed: false,
+    }));
+    this._render();
+    this._startTimer();
+    this._showRetryToast();
+  }
+
+  _showRetryToast() {
+    // Local toast — the engine-level onPenalty callback shows its own toast for
+    // the penalty accounting, but this one belongs to the puzzle UI itself so
+    // the message stays visible even if the engine's toast is styled globally.
+    let toast = this.container.querySelector('.dclk-toast');
+    if (toast) toast.remove();
+    toast = document.createElement('div');
+    toast.className = 'dclk-toast';
+    toast.textContent = 'You step away and come back. -30 seconds.';
+    this.container.appendChild(toast);
+    // Trigger CSS transition on next frame
+    requestAnimationFrame(() => toast.classList.add('dclk-toast-show'));
+    setTimeout(() => {
+      toast.classList.remove('dclk-toast-show');
+      setTimeout(() => toast.remove(), 300);
+    }, 2200);
   }
 
   _init() {
@@ -97,6 +142,7 @@ class DecayLock {
     const input = this.container.querySelector('.dclk-input');
     if (!input) return;
     const val = input.value.toLowerCase().trim();
+    if (!val) return; // don't submit empty/placeholder
     if (this.answers.includes(val)) {
       this.solved = true;
       this._stopTimer();
@@ -205,19 +251,56 @@ class DecayLock {
     });
     wrap.appendChild(fragBox);
 
-    // Question + input
+    // Circle Back button — subtle safety net, only when allowRetry is enabled
+    // and the puzzle isn't solved yet. Costs 30s each click via onPenalty.
+    if (this.allowRetry && !this.solved) {
+      const retryBar = document.createElement('div');
+      retryBar.className = 'dclk-retry-bar';
+      const retryBtn = document.createElement('button');
+      retryBtn.type = 'button';
+      retryBtn.className = 'dclk-retry-btn';
+      retryBtn.textContent = '🔄 Circle back in a minute';
+      retryBtn.title = 'Reset fragments (costs 30 seconds)';
+      retryBtn.addEventListener('click', () => this._circleBack());
+      retryBar.appendChild(retryBtn);
+      wrap.appendChild(retryBar);
+    }
+
+    // Question + input/select
     if (!this.solved) {
       const qBox = document.createElement('div');
       qBox.className = 'dclk-question';
       qBox.textContent = this.question;
       wrap.appendChild(qBox);
 
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.className = 'dclk-input';
-      input.placeholder = 'Type your answer...';
-      input.addEventListener('keydown', (e) => { if (e.key === 'Enter') this._submit(); });
-      wrap.appendChild(input);
+      if (this.options && this.options.length > 0) {
+        // Dropdown mode
+        const select = document.createElement('select');
+        select.className = 'dclk-input dclk-select';
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = '— Choose your answer —';
+        placeholder.disabled = true;
+        placeholder.selected = true;
+        select.appendChild(placeholder);
+        const shuffled = [...this.options].sort(() => Math.random() - 0.5);
+        shuffled.forEach(opt => {
+          const o = document.createElement('option');
+          o.value = opt.toLowerCase().trim();
+          o.textContent = opt;
+          select.appendChild(o);
+        });
+        select.addEventListener('change', () => {}); // no auto-submit
+        wrap.appendChild(select);
+      } else {
+        // Text input mode
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'dclk-input';
+        input.placeholder = 'Type your answer...';
+        input.addEventListener('keydown', (e) => { if (e.key === 'Enter') this._submit(); });
+        wrap.appendChild(input);
+      }
 
       const bar = document.createElement('div');
       bar.className = 'dclk-bar';
@@ -258,11 +341,19 @@ class DecayLock {
 .dclk-question{font-size:14px;font-weight:600;color:var(--text,#e0e6f0);text-align:center;margin-top:8px}
 .dclk-input{width:100%;padding:12px;background:var(--bg,#0a0e17);border:1px solid var(--border,#1e2a45);border-radius:8px;color:var(--text,#e0e6f0);font-size:14px;text-align:center}
 .dclk-input:focus{outline:none;border-color:var(--accent,#3b82f6)}
+.dclk-select{appearance:none;-webkit-appearance:none;cursor:pointer}
 .dclk-bar{display:flex;flex-direction:column;align-items:center;gap:6px}
 .dclk-btn{padding:10px 24px;background:var(--accent,#3b82f6);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
 .dclk-btn:active{opacity:.7}
 .dclk-result{font-size:12px;font-weight:600;min-height:18px}
 .dclk-solved{text-align:center;font-size:16px;font-weight:700;color:var(--green,#22c55e);padding:16px;background:rgba(34,197,94,.1);border-radius:8px}
+.dclk-retry-bar{display:flex;justify-content:center;margin-top:-4px}
+.dclk-retry-btn{padding:6px 12px;background:transparent;color:var(--muted,#7a8ba8);border:1px dashed var(--border,#1e2a45);border-radius:6px;font-size:11px;font-weight:500;cursor:pointer;letter-spacing:.2px;transition:all .2s}
+.dclk-retry-btn:hover{color:var(--text,#e0e6f0);border-color:var(--muted,#7a8ba8);border-style:solid}
+.dclk-retry-btn:active{opacity:.6}
+.dclk-toast{position:absolute;left:50%;bottom:24px;transform:translate(-50%,8px);background:rgba(10,14,23,.95);color:var(--text,#e0e6f0);border:1px solid var(--yellow,#eab308);padding:8px 14px;border-radius:6px;font-size:12px;font-weight:500;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;z-index:10;white-space:nowrap}
+.dclk-toast-show{opacity:1;transform:translate(-50%,0)}
+.dclk{position:relative}
 `;
     document.head.appendChild(s);
   }
