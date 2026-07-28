@@ -112,7 +112,176 @@ const SFX = {
 let timerInterval = null;
 let currentPuzzleId = null;
 let activePuzzlePopupId = null;
+let activePuzzleAward = null;
 let lastEvent = null;
+
+// ── Role system ("Choose Your Lane") ──
+// Puzzle configs may carry role variants (e.g. title_builder, components_planner).
+// resolveRoleCfg promotes the active role's variant onto the base key IN PLACE.
+// For any episode/puzzle without *_builder/_planner/_strategist keys this is a no-op,
+// so existing episodes are completely unaffected.
+const ROLE_META = {
+  builder: { icon: '🧑‍💻', label: 'Builder', tagline: 'I build things', covers: 'Developer, DevOps, SRE, Platform Engineer' },
+  planner: { icon: '📋', label: 'Planner', tagline: 'I shape what gets built', covers: 'PM, BA, QA, Designer, UX Researcher' },
+  strategist: { icon: '💼', label: 'Strategist', tagline: 'I drive business outcomes', covers: 'Executive, Manager, Business User, Sales' }
+};
+let currentRole = 'builder';
+try { currentRole = localStorage.getItem('resolve_role') || 'builder'; } catch {}
+if (!ROLE_META[currentRole]) currentRole = 'builder';
+
+function resolveRoleCfg(cfg) {
+  if (!cfg || typeof cfg !== 'object') return cfg;
+  const sfx = '_' + currentRole;
+  for (const k of Object.keys(cfg)) {
+    if (k.endsWith(sfx) && k.length > sfx.length) cfg[k.slice(0, -sfx.length)] = cfg[k];
+  }
+  return cfg;
+}
+
+function cfgHasRoleVariants(cfg) {
+  return !!cfg && typeof cfg === 'object' && Object.keys(cfg).some(k => /_(builder|planner|strategist)$/.test(k));
+}
+
+function setRole(r) {
+  if (!ROLE_META[r] || r === currentRole) return;
+  currentRole = r;
+  try { localStorage.setItem('resolve_role', r); } catch {}
+  if (activePuzzlePopupId) showPuzzlePopup(activePuzzlePopupId, activePuzzleAward);
+}
+
+function _injectRoleBar(mount, cfg) {
+  if (!mount) return;
+  if (!document.getElementById('role-bar-css')) {
+    const s = document.createElement('style');
+    s.id = 'role-bar-css';
+    s.textContent = '.role-bar{display:flex;gap:6px;justify-content:center;align-items:center;margin:0 0 10px}.role-bar .rb-lbl{font-size:10px;color:var(--muted,#7a8ba8);text-transform:uppercase;letter-spacing:1px;margin-right:4px}.role-btn{padding:5px 10px;border:1px solid var(--border,#1e2a45);background:var(--surface,#141b2d);border-radius:8px;font-size:16px;cursor:pointer;opacity:.45;transition:all .15s}.role-btn.active{opacity:1;border-color:var(--accent,#3b82f6);box-shadow:0 0 8px rgba(59,130,246,.3)}.role-prompt{font-size:13px;color:var(--text,#e0e6f0);text-align:center;margin:0 0 12px;font-weight:600}';
+    document.head.appendChild(s);
+  }
+  const frag = document.createDocumentFragment();
+  const bar = document.createElement('div');
+  bar.className = 'role-bar';
+  bar.innerHTML = '<span class="rb-lbl">Lane</span>' + Object.entries(ROLE_META).map(([id, m]) =>
+    `<button class="role-btn ${id === currentRole ? 'active' : ''}" title="${m.label}" onclick="setRole('${id}')">${m.icon}</button>`
+  ).join('');
+  frag.appendChild(bar);
+  if (cfg && cfg.title) {
+    const t = document.createElement('div');
+    t.className = 'role-prompt';
+    t.textContent = cfg.title;
+    frag.appendChild(t);
+  }
+  mount.insertBefore(frag, mount.firstChild);
+}
+
+function renderRoleChooser() {
+  const host = document.getElementById('intro-role-chooser');
+  if (!host) return;
+  host.innerHTML = '<div class="rc-title">Choose your lane</div>'
+    + '<div class="rc-sub">All lanes reach the same destination — same difficulty, same time, same learning. Switch anytime; no progress lost.</div>'
+    + '<div class="rc-row">'
+    + Object.entries(ROLE_META).map(([id, m]) =>
+        `<button class="rc-btn ${id === currentRole ? 'active' : ''}" onclick="pickRole('${id}')"><span class="rc-head"><span class="rc-icon">${m.icon}</span><span class="rc-name">${m.label}</span></span><span class="rc-tag">"${m.tagline}"</span><span class="rc-covers">${m.covers}</span></button>`
+      ).join('')
+    + '</div>';
+}
+
+function pickRole(id) {
+  setRole(id);
+  renderRoleChooser();
+}
+
+// "You just learned" card — shown after key puzzles. Non-dismissible for 3s, then tap to continue.
+function showLearningCard(text, onContinue) {
+  try { SFX.lore(); } catch {}
+  if (!document.getElementById('learn-card-css')) {
+    const s = document.createElement('style');
+    s.id = 'learn-card-css';
+    s.textContent = '.learn-overlay{position:fixed;inset:0;z-index:9998;background:rgba(6,9,17,.82);display:flex;align-items:center;justify-content:center;padding:20px;animation:learn-fade .25s}.learn-card{max-width:420px;width:100%;background:var(--surface,#141b2d);border:2px solid var(--purple,#a855f7);border-radius:14px;padding:22px;box-shadow:0 10px 40px rgba(168,85,247,.25);text-align:center;animation:learn-pop .3s}.learn-badge{display:inline-block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--purple,#a855f7);border:1px solid var(--purple,#a855f7);border-radius:20px;padding:3px 12px;margin-bottom:12px}.learn-text{font-size:15px;line-height:1.55;color:var(--text,#e0e6f0);margin-bottom:18px}.learn-continue{padding:11px 26px;border:none;border-radius:9px;font-size:14px;font-weight:600;background:var(--border,#1e2a45);color:var(--muted,#7a8ba8);transition:all .2s;cursor:default}.learn-continue.ready{background:var(--purple,#a855f7);color:#fff;cursor:pointer;box-shadow:0 0 14px rgba(168,85,247,.4)}@keyframes learn-fade{from{opacity:0}to{opacity:1}}@keyframes learn-pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}';
+    document.head.appendChild(s);
+  }
+  const overlay = document.createElement('div');
+  overlay.className = 'learn-overlay';
+  const card = document.createElement('div');
+  card.className = 'learn-card';
+  const badge = document.createElement('div');
+  badge.className = 'learn-badge';
+  badge.textContent = 'You just learned';
+  const body = document.createElement('div');
+  body.className = 'learn-text';
+  body.textContent = text;
+  const btn = document.createElement('button');
+  btn.className = 'learn-continue';
+  btn.disabled = true;
+  card.appendChild(badge);
+  card.appendChild(body);
+  card.appendChild(btn);
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+
+  let remaining = 3;
+  btn.textContent = `Read this… (${remaining})`;
+  const iv = setInterval(() => {
+    remaining--;
+    if (remaining > 0) {
+      btn.textContent = `Read this… (${remaining})`;
+    } else {
+      clearInterval(iv);
+      btn.disabled = false;
+      btn.classList.add('ready');
+      btn.textContent = 'Continue →';
+    }
+  }, 1000);
+
+  const done = () => {
+    if (btn.disabled) return; // locked for the first 3 seconds
+    clearInterval(iv);
+    overlay.remove();
+    if (onContinue) onContinue();
+  };
+  btn.addEventListener('click', done);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) done(); });
+}
+
+// Episode background image — cover/center (no stretch), with a dark scrim for readability. Opt-in via meta.background.
+function applyEpisodeBackground() {
+  const bg = engine.meta && engine.meta.background;
+  if (!bg) return;
+  const url = `${ASSET_BASE}/${bg}`;
+  const gs = document.getElementById('game-screen');
+  if (gs) {
+    gs.style.background = `linear-gradient(rgba(10,14,23,.88), rgba(10,14,23,.95)), url('${url}') center center / cover no-repeat`;
+    gs.style.backgroundAttachment = 'fixed';
+  }
+}
+
+// AIDLC learning recap on the end screen — opt-in via meta.learning_recap.
+function renderLearningRecap() {
+  const existing = document.getElementById('aidlc-recap');
+  if (existing) existing.remove();
+  const r = engine.meta && engine.meta.learning_recap;
+  if (!r) return;
+  if (!document.getElementById('aidlc-recap-css')) {
+    const s = document.createElement('style');
+    s.id = 'aidlc-recap-css';
+    s.textContent = '.ar-card{background:linear-gradient(160deg,#141b2d,#0d1424);border:2px solid var(--purple,#a855f7);border-radius:14px;padding:18px;margin:18px 0;text-align:center;box-shadow:0 8px 30px rgba(168,85,247,.15)}.ar-title{font-size:15px;font-weight:800;color:var(--purple,#a855f7);margin-bottom:14px}.ar-cycle{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:14px}.ar-stage{display:flex;align-items:center;gap:8px;justify-content:center}.ar-box{background:var(--bg,#0a0e17);border:2px solid var(--accent,#3b82f6);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--text,#e0e6f0);min-width:120px}.ar-note{font-size:11px;color:var(--muted,#7a8ba8);text-align:left}.ar-arrow{color:var(--accent,#3b82f6);font-size:12px;line-height:1}.ar-benefits{display:flex;flex-direction:column;gap:5px;text-align:left;max-width:280px;margin:0 auto 12px}.ar-benefit{font-size:12px;color:var(--text,#e0e6f0)}.ar-link{display:inline-block;font-size:12px;color:var(--accent,#3b82f6);text-decoration:underline;word-break:break-all}';
+    document.head.appendChild(s);
+  }
+  const cycle = (r.cycle || []).map((c, i, arr) =>
+    `<div class="ar-stage"><div class="ar-box">${c.stage}</div><div class="ar-note">← ${c.note}</div></div>` + (i < arr.length - 1 ? '<div class="ar-arrow">▼</div>' : '')
+  ).join('');
+  const benefits = (r.benefits || []).map(b => `<div class="ar-benefit">✓ ${b}</div>`).join('');
+  const link = r.link ? `<a class="ar-link" href="${r.link.url}" target="_blank" rel="noopener">🔗 ${r.link.label}</a>` : '';
+  const el = document.createElement('div');
+  el.id = 'aidlc-recap';
+  el.className = 'ar-card';
+  el.innerHTML = `<div class="ar-title">${r.title || 'What You Just Learned'}</div><div class="ar-cycle">${cycle}</div><div class="ar-benefits">${benefits}</div>${link}`;
+  const lore = document.getElementById('end-lore');
+  if (lore && lore.parentNode) lore.parentNode.insertBefore(el, lore);
+  else { const ec = document.getElementById('end-content'); if (ec) ec.appendChild(el); }
+}
+
+// Lane choice (manual vs AI express) is handled organically inside Room 200
+// (Requirements Tollbooth) via its discovery buttons — no fullscreen popup.
 let lastPenalty = null;
 let visitedRooms = new Set();
 let lastKnownRoomCount = 0;
@@ -577,7 +746,7 @@ function buildDiscoveryHtml() {
     const puzzle = d.puzzle ? engine.puzzles[d.puzzle] : null;
     const isTool = puzzle && puzzle.type === 'tool';
     const isNpc = isTool && puzzle.ui === 'npc-dialog';
-    const icon = isNpc ? (puzzle.config?.portrait || '🧑') : isTool ? '🔧' : d.puzzle ? '🔒' : '👁';
+    let icon = isNpc ? (puzzle.config?.portrait || '🧑') : isTool ? '🔧' : d.puzzle ? '🔒' : '👁';
     const cls = isTool ? 'discover-btn tool-btn' : 'discover-btn';
     let subtitle = '';
     if (d.requires_item) {
@@ -595,8 +764,7 @@ function buildDiscoveryHtml() {
   });
   const locked = all.filter(d => !d.done && !d.available);
   locked.forEach(d => {
-    let missing = '';
-    const uid = 'lock-' + d.card_id;
+    let reqHtml = '';
     if (d.requires_item) {
       const reqs = Array.isArray(d.requires_item) ? d.requires_item : [d.requires_item];
       const missingItems = reqs.filter(r => !engine.inventory.includes(r) && !engine.visibleCards.has(r) && !engine.discoveredCards.has(r) && !(engine.revealedCards && engine.revealedCards.has(r)));
@@ -768,6 +936,8 @@ function showPuzzlePopup(puzzleId, awardCardId) {
   const puzzle = engine.puzzles[puzzleId];
   if (!puzzle) return;
   activePuzzlePopupId = puzzleId;
+  activePuzzleAward = awardCardId;
+  const cfg = resolveRoleCfg(engine.getPuzzleConfig(puzzleId));
   const popup = document.getElementById('puzzle-popup');
   const mount = document.getElementById('puzzle-mount');
   document.getElementById('puzzle-popup-title').textContent = engine.t('puzzles', puzzleId, 'description') || puzzle.description;
@@ -780,20 +950,25 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     engine.solvedPuzzles.add(puzzleId);
     if (engine.onLeaderboardEvent) engine.onLeaderboardEvent('puzzle_solved', { puzzleId });
     SFX.solve();
-    const successCard = puzzle.success_card || awardCardId;
-    if (successCard !== awardCardId) engine.discoverCard(awardCardId);
-    const prevInv = [...engine.inventory];
-    const card = engine.discoverCard(successCard);
-    const consumed = prevInv.filter(id => !engine.inventory.includes(id));
-    if (consumed.length) {
-      const names = consumed.map(id => engine.cards[id]?.title || '').filter(Boolean).join(', ');
-      if (names) setTimeout(() => showToast(`Used: ${names}`, false), 300);
-    }
-    if (!card && engine.cards[successCard]?.is_ending) {
-      engine.finished = true; engine.completed = true; engine.endTime = Date.now();
-    }
-    if (card && !card.is_ending) showDiscoverPopup(card);
-    renderGame();
+    const finishSolve = () => {
+      const successCard = puzzle.success_card || awardCardId;
+      if (successCard !== awardCardId) engine.discoverCard(awardCardId);
+      const prevInv = [...engine.inventory];
+      const card = engine.discoverCard(successCard);
+      const consumed = prevInv.filter(id => !engine.inventory.includes(id));
+      if (consumed.length) {
+        const names = consumed.map(id => engine.cards[id]?.title || '').filter(Boolean).join(', ');
+        if (names) setTimeout(() => showToast(`Used: ${names}`, false), 300);
+      }
+      if (!card && engine.cards[successCard]?.is_ending) {
+        engine.finished = true; engine.completed = true; engine.endTime = Date.now();
+      }
+      if (card && !card.is_ending) showDiscoverPopup(card);
+      renderGame();
+    };
+    // "You just learned" card — mandatory brief teaching moment before the reward
+    if (cfg && cfg.learning_card) showLearningCard(cfg.learning_card, finishSolve);
+    else finishSolve();
   };
   const onFail = (msg) => {
     SFX.wrong();
@@ -801,7 +976,6 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     engine.penalties++;
     if (engine.onLeaderboardEvent) engine.onLeaderboardEvent('penalty', { seconds: 0, reason: msg || 'wrong_answer', puzzleId });
   };
-  const cfg = engine.getPuzzleConfig(puzzleId);
 
   if (puzzle.ui === 'sequence-lock') {
     new SequenceLock(mount, {
@@ -1015,6 +1189,13 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       revealed: cfg.revealed || false,
       faceUp: cfg.faceUp || false,
       onSubmit() { onSolve(); }
+    });
+  } else if (puzzle.ui === 'traffic-lane-lock') {
+    new TrafficLaneLock(mount, {
+      tasks: cfg.tasks || [],
+      lanes: cfg.lanes || null,
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
     });
   } else if (puzzle.ui === 'word-lock') {
     new WordLock(mount, {
@@ -1304,6 +1485,8 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     new SpecLock(mount, {
       rounds: cfg.rounds || [],
       falseOutputs: cfg.falseOutputs || ['The golem is still confused.'],
+      agentName: cfg.agentName,
+      cliName: cfg.cliName,
       onSubmit() { onSolve(); },
       onWrong(msg) { onFail(msg); }
     });
@@ -1311,6 +1494,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     new ContextLock(mount, {
       capacity: cfg.capacity || 2000,
       documents: cfg.documents || [],
+      agentName: cfg.agentName,
       onSubmit() { onSolve(); },
       onWrong(msg) { onFail(msg); }
     });
@@ -1421,6 +1605,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     });
   }
 
+  if (puzzle.type !== 'tool' && cfgHasRoleVariants(cfg)) _injectRoleBar(mount, cfg);
   popup.classList.add('open');
 }
 
@@ -1961,7 +2146,16 @@ function showEndScreen() {
   const endImg = document.getElementById('end-bg');
   const timedOut = engine._timerExpired || engine.getRemainingSeconds() < 0;
   const succeeded = engine.completed && !timedOut;
-  const imgUrl = `${ASSET_BASE}/assets/${succeeded ? 'ending-success' : 'ending-failure'}.png`;
+  let imgUrl;
+  if (succeeded) {
+    const _s = engine.narrative.ending && engine.narrative.ending.success;
+    const _usedAidlc = engine.solvedPuzzles.has('ctx-aidlc') || engine.solvedPuzzles.has('wordlock-bolts') || (engine.unlockedRooms || []).includes(600);
+    const _img = _s && (_usedAidlc ? _s.image : (_s.image_manual || _s.image));
+    imgUrl = `${ASSET_BASE}/${_img || 'assets/ending-success.png'}`;
+  } else {
+    const _f = engine.narrative.ending && engine.narrative.ending.failure;
+    imgUrl = `${ASSET_BASE}/${(_f && _f.image) || 'assets/ending-failure.png'}`;
+  }
   document.getElementById('end-screen').style.backgroundImage = `url('${imgUrl}')`;
   document.getElementById('end-screen').style.backgroundSize = 'contain';
   document.getElementById('end-screen').style.backgroundRepeat = 'no-repeat';
@@ -2084,4 +2278,5 @@ function showEndScreen() {
   }
   const root = roomDefs.find(r => r.unlocked_by === null);
   mapEl.innerHTML = `<h3 style="font-size:14px;color:var(--green);margin-bottom:12px">Map</h3>` + (root ? renderEndNode(root) : '');
+  renderLearningRecap();
 }
