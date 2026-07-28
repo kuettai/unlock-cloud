@@ -12,8 +12,10 @@
     "bonus": 10
   },
   "stars": [
-    { "min": 40, "label": "★" },
-    { "min": 65, "label": "★★" },
-    { "min": 90, "label": "★★★" }
+    { "min": 95, "stars": 5 },
+    { "min": 80, "stars": 4 },
+    { "min": 65, "stars": 3 },
+    { "min": 50, "stars": 2 },
+    { "min":  0, "stars": 1 }
   ]
 }

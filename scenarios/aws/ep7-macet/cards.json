@@ -1,0 +1,515 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "The Gridlock",
+      "description": "A congested digital highway spread across a wall of monitors. Data packets frozen mid-transit. A massive bottleneck sign flashes: \"HUMAN VERIFICATION: QUEUE FULL.\" Somewhere behind the noise, a single acrostic clue waits for someone patient enough to read it.\n\nThis is the old bottleneck — every artifact through one human. It couldn't scale. But V2 has an answer. Speak the name of the one who orchestrates the pipeline and the door opens.",
+      "image": "assets/room-gridlock.png",
+      "image_prompt": "Cyberpunk Jakarta control room, wall of monitors showing frozen data packet visualizations on a digital highway, huge holographic sign reading queue full, dark teal and amber palette, neon-lit MRT elevated rail visible through window, tense atmosphere, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 101, "label": "Read \"The Old Way\" (V1 diagram)" },
+        { "card_id": 102, "label": "Read \"The Dual Loop\" (V2 diagram)" },
+        { "card_id": 110, "label": "Name the Conductor", "puzzle": "word-lock" }
+      ],
+      "visible_to": "all",
+      "room": "gridlock"
+    },
+    {
+      "id": 101,
+      "type": "lore",
+      "color": "purple",
+      "title": "The Old Way",
+      "description": "V1: a single human-AI loop. Every artifact passed through one human. The pipeline could only move as fast as the reviewer could read.\n\nThe bottleneck wasn't the AI. It was the queue at the reviewer's desk. When the AI got faster, the queue got longer. Progress plateaued the moment humans became the single serialization point.",
+      "image": "assets/lore-old-way.png",
+      "image_prompt": "Retro schematic of a single human silhouette gating a long queue of AI-generated document icons, one narrow bottleneck at the human, dark teal background with amber accent lines, minimalist infographic, single lore card on dark gradient",
+      "visible_to": "all",
+      "room": "gridlock"
+    },
+    {
+      "id": 102,
+      "type": "lore",
+      "color": "purple",
+      "title": "The Dual Loop",
+      "description": "V2: AI generates. AI verifies. Only high-judgment decisions reach the human. The inner loop self-corrects on linting, standards, and traceability. The outer loop escalates only when models cannot reconcile. The gridlock clears.\n\nCallers of the loop — Orchestrators, Operators, Notaries, Directors, Umpires, Composers, Testers, Overseers, Reviewers — every specialist has a role. But only one Conductor holds the baton.",
+      "image": "assets/lore-dual-loop.png",
+      "image_prompt": "Diagram of two nested loops — inner AI-to-AI verification loop and outer human-escalation loop — with agent avatars around each ring, dark teal and cyan glow, minimalist infographic, single lore card on dark gradient",
+      "visible_to": "all",
+      "room": "gridlock"
+    },
+    {
+      "id": 110,
+      "type": "event",
+      "color": "yellow",
+      "title": "Conductor Named. The tower opens.",
+      "description": "The word lock chirps green. \"CONDUCTOR\" flashes across every screen. The freeze on the highway visualization thaws by one frame — then holds, waiting.\n\nA door slides open. Beyond it: the Control Tower. Raja, the Chief Architect, is already there.",
+      "reveals": [200],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "gridlock"
+    },
+
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "The Control Tower",
+      "description": "A glass-walled control room overlooking the entire pipeline. Screens show stage graphs, agent status panels, and FSM traces. A large orchestra conductor's podium sits in the center, awaiting a hand.\n\nRaja is at the main console, sleeves rolled up, muttering at a corrupted state file. Behind him, a countdown ticks: \"MRT SIGNAGE — TIME TO BLACKOUT.\"",
+      "image": "assets/room-control-tower.png",
+      "image_prompt": "Cyberpunk Jakarta glass-walled control room overlooking a neon-lit elevated MRT line, holographic stage graphs and agent status panels on walls, orchestra conductor podium in center, dark teal and amber palette, tense but hopeful lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 201, "label": "Talk to Raja (Chief Architect)", "puzzle": "npc-raja" },
+        { "card_id": 210, "label": "Restart the FSM Engine", "puzzle": "defuse-restart" },
+        { "card_id": 220, "label": "Report back to Raja — sub-agents cleared", "requires_item": [410, 460] }
+      ],
+      "visible_to": "all",
+      "room": "control-tower"
+    },
+    {
+      "id": 201,
+      "type": "tool",
+      "color": "orange",
+      "title": "Raja — Chief Architect",
+      "description": "The senior architect who designed the AI-DLC V2 pipeline. Calm, technical, authoritative. Trusts the loop, but knows when to page a human. Right now he's paging you.",
+      "image": "assets/npc-raja.png",
+      "image_prompt": "Confident senior software architect in a Jakarta tech office, mid-40s, calm and authoritative, holding a tablet showing a pipeline diagram, dark teal and amber lighting, single character portrait, cyberpunk cityscape blurred behind",
+      "visible_to": "all",
+      "room": "control-tower"
+    },
+    {
+      "id": 202,
+      "type": "object",
+      "color": "blue",
+      "title": "FSM Engine Console",
+      "description": "The console that drives workflow progression. 10 canonical steps in one deterministic engine: Human sends intent → Conductor reads skill → invokes FSM → FSM reads graph → reads state → returns directive → persona hat or sub-agent takes over → human gate for high-judgment → report → dispatch again. Audit hooks fire throughout.\n\nRight now the console is amber. State file corrupted. Hooks disabled. Engine looping. Restart it.",
+      "image": "assets/object-fsm-console.png",
+      "image_prompt": "Digital control console with 10 illuminated buttons in a circle labeled with FSM steps, glowing amber warning lights, holographic state file with corruption artifacts hovering above, dark teal background, single object card, cyberpunk aesthetic",
+      "visible_to": "all",
+      "room": "control-tower"
+    },
+    {
+      "id": 210,
+      "type": "event",
+      "color": "yellow",
+      "title": "FSM Engine Restarted. The graph comes online.",
+      "description": "The State Machine flips green. Audit Hooks come online — every action now logs. DIRECTIVE prints on the console. The Read Graph → Read State → Return Directive cycle spins up clean.\n\nRaja: \"Engine's live. Head to the Stage Graph. The Composer has already scored the fix — go route the agents and confirm the stage count.\"",
+      "reveals": [300],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "control-tower"
+    },
+    {
+      "id": 220,
+      "type": "event",
+      "color": "yellow",
+      "title": "Sub-agents cleared. Composer's Studio opens.",
+      "description": "Raja glances at your inventory: verification-key from the Inner Loop, memory.md from the Memory Vault. He nods.\n\n\"Sub-agents reported back. Verification protocol restored, memory rules rebuilt. The Composer's Studio is unlocked — go right-size that bloated workflow before the Golem hallucinates its way through 32 stages for a typo fix.\"\n\nA new door in the tower slides open. The Studio's mixing console pulses beyond it.",
+      "reveals": [500],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "control-tower"
+    },
+
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "The Stage Graph",
+      "description": "A wall-sized display showing all 32 stages of the AI-DLC V2 workflow as a finite state machine. Green nodes complete. Dark nodes pending. Two nodes flash red — stuck.\n\nSeven agents queue on the side bench, waiting to be routed to their correct phase. Once they're all placed, the Composer's autonomy-risk score for this Bolt will unlock.",
+      "image": "assets/room-stage-graph.png",
+      "image_prompt": "Massive wall display of an FSM diagram with 32 numbered nodes arranged in five phase groups, some nodes glowing green, most dark, two flashing red, holographic queue of AI agent avatars on side, dark teal and amber lighting, cyberpunk control room, isometric",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 301, "label": "Read \"5 Phases, 32 Stages\"" },
+        { "card_id": 310, "label": "Route the Agents", "puzzle": "blueprint-route" },
+        { "card_id": 320, "label": "Enter the composed stage count", "puzzle": "keypad-stages", "requires_item": 311, "consumes_item": 311 }
+      ],
+      "visible_to": "all",
+      "room": "stage-graph"
+    },
+    {
+      "id": 301,
+      "type": "lore",
+      "color": "purple",
+      "title": "5 Phases, 32 Stages",
+      "description": "AI-DLC V2 has five phases: Initialization → Ideation → Inception → Construction → Operation. Thirty-two stages fill them.\n\nEvery stage follows the Three-Compartment Model: Generate → Verify → Learn. Generate the artifact. Verify it (AI + tools). Learn from corrections (encoded into memory). Tomorrow's rule is today's correction.\n\nEvery agent has a phase. Route them right and the graph advances.",
+      "image": "assets/lore-phases.png",
+      "image_prompt": "Stylized infographic card of five colored horizontal bands labeled Initialization, Ideation, Inception, Construction, Operation, each showing small stage circles, three-compartment icons on the side, dark teal and amber gradient, lore card on dark background",
+      "visible_to": "all",
+      "room": "stage-graph"
+    },
+    {
+      "id": 310,
+      "type": "event",
+      "color": "yellow",
+      "title": "Agents Routed.",
+      "description": "All seven agents drop into their correct phase slots. The Product Manager lights up Ideation. The Systems Architect and Adaptive Composer settle into Inception. The Developer, Security Reviewer, and QA Engineer fill Construction. The SRE anchors Operation.\n\nThe Composer prints its score: \"AUTONOMY RISK: 40%.\" A slip of paper drops from the console. The composed stage count is on it.",
+      "reveals": [311],
+      "awards": [311],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "stage-graph"
+    },
+    {
+      "id": 311,
+      "type": "item",
+      "color": "red",
+      "title": "Composer's Slip — Stage Count",
+      "description": "A slip of thermal-printed paper from the Composer:\n\n> INTENT: MRT signage station-name fix.\n> AUTONOMY RISK SCORE: 40%.\n> RECOMMENDED STAGES: 14.\n\nEnter the count on the keypad. The graph will crystallize around it.",
+      "image": "assets/item-composer-slip.png",
+      "image_prompt": "Small thermal receipt slip printed with black text on white, showing a project score and a large number, floating on dark teal background, single item card, cyberpunk aesthetic",
+      "visible_to": "all",
+      "room": "stage-graph"
+    },
+    {
+      "id": 320,
+      "type": "event",
+      "color": "yellow",
+      "title": "Stage Count Confirmed. Parallel paths open.",
+      "description": "\"14\" lights up on the keypad. The graph pulses — 14 nodes glow green in sequence, the rest fade to gray.\n\nTwo doors open at the same time on opposite sides of the room: The Inner Loop (verification lab) and The Memory Vault (hierarchical rules). Two teams, two paths, two items to bring back.",
+      "reveals": [400, 450],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "stage-graph"
+    },
+
+    {
+      "id": 400,
+      "type": "location",
+      "color": "green",
+      "title": "The Inner Loop",
+      "description": "A testing laboratory with two AI agents visible on paired screens — one generating code, one reviewing it. They're arguing in a loop. A scoreboard shows: \"Iterations: 47. Budget: EXHAUSTED.\" \n\nA touch-panel between the screens waits. Answer confidently about how V2 self-verifies. Come away with the verification key.",
+      "image": "assets/room-inner-loop.png",
+      "image_prompt": "Cyberpunk testing lab with two paired glass chambers, one glowing blue with LLM tokens streaming, one glowing green with tool output lines, argumentative agent avatars facing each other, exhausted iteration counter on wall, dark teal and cyan palette, isometric",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 401, "label": "Read \"Two Ways to Verify\"" },
+        { "card_id": 410, "label": "Wager on Verification Confidence", "puzzle": "wager-verify" }
+      ],
+      "visible_to": "all",
+      "room": "inner-loop"
+    },
+    {
+      "id": 401,
+      "type": "lore",
+      "color": "purple",
+      "title": "Two Ways to Verify",
+      "description": "Inferential verification: an LLM checks quality, traceability, and standards compliance. Probabilistic. Judgment-based.\n\nDeterministic verification: linters, SAST, SonarQube, unit tests. Computational. Not probabilistic.\n\nBoth must pass. Neither alone is enough. And when the two verifiers deadlock — that's when the outer loop kicks in and the human is paged, and only then.",
+      "image": "assets/lore-two-verify.png",
+      "image_prompt": "Split-panel infographic — left side an LLM neural glow icon labeled Inferential, right side a wrench-and-gear icon labeled Deterministic, both flowing into a checkmark, dark teal and amber, lore card on dark gradient",
+      "visible_to": "all",
+      "room": "inner-loop"
+    },
+    {
+      "id": 410,
+      "type": "item",
+      "color": "red",
+      "title": "verification-key",
+      "description": "A physical key etched with two glyphs: an LLM neural-swirl (inferential) and a wrench-plus-gear (deterministic). The token that proves you understand how V2 verifies — and that you can bring both channels to the Conductor's Podium.\n\nBring this to Room 8. The Podium won't accept the release without it.",
+      "image": "assets/item-verification-key.png",
+      "image_prompt": "A stylized dual-glyph key card, one side an LLM neural swirl icon and the other a deterministic wrench-and-gear icon, glowing teal, floating on dark background, single item card, cyberpunk aesthetic",
+      "visible_to": "all",
+      "room": "inner-loop"
+    },
+
+    {
+      "id": 450,
+      "type": "location",
+      "color": "green",
+      "title": "The Memory Vault",
+      "description": "A library of glowing filing cabinets labeled ORG, TEAM, PROJECT. Some drawers hang open. Papers scattered. A screen on the wall shows aidlc-state.md — text visibly corrupting, characters glitching away in real time.\n\nRead the state before it decays. Then encode the position on the keypad. The memory.md drops from the printer only when both are done.",
+      "image": "assets/room-memory-vault.png",
+      "image_prompt": "Library room with three towering rows of glowing filing cabinets labeled ORG TEAM PROJECT, some drawers ajar, scattered digital papers, wall screen showing decaying markdown text with red glitch artifacts, dark teal and amber palette, cyberpunk aesthetic, isometric",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 452, "label": "Read the state before it corrupts", "puzzle": "decay-state" },
+        { "card_id": 460, "label": "Encode the position (PIN)", "puzzle": "4digits-encode", "requires_item": 453, "consumes_item": 453 }
+      ],
+      "visible_to": "all",
+      "room": "memory-vault"
+    },
+    {
+      "id": 452,
+      "type": "event",
+      "color": "yellow",
+      "title": "State Read Before Decay.",
+      "description": "You catch the state values before they crumble off screen. Phase 3 (inception). Stage 7 (refined-mockups). Patch 0. Version 2. The vault stabilizes — briefly.\n\nA slip of paper prints with the observed fragments. Take it to the keypad.",
+      "reveals": [453],
+      "awards": [453],
+      "visible_to": "all",
+      "room": "memory-vault"
+    },
+    {
+      "id": 453,
+      "type": "item",
+      "color": "red",
+      "title": "State Fragments — PHASE.STAGE.PATCH.VERSION",
+      "description": "The values you rescued from the decaying state file:\n\nPhase: 3 (inception)\nStage: 7 (refined-mockups)\nPatch: 0\nVersion: 2\n\nFormat: PHASE.STAGE.PATCH.VERSION → 3.7.0.2. The keypad expects four digits, in that order.",
+      "image": "assets/item-state-fragments.png",
+      "image_prompt": "A slip of paper with four numeric fields labeled Phase Stage Patch Version, each showing a single digit, glowing amber ink, dark teal background, single item card, cyberpunk aesthetic",
+      "visible_to": "all",
+      "room": "memory-vault"
+    },
+    {
+      "id": 460,
+      "type": "item",
+      "color": "red",
+      "title": "memory.md",
+      "description": "A sealed manifest of the hierarchical memory rules — org.md, team.md, project.md — reconstructed from the vault. Encodes corrections so effort descends over time.\n\n> Corrections become durable rules. Teach once, apply forever. This is why V2's effort curve descends where V1's plateaued.\n\nBring this to the Conductor's Podium. Needed at Room 8.",
+      "image": "assets/item-memory-md.png",
+      "image_prompt": "Sealed manifest card labeled memory.md with three stacked layers colored for ORG TEAM PROJECT and a green checkmark seal, soft amber glow, single item on dark background, cyberpunk aesthetic",
+      "visible_to": "all",
+      "room": "memory-vault"
+    },
+
+    {
+      "id": 500,
+      "type": "location",
+      "color": "green",
+      "title": "The Composer's Studio",
+      "description": "A massive mixing console with 32 channel faders — each a workflow stage. An AI hologram (The Golem) is panicking, trying to fire every fader simultaneously. A sign on the console reads: \"INTENT: Fix typo in station name. AUTONOMY RISK: 15%.\"\n\nStrip the Golem down to the three stages this fix actually needs. Then move on to the verification lab — and, once the sub-agents are back, on to the Podium.",
+      "image": "assets/room-composer-studio.png",
+      "image_prompt": "Enormous 32-channel audio mixing console glowing with holographic overlays of AI workflow stages, panicked golem hologram trying to touch every fader at once, intent sign displayed above console, dark teal and amber lighting, cyberpunk studio, isometric",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 501, "label": "Read \"Right-Size or Suffer\"" },
+        { "card_id": 510, "label": "Unload the Golem", "puzzle": "context-golem" }
+      ],
+      "visible_to": "all",
+      "room": "composer-studio"
+    },
+    {
+      "id": 501,
+      "type": "lore",
+      "color": "purple",
+      "title": "Right-Size or Suffer",
+      "description": "Stage bloat: too many stages for a simple problem → the AI is forced to produce output for stages that shouldn't run → hallucination.\n\nSquashing: too few stages for a complex problem → nothing gets verified → shipped bugs.\n\nThe Adaptive Composer scores complexity (ambiguity, blast radius, test coverage, autonomy risk) and proposes the minimum viable workflow. Low-risk fix = 3 stages. High-risk feature = full 32. Right-size or suffer.",
+      "image": "assets/lore-right-size.png",
+      "image_prompt": "Infographic card with three stage-count silhouettes — too many stages with hallucination clouds, right-sized in the middle glowing green, too few with red bug icons — labeled Bloat / Right-Sized / Squash, dark teal and amber gradient, lore card on dark background",
+      "visible_to": "all",
+      "room": "composer-studio"
+    },
+    {
+      "id": 510,
+      "type": "event",
+      "color": "yellow",
+      "title": "Golem Unloaded. Three stages remain.",
+      "description": "You strip requirements-analysis, application-design, security-review, mockups, and twenty-four more from the Golem's context. Only three faders stay lit: intent-capture, code-generation, unit-test.\n\nThe Golem exhales. \"Now I can actually ship the typo fix.\" The verification chamber lights up beyond the studio.",
+      "reveals": [600],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "composer-studio"
+    },
+
+    {
+      "id": 600,
+      "type": "location",
+      "color": "green",
+      "title": "The Verification Lab",
+      "description": "A clean room with two glass test chambers: one running LLM inference (glowing blue), one running computational tools (sparking green). In the center: a prompt assembly workbench with a set of instruction fragments floating on magnets.\n\nBuild the self-verification prompt. Both channels must fire. Both must pass.",
+      "image": "assets/room-verification-lab.png",
+      "image_prompt": "Clean lab with two adjacent glass test chambers, left chamber glowing blue with LLM neural swirls, right chamber sparking green with tool output logs, prompt fragment magnets floating on a central workbench, dark teal and cyan palette, isometric cyberpunk",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 601, "label": "Read \"Generate → Verify → Learn\"" },
+        { "card_id": 610, "label": "Assemble the Verification Instruction", "puzzle": "prompt-verify" }
+      ],
+      "visible_to": "all",
+      "room": "verification-lab"
+    },
+    {
+      "id": 601,
+      "type": "lore",
+      "color": "purple",
+      "title": "Generate → Verify → Learn",
+      "description": "The Three-Compartment Model. Every stage has three compartments.\n\n1. Generate: produce the artifact.\n2. Verify: check it — inferential (LLM) AND deterministic (tools).\n3. Learn: encode corrections into memory so the next iteration starts smarter.\n\nSkip Verify and you ship the wrong thing. Skip Learn and you re-ship the same wrong thing tomorrow. All three, every stage. That's how effort descends.",
+      "image": "assets/lore-generate-verify-learn.png",
+      "image_prompt": "Three horizontal panels labeled Generate Verify Learn, connected by arrows in a compact loop, small icons of gears, magnifying glass, and a memory chip, dark teal and amber gradient, lore card on dark background",
+      "visible_to": "all",
+      "room": "verification-lab"
+    },
+    {
+      "id": 610,
+      "type": "event",
+      "color": "yellow",
+      "title": "Verification Instruction Assembled.",
+      "description": "The prompt locks in: \"Check that user stories are fully traceable to requirements using inferential verification. Run linter for security policy using deterministic tools.\"\n\nBoth chambers flash green. Two new doors open — the Sub-Agent Bay (dispatch specialists) and the Audit Trail (mine the logs). Take either. Both feed back into the Podium.",
+      "reveals": [700, 750],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "verification-lab"
+    },
+
+    {
+      "id": 700,
+      "type": "location",
+      "color": "green",
+      "title": "The Sub-Agent Bay",
+      "description": "A deployment bay with 20 docking stations. Each station has a specialist agent pod — some powered on and glowing, most dark and inert. A dispatch terminal in the middle awaits your commands.\n\nEnergy is finite. You can only reveal so many cells. Find the four agents this stage actually needs. Don't waste power probing pods you don't.",
+      "image": "assets/room-subagent-bay.png",
+      "image_prompt": "Cyberpunk deployment bay with a 5x4 grid of agent docking pods, most obscured by digital fog, a few glowing green with agent silhouettes visible, dispatch terminal in the foreground, dark teal and amber lighting, isometric",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 710, "label": "Discover Agent Capabilities", "puzzle": "fogmap-agents" }
+      ],
+      "visible_to": "all",
+      "room": "subagent-bay"
+    },
+    {
+      "id": 710,
+      "type": "event",
+      "color": "yellow",
+      "title": "Sub-Agents Dispatched. Podium unlocks.",
+      "description": "You reveal the four specialists this stage needs — Developer, Security Reviewer, QA Engineer, Adaptive Composer — without wasting energy on decoy pods. Each undocks and pipes into the main pipeline.\n\nThe Composer voice: \"Workflow optimized. Proceed to the Conductor's Podium.\" A gate opens between the studio and the podium.",
+      "reveals": [800],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "subagent-bay"
+    },
+
+    {
+      "id": 750,
+      "type": "location",
+      "color": "green",
+      "title": "The Audit Trail",
+      "description": "A dark room with a single terminal streaming event logs. 72 event types scroll past. Some pipeline actions have just fired — each one wrote an audit event.\n\nTrace the 72-event audit trail — identify which event fires at each pipeline action. Zero gaps. Enterprise traceability depends on you naming them right.",
+      "image": "assets/room-audit-trail.png",
+      "image_prompt": "Dark cyberpunk terminal room with a single monitor streaming vertical log lines, most in cyan and green, some flashing red glitches, dark teal ambient light, a single desk chair silhouetted, isometric",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 751, "label": "Read \"72 Events, Zero Gaps\"" },
+        { "card_id": 760, "label": "Trace the audit events", "puzzle": "evidence-audit" }
+      ],
+      "visible_to": "all",
+      "room": "audit-trail"
+    },
+    {
+      "id": 751,
+      "type": "lore",
+      "color": "purple",
+      "title": "72 Events, Zero Gaps",
+      "description": "Every V2 action is logged. Seventy-two event types cover the entire lifecycle: stage_started, gate_presented, human_approved, correction_recorded, memory_promoted, hook_fired, agent_dispatched, artifact_generated, verification_run, escalation_triggered — and sixty-two more.\n\nEnterprise-grade traceability. Nothing is forgotten. Every action can be replayed, audited, and learned from. Zero gaps.",
+      "image": "assets/lore-72-events.png",
+      "image_prompt": "Infographic card showing a vertical stream of small event chips labeled in monospace font, each a different event name, some highlighted with green checkmarks, dark teal and cyan gradient, lore card on dark background",
+      "visible_to": "all",
+      "room": "audit-trail"
+    },
+    {
+      "id": 760,
+      "type": "event",
+      "color": "yellow",
+      "title": "Audit Trail Traced. Podium unlocks.",
+      "description": "You name every pipeline action in order: workflow_started, stage_started, verification_passed, gate_approved, correction_recorded. Zero gaps. The 72-event trail is coherent — enterprise-grade traceability restored.\n\nRaja's voice on the intercom: \"Trail's clean. Get to the podium.\" A gate opens between the studio and the podium.",
+      "reveals": [800],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "audit-trail"
+    },
+
+    {
+      "id": 800,
+      "type": "location",
+      "color": "green",
+      "title": "The Conductor's Podium",
+      "description": "The central orchestra podium. The full pipeline is visible on wraparound screens — every agent, every stage, every hook, awaiting your signal. Two item slots glow on the podium rail: \"Verification Protocol\" and \"Memory Rules.\"\n\nSlot the verification-key. Slot memory.md. Then conduct. Eight rapid-fire decisions. No time to hesitate.",
+      "image": "assets/room-podium.png",
+      "image_prompt": "Grand orchestra conductor podium in the center of a wraparound holographic display showing the full AI pipeline, two glowing key slots on the podium rail, dramatic cyberpunk stage lighting, dark teal and amber palette, isometric cinematic",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 810, "label": "Conduct the Orchestra", "puzzle": "streak-conduct", "requires_item": [410, 460], "consumes_item": [410, 460] }
+      ],
+      "visible_to": "all",
+      "room": "podium"
+    },
+    {
+      "id": 810,
+      "type": "event",
+      "color": "yellow",
+      "title": "The Orchestra Played. Release Gate opens.",
+      "description": "Eight decisions land in a row. Ideation begun. QA verified. Inner loop self-corrected. Human paged on deadlock. Correction saved to project.md. Existing rule applied automatically. Audit event written. Deploy to production.\n\nThe pipeline turns green node by node. Every stage confirms. The Release Gate slides open beyond the podium.",
+      "reveals": [900],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "podium"
+    },
+
+    {
+      "id": 900,
+      "type": "location",
+      "color": "green",
+      "title": "The Release Gate",
+      "description": "The pipeline diagram transforms — all nodes glow green. The Jakarta MRT map appears on the main screen, stations lighting up one by one as the update propagates. Digital signage across the city flickers awake with the correct station names.\n\nThe traffic clears. The macet lifts.",
+      "image": "assets/room-release-gate.png",
+      "image_prompt": "Cinematic view of a Jakarta MRT map holograph with stations lighting up green sequentially, elevated rail visible through window at night, digital signage glowing with correct station names, dark teal and warm amber lighting, cyberpunk cityscape, isometric",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 901, "label": "Read \"Traffic Cleared\"" },
+        { "card_id": 910, "label": "Proceed to the Learning Loop" }
+      ],
+      "visible_to": "all",
+      "room": "release-gate"
+    },
+    {
+      "id": 901,
+      "type": "lore",
+      "color": "purple",
+      "title": "Traffic Cleared",
+      "description": "The pipeline shipped in 14 stages, 23 minutes, with 2 human gates. The MRT system update is live. Jakarta's commuters see the correct station names. The Conductor cleared the macet.\n\nCompare to V1: same fix, same team, three days. That's not a speed-up — that's a category change.",
+      "image": "assets/lore-traffic-cleared.png",
+      "image_prompt": "Infographic card comparing V1 timeline of three days versus V2 timeline of 23 minutes, MRT map illustrated below with green stations, warm amber and teal, lore card on dark background",
+      "visible_to": "all",
+      "room": "release-gate"
+    },
+    {
+      "id": 910,
+      "type": "event",
+      "color": "yellow",
+      "title": "Proceeding to the Learning Loop.",
+      "description": "The room dims. The final terminal wakes up. Time to encode what you learned so tomorrow's Conductor is faster.",
+      "reveals": [1000],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "release-gate"
+    },
+
+    {
+      "id": 1000,
+      "type": "location",
+      "color": "green",
+      "title": "The Learning Loop",
+      "description": "A quiet reflection room. The pipeline replays itself on a timeline. Each step you fixed plays back in miniature — the Gridlock, the FSM restart, the graph, the parallel dives, the composer, the verification, the sub-agents, the podium.\n\nA final terminal asks: shall we encode what we learned? Approve each learning. One wrong approval breaks the chain.",
+      "image": "assets/room-learning-loop.png",
+      "image_prompt": "Quiet reflection room with a horizontal timeline replaying miniature pipeline vignettes as glowing dioramas, a single terminal in the center prompting for approval, calm cyberpunk lighting, dark teal and soft amber, isometric",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 999, "label": "Approve each learning (the pipeline replay)", "puzzle": "cascade-learning" }
+      ],
+      "visible_to": "all",
+      "room": "learning-loop"
+    },
+    {
+      "id": 999,
+      "type": "event",
+      "color": "yellow",
+      "title": "Macet Selesai.",
+      "description": "The Jakarta MRT glows green. Every station name correct. Every digital sign alive. The pipeline learned from today — next time, fewer stages, fewer gates, faster delivery. The traffic has cleared. You conducted the orchestra. Macet selesai.\n\nEnding replay for the debrief: (1) Bottleneck shift — AI verifies AI. (2) Deterministic FSM drives progression. (3) Memory compounds — corrections become durable rules. (4) Adaptive composition right-sizes the workflow. (5) The Conductor orchestrates. Humans elevated. Gridlock cleared.",
+      "is_ending": true,
+      "reveals": [],
+      "visible_to": "all",
+      "room": "learning-loop"
+    }
+  ]
+}

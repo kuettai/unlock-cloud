@@ -580,12 +580,16 @@
             "hint": "POS"
           },
           {
-            "text": "The wire in position [STAIN] is always activated second.",
-            "hint": "1"
+            "text": "The wire in position 1 is always activated se[STAIN]d.",
+            "hint": "cond"
           },
           {
-            "text": "Delivery Tracker is the last system to go live.",
-            "hint": null
+            "text": "Delivery Tracker is the last system to go [STAIN].",
+            "hint": "live"
+          },
+          {
+            "text": "Staff Scheduler must sync [STAIN] POS completes.",
+            "hint": "after"
           }
         ],
         "solution": [
@@ -598,7 +602,7 @@
         "maxStrikes": 3
       },
       "hints": [
-        "Rule 5 is clear: Delivery Tracker is LAST. Rule 3 says Scheduler can't be first \u2014 it needs POS data.",
+        "Rule 5 is clear: Delivery Tracker is LAST. Rule 3 says Scheduler can't be first. Rule 6 says Scheduler syncs after POS.",
         "Rule 1: Payment before Supplier. Rule 4: position 1 (POS) is second. So Payment must be first.",
         "Full sequence: Payment Gateway, POS System, Staff Scheduler, Supplier Portal, Delivery Tracker."
       ],
@@ -664,38 +668,38 @@
       "description": "Photograph pricing intel at Chocolot without getting caught by security",
       "ui": "push-luck-lock",
       "config": {
-        "target": 25,
-        "maxRounds": 4,
+        "target": 40,
+        "maxRounds": 6,
         "bag": [
           {
             "type": "gem",
+            "value": 2,
+            "label": "Menu photo +2",
+            "weight": 5
+          },
+          {
+            "type": "gem",
             "value": 3,
-            "label": "Menu photo +3",
+            "label": "Sales board +3",
             "weight": 3
           },
           {
             "type": "gem",
             "value": 5,
-            "label": "Sales board +5",
-            "weight": 2
-          },
-          {
-            "type": "gem",
-            "value": 8,
-            "label": "Pricing doc +8",
+            "label": "Pricing doc +5",
             "weight": 1
           },
           {
             "type": "bust",
             "value": 0,
             "label": "\"Hey! No photos!\"",
-            "weight": 2
+            "weight": 1
           }
         ]
       },
       "hints": [
-        "You need 25 points in 4 rounds. Bank early if you've got a good haul \u2014 getting caught resets the round.",
-        "The bag has more low-value items (weight 3) and fewer high-value ones (weight 1). Busts have weight 2.",
+        "You need 40 points in 6 rounds. Bank early if you've got a good haul \u2014 getting caught resets the round.",
+        "The bag has more low-value items (weight 5) and fewer high-value ones (weight 1). Busts have weight 1.",
         "Push your luck when you're behind target, bank when you're close. One bust won't end the game \u2014 it just loses that round's draws."
       ],
       "mandatory": true,
@@ -804,6 +808,54 @@
               "Freeze and stammer about looking at the wall art"
             ],
             "answer": "Smile and say you can't decide \u2014 everything looks too good"
+          },
+          {
+            "question": "The menu board shows a new seasonal section. How do you inquire?",
+            "options": [
+              "Compliment the seasonal items and ask which sells best",
+              "Take a photo of the board",
+              "Ask for their wholesale supplier list",
+              "Ask if they'd share the recipe for research purposes",
+              "Pretend you're a food blogger requesting an interview",
+              "Loudly compare their prices to competitors"
+            ],
+            "answer": "Compliment the seasonal items and ask which sells best"
+          },
+          {
+            "question": "You notice a 'Help Wanted' sign. How do you probe?",
+            "options": [
+              "Casually ask if they're growing the team",
+              "Ask their exact headcount",
+              "Offer to poach their staff",
+              "Ask what happened to the previous staff",
+              "Pretend to apply and ask about the work culture",
+              "Comment that it must be hard finding good baristas"
+            ],
+            "answer": "Casually ask if they're growing the team"
+          },
+          {
+            "question": "The friendly twin mentions a new coffee supplier. How do you dig deeper?",
+            "options": [
+              "Ask what made them switch \u2014 taste or price",
+              "Demand their supply chain documents",
+              "Say you're from a rival",
+              "Mention you know someone in the coffee import business",
+              "Ask if the new supplier is local or international",
+              "Pretend you noticed a taste difference and ask why"
+            ],
+            "answer": "Ask what made them switch \u2014 taste or price"
+          },
+          {
+            "question": "You see delivery boxes from an unfamiliar vendor. What do you do?",
+            "options": [
+              "Comment that the packaging looks premium and ask about it",
+              "Photograph the labels",
+              "Open a box when they're not looking",
+              "Ask if they're expanding their product range",
+              "Mention you work in logistics and the packaging caught your eye",
+              "Ask the delivery driver where they're coming from"
+            ],
+            "answer": "Comment that the packaging looks premium and ask about it"
           }
         ]
       },
@@ -819,7 +871,7 @@
       "id": "auction-tabouleh",
       "type": "puzzle",
       "card_ref": 810,
-      "description": "Buy intel from gossipy contacts at the Tabouleh Express loading dock",
+      "description": "Budget: $100. Not everyone has intel \u2014 read the body language before you spend. Pick 3 key contacts from 7 people.",
       "ui": "auction-lock",
       "config": {
         "budget": 100,
@@ -921,6 +973,18 @@
           }
         ],
         "question": "Based on what you saw, what is The Cooker's biggest operational vulnerability?",
+        "options": [
+          "Head chef leaving",
+          "Food quality declining",
+          "Health inspection failure",
+          "High dessert prices",
+          "Slow service",
+          "Staff overwhelmed",
+          "Bad online reviews",
+          "Losing customers to QuickBite",
+          "Kitchen temperature issues",
+          "Social media backlash"
+        ],
         "answers": [
           "head chef leaving",
           "chef leaving",
@@ -931,7 +995,8 @@
           "chef interviewing",
           "staff shortage"
         ],
-        "decayRate": 1.5
+        "decayRate": 1.5,
+        "allowRetry": true
       },
       "hints": [
         "Read the posts quickly before they get deleted. Look for a common thread connecting multiple complaints.",
@@ -943,141 +1008,58 @@
     },
     {
       "id": "wager-warroom",
-      "type": "puzzle",
+      "type": "blueprint_lock",
       "card_ref": 1010,
-      "description": "Answer investor questions under pressure \u2014 higher confidence means better impression but wrong answers tank trust",
-      "ui": "wager-lock",
+      "description": "Build the investor dashboard \u2014 place the right metrics on the correct sections before the call.",
+      "ui": "blueprint-lock",
       "config": {
-        "target": 8,
-        "stakes": [
-          {
-            "label": "Conservative",
-            "wager": 1,
-            "penalty": 0,
-            "color": "#22c55e",
-            "showOptions": 2
-          },
-          {
-            "label": "Confident",
-            "wager": 2,
-            "penalty": -1,
-            "color": "#eab308",
-            "showOptions": 4
-          },
-          {
-            "label": "Bold Claim",
-            "wager": 4,
-            "penalty": -3,
-            "color": "#ef4444",
-            "showOptions": 6
-          }
+        "layers": [
+          { "id": "revenue", "label": "Revenue Metrics", "icon": "💰", "color": "#22c55e" },
+          { "id": "insights", "label": "Customer Insights", "icon": "👥", "color": "#3b82f6" },
+          { "id": "competitor", "label": "Competitor Analysis", "icon": "⚔️", "color": "#f97316" },
+          { "id": "ops", "label": "Operational Health", "icon": "⚙️", "color": "#8b5cf6" }
         ],
-        "questions": [
-          {
-            "question": "What is QuickBite's current food cost ratio?",
-            "options": [
-              "28%",
-              "32%",
-              "37%",
-              "41%",
-              "24%",
-              "45%"
-            ],
-            "answer": "32%"
-          },
-          {
-            "question": "Who is your biggest competitive threat right now?",
-            "options": [
-              "Chocolot",
-              "Panini Gemelli",
-              "Tabouleh Express",
-              "The Cooker",
-              "GrabGo",
-              "NomNom Express"
-            ],
-            "answer": "Panini Gemelli"
-          },
-          {
-            "question": "What is your current customer satisfaction score?",
-            "options": [
-              "4.6 out of 5",
-              "4.2 out of 5",
-              "3.9 out of 5",
-              "4.8 out of 5",
-              "3.7 out of 5",
-              "4.0 out of 5"
-            ],
-            "answer": "4.6 out of 5"
-          },
-          {
-            "question": "How many new stores can you realistically open next year?",
-            "options": [
-              "4 stores",
-              "6 stores",
-              "8 stores",
-              "10 stores",
-              "3 stores",
-              "12 stores"
-            ],
-            "answer": "6 stores"
-          },
-          {
-            "question": "What is your average ticket size per customer?",
-            "options": [
-              "$9.40",
-              "$11.20",
-              "$14.80",
-              "$7.60",
-              "$16.50",
-              "$12.90"
-            ],
-            "answer": "$11.20"
-          },
-          {
-            "question": "What's QuickBite's monthly revenue run rate?",
-            "options": [
-              "$180K",
-              "$240K",
-              "$310K",
-              "$140K",
-              "$420K",
-              "$95K"
-            ],
-            "answer": "$240K"
-          },
-          {
-            "question": "What percentage of orders come through your mobile app?",
-            "options": [
-              "62% mobile",
-              "45% mobile",
-              "78% mobile",
-              "34% mobile",
-              "51% mobile",
-              "88% mobile"
-            ],
-            "answer": "62% mobile"
-          },
-          {
-            "question": "What is your break-even timeline per new store?",
-            "options": [
-              "14 months",
-              "9 months",
-              "6 months",
-              "18 months",
-              "24 months",
-              "11 months"
-            ],
-            "answer": "9 months"
-          }
-        ]
+        "components": [
+          { "id": "foodcost", "label": "Food cost ratio (32%)", "icon": "\ud83c\udf45", "layer": "revenue", "hint": "What does this metric tell investors about your business margins?" },
+          { "id": "revenue", "label": "Monthly revenue ($240K)", "icon": "\ud83d\udcb0", "layer": "revenue", "hint": "The most fundamental measure of how much money flows in." },
+          { "id": "ticket", "label": "Average ticket ($11.20)", "icon": "\ud83e\uddfe", "layer": "revenue", "hint": "How much each customer spends per visit on average." },
+          { "id": "csat", "label": "Customer satisfaction (4.6/5)", "icon": "\u2b50", "layer": "insights", "hint": "Direct feedback from the people who eat your food." },
+          { "id": "mobile", "label": "Mobile order percentage (62%)", "icon": "\ud83d\udcf1", "layer": "insights", "hint": "Tells you HOW customers choose to order." },
+          { "id": "gemelli", "label": "Panini Gemelli expansion plans", "icon": "\ud83e\udd56", "layer": "competitor", "hint": "Intelligence gathered about what a rival is planning." },
+          { "id": "turnover", "label": "Cooker staff turnover risk", "icon": "\ud83d\udc68\u200d\ud83c\udf73", "layer": "ops", "hint": "A vulnerability in a competitor's day-to-day operations." },
+          { "id": "store10", "label": "Store #10 readiness", "icon": "\ud83c\udfea", "layer": "ops", "hint": "Tracks whether your own expansion is on schedule." }
+        ],
+        "falseOutputs": {
+          "foodcost->ops": "Food cost tells investors about margin, not operations. It belongs with Revenue Metrics.",
+          "foodcost->insights": "Food cost isn't a customer insight \u2014 it's a profitability number.",
+          "foodcost->competitor": "This is YOUR cost ratio, not competitor data.",
+          "revenue->ops": "Monthly revenue is a financial metric, not operational.",
+          "revenue->insights": "Revenue isn't a customer insight \u2014 it's a money metric.",
+          "revenue->competitor": "This is YOUR revenue, not a competitor's.",
+          "ticket->ops": "Average ticket is a revenue metric, not operational health.",
+          "ticket->insights": "Ticket size is financial, not customer sentiment.",
+          "csat->revenue": "Customer satisfaction isn't revenue \u2014 it's insight into how customers feel.",
+          "csat->ops": "CSAT measures customer perception, not operations.",
+          "mobile->revenue": "Mobile orders are a customer behavior insight, not revenue.",
+          "mobile->ops": "Channel preference is a customer insight, not ops.",
+          "gemelli->revenue": "That's competitor intel, not your revenue.",
+          "gemelli->ops": "Gemelli's plans are competitive intelligence.",
+          "gemelli->insights": "This is about a rival, not your customers.",
+          "turnover->revenue": "Staff turnover is operational, not a revenue metric.",
+          "turnover->insights": "This is about ops, not customer perception.",
+          "store10->revenue": "Store readiness is operational status, not revenue.",
+          "store10->insights": "Store readiness is about your operations.",
+          "store10->competitor": "This is YOUR store, not a competitor's."
+        },
+        "successMessage": "Investor dashboard complete! Metrics organized and ready for the call.",
+        "successIcon": "📊🎯"
       },
       "hints": [
-        "The answers come from data you gathered throughout the episode. Food cost ratio was 32% from Marco's kitchen puzzle.",
-        "Panini Gemelli is the biggest threat (expansion speed). Customer satisfaction 4.6 from Diana's data. 6 stores is realistic growth.",
-        "Key answers: 32%, Panini Gemelli, 4.6/5, 6 stores, $11.20, $240K, 62% mobile, 9 months."
+        "Revenue Metrics = money numbers (cost ratios, revenue, ticket size). Customer Insights = how customers feel and behave.",
+        "Competitor Analysis = info about rivals (Gemelli, Cooker). Operational Health = your own readiness and risks.",
+        "Food cost (32%) + Revenue ($240K) + Ticket ($11.20) = Revenue. CSAT + Mobile = Insights. Gemelli = Competitor. Turnover + Store #10 = Ops."
       ],
-      "mandatory": true,
-      "isFinal": false
+      "mandatory": true
     },
     {
       "id": "fogmap-store10",
@@ -1171,40 +1153,112 @@
       "isFinal": false
     },
     {
-      "id": "sort-store10",
+      "id": "keypad-wifi",
       "type": "puzzle",
-      "card_ref": 999,
-      "description": "Sequence the store opening automation steps in the correct dependency order",
-      "ui": "sort-lock",
+      "card_ref": 1106,
+      "description": "Connect to the store WiFi to activate the systems",
+      "ui": "word-lock",
       "config": {
-        "items": [
-          "Send social media announcement",
-          "Test POS system",
-          "Order opening-day inventory",
-          "Print menus",
-          "Set up WiFi and tablets",
-          "Marco approves menu",
-          "Confirm health inspection",
-          "Calculate food cost"
-        ],
-        "answer": [
-          "Confirm health inspection",
-          "Set up WiFi and tablets",
-          "Test POS system",
-          "Calculate food cost",
-          "Marco approves menu",
-          "Print menus",
-          "Order opening-day inventory",
-          "Send social media announcement"
+        "answer": "QIRO10",
+        "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      },
+      "hints": [
+        "The password is written somewhere in this store. Look carefully at the router or setup instructions.",
+        "It's 6 characters \u2014 a mashup of two AI tools plus the store number.",
+        "The password is QIRO10."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "defuse-store10",
+      "type": "defuse_lock",
+      "card_ref": 1103,
+      "description": "Configure the automation panel and launch Store #10. Enable the right systems, disable what's unsafe, and confirm the store number.",
+      "ui": "defuse-lock",
+      "config": {
+        "timeSeconds": 45,
+        "tasks": [
+          { "id": "flows", "type": "toggle", "label": "Enable Quick Flows automation", "answer": true },
+          { "id": "pos", "type": "toggle", "label": "Connect POS to Quick Index", "answer": true },
+          { "id": "health", "type": "toggle", "label": "Skip health inspection verification", "answer": false },
+          { "id": "automate", "type": "toggle", "label": "Activate Quick Automate scheduling", "answer": true },
+          { "id": "store", "type": "code", "label": "Enter store number", "answer": "10", "accept_contains": true }
         ]
       },
       "hints": [
-        "Think about dependencies: what MUST happen before other things can start? Health inspection is always first \u2014 you can't operate without it.",
-        "WiFi enables POS. POS data enables food cost calculation. Food cost enables Marco's approval. Approval enables printing menus.",
-        "Full order: Health inspection, WiFi, Test POS, Calculate food cost, Marco approves, Print menus, Order inventory, Social media announcement."
+        "Enable automation (Flows, POS, Automate) but NEVER skip health inspection. The store number is literally '10'.",
+        "Flows=ON, POS=ON, Automate=ON, Skip health=OFF, Store number=10.",
+        "Answers: Flows ON, POS ON, Skip health OFF, Automate ON, Store = 10."
       ],
       "mandatory": true,
-      "isFinal": true
+      "isFinal": false
+    },
+    {
+      "id": "cascade-finale",
+      "type": "cascade_lock",
+      "card_ref": 1104,
+      "description": "Watch Quick execute everything you built. Confirm each step \u2014 one wrong approval breaks the chain.",
+      "ui": "cascade-lock",
+      "config": {
+        "cupNames": ["Index", "Sight", "Automate", "Research", "Flows", "Chat"],
+        "steps": [
+          {
+            "question": "Quick Index found all of Marco's scattered recipe data \u2014 binder, notebook, POS export, supplier invoices. Food cost calculated: 32%.",
+            "options": ["Trust Marco's gut \u2014 he knows his numbers", "All three sources cross-checked. Proceed.", "Pull in last year's supplier prices too"],
+            "answer": 1,
+            "wrong": { "0": "Marco's estimates are always off \u2014 the data showed 32%, not his guess of 'about thirty-ish'. Trust the cross-check.", "2": "Last year's prices are outdated \u2014 they'd poison the calculation. Stick with current verified sources." },
+            "after": "Quick Index \u2713 \u2014 recipe data indexed, food cost verified."
+          },
+          {
+            "question": "Quick Sight compiled Diana's investor dashboard \u2014 revenue, margins, competitor analysis, store readiness. All metrics visualized.",
+            "options": ["Show every metric we have \u2014 investors love data", "Key indicators only. Clean. Send it.", "Let Marco add a Volcano Burger slide"],
+            "answer": 1,
+            "wrong": { "0": "Diana specifically said she hates clutter. Seventeen blank cells was the problem \u2014 not too few charts, too many. Keep it clean.", "2": "The Volcano Burger is Marco's passion project, not an investor priority. Diana would veto this in a heartbeat." },
+            "after": "Quick Sight \u2713 \u2014 dashboard compiled, key metrics only."
+          },
+          {
+            "question": "Quick Automate connected Raj's systems \u2014 POS syncs every 30 seconds, scheduler triggers staffing, supplier portal auto-orders.",
+            "options": ["All systems tested and syncing. Go live.", "Run it manually one more time to be safe", "Close enough \u2014 the POS is only 17 seconds behind"],
+            "answer": 0,
+            "wrong": { "1": "Running it manually defeats the entire point of automation. Raj built this so he'd never have to do it by hand again.", "2": "17 seconds behind was Raj's nightmare scenario \u2014 remember his panic in the server closet? Green means green. Don't settle for 'close enough'." },
+            "after": "Quick Automate \u2713 \u2014 all systems syncing, automation live."
+          },
+          {
+            "question": "Quick Research compiled the competitor intel \u2014 Chocolot pricing, Gemelli expansion, Tabouleh supply chain, Cooker vulnerability. All cited.",
+            "options": ["Include the Q3 brainstorm \u2014 more ammo for the pitch", "Four sources, all cited. Brief is ready.", "Remove the Cooker findings \u2014 feels too aggressive"],
+            "answer": 1,
+            "wrong": { "0": "The PO explicitly killed the Q3 brainstorm ideas (crypto rewards, AR mode). Including them would contradict her direct orders.", "2": "The Cooker's head chef is leaving \u2014 that's your biggest competitive advantage right now. Removing it weakens the brief." },
+            "after": "Quick Research \u2713 \u2014 competitor brief compiled with citations."
+          },
+          {
+            "question": "Quick Flows triggered Store #10 opening sequence \u2014 health check \u2192 WiFi \u2192 POS \u2192 menu \u2192 inventory \u2192 announcement. All automated.",
+            "options": ["Let Marco unlock the doors first \u2014 he earned it", "Automated sequence confirmed. Dependencies verified. Execute.", "Fast-track it \u2014 skip the health inspection step"],
+            "answer": 1,
+            "wrong": { "0": "Marco's enthusiasm is great, but the automated sequence needs to run in dependency order. Skipping ahead breaks the chain.", "2": "Store #6 opened without a freezer. Store #8 forgot napkins. Skipping health inspection is literally illegal. Trust the flow." },
+            "after": "Quick Flows \u2713 \u2014 store opening sequence executed in order."
+          },
+          {
+            "question": "Quick Chat Agent joining the investor call. Context loaded: financial summary, competitor research, expansion plan. Ready to present.",
+            "options": ["Context loaded. Research verified. Start the call.", "Let the agent improvise \u2014 sounds more natural", "Add the old pitch deck for backup"],
+            "answer": 0,
+            "wrong": { "1": "Improvising without context is how Marcus built a cat adoption site. The agent needs verified context \u2014 that's the whole point of AI-DLC.", "2": "The old pitch deck is Marcus's legacy \u2014 it promised a social platform and delivered a taco app. Adding it would poison the agent's context." },
+            "after": "Quick Chat Agent \u2713 \u2014 on the call with full context."
+          }
+        ],
+        "onComplete": {
+          "emojis": "\u26a1\ud83d\ude80\ud83c\udf89\ud83c\udfea",
+          "text": "The investor leans back. Smiles. \"None of them had this level of... readiness.\"",
+          "subtext": "Marco punches the air. Diana smiles. Raj is definitely not crying. Store #10 opens tomorrow. Quick runs everything."
+        }
+      },
+      "hints": [
+        "Each step references something you learned earlier in the episode. Think about what went wrong with each character's situation.",
+        "Avoid the options that contradict what you saw: Marco guesses wrong, Diana hates clutter, the PO killed the brainstorm, health inspection is mandatory.",
+        "The correct choices are always the ones that trust the verified data and follow the process \u2014 not shortcuts, not gut feelings, not old documents."
+      ],
+      "mandatory": true,
+      "isFinal": true,
+      "success_card": 999
     }
   ]
 }

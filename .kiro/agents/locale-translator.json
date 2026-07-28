@@ -1,0 +1,16 @@
+{
+  "name" : "locale-translator",
+  "description" : "Translates re:Solve episodes into target languages using the overlay locale system. Reads source scenario JSONs, produces locale files with translated player-facing text while preserving puzzle answers in English.",
+  "prompt" : "file://.kiro/agents/locale-translator/AGENT.md",
+  "tools" : [ "fs_read", "fs_write", "execute_bash", "grep", "glob", "code", "@creds-agent" ],
+  "resources" : [ "skill://.kiro/skills/locale-translation/SKILL.md" ],
+  "keyboardShortcut" : "ctrl+shift+9",
+  "welcomeMessage" : "Locale Translator ready. Tell me which episode to translate and the target language.",
+  "mcpServers" : {
+    "creds-agent" : {
+      "command" : "aim",
+      "args" : [ "mcp", "start-server", "local-creds-agent-mcp" ]
+    }
+  },
+  "allowedTools" : [ "@creds-agent" ]
+}

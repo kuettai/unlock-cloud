@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle Tester — Unlock Cloud</title>
+
+<!-- Base game styling (CSS variables) -->
+<link rel="stylesheet" href="/app/index.css">
+
+<style>
+  /* Tester-specific layout on top of app base */
+  html, body { overflow: auto !important; }
+  body {
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  .tester-header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .tester-header h1 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+  .tester-header .badge {
+    background: var(--accent);
+    color: #fff;
+    padding: 2px 8px;
+    font-size: 10px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .tester-header label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 6px;
+  }
+  .tester-header select {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    min-width: 260px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .tester-header select:hover { border-color: var(--accent); }
+
+  .tester-status {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  #warning {
+    display: none;
+    padding: 12px 20px;
+    background: rgba(239, 68, 68, 0.12);
+    border-bottom: 1px solid var(--red);
+    color: var(--red);
+    font-size: 13px;
+  }
+  #warning.active { display: block; }
+
+  #tabs {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    padding: 12px 20px 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 63px; z-index: 90;
+  }
+  .tab {
+    padding: 10px 18px;
+    background: var(--surface);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+  .tab:hover { color: var(--text); border-color: var(--accent); }
+  .tab.active {
+    background: var(--bg);
+    color: var(--accent);
+    border-color: var(--accent);
+    border-bottom: 1px solid var(--bg);
+    z-index: 2;
+  }
+  .tab .count {
+    display: inline-block;
+    background: var(--border);
+    color: var(--text);
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-left: 6px;
+    font-weight: 600;
+  }
+  .tab.active .count { background: var(--accent); color: #fff; }
+
+  #content {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .tab-panel h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .tab-panel .room-desc {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .puzzle-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .puzzle-block.solved { border-color: var(--green); }
+
+  .puzzle-head {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .puzzle-id {
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    background: rgba(59, 130, 246, 0.12);
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .puzzle-ui {
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .puzzle-mandatory {
+    font-size: 10px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .puzzle-desc {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .puzzle-mount {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 60px;
+  }
+
+  .puzzle-status {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    display: none;
+  }
+  .puzzle-status.solved {
+    display: block;
+    background: rgba(34, 197, 94, 0.14);
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-weight: 600;
+  }
+  .puzzle-status.wrong {
+    display: block;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid var(--red);
+    color: var(--red);
+  }
+
+  .puzzle-reset {
+    margin-top: 10px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 12px;
+    font-size: 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .puzzle-reset:hover { border-color: var(--accent); color: var(--text); }
+
+  .npc-note {
+    background: rgba(168, 85, 247, 0.08);
+    border: 1px solid var(--purple);
+    color: var(--text);
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .npc-note pre {
+    margin-top: 8px;
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 60px 20px;
+    font-size: 14px;
+  }
+
+  .error-box {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 12px;
+    border-radius: 6px;
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+  }
+
+  /* Base button styles from app */
+  .btn { padding: 10px 16px; border-radius: 6px; border: none; cursor: pointer; font-size: 14px; font-family: inherit; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { opacity: 0.9; }
+
+  /* Hints toggle button */
+  #toggle-hints {
+    background: transparent;
+    color: var(--purple);
+    border: 1px solid var(--purple);
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  #toggle-hints:hover { background: rgba(168, 85, 247, 0.14); }
+  #toggle-hints.active {
+    background: var(--purple);
+    color: #fff;
+  }
+  #toggle-hints:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: transparent;
+    color: var(--muted);
+    border-color: var(--border);
+  }
+
+  /* Hints block (per puzzle) */
+  .puzzle-hints {
+    display: none;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 12px 14px 12px 14px;
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.10), rgba(59, 130, 246, 0.06));
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  #content.hints-visible .puzzle-hints { display: block; }
+
+  .puzzle-hints .hints-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--purple);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .puzzle-hints ol {
+    margin: 0;
+    padding-left: 22px;
+    color: var(--text);
+  }
+  .puzzle-hints ol li {
+    margin-bottom: 6px;
+  }
+  .puzzle-hints ol li:last-child { margin-bottom: 0; }
+  .puzzle-hints .no-hints {
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="warning">
+  ⚠️ This tool must be served from <strong>localhost</strong> (dev server at <code>localhost:3000</code>).
+  Run <code>node server/dev-server.js</code> from the project root, then open
+  <code>http://localhost:3000/tools/puzzle-tester.html</code>.
+</div>
+
+<header class="tester-header">
+  <h1>Puzzle Tester <span class="badge">DEV</span></h1>
+  <div>
+    <label for="episode-select">Episode:</label>
+    <select id="episode-select">
+      <option value="">— loading —</option>
+    </select>
+  </div>
+  <button id="toggle-hints" type="button" disabled>Show All Hints</button>
+  <div class="tester-status" id="status"></div>
+</header>
+
+<nav id="tabs" style="display:none"></nav>
+
+<div id="content">
+  <div class="empty" id="empty-msg">Select an episode above to load its puzzles.</div>
+</div>
+
+<!-- Puzzle component scripts (all *.js in /app/puzzle/) -->
+<script src="/app/puzzle/4digits-lock.js"></script>
+<script src="/app/puzzle/alarm-lock.js"></script>
+<script src="/app/puzzle/arch-lock.js"></script>
+<script src="/app/puzzle/auction-lock.js"></script>
+<script src="/app/puzzle/az-lock.js"></script>
+<script src="/app/puzzle/base64-decoder.js"></script>
+<script src="/app/puzzle/bazaar-lock.js"></script>
+<script src="/app/puzzle/binary-lock.js"></script>
+<script src="/app/puzzle/blueprint-lock.js"></script>
+<script src="/app/puzzle/booking-run-lock.js"></script>
+<script src="/app/puzzle/bread-break-lock.js"></script>
+<script src="/app/puzzle/cafe-order-lock.js"></script>
+<script src="/app/puzzle/cascade-lock.js"></script>
+<script src="/app/puzzle/chain-lock.js"></script>
+<script src="/app/puzzle/cidr-lock.js"></script>
+<script src="/app/puzzle/color-lock.js"></script>
+<script src="/app/puzzle/context-lock.js"></script>
+<script src="/app/puzzle/cost-lock.js"></script>
+<script src="/app/puzzle/craft-lock.js"></script>
+<script src="/app/puzzle/crowd-counter-lock.js"></script>
+<script src="/app/puzzle/crowd-seating-lock.js"></script>
+<script src="/app/puzzle/decay-lock.js"></script>
+<script src="/app/puzzle/deck-battle-lock.js"></script>
+<script src="/app/puzzle/deduction-grid-lock.js"></script>
+<script src="/app/puzzle/defuse-lock.js"></script>
+<script src="/app/puzzle/dial-lock.js"></script>
+<script src="/app/puzzle/dns-lock.js"></script>
+<script src="/app/puzzle/equipment-rack-lock.js"></script>
+<script src="/app/puzzle/evidence-board-lock.js"></script>
+<script src="/app/puzzle/evidence-lock.js"></script>
+<script src="/app/puzzle/fog-map-lock.js"></script>
+<script src="/app/puzzle/grid-org-lock.js"></script>
+<script src="/app/puzzle/grinder-lock.js"></script>
+<script src="/app/puzzle/image-prompt-lock.js"></script>
+<script src="/app/puzzle/jar-fill-lock.js"></script>
+<script src="/app/puzzle/jigsaw-lock.js"></script>
+<script src="/app/puzzle/key-lock.js"></script>
+<script src="/app/puzzle/keypad-lock.js"></script>
+<script src="/app/puzzle/lifecycle-lock.js"></script>
+<script src="/app/puzzle/log-lock.js"></script>
+<script src="/app/puzzle/match-lock.js"></script>
+<script src="/app/puzzle/maze-lock.js"></script>
+<script src="/app/puzzle/milk-jug-lock.js"></script>
+<script src="/app/puzzle/morse-lock.js"></script>
+<script src="/app/puzzle/npc-dialog.js"></script>
+<script src="/app/puzzle/offering-table-lock.js"></script>
+<script src="/app/puzzle/path-lock.js"></script>
+<script src="/app/puzzle/pillar-lock.js"></script>
+<script src="/app/puzzle/pipe-lock.js"></script>
+<script src="/app/puzzle/policy-lock.js"></script>
+<script src="/app/puzzle/prompt-lock.js"></script>
+<script src="/app/puzzle/push-luck-lock.js"></script>
+<script src="/app/puzzle/query-lock.js"></script>
+<script src="/app/puzzle/rank-lock.js"></script>
+<script src="/app/puzzle/rotation-lock.js"></script>
+<script src="/app/puzzle/scroll-lock.js"></script>
+<script src="/app/puzzle/sequence-lock.js"></script>
+<script src="/app/puzzle/sg-lock.js"></script>
+<script src="/app/puzzle/slider-lock.js"></script>
+<script src="/app/puzzle/sort-lock.js"></script>
+<script src="/app/puzzle/spec-lock.js"></script>
+<script src="/app/puzzle/spelling-lock.js"></script>
+<script src="/app/puzzle/stock-memory-lock.js"></script>
+<script src="/app/puzzle/streak-lock.js"></script>
+<script src="/app/puzzle/tag-lock.js"></script>
+<script src="/app/puzzle/task-lock.js"></script>
+<script src="/app/puzzle/terminal-lock.js"></script>
+<script src="/app/puzzle/timeline-lock.js"></script>
+<script src="/app/puzzle/trap-disarm-lock.js"></script>
+<script src="/app/puzzle/waf-lock.js"></script>
+<script src="/app/puzzle/wager-lock.js"></script>
+<script src="/app/puzzle/wire-lock.js"></script>
+<script src="/app/puzzle/witness-lock.js"></script>
+<script src="/app/puzzle/word-lock.js"></script>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// Localhost gate
+// ─────────────────────────────────────────────────────────────
+(function () {
+  const h = location.hostname;
+  const isLocal = h === 'localhost' || h === '127.0.0.1' || h === '';
+  if (!isLocal) {
+    document.getElementById('warning').classList.add('active');
+    document.getElementById('empty-msg').textContent = 'This tool only runs from localhost.';
+  }
+})();
+
+// ─────────────────────────────────────────────────────────────
+// State
+// ─────────────────────────────────────────────────────────────
+const SCENARIO_BASE = '/scenarios/aws';
+let currentEpisode = null;
+let currentData = null; // { meta, puzzles, rooms, cards, roomIndex, puzzlesByRoom }
+
+const $ = (sel) => document.querySelector(sel);
+const setStatus = (msg) => { $('#status').textContent = msg || ''; };
+
+// ─────────────────────────────────────────────────────────────
+// Episode loading
+// ─────────────────────────────────────────────────────────────
+async function loadEpisodeList() {
+  try {
+    const res = await fetch(`${SCENARIO_BASE}/index.json`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const eps = await res.json();
+
+    // Try to fetch each episode's meta.json for a nicer label (fail-safe).
+    const metas = await Promise.all(eps.map(async (id) => {
+      try {
+        const r = await fetch(`${SCENARIO_BASE}/${id}/meta.json`);
+        if (!r.ok) return { id, title: id };
+        const m = await r.json();
+        return { id, title: m.title || id, episode: m.episode };
+      } catch { return { id, title: id }; }
+    }));
+
+    const sel = $('#episode-select');
+    sel.innerHTML = '<option value="">— select an episode —</option>';
+    metas.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m.id;
+      const epLabel = m.episode !== undefined ? `EP${m.episode} · ` : '';
+      opt.textContent = `${epLabel}${m.title}`;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener('change', (e) => {
+      const id = e.target.value;
+      if (id) loadEpisode(id);
+    });
+  } catch (err) {
+    $('#empty-msg').innerHTML = `<div class="error-box">Failed to load episode index: ${err.message}\n\nMake sure the dev server is running (node server/dev-server.js).</div>`;
+  }
+}
+
+async function loadEpisode(id) {
+  currentEpisode = id;
+  setStatus('Loading episode…');
+  const emptyMsg = $('#empty-msg');
+  if (emptyMsg) emptyMsg.style.display = 'none';
+  $('#content').innerHTML = '<div class="empty">Loading…</div>';
+  $('#tabs').style.display = 'none';
+
+  try {
+    const [meta, puzzles, rooms, cards] = await Promise.all([
+      fetchJson(`${SCENARIO_BASE}/${id}/meta.json`).catch(() => ({})),
+      fetchJson(`${SCENARIO_BASE}/${id}/puzzles.json`),
+      fetchJson(`${SCENARIO_BASE}/${id}/rooms.json`),
+      fetchJson(`${SCENARIO_BASE}/${id}/cards.json`),
+    ]);
+
+    const roomIndex = buildRoomIndex(rooms.rooms || [], cards.cards || []);
+    const puzzlesByRoom = mapPuzzlesToRooms(puzzles.puzzles || [], cards.cards || [], roomIndex);
+
+    currentData = { meta, puzzles: puzzles.puzzles || [], rooms: rooms.rooms || [], cards: cards.cards || [], roomIndex, puzzlesByRoom };
+
+    renderTabs();
+    setStatus(`${(puzzles.puzzles || []).length} puzzles across ${Object.keys(puzzlesByRoom).length} rooms`);
+    $('#toggle-hints').disabled = false;
+  } catch (err) {
+    console.error(err);
+    $('#content').innerHTML = `<div class="error-box">Failed to load ${id}: ${err.message}</div>`;
+    setStatus('');
+  }
+}
+
+async function fetchJson(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url} → HTTP ${r.status}`);
+  return r.json();
+}
+
+// ─────────────────────────────────────────────────────────────
+// Room/puzzle mapping
+// ─────────────────────────────────────────────────────────────
+// Build: room slug (from location cards) → { name, description, cardId, locationCard }
+function buildRoomIndex(rooms, cards) {
+  const cardById = {};
+  cards.forEach(c => { cardById[c.id] = c; });
+
+  const index = {};
+  rooms.forEach(r => {
+    const locCard = cardById[r.card_id];
+    const slug = locCard?.room || `room-${r.card_id}`;
+    index[slug] = {
+      name: r.name || locCard?.title || slug,
+      description: r.description || '',
+      cardId: r.card_id,
+      locationCard: locCard,
+      rawRoom: r,
+    };
+  });
+
+  // Also cover location cards that aren't in rooms.json (rare) — group under their own slug
+  cards.forEach(c => {
+    if (c.type === 'location' && c.room && !index[c.room]) {
+      index[c.room] = {
+        name: c.title || c.room,
+        description: c.description || '',
+        cardId: c.id,
+        locationCard: c,
+        rawRoom: null,
+      };
+    }
+  });
+
+  return index;
+}
+
+// Return an object mapping room slug → puzzle[]
+// Two-step matching (each puzzle assigned to first hit):
+//   1. Look at card_ref → card.room field
+//   2. Fallback: scan cards' `discoveries` for `puzzle: puzzle.id`, use that card's room
+function mapPuzzlesToRooms(puzzles, cards, roomIndex) {
+  const cardById = {};
+  cards.forEach(c => { cardById[c.id] = c; });
+
+  // Precompute: puzzle_id → room slug via discoveries
+  const puzzleToRoomViaDiscovery = {};
+  cards.forEach(c => {
+    (c.discoveries || []).forEach(d => {
+      if (d.puzzle && c.room && !puzzleToRoomViaDiscovery[d.puzzle]) {
+        puzzleToRoomViaDiscovery[d.puzzle] = c.room;
+      }
+    });
+  });
+
+  const grouped = {};
+  puzzles.forEach(p => {
+    let slug = null;
+    const refCard = cardById[p.card_ref];
+    if (refCard && refCard.room) slug = refCard.room;
+    if (!slug && puzzleToRoomViaDiscovery[p.id]) slug = puzzleToRoomViaDiscovery[p.id];
+    if (!slug) slug = '_unassigned';
+
+    if (!grouped[slug]) grouped[slug] = [];
+    grouped[slug].push(p);
+  });
+
+  // Order groups by room order in rooms.json (roomIndex insertion order roughly)
+  const ordered = {};
+  Object.keys(roomIndex).forEach(k => { if (grouped[k]) ordered[k] = grouped[k]; });
+  // Then any remaining (unassigned, or extras)
+  Object.keys(grouped).forEach(k => { if (!ordered[k]) ordered[k] = grouped[k]; });
+
+  return ordered;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Rendering
+// ─────────────────────────────────────────────────────────────
+function renderTabs() {
+  const { puzzlesByRoom, roomIndex } = currentData;
+  const tabsEl = $('#tabs');
+  const contentEl = $('#content');
+  tabsEl.innerHTML = '';
+  contentEl.innerHTML = '';
+
+  const slugs = Object.keys(puzzlesByRoom);
+  if (!slugs.length) {
+    contentEl.innerHTML = '<div class="empty">No puzzles found in this episode.</div>';
+    return;
+  }
+
+  slugs.forEach((slug, i) => {
+    const room = roomIndex[slug];
+    const puzzles = puzzlesByRoom[slug];
+    const label = room?.name || (slug === '_unassigned' ? 'Unassigned' : slug);
+
+    // Tab button
+    const tab = document.createElement('button');
+    tab.className = 'tab' + (i === 0 ? ' active' : '');
+    tab.dataset.slug = slug;
+    tab.innerHTML = `${escapeHtml(label)} <span class="count">${puzzles.length}</span>`;
+    tab.addEventListener('click', () => activateTab(slug));
+    tabsEl.appendChild(tab);
+
+    // Panel
+    const panel = document.createElement('section');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.dataset.slug = slug;
+
+    const h = document.createElement('h2');
+    h.textContent = label;
+    panel.appendChild(h);
+
+    if (room?.description) {
+      const d = document.createElement('div');
+      d.className = 'room-desc';
+      d.textContent = room.description;
+      panel.appendChild(d);
+    }
+
+    // Panel must be in DOM before we mount puzzles into it, because some
+    // puzzle components (e.g. BookingRunLock) use document.getElementById()
+    // internally, which requires their container to be attached to the document.
+    contentEl.appendChild(panel);
+    puzzles.forEach(pz => {
+      const block = createPuzzleBlock(pz);
+      panel.appendChild(block.root);
+      block.mount();
+    });
+  });
+
+  tabsEl.style.display = 'flex';
+}
+
+function activateTab(slug) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.slug === slug));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.slug === slug));
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function createPuzzleBlock(puzzle) {
+  const block = document.createElement('div');
+  block.className = 'puzzle-block';
+
+  // Header
+  const head = document.createElement('div');
+  head.className = 'puzzle-head';
+  head.innerHTML = `
+    <span class="puzzle-id">${escapeHtml(puzzle.id)}</span>
+    <span class="puzzle-ui">ui: ${escapeHtml(puzzle.ui || puzzle.type || '?')}</span>
+    ${puzzle.mandatory ? '<span class="puzzle-mandatory">mandatory</span>' : ''}
+    ${puzzle.isFinal ? '<span class="puzzle-mandatory" style="color:var(--purple)">final</span>' : ''}
+  `;
+  block.appendChild(head);
+
+  const desc = document.createElement('div');
+  desc.className = 'puzzle-desc';
+  desc.textContent = puzzle.description || '(no description)';
+  block.appendChild(desc);
+
+  // Hints block (rendered but hidden by default; toggled globally by #toggle-hints)
+  const hintsBox = document.createElement('div');
+  hintsBox.className = 'puzzle-hints' + ((puzzle.hints || []).length ? '' : ' empty-hints');
+  const hintsLabel = document.createElement('span');
+  hintsLabel.className = 'hints-label';
+  hintsLabel.textContent = `Hints (${(puzzle.hints || []).length})`;
+  hintsBox.appendChild(hintsLabel);
+  if ((puzzle.hints || []).length) {
+    const ol = document.createElement('ol');
+    puzzle.hints.forEach(h => {
+      const li = document.createElement('li');
+      li.textContent = h;
+      ol.appendChild(li);
+    });
+    hintsBox.appendChild(ol);
+  } else {
+    const nh = document.createElement('div');
+    nh.className = 'no-hints';
+    nh.textContent = 'No hints defined for this puzzle.';
+    hintsBox.appendChild(nh);
+  }
+  block.appendChild(hintsBox);
+
+  const mount = document.createElement('div');
+  mount.className = 'puzzle-mount';
+  block.appendChild(mount);
+
+  const status = document.createElement('div');
+  status.className = 'puzzle-status';
+  block.appendChild(status);
+
+  const onSolve = () => {
+    status.className = 'puzzle-status solved';
+    status.textContent = '✅ Solved!';
+    block.classList.add('solved');
+  };
+  const onFail = (msg) => {
+    status.className = 'puzzle-status wrong';
+    status.textContent = `❌ ${msg || 'Wrong. Try again.'}`;
+    setTimeout(() => {
+      if (!block.classList.contains('solved')) status.className = 'puzzle-status';
+    }, 2500);
+  };
+
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'puzzle-reset';
+  resetBtn.textContent = '↻ Reset';
+  resetBtn.addEventListener('click', () => {
+    block.classList.remove('solved');
+    status.className = 'puzzle-status';
+    mount.innerHTML = '';
+    try { mountPuzzle(mount, puzzle, onSolve, onFail); }
+    catch (err) { showMountError(mount, puzzle, err); }
+  });
+  block.appendChild(resetBtn);
+
+  return {
+    root: block,
+    // Deferred mount — call AFTER the block is appended to the document so
+    // components that call document.getElementById() find their nodes.
+    mount() {
+      try { mountPuzzle(mount, puzzle, onSolve, onFail); }
+      catch (err) { showMountError(mount, puzzle, err); }
+    }
+  };
+}
+
+function showMountError(mount, puzzle, err) {
+  console.error(`Puzzle ${puzzle.id} failed to mount:`, err);
+  mount.innerHTML = `<div class="error-box">Failed to mount: ${escapeHtml(err.message)}\n${escapeHtml(err.stack || '')}</div>`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Puzzle instantiation
+// Mirrors app/index.js showPuzzlePopup() — but engine-free.
+// ─────────────────────────────────────────────────────────────
+function mountPuzzle(mount, puzzle, onSolve, onFail) {
+  const cfg = puzzle.config || {};
+  const ui = puzzle.ui;
+
+  // NPC dialog puzzles: just show the config as text.
+  if (ui === 'npc-dialog') {
+    const note = document.createElement('div');
+    note.className = 'npc-note';
+    note.innerHTML = `
+      <strong>${escapeHtml(cfg.portrait || '🧑')} ${escapeHtml(cfg.name || 'NPC')}</strong>
+      <div style="margin-top:6px;color:var(--muted);font-style:italic">${escapeHtml(cfg.greeting || '')}</div>
+      <pre>${escapeHtml(JSON.stringify({ lines: cfg.lines, state_lines: cfg.state_lines }, null, 2))}</pre>
+    `;
+    mount.appendChild(note);
+
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-primary';
+    btn.style.marginTop = '10px';
+    btn.textContent = 'Mark solved';
+    btn.addEventListener('click', () => onSolve());
+    mount.appendChild(btn);
+    return;
+  }
+
+  // The big switch — matches app/index.js.
+  if (ui === 'sequence-lock') {
+    new SequenceLock(mount, {
+      sequence: cfg.sequence, mode: cfg.mode || 'flash',
+      flashMs: cfg.flashMs || 400, gapMs: cfg.gapMs || 200,
+      onSubmit(correct) { correct ? onSolve() : onFail('Wrong sequence.'); }
+    });
+  } else if (ui === 'jigsaw-lock') {
+    new JigsawLock(mount, {
+      cols: cfg.cols || 3, rows: cfg.rows || 3, tiles: cfg.tiles,
+      revealCorrect: cfg.revealCorrect !== false,
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'wire-lock') {
+    new WireLock(mount, {
+      wires: cfg.wires, sockets: cfg.sockets, solution: cfg.solution,
+      submitLabel: cfg.submitLabel, falseOutputs: cfg.falseOutputs || [],
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
+  } else if (ui === 'morse-lock') {
+    new MorseLock(mount, {
+      answer: cfg.answer, showReference: cfg.showReference !== false,
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'base64-decoder') {
+    new Base64Decoder(mount, { initialValue: cfg.initialValue || '' });
+    const b = document.createElement('button');
+    b.className = 'btn btn-primary'; b.style.marginTop = '10px';
+    b.textContent = 'Mark solved'; b.onclick = onSolve;
+    mount.appendChild(b);
+  } else if (ui === 'log-lock') {
+    const rawLines = cfg.lines || [];
+    const lines = rawLines[0]?.text !== undefined
+      ? rawLines
+      : rawLines.map((text, i) => ({ text, correct: (cfg.correct_lines || []).includes(i) }));
+    new LogLock(mount, {
+      lines, prompt: cfg.prompt || 'Select the lines containing critical data',
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'terminal-lock') {
+    mountTerminalLock(mount, cfg, onSolve, onFail);
+  } else if (ui === 'slider-lock') {
+    new SliderLock(mount, {
+      sliders: cfg.sliders, revealCorrect: cfg.revealCorrect !== false,
+      falseOutputs: cfg.falseOutputs || [],
+      onSubmit() { onSolve(); }, onWrong(msg) { onFail(msg); }
+    });
+  } else if (ui === 'keypad-lock') {
+    if (cfg.fields) {
+      mountMultiFieldKeypad(mount, cfg, onSolve, onFail);
+    } else {
+      new KeypadLock(mount, {
+        answer: cfg.answer || cfg.solution,
+        caseSensitive: cfg.case_sensitive,
+        onSubmit(correct) { correct ? onSolve() : onFail('Wrong code.'); }
+      });
+    }
+  } else if (ui === 'hex-decoder') {
+    mountHexDecoder(mount, cfg, onSolve);
+  } else if (ui === 'sg-lock') {
+    new SgLock(mount, {
+      rules: cfg.rules, headers: cfg.headers || null,
+      onSubmit(correct) { correct ? onSolve() : onFail('Rules rejected.'); }
+    });
+  } else if (ui === 'policy-lock') {
+    new PolicyLock(mount, {
+      template: cfg.template, blanks: cfg.blanks,
+      onSubmit(correct) { correct ? onSolve() : onFail('Policy invalid.'); }
+    });
+  } else if (ui === 'sort-lock') {
+    new SortLock(mount, {
+      items: cfg.items, answer: cfg.answer, distractors: cfg.distractors || [],
+      onSubmit(correct) { correct ? onSolve() : onFail('Wrong order.'); }
+    });
+  } else if (ui === 'match-lock') {
+    new MatchLock(mount, {
+      pairs: cfg.pairs, cols: cfg.cols || 4,
+      revealed: cfg.revealed || false, faceUp: cfg.faceUp || false,
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'word-lock') {
+    new WordLock(mount, {
+      answer: cfg.answer || cfg.solution, alphabet: cfg.alphabet || null,
+      onSubmit(word, correct) { correct ? onSolve() : onFail('Wrong word.'); }
+    });
+  } else if (ui === 'timeline-lock') {
+    new TimelineLock(mount, {
+      events: cfg.events, answer: cfg.answer,
+      onSubmit(correct) { correct ? onSolve() : onFail('Wrong timeline.'); }
+    });
+  } else if (ui === 'path-lock') {
+    new PathLock(mount, {
+      nodes: cfg.nodes, edges: cfg.edges, answer: cfg.answer,
+      onSubmit(correct) { correct ? onSolve() : onFail('Wrong route.'); }
+    });
+  } else if (ui === 'maze-lock') {
+    new MazeLock(mount, {
+      cols: cfg.cols, rows: cfg.rows, walls: cfg.walls,
+      start: cfg.start, goal: cfg.goal, maxSteps: cfg.maxSteps || 0,
+      showWalls: cfg.showWalls !== undefined ? cfg.showWalls : true,
+      showGoal: cfg.showGoal !== undefined ? cfg.showGoal : true,
+      fallOnBump: cfg.fallOnBump || false,
+      playerIcon: cfg.playerIcon || null,
+      showSteps: cfg.showSteps !== undefined ? cfg.showSteps : true,
+      checkpoints: cfg.checkpoints || [],
+      onSubmit() { onSolve(); },
+      onBump() { onFail(cfg.bumpMessage || 'You stumbled!'); }
+    });
+  } else if (ui === 'jar-fill-lock') {
+    new JarFillLock(mount, {
+      mode: cfg.mode || 'timing', jars: cfg.jars,
+      pourSpeed: cfg.pourSpeed || 2, tolerance: cfg.tolerance || 0.15,
+      onSubmit() { onSolve(); },
+      onSpill() { onFail(cfg.spillMessage || 'Water spilled!'); }
+    });
+  } else if (ui === 'crowd-counter-lock') {
+    new CrowdCounterLock(mount, {
+      rows: cfg.rows, cols: cfg.cols, clusters: cfg.clusters,
+      target: cfg.target, tolerance: cfg.tolerance || 0,
+      showTally: cfg.showTally !== undefined ? cfg.showTally : true,
+      onSubmit() { onSolve(); }, onWrong(msg) { onFail(msg); }
+    });
+  } else if (ui === 'crowd-seating-lock') {
+    new CrowdSeatingLock(mount, {
+      rows: cfg.rows, cols: cfg.cols, target: cfg.target,
+      groupSize: cfg.groupSize || 50, blocked: cfg.blocked || [],
+      onSubmit() { onSolve(); }, onWrong(msg) { onFail(msg); }
+    });
+  } else if (ui === 'offering-table-lock') {
+    new OfferingTableLock(mount, {
+      items: cfg.items,
+      onSubmit() { onSolve(); }, onWrong(msg) { onFail(msg); }
+    });
+  } else if (ui === 'bread-break-lock') {
+    new BreadBreakLock(mount, {
+      items: cfg.items, holdMin: cfg.holdMin || 0.4, holdMax: cfg.holdMax || 1.2,
+      multiplier: cfg.multiplier,
+      onSubmit() { onSolve(); }, onCrumble() { onFail('Crumbled!'); }
+    });
+  } else if (ui === 'chain-lock') {
+    new ChainLock(mount, {
+      items: cfg.items, answer: cfg.answer,
+      onSubmit(correct) { correct ? onSolve() : onFail('Wrong chain.'); }
+    });
+  } else if (ui === 'key-lock') {
+    new KeyLock(mount, {
+      fragments: cfg.fragments, encrypted: cfg.encrypted, decrypted: cfg.decrypted,
+      onSubmit(correct) { correct ? onSolve() : onFail('Decryption failed.'); }
+    });
+  } else if (ui === 'rotation-lock') {
+    new RotationLock(mount, {
+      dials: cfg.dials, revealCorrect: cfg.revealCorrect !== false,
+      falseOutputs: cfg.falseOutputs || [],
+      onSubmit() { onSolve(); }, onWrong(msg) { onFail(msg); }
+    });
+  } else if (ui === 'pillar-lock') {
+    new PillarLock(mount, {
+      pillars: cfg.pillars, statements: cfg.statements,
+      onSubmit(correct) { correct ? onSolve() : onFail('Wrong pillar.'); }
+    });
+  } else if (ui === 'audio-player') {
+    const msg = document.createElement('div');
+    msg.style.cssText = 'font-family:monospace;font-size:13px;color:var(--muted);line-height:1.8;font-style:italic;padding:16px;background:#0c0c0c;border:1px solid var(--border);border-radius:8px;margin-bottom:12px';
+    msg.textContent = cfg.message || '(audio placeholder)';
+    mount.appendChild(msg);
+    const b = document.createElement('button');
+    b.className = 'btn btn-primary'; b.textContent = 'Mark solved'; b.onclick = onSolve;
+    mount.appendChild(b);
+  } else if (ui === 'bazaar-lock') {
+    new BazaarLock(mount, {
+      budget: cfg.budget || 100,
+      stalls: (cfg.stalls || []).map(s => ({ id: s.id, label: s.name || s.label, icon: s.icon, specialty: s.specialty, cost: s.cost })),
+      quests: (cfg.quests || []).map(q => ({
+        id: q.label || q.id, label: q.label,
+        accepts: Object.entries(q.results || {}).filter(([, v]) => v.tier !== 'fail').map(([stall, v]) => ({
+          stall, tier: v.tier, reward: v.reward || v.message, msg: v.message
+        })),
+        failMsg: Object.entries(q.results || {}).filter(([, v]) => v.tier === 'fail').map(([, v]) => v.message)[0] || 'This merchant cannot handle this task.'
+      })),
+      onSubmit() { onSolve(); }, onWrong(msg) { onFail(msg); }
+    });
+  } else if (ui === 'scroll-lock') {
+    new ScrollLock(mount, {
+      title: cfg.title || 'Royal Decree',
+      clauses: (cfg.clauses || []).map(c => ({
+        text: c.text, blank: { options: c.options, answer: c.answer }
+      })),
+      constraints: cfg.constraints || [],
+      falseOutputs: cfg.falseOutputs || ['The decree is flawed.'],
+      onSubmit() { onSolve(); }, onWrong(msg) { onFail(msg); }
+    });
+  } else if (ui === 'rank-lock') {
+    new RankLock(mount, {
+      slots: cfg.slots || [], badges: cfg.badges || [],
+      extraBadges: cfg.extraBadges || [],
+      ranks: cfg.ranks || ['Soldier', 'Champion'],
+      falseOutputs: cfg.falseOutputs || [],
+      onSubmit() { onSolve(); }, onWrong(msg) { onFail(msg); }
+    });
+  } else if (ui === 'deck-battle-lock') {
+    new DeckBattleLock(mount, {
+      merchant: cfg.merchant, startingDeck: cfg.startingDeck || [],
+      gold: cfg.gold || 80,
+      onSubmit() { onSolve(); }, onWalkAway() {}
+    });
+  } else if (ui === 'equipment-rack-lock') {
+    new EquipmentRackLock(mount, {
+      slots: cfg.slots || [], upgradedQuests: [],
+      observability: cfg.observability || false,
+      cooldown: cfg.cooldown || 30,
+      tiers: cfg.tiers, target: cfg.target || 'strides',
+      onSubmit() { onSolve(); }, onDeploy() {}
+    });
+  } else if (ui === 'arch-lock') {
+    new ArchLock(mount, {
+      zones: cfg.zones || [], services: cfg.services || [],
+      solution: cfg.solution || {},
+      onSubmit(correct) { correct ? onSolve() : onFail('Wrong assignment.'); }
+    });
+  } else if (ui === 'prompt-lock') {
+    new PromptLock(mount, {
+      npc: cfg.npc, fragments: cfg.fragments || [], answers: cfg.answers || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'booking-run-lock') {
+    new BookingRunLock(mount, {
+      npc: cfg.npc, calls: cfg.calls || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'image-prompt-lock') {
+    new ImagePromptLock(mount, {
+      commissions: cfg.commissions || [], options: cfg.options || {},
+      maxAttempts: cfg.maxAttempts || 5,
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'witness-lock') {
+    new WitnessLock(mount, {
+      testimonies: cfg.testimonies || [], moments: cfg.moments || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'evidence-board-lock') {
+    new EvidenceBoardLock(mount, {
+      connections: cfg.connections || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'grinder-lock') {
+    new GrinderLock(mount, { config: cfg, onSubmit() { onSolve(); }, onWrong(m) { onFail(m); } });
+  } else if (ui === 'stock-memory-lock') {
+    new StockMemoryLock(mount, { config: cfg, onSubmit() { onSolve(); }, onWrong(m) { onFail(m); } });
+  } else if (ui === 'spelling-lock') {
+    new SpellingLock(mount, { config: cfg, onSubmit() { onSolve(); }, onWrong(m) { onFail(m); } });
+  } else if (ui === 'evidence-lock') {
+    new EvidenceLock(mount, { config: cfg, onSubmit() { onSolve(); }, onWrong(m) { onFail(m); } });
+  } else if (ui === 'milk-jug-lock') {
+    new MilkJugLock(mount, { config: cfg, onSubmit() { onSolve(); }, onWrong(m) { onFail(m); } });
+  } else if (ui === 'cascade-lock') {
+    new CascadeLock(mount, { config: cfg, onSubmit() { onSolve(); }, onWrong(m) { onFail(m); } });
+  } else if (ui === 'dial-lock') {
+    new DialLock(mount, { config: cfg, onSubmit() { onSolve(); }, onWrong(m) { onFail(m); } });
+  } else if (ui === 'cafe-order-lock') {
+    new CafeOrderLock(mount, { config: cfg, onServed() {} });
+    const b = document.createElement('button');
+    b.className = 'btn btn-primary'; b.style.marginTop = '10px';
+    b.textContent = 'Mark solved'; b.onclick = onSolve;
+    mount.appendChild(b);
+  } else if (ui === 'spec-lock') {
+    new SpecLock(mount, {
+      rounds: cfg.rounds || [],
+      falseOutputs: cfg.falseOutputs || ['The golem is still confused.'],
+      onSubmit() { onSolve(); }, onWrong(m) { onFail(m); }
+    });
+  } else if (ui === 'context-lock') {
+    new ContextLock(mount, {
+      capacity: cfg.capacity || 2000, documents: cfg.documents || [],
+      onSubmit() { onSolve(); }, onWrong(m) { onFail(m); }
+    });
+  } else if (ui === 'blueprint-lock') {
+    new BlueprintLock(mount, {
+      layers: cfg.layers || [], components: cfg.components || [],
+      falseOutputs: cfg.falseOutputs || {},
+      successMessage: cfg.successMessage || null,
+      successIcon: cfg.successIcon || null,
+      onSubmit() { onSolve(); }, onWrong(m) { onFail(m); }
+    });
+  } else if (ui === 'pipe-lock') {
+    new PipeLock(mount, {
+      cols: cfg.cols || (cfg.grid && cfg.grid.cols) || 4,
+      rows: cfg.rows || (cfg.grid && cfg.grid.rows) || 3,
+      pipes: cfg.pipes || [], source: cfg.source, sink: cfg.sink,
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'defuse-lock') {
+    new DefuseLock(mount, {
+      timeSeconds: cfg.timeSeconds || 30, tasks: cfg.tasks || [],
+      onSubmit() { onSolve(); }, onTimeout() { onFail('Time ran out!'); }
+    });
+  } else if (ui === 'craft-lock') {
+    new CraftLock(mount, {
+      materials: cfg.materials || [], rules: cfg.rules || [], goal: cfg.goal,
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'trap-disarm-lock') {
+    new TrapDisarmLock(mount, {
+      wires: cfg.wires || [], rules: cfg.rules || [],
+      solution: cfg.solution || [], maxStrikes: cfg.maxStrikes || 3,
+      onSubmit() { onSolve(); }, onFail() { onFail('Trap triggered!'); }
+    });
+  } else if (ui === 'push-luck-lock') {
+    new PushLuckLock(mount, {
+      target: cfg.target || 30, maxRounds: cfg.maxRounds || 5, bag: cfg.bag || [],
+      onSubmit() { onSolve(); }, onPenalty() { onFail('Out of rounds!'); }
+    });
+  } else if (ui === 'wager-lock') {
+    new WagerLock(mount, {
+      target: cfg.target || 10, questions: cfg.questions || [], stakes: cfg.stakes || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'auction-lock') {
+    new AuctionLock(mount, {
+      budget: cfg.budget || 100, requiredItems: cfg.requiredItems || 3, lots: cfg.lots || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'decay-lock') {
+    new DecayLock(mount, {
+      fragments: cfg.fragments || [],
+      question: cfg.question || 'What is the answer?',
+      answer: cfg.answer, answers: cfg.answers,
+      options: cfg.options || null,
+      decayRate: cfg.decayRate || 1,
+      corruptChar: cfg.corruptChar,
+      allowRetry: cfg.allowRetry || false,
+      onPenalty() {},
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'fog-map-lock') {
+    new FogMapLock(mount, {
+      cols: cfg.cols || 5, rows: cfg.rows || 5,
+      energy: cfg.energy || 8, intelNeeded: cfg.intelNeeded || 3,
+      tiles: cfg.tiles || [],
+      onSubmit() { onSolve(); }
+    });
+  } else if (ui === 'streak-lock') {
+    new StreakLock(mount, {
+      target: cfg.target || 10,
+      timePerQuestion: cfg.timePerQuestion || 10,
+      questions: cfg.questions || [],
+      onSubmit() { onSolve(); }
+    });
+  } else {
+    // Unknown ui: dump config and provide a manual solve.
+    const pre = document.createElement('pre');
+    pre.style.cssText = 'font-family:monospace;font-size:11px;color:var(--muted);background:#0c0c0c;padding:12px;border-radius:4px;overflow:auto;max-height:300px';
+    pre.textContent = JSON.stringify(cfg, null, 2);
+    mount.appendChild(pre);
+    const note = document.createElement('div');
+    note.style.cssText = 'color:var(--yellow);font-size:12px;margin-top:8px';
+    note.textContent = `⚠️ Unknown ui: "${ui}" — showing raw config.`;
+    mount.appendChild(note);
+    const b = document.createElement('button');
+    b.className = 'btn btn-primary'; b.style.marginTop = '10px';
+    b.textContent = 'Mark solved'; b.onclick = onSolve;
+    mount.appendChild(b);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Inline puzzle types (mirror index.js inline implementations)
+// ─────────────────────────────────────────────────────────────
+function mountTerminalLock(mount, cfg, onSolve, onFail) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'font-family:monospace;padding:8px 0;max-width:500px;margin:0 auto';
+  const prompt = document.createElement('div');
+  prompt.style.cssText = 'color:var(--green);font-size:14px;margin-bottom:12px;white-space:pre-wrap';
+  prompt.textContent = cfg.prompt || '>';
+  wrap.appendChild(prompt);
+  const input = document.createElement('input');
+  input.type = 'text'; input.autocomplete = 'off';
+  input.style.cssText = 'width:100%;padding:10px;background:#0c0c0c;border:1px solid var(--border);border-radius:6px;color:var(--green);font-family:monospace;font-size:14px;margin-bottom:12px';
+  input.placeholder = 'Type your answer...';
+  wrap.appendChild(input);
+  const status = document.createElement('div');
+  status.style.cssText = 'font-size:13px;color:var(--muted);text-align:center;min-height:18px;margin-bottom:12px';
+  wrap.appendChild(status);
+  const btn = document.createElement('button');
+  btn.className = 'btn btn-primary'; btn.style.cssText = 'width:100%';
+  btn.textContent = 'Submit';
+  const cfgClone = JSON.parse(JSON.stringify(cfg)); // don't mutate original
+  const doSubmit = () => {
+    const val = input.value.trim().toLowerCase();
+    const answer = (cfgClone.answer || '').toLowerCase();
+    const variations = (cfgClone.accept_variations || []).map(v => v.toLowerCase());
+    if (val === answer || variations.includes(val)) {
+      if (cfgClone.follow_up && !wrap.dataset.step2) {
+        wrap.dataset.step2 = 'true';
+        prompt.textContent = cfgClone.follow_up.prompt;
+        input.value = ''; input.placeholder = 'Type your answer...';
+        status.textContent = '✅ Accepted.'; status.style.color = 'var(--green)';
+        cfgClone.answer = cfgClone.follow_up.answer;
+        cfgClone.accept_variations = cfgClone.follow_up.accept_variations || [];
+        delete cfgClone.follow_up;
+        setTimeout(() => { status.textContent = ''; status.style.color = ''; input.focus(); }, 800);
+      } else {
+        onSolve();
+      }
+    } else {
+      const fo = cfgClone.falseOutputs;
+      status.textContent = (fo && fo.wrong_answer) || 'Incorrect. Try again.';
+      onFail((fo && fo.wrong_answer) || 'Incorrect.');
+    }
+  };
+  btn.addEventListener('click', doSubmit);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') doSubmit(); });
+  wrap.appendChild(btn);
+  mount.appendChild(wrap);
+  setTimeout(() => input.focus(), 100);
+}
+
+function mountMultiFieldKeypad(mount, cfg, onSolve, onFail) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'padding:8px 0;max-width:400px;margin:0 auto';
+  const inputs = [];
+  cfg.fields.forEach(f => {
+    const label = document.createElement('div');
+    label.style.cssText = 'font-size:12px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px';
+    label.textContent = f.label;
+    wrap.appendChild(label);
+    const input = document.createElement('input');
+    input.type = 'text'; input.autocomplete = 'off';
+    input.style.cssText = 'width:100%;padding:10px;background:#0c0c0c;border:1px solid var(--border);border-radius:6px;color:var(--green);font-family:monospace;font-size:14px;margin-bottom:12px';
+    input.placeholder = f.label;
+    wrap.appendChild(input);
+    inputs.push({ input, answer: f.answer });
+  });
+  const status = document.createElement('div');
+  status.style.cssText = 'font-size:13px;color:var(--muted);text-align:center;min-height:18px;margin-bottom:12px';
+  wrap.appendChild(status);
+  const btn = document.createElement('button');
+  btn.className = 'btn btn-primary'; btn.style.cssText = 'width:100%';
+  btn.textContent = 'Activate';
+  btn.addEventListener('click', () => {
+    const allCorrect = inputs.every(({ input, answer }) => {
+      const val = cfg.case_sensitive ? input.value.trim() : input.value.trim().toLowerCase();
+      const ans = cfg.case_sensitive ? answer : answer.toLowerCase();
+      return val === ans;
+    });
+    if (allCorrect) onSolve();
+    else { status.textContent = 'Incorrect values.'; onFail('Incorrect values.'); }
+  });
+  wrap.appendChild(btn);
+  mount.appendChild(wrap);
+  setTimeout(() => inputs[0]?.input.focus(), 100);
+}
+
+function mountHexDecoder(mount, cfg, onSolve) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'padding:8px 0;max-width:400px;margin:0 auto';
+  const label = document.createElement('div');
+  label.style.cssText = 'font-size:13px;color:var(--muted);margin-bottom:8px';
+  label.textContent = 'Enter hex string:';
+  wrap.appendChild(label);
+  const input = document.createElement('input');
+  input.type = 'text'; input.autocomplete = 'off';
+  input.style.cssText = 'width:100%;padding:10px;background:#0c0c0c;border:1px solid var(--border);border-radius:6px;color:var(--green);font-family:monospace;font-size:14px;margin-bottom:12px';
+  input.placeholder = 'e.g. 6e6574776f726b';
+  wrap.appendChild(input);
+  const result = document.createElement('div');
+  result.style.cssText = 'font-size:18px;font-family:monospace;color:var(--accent);text-align:center;min-height:24px;margin-bottom:12px';
+  wrap.appendChild(result);
+  const btn = document.createElement('button');
+  btn.className = 'btn btn-primary'; btn.style.cssText = 'width:100%';
+  btn.textContent = 'Decode';
+  btn.addEventListener('click', () => {
+    const hex = input.value.trim().replace(/\s+/g, '');
+    try {
+      let ascii = '';
+      for (let i = 0; i < hex.length; i += 2) ascii += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+      result.textContent = `→ ${ascii}`;
+    } catch { result.textContent = 'Invalid hex'; }
+  });
+  wrap.appendChild(btn);
+  const solveBtn = document.createElement('button');
+  solveBtn.className = 'btn btn-primary'; solveBtn.style.cssText = 'width:100%;margin-top:8px;background:var(--green)';
+  solveBtn.textContent = 'Mark solved'; solveBtn.onclick = onSolve;
+  wrap.appendChild(solveBtn);
+  mount.appendChild(wrap);
+}
+
+// ─────────────────────────────────────────────────────────────
+// Utils
+// ─────────────────────────────────────────────────────────────
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+// ─────────────────────────────────────────────────────────────
+// Kickoff
+// ─────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  loadEpisodeList();
+
+  // "Show All Hints" toggle — flips a class on #content; CSS reveals hint
+  // blocks inside every puzzle. Only the active tab is visible, so this
+  // effectively shows hints for the current tab's puzzles.
+  const btn = $('#toggle-hints');
+  btn.addEventListener('click', () => {
+    const content = $('#content');
+    const visible = content.classList.toggle('hints-visible');
+    btn.classList.toggle('active', visible);
+    btn.textContent = visible ? 'Hide All Hints' : 'Show All Hints';
+  });
+});
+</script>
+
+</body>
+</html>

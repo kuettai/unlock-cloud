@@ -34,11 +34,11 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
 /* Intro */
 #intro-screen{position:relative;align-items:center;justify-content:flex-end;text-align:center;padding:0;overflow:hidden}
 #intro-cover{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0}
-#intro-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to bottom,rgba(10,14,23,0) 10%,rgba(10,14,23,.7) 40%,rgba(10,14,23,.95) 55%,rgba(10,14,23,1) 65%);z-index:1}
+#intro-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to bottom,rgba(10,14,23,0) 5%,rgba(10,14,23,.8) 30%,rgba(10,14,23,.95) 45%,rgba(10,14,23,1) 55%);z-index:1}
 #intro-content{position:relative;z-index:2;padding:200px 20px 40px;max-width:440px;width:100%;margin-top:auto}
 #intro-screen h2{font-size:22px;margin-bottom:16px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.6)}
-#intro-text{text-align:left;line-height:1.7;color:var(--muted);margin-bottom:24px}
-#intro-text p{margin-bottom:10px;font-size:14px}
+#intro-text{text-align:left;line-height:1.7;color:#e0e6f0;margin-bottom:24px}
+#intro-text p{margin-bottom:10px;font-size:15px}
 
 /* Narrative bar */
 #narrative-bar{display:none;padding:8px 12px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;align-items:center;gap:8px}
@@ -311,3 +311,8 @@ header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:upper
 
 @keyframes flash-red{0%{background:var(--bg)}50%{background:#2a0a0a}100%{background:var(--bg)}}
 .penalty-flash{animation:flash-red .4s}
+
+/* Language toggle on intro screen (shown only when episode has a locales/ folder) */
+.lang-btn{padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .2s}
+.lang-btn.active{border-color:var(--green);background:rgba(0,229,255,.1);color:var(--green)}
+.lang-btn:hover{border-color:var(--green)}

@@ -1,3 +1,11 @@
 {
-  "combinations": []
+  "combinations": [
+    {
+      "card_a": 320,
+      "card_b": 321,
+      "result_card": 325,
+      "type": "item_item",
+      "description": "Anti-pattern trap: wiring Lambda directly to CloudFront skips the API layer. The internet screams. -10s penalty."
+    }
+  ]
 }

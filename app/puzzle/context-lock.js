@@ -19,6 +19,9 @@ class ContextLock {
     this.documents = opts.documents || [];
     this.onSubmit = opts.onSubmit || (() => {});
     this.onWrong = opts.onWrong || (() => {});
+    // Themeable agent label — defaults to the original "golem" theme so existing
+    // episodes are unaffected; ep8 (Macet) overrides it via config.
+    this.agentName = opts.agentName || 'golem';
     // Start with everything loaded
     this.loaded = new Set(this.documents.map(d => d.id));
     this._streamInterval = null;
@@ -89,7 +92,7 @@ class ContextLock {
     monitor.innerHTML = `
       <div class="ctxlk-mon-header">
         <span class="ctxlk-mon-dot ${isClean ? 'ctxlk-dot-green' : 'ctxlk-dot-red'}"></span>
-        <span class="ctxlk-mon-title">golem build output</span>
+        <span class="ctxlk-mon-title">${this.agentName} build output</span>
         <span class="ctxlk-mon-status">${isClean ? 'STABLE' : 'UNSTABLE'}</span>
       </div>
       <div class="ctxlk-stream" id="ctxlk-stream"></div>

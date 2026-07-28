@@ -625,46 +625,170 @@ describe('EP0.5 — Cloud Onboarding', () => {
 
 
 // ============================================================
-// EP6 — The Bolt (AI-DLC Apprentice)
+// EP6 — The Bolt (AI-DLC Apprentice, 5 rooms, 1→2→1→1 branching)
 // ============================================================
 describe('EP6 — The Bolt', () => {
   let engine;
   before(async () => { engine = await createEngine('ep6-the-bolt'); engine.start(); });
 
-  test('War Room: talk to Agent/PO, solve spec-stories → Step 1 reveals Design Lab', () => {
+  test('War Room: listen to PO, solve spec-lock → Both Context Lab and Architecture Bay unlock', () => {
     assert.equal(engine.currentRoom, 100);
-    discover(engine, 101, 'The Agent (War Room)');
     discover(engine, 102, 'The PO');
-    solvePuzzle(engine, 'spec-stories', 105, 'Stories Validated');
-    assert.ok(engine.unlockedRooms.includes(200), 'Design Lab should be unlocked');
-    // Optional lore
-    discover(engine, 110, 'Lore — The Loop');
+    solvePuzzle(engine, 'spec-lock', 105, 'Spec Validated');
+    assert.ok(engine.unlockedRooms.includes(200), 'Context Lab should be unlocked');
+    assert.ok(engine.unlockedRooms.includes(300), 'Architecture Bay should be unlocked');
   });
 
-  test('Design Lab: talk to Agent, solve wire-arch → Step 2 reveals Build Floor', () => {
+  test('Context Lab: solve context-lock → Context Package (211) awarded, read lore', () => {
     engine.navigateToRoom(200);
     assert.equal(engine.currentRoom, 200);
-    discover(engine, 201, 'The Agent (Design Lab)');
-    solvePuzzle(engine, 'wire-arch', 205, 'Architecture Validated');
-    assert.ok(engine.unlockedRooms.includes(300), 'Build Floor should be unlocked');
     discover(engine, 210, 'Lore — Context is King');
+    solvePuzzle(engine, 'context-lock', 205, 'Context Curated');
+    assert.ok(engine.inventory.includes(211), 'Context Package should be in inventory');
   });
 
-  test('Build Floor: talk to Agent, solve match-tests → Step 3 reveals Launch Pad', () => {
+  test('Architecture Bay: solve blueprint-lock → Architecture Package (311) awarded, read lore', () => {
     engine.navigateToRoom(300);
     assert.equal(engine.currentRoom, 300);
-    discover(engine, 301, 'The Agent (Build Floor)');
-    solvePuzzle(engine, 'match-tests', 305, 'Tests Verified');
-    assert.ok(engine.unlockedRooms.includes(400), 'Launch Pad should be unlocked');
     discover(engine, 310, 'Lore — Anti-Patterns');
+    solvePuzzle(engine, 'blueprint-lock', 305, 'Architecture Verified');
+    assert.ok(engine.inventory.includes(311), 'Architecture Package should be in inventory');
   });
 
-  test('Launch Pad: talk to Agent, solve sort-deploy → Shipped! (ending)', () => {
+  test('Convergence: with both packages, discover gate (350) → Review Room unlocks', () => {
+    discover(engine, 350, 'Both Packages Ready');
+    assert.ok(engine.unlockedRooms.includes(400), 'Review Room should be unlocked');
+  });
+
+  test('Review Room: sync with Agent, solve cascade-lock → Launch Pad unlocks', () => {
     engine.navigateToRoom(400);
     assert.equal(engine.currentRoom, 400);
-    discover(engine, 401, 'The Agent (Launch Pad)');
-    solvePuzzle(engine, 'sort-deploy', 499, 'Shipped!');
-    discover(engine, 410, 'Lore — Bolts not Sprints');
+    discover(engine, 401, 'The Agent (Review Room)');
+    discover(engine, 410, 'Lore — The Loop');
+    solvePuzzle(engine, 'cascade-lock', 405, 'Outcome Verified');
+    assert.ok(engine.unlockedRooms.includes(500), 'Launch Pad should be unlocked');
+  });
+
+  test('Launch Pad: solve defuse-lock → Shipped! (ending)', () => {
+    engine.navigateToRoom(500);
+    assert.equal(engine.currentRoom, 500);
+    solvePuzzle(engine, 'defuse-lock', 599, 'Shipped!');
+    assertCompleted(engine);
+  });
+});
+
+
+// ============================================================
+// EP7 — Macet (Grand Finale, 12 rooms, branching + revisits)
+// ============================================================
+describe('EP7 — Macet', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep7-macet'); engine.start(); });
+
+  test('Gridlock: read lore, solve word-lock → Control Tower opens', () => {
+    assert.equal(engine.currentRoom, 100);
+    discover(engine, 101, 'Lore — The Old Way');
+    discover(engine, 102, 'Lore — The Dual Loop');
+    solvePuzzle(engine, 'word-lock', 110, 'Conductor named');
+    assert.ok(engine.unlockedRooms.includes(200), 'Control Tower should be unlocked');
+  });
+
+  test('Control Tower: talk to Raja, restart FSM → Stage Graph opens', () => {
+    engine.navigateToRoom(200);
+    assert.equal(engine.currentRoom, 200);
+    discover(engine, 201, 'Raja');
+    solvePuzzle(engine, 'defuse-restart', 210, 'FSM restarted');
+    assert.ok(engine.unlockedRooms.includes(300), 'Stage Graph should be unlocked');
+  });
+
+  test('Stage Graph: route agents (blueprint), enter stage count → Inner Loop + Memory Vault open', () => {
+    engine.navigateToRoom(300);
+    assert.equal(engine.currentRoom, 300);
+    discover(engine, 301, 'Lore — 5 Phases');
+    solvePuzzle(engine, 'blueprint-route', 310, 'Agents Routed');
+    assert.ok(engine.inventory.includes(311), 'Composer slip should be in inventory');
+    solvePuzzle(engine, 'keypad-stages', 320, 'Stage count 14');
+    assert.ok(engine.unlockedRooms.includes(400), 'Inner Loop should be unlocked');
+    assert.ok(engine.unlockedRooms.includes(450), 'Memory Vault should be unlocked');
+  });
+
+  test('Inner Loop (4A): read lore, solve wager → verification-key in inventory', () => {
+    engine.navigateToRoom(400);
+    assert.equal(engine.currentRoom, 400);
+    discover(engine, 401, 'Lore — Two Ways to Verify');
+    solvePuzzle(engine, 'wager-verify', 410, 'verification-key');
+    assert.ok(engine.inventory.includes(410), 'verification-key should be in inventory');
+  });
+
+  test('Memory Vault (4B): solve decay, then 4digits → memory.md in inventory', () => {
+    engine.navigateToRoom(450);
+    assert.equal(engine.currentRoom, 450);
+    solvePuzzle(engine, 'decay-state', 452, 'State observed');
+    assert.ok(engine.inventory.includes(453), 'State fragments should be in inventory');
+    solvePuzzle(engine, '4digits-encode', 460, 'memory.md');
+    assert.ok(engine.inventory.includes(460), 'memory.md should be in inventory');
+  });
+
+  test('Control Tower revisit: with both items → Composer Studio opens', () => {
+    engine.navigateToRoom(200);
+    // Both items in inventory — discover the report-back card
+    discover(engine, 220, 'Report back to Raja');
+    assert.ok(engine.unlockedRooms.includes(500), "Composer's Studio should be unlocked");
+  });
+
+  test("Composer's Studio: read lore, solve context-lock → Verification Lab opens", () => {
+    engine.navigateToRoom(500);
+    assert.equal(engine.currentRoom, 500);
+    discover(engine, 501, 'Lore — Right-Size or Suffer');
+    solvePuzzle(engine, 'context-golem', 510, 'Golem unloaded');
+    assert.ok(engine.unlockedRooms.includes(600), 'Verification Lab should be unlocked');
+  });
+
+  test('Verification Lab: read lore, solve prompt-lock → Sub-Agent Bay + Audit Trail open', () => {
+    engine.navigateToRoom(600);
+    assert.equal(engine.currentRoom, 600);
+    discover(engine, 601, 'Lore — Generate Verify Learn');
+    solvePuzzle(engine, 'prompt-verify', 610, 'Verification prompt');
+    assert.ok(engine.unlockedRooms.includes(700), 'Sub-Agent Bay should be unlocked');
+    assert.ok(engine.unlockedRooms.includes(750), 'Audit Trail should be unlocked');
+  });
+
+  test('Sub-Agent Bay (7A): solve fog-map → Podium opens', () => {
+    engine.navigateToRoom(700);
+    assert.equal(engine.currentRoom, 700);
+    solvePuzzle(engine, 'fogmap-agents', 710, 'Sub-agents dispatched');
+    assert.ok(engine.unlockedRooms.includes(800), 'Podium should be unlocked');
+  });
+
+  test('Audit Trail (7B): read lore, solve evidence-lock (Podium already unlocked via 7A, idempotent)', () => {
+    engine.navigateToRoom(750);
+    assert.equal(engine.currentRoom, 750);
+    discover(engine, 751, 'Lore — 72 Events');
+    solvePuzzle(engine, 'evidence-audit', 760, 'Audit traced');
+    // Podium remains unlocked; both branches idempotently reveal room 800
+    assert.ok(engine.unlockedRooms.includes(800), 'Podium should still be unlocked');
+  });
+
+  test("Conductor's Podium: solve streak-lock with items → Release Gate opens", () => {
+    engine.navigateToRoom(800);
+    assert.equal(engine.currentRoom, 800);
+    // items 410 + 460 already in inventory from Rooms 4A and 4B
+    solvePuzzle(engine, 'streak-conduct', 810, 'Orchestra played');
+    assert.ok(engine.unlockedRooms.includes(900), 'Release Gate should be unlocked');
+  });
+
+  test('Release Gate: read lore, proceed → Learning Loop opens', () => {
+    engine.navigateToRoom(900);
+    assert.equal(engine.currentRoom, 900);
+    discover(engine, 901, 'Lore — Traffic Cleared');
+    discover(engine, 910, 'Proceed to Learning Loop');
+    assert.ok(engine.unlockedRooms.includes(1000), 'Learning Loop should be unlocked');
+  });
+
+  test('Learning Loop: solve cascade-lock → Macet Selesai (ending)', () => {
+    engine.navigateToRoom(1000);
+    assert.equal(engine.currentRoom, 1000);
+    solvePuzzle(engine, 'cascade-learning', 999, 'Macet selesai');
     assertCompleted(engine);
   });
 });

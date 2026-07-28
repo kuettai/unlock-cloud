@@ -7,7 +7,7 @@
   "lore_ids": [110, 310, 410, 510],
   "all_lore_bonus": 5,
   "stars": [
-    { "min": 65, "stars": 5 },
+    { "min": 58, "stars": 5 },
     { "min": 50, "stars": 4 },
     { "min": 35, "stars": 3 },
     { "min": 20, "stars": 2 },

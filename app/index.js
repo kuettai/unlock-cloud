@@ -31,7 +31,10 @@ const GUEST_MODE = new URLSearchParams(location.search).get('mode') === 'guest';
 engine.onLeaderboardEvent = (event, payload) => {
   if (GUEST_MODE) return;
   leaderboard.push(event, payload);
-  if (event === 'game_complete') leaderboard.flush().then(res => { if (res && res.timer) engine.syncTimer(res.timer); });
+  if (event === 'game_complete') {
+    leaderboard.stopPeriodicFlush();
+    leaderboard.flush().then(res => { if (res && res.timer) engine.syncTimer(res.timer); });
+  }
   // History log
   _historyLog(event, payload);
 };
@@ -43,6 +46,7 @@ engine.onLeaderboardEvent = (event, payload) => {
 // only knows about local time and just toasts "Time expired! You can keep playing..."
 leaderboard.onGameEnded = (game) => {
   if (engine.finished) return; // already ended client-side (player completed normally)
+  leaderboard.stopPeriodicFlush();
   if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
   engine.finished = true;
   engine._timerExpired = true; // routes showEndScreen() into the "Overtime"/failure branch
@@ -108,7 +112,176 @@ const SFX = {
 let timerInterval = null;
 let currentPuzzleId = null;
 let activePuzzlePopupId = null;
+let activePuzzleAward = null;
 let lastEvent = null;
+
+// ── Role system ("Choose Your Lane") ──
+// Puzzle configs may carry role variants (e.g. title_builder, components_planner).
+// resolveRoleCfg promotes the active role's variant onto the base key IN PLACE.
+// For any episode/puzzle without *_builder/_planner/_strategist keys this is a no-op,
+// so existing episodes are completely unaffected.
+const ROLE_META = {
+  builder: { icon: '🧑‍💻', label: 'Builder', tagline: 'I build things', covers: 'Developer, DevOps, SRE, Platform Engineer' },
+  planner: { icon: '📋', label: 'Planner', tagline: 'I shape what gets built', covers: 'PM, BA, QA, Designer, UX Researcher' },
+  strategist: { icon: '💼', label: 'Strategist', tagline: 'I drive business outcomes', covers: 'Executive, Manager, Business User, Sales' }
+};
+let currentRole = 'builder';
+try { currentRole = localStorage.getItem('resolve_role') || 'builder'; } catch {}
+if (!ROLE_META[currentRole]) currentRole = 'builder';
+
+function resolveRoleCfg(cfg) {
+  if (!cfg || typeof cfg !== 'object') return cfg;
+  const sfx = '_' + currentRole;
+  for (const k of Object.keys(cfg)) {
+    if (k.endsWith(sfx) && k.length > sfx.length) cfg[k.slice(0, -sfx.length)] = cfg[k];
+  }
+  return cfg;
+}
+
+function cfgHasRoleVariants(cfg) {
+  return !!cfg && typeof cfg === 'object' && Object.keys(cfg).some(k => /_(builder|planner|strategist)$/.test(k));
+}
+
+function setRole(r) {
+  if (!ROLE_META[r] || r === currentRole) return;
+  currentRole = r;
+  try { localStorage.setItem('resolve_role', r); } catch {}
+  if (activePuzzlePopupId) showPuzzlePopup(activePuzzlePopupId, activePuzzleAward);
+}
+
+function _injectRoleBar(mount, cfg) {
+  if (!mount) return;
+  if (!document.getElementById('role-bar-css')) {
+    const s = document.createElement('style');
+    s.id = 'role-bar-css';
+    s.textContent = '.role-bar{display:flex;gap:6px;justify-content:center;align-items:center;margin:0 0 10px}.role-bar .rb-lbl{font-size:10px;color:var(--muted,#7a8ba8);text-transform:uppercase;letter-spacing:1px;margin-right:4px}.role-btn{padding:5px 10px;border:1px solid var(--border,#1e2a45);background:var(--surface,#141b2d);border-radius:8px;font-size:16px;cursor:pointer;opacity:.45;transition:all .15s}.role-btn.active{opacity:1;border-color:var(--accent,#3b82f6);box-shadow:0 0 8px rgba(59,130,246,.3)}.role-prompt{font-size:13px;color:var(--text,#e0e6f0);text-align:center;margin:0 0 12px;font-weight:600}';
+    document.head.appendChild(s);
+  }
+  const frag = document.createDocumentFragment();
+  const bar = document.createElement('div');
+  bar.className = 'role-bar';
+  bar.innerHTML = '<span class="rb-lbl">Lane</span>' + Object.entries(ROLE_META).map(([id, m]) =>
+    `<button class="role-btn ${id === currentRole ? 'active' : ''}" title="${m.label}" onclick="setRole('${id}')">${m.icon}</button>`
+  ).join('');
+  frag.appendChild(bar);
+  if (cfg && cfg.title) {
+    const t = document.createElement('div');
+    t.className = 'role-prompt';
+    t.textContent = cfg.title;
+    frag.appendChild(t);
+  }
+  mount.insertBefore(frag, mount.firstChild);
+}
+
+function renderRoleChooser() {
+  const host = document.getElementById('intro-role-chooser');
+  if (!host) return;
+  host.innerHTML = '<div class="rc-title">Choose your lane</div>'
+    + '<div class="rc-sub">All lanes reach the same destination — same difficulty, same time, same learning. Switch anytime; no progress lost.</div>'
+    + '<div class="rc-row">'
+    + Object.entries(ROLE_META).map(([id, m]) =>
+        `<button class="rc-btn ${id === currentRole ? 'active' : ''}" onclick="pickRole('${id}')"><span class="rc-head"><span class="rc-icon">${m.icon}</span><span class="rc-name">${m.label}</span></span><span class="rc-tag">"${m.tagline}"</span><span class="rc-covers">${m.covers}</span></button>`
+      ).join('')
+    + '</div>';
+}
+
+function pickRole(id) {
+  setRole(id);
+  renderRoleChooser();
+}
+
+// "You just learned" card — shown after key puzzles. Non-dismissible for 3s, then tap to continue.
+function showLearningCard(text, onContinue) {
+  try { SFX.lore(); } catch {}
+  if (!document.getElementById('learn-card-css')) {
+    const s = document.createElement('style');
+    s.id = 'learn-card-css';
+    s.textContent = '.learn-overlay{position:fixed;inset:0;z-index:9998;background:rgba(6,9,17,.82);display:flex;align-items:center;justify-content:center;padding:20px;animation:learn-fade .25s}.learn-card{max-width:420px;width:100%;background:var(--surface,#141b2d);border:2px solid var(--purple,#a855f7);border-radius:14px;padding:22px;box-shadow:0 10px 40px rgba(168,85,247,.25);text-align:center;animation:learn-pop .3s}.learn-badge{display:inline-block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--purple,#a855f7);border:1px solid var(--purple,#a855f7);border-radius:20px;padding:3px 12px;margin-bottom:12px}.learn-text{font-size:15px;line-height:1.55;color:var(--text,#e0e6f0);margin-bottom:18px}.learn-continue{padding:11px 26px;border:none;border-radius:9px;font-size:14px;font-weight:600;background:var(--border,#1e2a45);color:var(--muted,#7a8ba8);transition:all .2s;cursor:default}.learn-continue.ready{background:var(--purple,#a855f7);color:#fff;cursor:pointer;box-shadow:0 0 14px rgba(168,85,247,.4)}@keyframes learn-fade{from{opacity:0}to{opacity:1}}@keyframes learn-pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}';
+    document.head.appendChild(s);
+  }
+  const overlay = document.createElement('div');
+  overlay.className = 'learn-overlay';
+  const card = document.createElement('div');
+  card.className = 'learn-card';
+  const badge = document.createElement('div');
+  badge.className = 'learn-badge';
+  badge.textContent = 'You just learned';
+  const body = document.createElement('div');
+  body.className = 'learn-text';
+  body.textContent = text;
+  const btn = document.createElement('button');
+  btn.className = 'learn-continue';
+  btn.disabled = true;
+  card.appendChild(badge);
+  card.appendChild(body);
+  card.appendChild(btn);
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+
+  let remaining = 3;
+  btn.textContent = `Read this… (${remaining})`;
+  const iv = setInterval(() => {
+    remaining--;
+    if (remaining > 0) {
+      btn.textContent = `Read this… (${remaining})`;
+    } else {
+      clearInterval(iv);
+      btn.disabled = false;
+      btn.classList.add('ready');
+      btn.textContent = 'Continue →';
+    }
+  }, 1000);
+
+  const done = () => {
+    if (btn.disabled) return; // locked for the first 3 seconds
+    clearInterval(iv);
+    overlay.remove();
+    if (onContinue) onContinue();
+  };
+  btn.addEventListener('click', done);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) done(); });
+}
+
+// Episode background image — cover/center (no stretch), with a dark scrim for readability. Opt-in via meta.background.
+function applyEpisodeBackground() {
+  const bg = engine.meta && engine.meta.background;
+  if (!bg) return;
+  const url = `${ASSET_BASE}/${bg}`;
+  const gs = document.getElementById('game-screen');
+  if (gs) {
+    gs.style.background = `linear-gradient(rgba(10,14,23,.88), rgba(10,14,23,.95)), url('${url}') center center / cover no-repeat`;
+    gs.style.backgroundAttachment = 'fixed';
+  }
+}
+
+// AIDLC learning recap on the end screen — opt-in via meta.learning_recap.
+function renderLearningRecap() {
+  const existing = document.getElementById('aidlc-recap');
+  if (existing) existing.remove();
+  const r = engine.meta && engine.meta.learning_recap;
+  if (!r) return;
+  if (!document.getElementById('aidlc-recap-css')) {
+    const s = document.createElement('style');
+    s.id = 'aidlc-recap-css';
+    s.textContent = '.ar-card{background:linear-gradient(160deg,#141b2d,#0d1424);border:2px solid var(--purple,#a855f7);border-radius:14px;padding:18px;margin:18px 0;text-align:center;box-shadow:0 8px 30px rgba(168,85,247,.15)}.ar-title{font-size:15px;font-weight:800;color:var(--purple,#a855f7);margin-bottom:14px}.ar-cycle{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:14px}.ar-stage{display:flex;align-items:center;gap:8px;justify-content:center}.ar-box{background:var(--bg,#0a0e17);border:2px solid var(--accent,#3b82f6);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--text,#e0e6f0);min-width:120px}.ar-note{font-size:11px;color:var(--muted,#7a8ba8);text-align:left}.ar-arrow{color:var(--accent,#3b82f6);font-size:12px;line-height:1}.ar-benefits{display:flex;flex-direction:column;gap:5px;text-align:left;max-width:280px;margin:0 auto 12px}.ar-benefit{font-size:12px;color:var(--text,#e0e6f0)}.ar-link{display:inline-block;font-size:12px;color:var(--accent,#3b82f6);text-decoration:underline;word-break:break-all}';
+    document.head.appendChild(s);
+  }
+  const cycle = (r.cycle || []).map((c, i, arr) =>
+    `<div class="ar-stage"><div class="ar-box">${c.stage}</div><div class="ar-note">← ${c.note}</div></div>` + (i < arr.length - 1 ? '<div class="ar-arrow">▼</div>' : '')
+  ).join('');
+  const benefits = (r.benefits || []).map(b => `<div class="ar-benefit">✓ ${b}</div>`).join('');
+  const link = r.link ? `<a class="ar-link" href="${r.link.url}" target="_blank" rel="noopener">🔗 ${r.link.label}</a>` : '';
+  const el = document.createElement('div');
+  el.id = 'aidlc-recap';
+  el.className = 'ar-card';
+  el.innerHTML = `<div class="ar-title">${r.title || 'What You Just Learned'}</div><div class="ar-cycle">${cycle}</div><div class="ar-benefits">${benefits}</div>${link}`;
+  const lore = document.getElementById('end-lore');
+  if (lore && lore.parentNode) lore.parentNode.insertBefore(el, lore);
+  else { const ec = document.getElementById('end-content'); if (ec) ec.appendChild(el); }
+}
+
+// Lane choice (manual vs AI express) is handled organically inside Room 200
+// (Requirements Tollbooth) via its discovery buttons — no fullscreen popup.
 let lastPenalty = null;
 let visitedRooms = new Set();
 let lastKnownRoomCount = 0;
@@ -155,11 +328,32 @@ function renderNarrativeText() {
   const n = engine.narrative;
   let segments = [];
   const voices = n.voices || {};
+  const narOverride = engine.t('narrative');
 
   if (currentNarrativeKey === 'intro' && n.intro) {
     segments = n.intro.segments || [{ text: (n.intro.text || []).join(' ') }];
+    if (narOverride && narOverride.intro && Array.isArray(narOverride.intro.segments)) {
+      segments = segments.map((s, i) => {
+        const ov = narOverride.intro.segments.find(o => o.index === i);
+        return ov ? { ...s, text: ov.text } : s;
+      });
+    }
   } else if (currentNarrativeKey === 'ending_success' && n.ending?.success) {
     segments = n.ending.success.segments || [{ text: (n.ending.success.text || []).join(' ') }];
+    if (narOverride && narOverride.ending && narOverride.ending.success && Array.isArray(narOverride.ending.success.segments)) {
+      segments = segments.map((s, i) => {
+        const ov = narOverride.ending.success.segments.find(o => o.index === i);
+        return ov ? { ...s, text: ov.text } : s;
+      });
+    }
+  } else if (currentNarrativeKey === 'ending_failure' && n.ending?.failure) {
+    segments = n.ending.failure.segments || [{ text: (n.ending.failure.text || []).join(' ') }];
+    if (narOverride && narOverride.ending && narOverride.ending.failure && Array.isArray(narOverride.ending.failure.segments)) {
+      segments = segments.map((s, i) => {
+        const ov = narOverride.ending.failure.segments.find(o => o.index === i);
+        return ov ? { ...s, text: ov.text } : s;
+      });
+    }
   }
 
   panel.innerHTML = segments.map(s => {
@@ -173,6 +367,14 @@ const ADMIN = new URLSearchParams(location.search).get('admin') === 'true';
 
 (async () => {
   await engine.load();
+  // Restore saved locale (opt-in per episode: only if this episode has locales)
+  try {
+    const savedLocale = localStorage.getItem('resolve-locale');
+    if (savedLocale && savedLocale !== 'en' && engine.localesAvailable.some(l => l.code === savedLocale)) {
+      await engine.applyLocale(savedLocale);
+    }
+  } catch {}
+  applyUiTranslations();
   engine.onUpdate = () => { renderGame(); renderAdmin(); };
   window._cafeOrderBadgeUpdate = () => {
     const pending = typeof CafeOrderLock !== 'undefined' ? CafeOrderLock.getPending() : 0;
@@ -218,12 +420,90 @@ function showScreen(id) {
 function renderIntro() {
   const intro = engine.narrative.intro;
   const el = document.getElementById('intro-text');
-  const segments = intro.segments || [{ text: (intro.text || []).join(' ') }];
+  let segments = intro.segments || [{ text: (intro.text || []).join(' ') }];
+  // Overlay translated segments if a locale is active
+  const narOverride = engine.t('narrative');
+  if (narOverride && narOverride.intro && Array.isArray(narOverride.intro.segments)) {
+    segments = segments.map((s, i) => {
+      const override = narOverride.intro.segments.find(o => o.index === i);
+      return override ? { ...s, text: override.text } : s;
+    });
+  }
   el.innerHTML = segments.map(s => `<p>${s.text || (s.ssml || '').replace(/<[^>]+>/g, '')}</p>`).join('');
-  document.querySelector('#intro-screen h2').textContent = `Episode ${engine.meta.episode}: ${engine.meta.title}`;
+  const metaTitle = engine.t('meta', null, 'title') || engine.meta.title;
+  document.querySelector('#intro-screen h2').textContent = `Episode ${engine.meta.episode}: ${metaTitle}`;
   document.getElementById('intro-cover').src = `${ASSET_BASE}/assets/cover.png`;
-  document.getElementById('intro-cover').alt = engine.meta.title;
-  document.getElementById('start-btn').textContent = engine.meta.start_button || 'Start';
+  document.getElementById('intro-cover').alt = metaTitle;
+  document.getElementById('start-btn').textContent = engine.t('meta', null, 'start_button') || engine.meta.start_button || 'Start';
+
+  // Language toggle — only shown if the episode ships with locales/index.json
+  const langContainer = document.getElementById('lang-toggle-container');
+  if (langContainer) {
+    if (engine.localesAvailable && engine.localesAvailable.length > 0) {
+      langContainer.style.display = 'flex';
+      const enBtn = `<button class="lang-btn ${!engine.activeLocale ? 'active' : ''}" onclick="switchLocale('en')">🇬🇧 English</button>`;
+      const localeBtns = engine.localesAvailable.map(loc =>
+        `<button class="lang-btn ${engine.activeLocale === loc.code ? 'active' : ''}" onclick="switchLocale('${loc.code}')">${loc.flag || ''} ${loc.label}</button>`
+      ).join('');
+      langContainer.innerHTML = enBtn + localeBtns;
+    } else {
+      langContainer.style.display = 'none';
+    }
+  }
+
+  applyUiTranslations();
+}
+
+async function switchLocale(code) {
+  await engine.applyLocale(code);
+  try { localStorage.setItem('resolve-locale', code); } catch {}
+  renderIntro();
+  applyUiTranslations();
+}
+
+// Overlay translated text on hardcoded UI chrome (bottom nav, popups, headers).
+// Called after locale changes and on initial load. Emoji prefixes are preserved.
+// Missing translations fall back to the current English text.
+function applyUiTranslations() {
+  const T = (key) => engine.t('ui', null, key);
+  const set = (selector, key, prefix) => {
+    const el = typeof selector === 'string' ? document.querySelector(selector) : selector;
+    if (!el) return;
+    const val = T(key);
+    if (!val) return;
+    el.textContent = prefix ? `${prefix} ${val}` : val;
+  };
+
+  // Bottom navigation — preserve emoji + badge span
+  const rewriteBtn = (id, key, prefix) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const val = T(key);
+    if (!val) return;
+    const badge = el.querySelector('.badge');
+    el.innerHTML = `${prefix} ${val}${badge ? ' ' + badge.outerHTML : ''}`;
+  };
+  rewriteBtn('btn-map', 'map', '🗺️');
+  rewriteBtn('btn-combine-mode', 'interact', '🎒');
+  rewriteBtn('btn-tools', 'tools', '🔧');
+
+  // Hints button in bottom nav is not id'd — target by onclick attribute
+  document.querySelectorAll('#bottom-bar .tab-btn').forEach(btn => {
+    if (btn.getAttribute('onclick') === 'useHint()') {
+      const val = T('hints');
+      if (val) btn.textContent = `💡 ${val}`;
+    }
+  });
+
+  // Puzzle popup Hint button
+  const hintBtn = document.getElementById('puzzle-hint-btn');
+  if (hintBtn) { const v = T('hint'); if (v) hintBtn.textContent = v; }
+
+  // Screen headers (Map / Tools panels)
+  const mapHeader = document.querySelector('#map-top h3');
+  if (mapHeader) { const v = T('map'); if (v) mapHeader.textContent = v; }
+  const toolsHeader = document.querySelector('#tools-top h3');
+  if (toolsHeader) { const v = T('tools'); if (v) toolsHeader.textContent = `🔧 ${v}`; }
 }
 
 async function startGame() {
@@ -322,7 +602,9 @@ function renderGame() {
 
   // Center room
   if (room) {
-    let img = room.image ? `<img class="room-img" src="${ASSET_BASE}/${room.image}" alt="${room.title}" onerror="this.style.display='none'">` : '';
+    const roomTitle = (engine.t('cards', room.id, 'title') || room.title);
+    const roomDesc = (engine.t('cards', room.id, 'description') || room.description);
+    let img = room.image ? `<img class="room-img" src="${ASSET_BASE}/${room.image}" alt="${roomTitle}" onerror="this.style.display='none'">` : '';
     let extra = '';
     if (room.hidden_elements && !engine.solvedPuzzles.has(room.puzzle_ref)) {
       const hp = engine.puzzles[room.puzzle_ref] || {};
@@ -344,8 +626,16 @@ function renderGame() {
 
     // Banners (always update)
     let banners = '';
-    if (lastEvent) banners += `<div class="event-banner"><div class="ev-title">${lastEvent.title}</div><div class="ev-desc">${lastEvent.description}</div></div>`;
-    if (lastPenalty) banners += `<div class="penalty-banner"><div class="pen-title">${lastPenalty.title}</div><div class="pen-desc">${lastPenalty.description}</div></div>`;
+    if (lastEvent) {
+      const eTitle = engine.t('cards', lastEvent.id, 'title') || lastEvent.title;
+      const eDesc = engine.t('cards', lastEvent.id, 'description') || lastEvent.description;
+      banners += `<div class="event-banner"><div class="ev-title">${eTitle}</div><div class="ev-desc">${eDesc}</div></div>`;
+    }
+    if (lastPenalty) {
+      const pTitle = engine.t('cards', lastPenalty.id, 'title') || lastPenalty.title;
+      const pDesc = engine.t('cards', lastPenalty.id, 'description') || lastPenalty.description;
+      banners += `<div class="penalty-banner"><div class="pen-title">${pTitle}</div><div class="pen-desc">${pDesc}</div></div>`;
+    }
     const existingBanners = container.querySelectorAll('.event-banner,.penalty-banner');
     existingBanners.forEach(b => b.remove());
     if (banners) container.insertAdjacentHTML('afterbegin', banners);
@@ -353,17 +643,17 @@ function renderGame() {
     if (roomChanged) {
       container.dataset.roomId = String(room.id);
       if (visitedRooms.has(room.id)) {
-        showRoomBanner(room.title);
+        showRoomBanner(roomTitle);
       } else {
         visitedRooms.add(room.id);
-        showRoomBanner(room.title);
+        showRoomBanner(roomTitle);
       }
       let roomHtml = banners;
       if (room.image) {
-        img = `<img class="room-img" src="${ASSET_BASE}/${room.image}" alt="${room.title}" onload="this.parentElement.style.opacity=1" onerror="this.style.display='none';this.parentElement.style.opacity=1">`;
-        roomHtml += `<div class="room-card" style="opacity:0;transition:opacity 1.5s ease">${img}<div class="room-title">${room.title}</div><div class="room-desc">${room.description}</div>${extra}</div>`;
+        img = `<img class="room-img" src="${ASSET_BASE}/${room.image}" alt="${roomTitle}" onload="this.parentElement.style.opacity=1" onerror="this.style.display='none';this.parentElement.style.opacity=1">`;
+        roomHtml += `<div class="room-card" style="opacity:0;transition:opacity 1.5s ease">${img}<div class="room-title">${roomTitle}</div><div class="room-desc">${roomDesc}</div>${extra}</div>`;
       } else {
-        roomHtml += `<div class="room-card room-fadein">${img}<div class="room-title">${room.title}</div><div class="room-desc">${room.description}</div>${extra}</div>`;
+        roomHtml += `<div class="room-card room-fadein">${img}<div class="room-title">${roomTitle}</div><div class="room-desc">${roomDesc}</div>${extra}</div>`;
       }
 
       roomHtml += buildDiscoveryHtml();
@@ -391,7 +681,8 @@ function renderGame() {
     newRooms.forEach(cardId => {
       const roomDef = engine.rooms.find(r => r.card_id === cardId);
       const card = engine.cards[cardId];
-      showRoomUnlock(roomDef?.name || card?.title || 'Unknown Area');
+      const name = engine.t('cards', cardId, 'title') || roomDef?.name || card?.title || 'Unknown Area';
+      showRoomUnlock(name);
     });
   }
   lastKnownRoomCount = roomCount;
@@ -405,9 +696,10 @@ function renderGame() {
     queue.forEach((card, i) => {
       setTimeout(() => {
         const icon = card.type === 'item' ? '🔴' : '🟣';
-        const loreLabel = engine.meta.lore_label || 'Memory Fragment';
+        const loreLabel = engine.t('meta', null, 'lore_label') || engine.meta.lore_label || 'Memory Fragment';
         const label = card.type === 'item' ? 'Item acquired' : loreLabel;
-        showToast(`${icon} ${label}: ${card.title}`, false);
+        const cardTitle = engine.t('cards', card.id, 'title') || card.title;
+        showToast(`${icon} ${label}: ${cardTitle}`, false);
         if (card.type === 'lore') SFX.lore(); else SFX.discover();
       }, i * 800);
     });
@@ -426,7 +718,9 @@ function renderCard(card, selectable) {
   const onclick = selectable ? `onclick="toggleSelect(${card.id})"` : '';
   const flavor = card.flavor_text ? `<div class="card-flavor">${card.flavor_text}</div>` : '';
   const img = card.image ? `<img style="width:100%;max-height:60px;object-fit:contain;border-radius:6px;margin-bottom:8px" src="${ASSET_BASE}/${card.image}" onerror="this.style.display='none'">` : '';
-  return `<div class="${cls}" ${onclick}>${img}<div class="card-header"><span class="card-title">${card.title}</span><span class="card-id">#${card.id}</span></div><div class="card-desc">${card.description}</div>${flavor}</div>`;
+  const title = engine.t('cards', card.id, 'title') || card.title;
+  const desc = engine.t('cards', card.id, 'description') || card.description;
+  return `<div class="${cls}" ${onclick}>${img}<div class="card-header"><span class="card-title">${title}</span><span class="card-id">#${card.id}</span></div><div class="card-desc">${desc}</div>${flavor}</div>`;
 }
 
 function setBadge(id, n) {
@@ -439,42 +733,50 @@ function buildDiscoveryHtml() {
   const active = all.filter(d => !d.done && d.available);
   const done = all.filter(d => d.done);
   if (!active.length && !done.length) return '';
+
+  // Look up per-room discovery-label translations. Stored under
+  // cards.<room_card_id>.discoveries as { "<disc_card_id>": "translated label" }.
+  const room = engine.getActiveRoom();
+  const roomOverlay = room ? engine.t('cards', room.id) : null;
+  const discOverlay = (roomOverlay && roomOverlay.discoveries) || {};
+  const tLabel = (d) => discOverlay[String(d.card_id)] || d.label;
+
   let html = '<div class="discoveries">';
   active.forEach(d => {
     const puzzle = d.puzzle ? engine.puzzles[d.puzzle] : null;
     const isTool = puzzle && puzzle.type === 'tool';
     const isNpc = isTool && puzzle.ui === 'npc-dialog';
-    const icon = isNpc ? (puzzle.config?.portrait || '🧑') : isTool ? '🔧' : d.puzzle ? '🔒' : '👁';
+    let icon = isNpc ? (puzzle.config?.portrait || '🧑') : isTool ? '🔧' : d.puzzle ? '🔒' : '👁';
     const cls = isTool ? 'discover-btn tool-btn' : 'discover-btn';
     let subtitle = '';
     if (d.requires_item) {
       const reqs = Array.isArray(d.requires_item) ? d.requires_item : [d.requires_item];
-      const names = reqs.map(id => engine.cards[id]?.title || '').filter(Boolean);
+      const names = reqs.map(id => engine.t('cards', id, 'title') || engine.cards[id]?.title || '').filter(Boolean);
       if (names.length) subtitle = `<div style="font-size:10px;color:var(--green);margin-top:2px;opacity:.7">🔓 ${names.join(' + ')}</div>`;
     }
-    html += `<button class="${cls}" onclick="discover(${d.card_id},'${d.puzzle||''}')"><span class="discover-icon">${icon}</span><div>${d.label}${subtitle}</div></button>`;
+    html += `<button class="${cls}" onclick="discover(${d.card_id},'${d.puzzle||''}')"><span class="discover-icon">${icon}</span><div>${tLabel(d)}${subtitle}</div></button>`;
   });
   done.forEach(d => {
     const card = engine.cards[d.card_id];
-    const name = card ? ` — ${card.title}` : '';
-    html += `<button class="discover-btn done"><span class="discover-icon">✓</span>${d.label}${name}</button>`;
+    const cardTitle = card ? (engine.t('cards', card.id, 'title') || card.title) : '';
+    const name = cardTitle ? ` — ${cardTitle}` : '';
+    html += `<button class="discover-btn done"><span class="discover-icon">✓</span>${tLabel(d)}${name}</button>`;
   });
   const locked = all.filter(d => !d.done && !d.available);
   locked.forEach(d => {
-    let missing = '';
-    const uid = 'lock-' + d.card_id;
+    let reqHtml = '';
     if (d.requires_item) {
       const reqs = Array.isArray(d.requires_item) ? d.requires_item : [d.requires_item];
       const missingItems = reqs.filter(r => !engine.inventory.includes(r) && !engine.visibleCards.has(r) && !engine.discoveredCards.has(r) && !(engine.revealedCards && engine.revealedCards.has(r)));
       if (missingItems.length) {
-        const names = missingItems.map(id => engine.cards[id]?.title || `#${id}`).join(', ');
+        const names = missingItems.map(id => engine.t('cards', id, 'title') || engine.cards[id]?.title || `#${id}`).join(', ');
         const revealed = engine['_lockRevealed_' + d.card_id];
         missing = `<div id="${uid}" style="${revealed ? '' : 'display:none;'}font-size:11px;color:var(--red);margin-top:4px">Missing: ${names}</div>`;
       }
     }
     const revealed = engine['_lockRevealed_' + d.card_id];
     const onclick = revealed ? '' : `onclick="if(!engine['_lockRevealed_${d.card_id}']){engine['_lockRevealed_${d.card_id}']=true;engine.penaltySeconds+=15;showToast('⏱️ -15 seconds',true);var el=document.getElementById('${uid}');if(el)el.style.display='block'}"`;
-    html += `<button class="discover-btn" style="opacity:.5;cursor:pointer" ${onclick}><span class="discover-icon">🔒</span><div>${d.label}${missing}</div></button>`;
+    html += `<button class="discover-btn" style="opacity:.5;cursor:pointer" ${onclick}><span class="discover-icon">🔒</span><div>${tLabel(d)}${missing}</div></button>`;
   });
   html += '</div>';
   return html;
@@ -517,7 +819,9 @@ function renderCombineCards() {
 }
 
 function renderConsumedCard(card) {
-  return `<div class="card ${card.color}" style="opacity:.35;pointer-events:none"><div class="card-header"><span class="card-title">${card.title}</span><span class="card-id">#${card.id}</span></div><div class="card-desc">${card.description}</div></div>`;
+  const title = engine.t('cards', card.id, 'title') || card.title;
+  const desc = engine.t('cards', card.id, 'description') || card.description;
+  return `<div class="card ${card.color}" style="opacity:.35;pointer-events:none"><div class="card-header"><span class="card-title">${title}</span><span class="card-id">#${card.id}</span></div><div class="card-desc">${desc}</div></div>`;
 }
 
 function toggleSelect(id) {
@@ -576,12 +880,12 @@ function showEventPopup(card, consumed) {
   document.getElementById('popup-type').textContent = 'Success';
   document.getElementById('popup-type').className = 'popup-type';
   document.getElementById('popup-type').style.color = 'var(--yellow)';
-  document.getElementById('popup-title').textContent = card.title;
-  document.getElementById('popup-desc').textContent = card.description;
+  document.getElementById('popup-title').textContent = engine.t('cards', card.id, 'title') || card.title;
+  document.getElementById('popup-desc').textContent = engine.t('cards', card.id, 'description') || card.description;
   const flavor = document.getElementById('popup-flavor');
   if (consumed.length) {
     flavor.style.display = '';
-    flavor.innerHTML = '<div class="consumed-list">Used: ' + consumed.map(c => `<span>${c.title}</span>`).join('') + '</div>';
+    flavor.innerHTML = '<div class="consumed-list">Used: ' + consumed.map(c => `<span>${engine.t('cards', c.id, 'title') || c.title}</span>`).join('') + '</div>';
   } else {
     flavor.style.display = 'none';
   }
@@ -632,9 +936,11 @@ function showPuzzlePopup(puzzleId, awardCardId) {
   const puzzle = engine.puzzles[puzzleId];
   if (!puzzle) return;
   activePuzzlePopupId = puzzleId;
+  activePuzzleAward = awardCardId;
+  const cfg = resolveRoleCfg(engine.getPuzzleConfig(puzzleId));
   const popup = document.getElementById('puzzle-popup');
   const mount = document.getElementById('puzzle-mount');
-  document.getElementById('puzzle-popup-title').textContent = puzzle.description;
+  document.getElementById('puzzle-popup-title').textContent = engine.t('puzzles', puzzleId, 'description') || puzzle.description;
   document.getElementById('puzzle-hint-box').style.display = 'none';
   document.getElementById('puzzle-hint-btn').style.display = puzzle.type === 'tool' ? 'none' : '';
   mount.innerHTML = '';
@@ -644,20 +950,25 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     engine.solvedPuzzles.add(puzzleId);
     if (engine.onLeaderboardEvent) engine.onLeaderboardEvent('puzzle_solved', { puzzleId });
     SFX.solve();
-    const successCard = puzzle.success_card || awardCardId;
-    if (successCard !== awardCardId) engine.discoverCard(awardCardId);
-    const prevInv = [...engine.inventory];
-    const card = engine.discoverCard(successCard);
-    const consumed = prevInv.filter(id => !engine.inventory.includes(id));
-    if (consumed.length) {
-      const names = consumed.map(id => engine.cards[id]?.title || '').filter(Boolean).join(', ');
-      if (names) setTimeout(() => showToast(`Used: ${names}`, false), 300);
-    }
-    if (!card && engine.cards[successCard]?.is_ending) {
-      engine.finished = true; engine.completed = true; engine.endTime = Date.now();
-    }
-    if (card && !card.is_ending) showDiscoverPopup(card);
-    renderGame();
+    const finishSolve = () => {
+      const successCard = puzzle.success_card || awardCardId;
+      if (successCard !== awardCardId) engine.discoverCard(awardCardId);
+      const prevInv = [...engine.inventory];
+      const card = engine.discoverCard(successCard);
+      const consumed = prevInv.filter(id => !engine.inventory.includes(id));
+      if (consumed.length) {
+        const names = consumed.map(id => engine.cards[id]?.title || '').filter(Boolean).join(', ');
+        if (names) setTimeout(() => showToast(`Used: ${names}`, false), 300);
+      }
+      if (!card && engine.cards[successCard]?.is_ending) {
+        engine.finished = true; engine.completed = true; engine.endTime = Date.now();
+      }
+      if (card && !card.is_ending) showDiscoverPopup(card);
+      renderGame();
+    };
+    // "You just learned" card — mandatory brief teaching moment before the reward
+    if (cfg && cfg.learning_card) showLearningCard(cfg.learning_card, finishSolve);
+    else finishSolve();
   };
   const onFail = (msg) => {
     SFX.wrong();
@@ -665,7 +976,6 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     engine.penalties++;
     if (engine.onLeaderboardEvent) engine.onLeaderboardEvent('penalty', { seconds: 0, reason: msg || 'wrong_answer', puzzleId });
   };
-  const cfg = engine.getPuzzleConfig(puzzleId);
 
   if (puzzle.ui === 'sequence-lock') {
     new SequenceLock(mount, {
@@ -880,6 +1190,13 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       faceUp: cfg.faceUp || false,
       onSubmit() { onSolve(); }
     });
+  } else if (puzzle.ui === 'traffic-lane-lock') {
+    new TrafficLaneLock(mount, {
+      tasks: cfg.tasks || [],
+      lanes: cfg.lanes || null,
+      onSubmit() { onSolve(); },
+      onWrong(msg) { onFail(msg); }
+    });
   } else if (puzzle.ui === 'word-lock') {
     new WordLock(mount, {
       answer: cfg.answer || cfg.solution,
@@ -982,12 +1299,12 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       state_lines: cfg.state_lines || [],
       hasCard(id) { return engine.visibleCards.has(id) || engine.discoveredCards.has(id); }
     });
-    // NPC dialogs don't solve — just close
+    // Closing the NPC dialog marks the puzzle as solved
     const closeBtn = document.createElement('button');
     closeBtn.className = 'btn btn-primary';
     closeBtn.style.cssText = 'width:100%;margin-top:12px';
     closeBtn.textContent = 'End Conversation';
-    closeBtn.onclick = () => popup.classList.remove('open');
+    closeBtn.onclick = () => onSolve();
     mount.appendChild(closeBtn);
   } else if (puzzle.ui === 'audio-player') {
     const wrap = document.createElement('div');
@@ -1168,6 +1485,8 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     new SpecLock(mount, {
       rounds: cfg.rounds || [],
       falseOutputs: cfg.falseOutputs || ['The golem is still confused.'],
+      agentName: cfg.agentName,
+      cliName: cfg.cliName,
       onSubmit() { onSolve(); },
       onWrong(msg) { onFail(msg); }
     });
@@ -1175,6 +1494,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     new ContextLock(mount, {
       capacity: cfg.capacity || 2000,
       documents: cfg.documents || [],
+      agentName: cfg.agentName,
       onSubmit() { onSolve(); },
       onWrong(msg) { onFail(msg); }
     });
@@ -1183,6 +1503,8 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       layers: cfg.layers || [],
       components: cfg.components || [],
       falseOutputs: cfg.falseOutputs || {},
+      successMessage: cfg.successMessage || null,
+      successIcon: cfg.successIcon || null,
       onSubmit() { onSolve(); },
       onWrong(msg) { onFail(msg); }
     });
@@ -1246,8 +1568,15 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       question: cfg.question || 'What is the answer?',
       answer: cfg.answer,
       answers: cfg.answers,
+      options: cfg.options || null,
       decayRate: cfg.decayRate || 1,
       corruptChar: cfg.corruptChar,
+      allowRetry: cfg.allowRetry || false,
+      onPenalty: (seconds) => {
+        engine.penaltySeconds += seconds;
+        if (engine.onLeaderboardEvent) engine.onLeaderboardEvent('penalty', { seconds, reason: 'Circle back' });
+        showToast('-30 seconds penalty', true);
+      },
       onSubmit() { onSolve(); }
     });
   } else if (puzzle.ui === 'fog-map-lock') {
@@ -1276,6 +1605,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     });
   }
 
+  if (puzzle.type !== 'tool' && cfgHasRoleVariants(cfg)) _injectRoleBar(mount, cfg);
   popup.classList.add('open');
 }
 
@@ -1286,10 +1616,11 @@ function showDiscoverPopup(card) {
   const img = document.getElementById('popup-img');
   if (card.image) { img.src = `${ASSET_BASE}/${card.image}`; img.style.display = ''; }
   else { img.style.display = 'none'; }
-  document.getElementById('popup-type').textContent = card.type === 'item' ? 'Item Found' : card.type === 'object' ? 'Object Found' : card.type === 'lore' ? (engine.meta.lore_label || 'Memory Fragment') : card.type === 'event' ? 'Event' : 'Discovered';
+  const loreLabel = engine.t('meta', null, 'lore_label') || engine.meta.lore_label || 'Memory Fragment';
+  document.getElementById('popup-type').textContent = card.type === 'item' ? 'Item Found' : card.type === 'object' ? 'Object Found' : card.type === 'lore' ? loreLabel : card.type === 'event' ? 'Event' : 'Discovered';
   document.getElementById('popup-type').className = `popup-type ${card.color}`;
-  document.getElementById('popup-title').textContent = card.title;
-  document.getElementById('popup-desc').textContent = card.short_description || card.description;
+  document.getElementById('popup-title').textContent = engine.t('cards', card.id, 'title') || card.title;
+  document.getElementById('popup-desc').textContent = card.short_description || engine.t('cards', card.id, 'description') || card.description;
   const flavor = document.getElementById('popup-flavor');
   if (card.flavor_text) { flavor.textContent = card.flavor_text; flavor.style.display = ''; }
   else { flavor.style.display = 'none'; }
@@ -1493,7 +1824,8 @@ function renderMap() {
     tile.dataset.id = id;
 
     const imgSrc = card?.image ? `${ASSET_BASE}/${card.image}` : '';
-    tile.innerHTML = `${imgSrc ? `<img src="${imgSrc}" onerror="this.style.display='none'">` : ''}${isCurrent ? '<div class="iso-pin"><div class="iso-pin-head"></div><div class="iso-pin-stick"></div></div>' : ''}${remaining > 0 && isUnlocked ? `<div class="iso-badge">${remaining}</div>` : ''}<div class="iso-label">${r.name}</div>`;
+    const roomLabel = engine.t('cards', id, 'title') || r.name;
+    tile.innerHTML = `${imgSrc ? `<img src="${imgSrc}" onerror="this.style.display='none'">` : ''}${isCurrent ? '<div class="iso-pin"><div class="iso-pin-head"></div><div class="iso-pin-stick"></div></div>' : ''}${remaining > 0 && isUnlocked ? `<div class="iso-badge">${remaining}</div>` : ''}<div class="iso-label">${roomLabel}</div>`;
 
     tile.addEventListener('click', () => {
       if (!isUnlocked) return;
@@ -1503,7 +1835,8 @@ function renderMap() {
       tile.classList.add('selected');
       const status = isCurrent ? '📍 You are here' : remaining > 0 ? `⚠️ ${remaining} action${remaining > 1 ? 's' : ''} remaining` : '✅ Explored';
       const info = document.getElementById('iso-info');
-      info.innerHTML = `<div class="iso-info-name">${r.name}</div><div class="iso-info-status">${status}</div>${r.unlock_text ? `<div class="iso-info-unlock">${r.unlock_text}</div>` : ''}${!isCurrent ? `<button class="iso-info-btn" onclick="goToRoom(${id})">Go Here</button>` : ''}`;
+      const unlockText = engine.t('rooms', id, 'unlock_text') || r.unlock_text;
+      info.innerHTML = `<div class="iso-info-name">${roomLabel}</div><div class="iso-info-status">${status}</div>${unlockText ? `<div class="iso-info-unlock">${unlockText}</div>` : ''}${!isCurrent ? `<button class="iso-info-btn" onclick="goToRoom(${id})">Go Here</button>` : ''}`;
     });
 
     floor.appendChild(tile);
@@ -1561,7 +1894,8 @@ function renderMapVoxel(el, roomDefs, unlocked) {
     // Use 25maps/<name>.png based on room name
     const slug = r.name.toLowerCase().replace(/\s+/g, '-');
     const imgSrc = `${mapDir}/${slug}.png`;
-    tile.innerHTML = `<img src="${imgSrc}" onerror="this.style.display='none'">${isCurrent ? '<div class="iso-pin">📍</div>' : ''}${remaining > 0 && isUnlocked ? `<div class="iso-badge">${remaining}</div>` : ''}<div class="iso-label">${r.name}</div>`;
+    const roomLabel = engine.t('cards', id, 'title') || r.name;
+    tile.innerHTML = `<img src="${imgSrc}" onerror="this.style.display='none'">${isCurrent ? '<div class="iso-pin">📍</div>' : ''}${remaining > 0 && isUnlocked ? `<div class="iso-badge">${remaining}</div>` : ''}<div class="iso-label">${roomLabel}</div>`;
 
     tile.addEventListener('click', () => {
       if (!isUnlocked) return;
@@ -1571,7 +1905,8 @@ function renderMapVoxel(el, roomDefs, unlocked) {
       tile.classList.add('selected');
       const status = isCurrent ? '📍 You are here' : remaining > 0 ? `⚠️ ${remaining} action${remaining > 1 ? 's' : ''} remaining` : '✅ Explored';
       const info = document.getElementById('iso-info');
-      info.innerHTML = `<div class="iso-info-name">${r.name}</div><div class="iso-info-status">${status}</div>${r.unlock_text ? `<div class="iso-info-unlock">${r.unlock_text}</div>` : ''}${!isCurrent ? `<button class="iso-info-btn" onclick="goToRoom(${id})">Go Here</button>` : ''}`;
+      const unlockText = engine.t('rooms', id, 'unlock_text') || r.unlock_text;
+      info.innerHTML = `<div class="iso-info-name">${roomLabel}</div><div class="iso-info-status">${status}</div>${unlockText ? `<div class="iso-info-unlock">${unlockText}</div>` : ''}${!isCurrent ? `<button class="iso-info-btn" onclick="goToRoom(${id})">Go Here</button>` : ''}`;
     });
 
     floor.appendChild(tile);
@@ -1600,8 +1935,10 @@ function renderMapList(el, roomDefs, unlocked) {
     const cls = `map-room ${isCurrent ? 'current' : ''} ${hasRemaining ? 'unsolved' : ''}`;
     const status = isCurrent ? 'You are here' : hasRemaining ? `${remaining} action${remaining > 1 ? 's' : ''} remaining` : 'Explored';
     const badge = hasRemaining ? `<span class="map-badge">${remaining}</span>` : '';
-    const unlock = roomDef.unlock_text ? `<div class="room-unlock">Unlocked: ${roomDef.unlock_text}</div>` : '';
-    let html = `<div class="map-node"><div class="${cls}" onclick="goToRoom(${id})"><div class="room-dot"></div><div class="room-info"><div class="room-name">${roomDef.name}${badge}</div><div class="room-status">${status}</div>${unlock}</div></div>`;
+    const unlockTextTrans = engine.t('rooms', id, 'unlock_text') || roomDef.unlock_text;
+    const unlock = unlockTextTrans ? `<div class="room-unlock">Unlocked: ${unlockTextTrans}</div>` : '';
+    const roomLabel = engine.t('cards', id, 'title') || roomDef.name;
+    let html = `<div class="map-node"><div class="${cls}" onclick="goToRoom(${id})"><div class="room-dot"></div><div class="room-info"><div class="room-name">${roomLabel}${badge}</div><div class="room-status">${status}</div>${unlock}</div></div>`;
     const children = (roomDef.connects_to || []).map(cid => roomDefs.find(r => r.card_id === cid)).filter(Boolean);
     if (children.length === 1) { html += `<div class="map-connector"><span class="line">→</span></div>${renderNode(children[0])}`; }
     else if (children.length > 1) { html += `<div class="map-connector"><span class="line">→</span></div><div class="map-branch">${children.map(c => `<div class="map-branch-col">${renderNode(c)}</div>`).join('')}</div>`; }
@@ -1809,9 +2146,19 @@ function showEndScreen() {
   const endImg = document.getElementById('end-bg');
   const timedOut = engine._timerExpired || engine.getRemainingSeconds() < 0;
   const succeeded = engine.completed && !timedOut;
-  const imgUrl = `${ASSET_BASE}/assets/${succeeded ? 'ending-success' : 'ending-failure'}.png`;
+  let imgUrl;
+  if (succeeded) {
+    const _s = engine.narrative.ending && engine.narrative.ending.success;
+    const _usedAidlc = engine.solvedPuzzles.has('ctx-aidlc') || engine.solvedPuzzles.has('wordlock-bolts') || (engine.unlockedRooms || []).includes(600);
+    const _img = _s && (_usedAidlc ? _s.image : (_s.image_manual || _s.image));
+    imgUrl = `${ASSET_BASE}/${_img || 'assets/ending-success.png'}`;
+  } else {
+    const _f = engine.narrative.ending && engine.narrative.ending.failure;
+    imgUrl = `${ASSET_BASE}/${(_f && _f.image) || 'assets/ending-failure.png'}`;
+  }
   document.getElementById('end-screen').style.backgroundImage = `url('${imgUrl}')`;
-  document.getElementById('end-screen').style.backgroundSize = 'cover';
+  document.getElementById('end-screen').style.backgroundSize = 'contain';
+  document.getElementById('end-screen').style.backgroundRepeat = 'no-repeat';
   document.getElementById('end-screen').style.backgroundPosition = 'top center';
   // Fade in gradient overlay with content
   const endOverlay = document.getElementById('end-overlay');
@@ -1823,12 +2170,19 @@ function showEndScreen() {
 
   if (succeeded) {
     SFX.complete();
-    document.getElementById('end-title').textContent = engine.meta.end_title || 'Mission Complete';
+    document.getElementById('end-title').textContent = engine.t('meta', null, 'end_title') || engine.meta.end_title || 'Mission Complete';
     setNarrative('ending_success');
     playVoice('ending_success.wav');
     const ending = engine.narrative.ending?.success;
     if (ending) {
-      const segments = ending.segments || [{ text: (ending.text || []).join(' ') }];
+      let segments = ending.segments || [{ text: (ending.text || []).join(' ') }];
+      const narOverride = engine.t('narrative');
+      if (narOverride && narOverride.ending && narOverride.ending.success && Array.isArray(narOverride.ending.success.segments)) {
+        segments = segments.map((s, i) => {
+          const ov = narOverride.ending.success.segments.find(o => o.index === i);
+          return ov ? { ...s, text: ov.text } : s;
+        });
+      }
       document.getElementById('end-message').innerHTML = segments.map(s => s.text || (s.ssml || '').replace(/<[^>]+>/g, '')).join('<br><br>');
     }
   } else {
@@ -1837,7 +2191,14 @@ function showEndScreen() {
     if (failEnding) {
       setNarrative('ending_failure');
       playVoice('ending_failure.wav');
-      const segments = failEnding.segments || [{ text: (failEnding.text || []).join(' ') }];
+      let segments = failEnding.segments || [{ text: (failEnding.text || []).join(' ') }];
+      const narOverride = engine.t('narrative');
+      if (narOverride && narOverride.ending && narOverride.ending.failure && Array.isArray(narOverride.ending.failure.segments)) {
+        segments = segments.map((s, i) => {
+          const ov = narOverride.ending.failure.segments.find(o => o.index === i);
+          return ov ? { ...s, text: ov.text } : s;
+        });
+      }
       document.getElementById('end-message').innerHTML = segments.map(s => s.text || (s.ssml || '').replace(/<[^>]+>/g, '')).join('<br><br>');
     } else {
       document.getElementById('end-message').textContent = timedOut ? 'You finished, but time had already run out.' : 'Try again.';
@@ -1875,14 +2236,16 @@ function showEndScreen() {
   // Memory Fragments collected
   const allLore = Object.values(engine.cards).filter(c => c.type === 'lore');
   const found = allLore.filter(c => engine.visibleCards.has(c.id) || engine.discoveredCards.has(c.id) || (engine.revealedCards && engine.revealedCards.has(c.id)));
-  const loreName = engine.meta.lore_label || 'Memory Fragments';
+  const loreName = engine.t('meta', null, 'lore_label') || engine.meta.lore_label || 'Memory Fragments';
   let loreHtml = `<h3 style="font-size:14px;color:var(--purple);margin-bottom:12px">${loreName} (${found.length}/${allLore.length})</h3>`;
   allLore.sort((a, b) => a.id - b.id).forEach(c => {
     const collected = engine.visibleCards.has(c.id) || engine.discoveredCards.has(c.id) || (engine.revealedCards && engine.revealedCards.has(c.id));
+    const cTitle = engine.t('cards', c.id, 'title') || c.title;
+    const cDesc = engine.t('cards', c.id, 'description') || c.description;
     if (collected) {
-      loreHtml += `<div style="background:var(--surface);border:1px solid var(--purple);border-radius:8px;padding:12px;margin-bottom:8px"><div style="font-size:12px;color:var(--purple);font-weight:700;margin-bottom:4px">${c.title}</div><div style="font-size:13px;color:var(--muted);line-height:1.5">${c.description}</div></div>`;
+      loreHtml += `<div style="background:var(--surface);border:1px solid var(--purple);border-radius:8px;padding:12px;margin-bottom:8px"><div style="font-size:12px;color:var(--purple);font-weight:700;margin-bottom:4px">${cTitle}</div><div style="font-size:13px;color:var(--muted);line-height:1.5">${cDesc}</div></div>`;
     } else {
-      loreHtml += `<div style="background:var(--surface);border:1px dashed var(--border);border-radius:8px;padding:12px;margin-bottom:8px;opacity:.4"><div style="font-size:12px;color:var(--muted);font-weight:700">${c.title} — Not found</div></div>`;
+      loreHtml += `<div style="background:var(--surface);border:1px dashed var(--border);border-radius:8px;padding:12px;margin-bottom:8px;opacity:.4"><div style="font-size:12px;color:var(--muted);font-weight:700">${cTitle} — Not found</div></div>`;
     }
   });
   document.getElementById('end-lore').innerHTML = loreHtml;
@@ -1900,7 +2263,7 @@ function showEndScreen() {
     const isUnlocked = unlocked.has(id);
     const cls = `map-room ${isUnlocked ? '' : 'locked'}`;
     const status = isUnlocked ? 'Explored' : 'Not reached';
-    let html = `<div class="map-node"><div class="${cls}" style="cursor:default"><div class="room-dot" ${isUnlocked ? '' : 'style="background:var(--border)"'}></div><div class="room-info"><div class="room-name">${roomDef.name}</div><div class="room-status">${status}</div></div></div>`;
+    let html = `<div class="map-node"><div class="${cls}" style="cursor:default"><div class="room-dot" ${isUnlocked ? '' : 'style="background:var(--border)"'}></div><div class="room-info"><div class="room-name">${engine.t('cards', id, 'title') || roomDef.name}</div><div class="room-status">${status}</div></div></div>`;
     const children = (roomDef.connects_to || []).map(cid => roomDefs.find(r => r.card_id === cid)).filter(Boolean);
     if (children.length === 1) {
       html += `<div class="map-connector"><span class="line">│</span></div>`;
@@ -1915,4 +2278,5 @@ function showEndScreen() {
   }
   const root = roomDefs.find(r => r.unlocked_by === null);
   mapEl.innerHTML = `<h3 style="font-size:14px;color:var(--green);margin-bottom:12px">Map</h3>` + (root ? renderEndNode(root) : '');
+  renderLearningRecap();
 }

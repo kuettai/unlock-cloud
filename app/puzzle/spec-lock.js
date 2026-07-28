@@ -15,7 +15,19 @@ class SpecLock {
     this.rounds = opts.rounds || [];
     this.onSubmit = opts.onSubmit || (() => {});
     this.onWrong = opts.onWrong || (() => {});
-    this.falseOutputs = opts.falseOutputs || ['The golem is still confused.'];
+    // Themeable agent name — when omitted, the original "golem" theme is used
+    // verbatim (ep4/ep6). A proper name (e.g. ep8's "Kiro") switches to
+    // name-friendly phrasing so sentences stay grammatical.
+    this.agentName = opts.agentName || null;
+    this.cliName = opts.cliName || 'golem-cli';
+    const A = this.agentName;
+    this._txt = {
+      awaiting: A ? `${A} is ready. What do you want it to build?` : 'The golem awaits your command. What do you want it to build?',
+      send: '⏎ Send to ' + (A || 'Golem'),
+      done: A ? `All specs validated! ${A} knows exactly what to build.` : 'All specs validated! The golem knows exactly what to build.',
+      builds: A ? `✅ Spec validated! ${A} builds correctly.` : '✅ Spec validated! The golem builds correctly.'
+    };
+    this.falseOutputs = opts.falseOutputs || [A ? `${A} is still confused.` : 'The golem is still confused.'];
     this.currentRound = 0;
     this.selections = [];
     this.phase = 'vibe'; // 'vibe' → 'chaos' → 'spec'
@@ -59,7 +71,8 @@ class SpecLock {
     }
 
     if (this.currentRound >= this.rounds.length) {
-      wrap.innerHTML += `<div class="speclk-done"><div class="speclk-done-icon">🤖✨</div><div class="speclk-done-text">All specs validated! The golem knows exactly what to build.</div></div>`;
+      const doneText = this.cfg.doneText || 'All specs validated! The golem knows exactly what to build.';
+      wrap.innerHTML += `<div class="speclk-done"><div class="speclk-done-icon">🤖✨</div><div class="speclk-done-text">${doneText}</div></div>`;
       this.container.appendChild(wrap);
       this._injectStyles();
       setTimeout(() => this.onSubmit(), 600);
@@ -80,14 +93,15 @@ class SpecLock {
 
     const intro = document.createElement('div');
     intro.className = 'speclk-intro';
-    intro.innerHTML = `<div class="speclk-intro-icon">🤖</div><div class="speclk-intro-text">The golem awaits your command. What do you want it to build?</div>`;
+    const introText = this.cfg.introText || 'The golem awaits your command. What do you want it to build?';
+    intro.innerHTML = `<div class="speclk-intro-icon">🤖</div><div class="speclk-intro-text">${introText}</div>`;
     wrap.appendChild(intro);
 
     // Fake terminal with the vibe prompt pre-filled
     const terminal = document.createElement('div');
     terminal.className = 'speclk-terminal';
     terminal.innerHTML = `
-      <div class="speclk-term-header"><span class="speclk-term-dot" style="background:#e94560"></span><span class="speclk-term-dot" style="background:#f39c12"></span><span class="speclk-term-dot" style="background:#2ecc71"></span><span class="speclk-term-title">golem-cli</span></div>
+      <div class="speclk-term-header"><span class="speclk-term-dot" style="background:#e94560"></span><span class="speclk-term-dot" style="background:#f39c12"></span><span class="speclk-term-dot" style="background:#2ecc71"></span><span class="speclk-term-title">${this.cliName}</span></div>
       <div class="speclk-term-body">
         <div class="speclk-term-line"><span class="speclk-term-prompt">you@project:~$</span> <span class="speclk-term-cmd">kiro build</span></div>
         <div class="speclk-term-line speclk-term-response">🤖 What should I build?</div>
@@ -102,7 +116,7 @@ class SpecLock {
 
     const btn = document.createElement('button');
     btn.className = 'speclk-btn speclk-btn-send';
-    btn.textContent = '⏎ Send to Golem';
+    btn.textContent = this.cfg.sendButton || '⏎ Send to Golem';
     btn.addEventListener('click', () => { this.phase = 'chaos'; this._render(); });
     wrap.appendChild(btn);
   }
@@ -122,13 +136,14 @@ class SpecLock {
 
     // Show all chaos items stacked with delays, then verdict + button
     const out = scene.querySelector('#speclk-chaos-out');
+    const chaos = round.chaosOutputs || round.golemChaos || [];
     let idx = 0;
     const showNext = () => {
-      if (idx < round.golemChaos.length) {
+      if (idx < chaos.length) {
         const item = document.createElement('div');
         item.className = 'speclk-chaos-item speclk-pop';
         const tokens = 150 + Math.floor(Math.random() * 200);
-        item.innerHTML = `${round.golemChaos[idx]} <span class="speclk-chaos-cost">~${tokens} tokens wasted</span>`;
+        item.innerHTML = `${chaos[idx]} <span class="speclk-chaos-cost">~${tokens} tokens wasted</span>`;
         out.appendChild(item);
         idx++;
         this._chaosTimer = setTimeout(showNext, 1200);
@@ -217,7 +232,7 @@ class SpecLock {
     const correct = round.spec.every((field, i) => field.options[this.selections[i]] === field.answer);
     if (correct) {
       // Show success state briefly before moving on
-      statusEl.textContent = '✅ Spec validated! The golem builds correctly.';
+      statusEl.textContent = this._txt.builds;
       this.container.querySelectorAll('.speclk-field').forEach(el => el.classList.add('speclk-field-correct'));
       const summary = round.spec.map(f => f.answer).join(' → ');
       this.solved.push(summary);

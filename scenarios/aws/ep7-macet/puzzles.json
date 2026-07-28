@@ -1,0 +1,644 @@
+{
+  "puzzles": [
+    {
+      "id": "npc-raja",
+      "type": "tool",
+      "card_ref": 201,
+      "description": "Raja — Chief Architect. Short dialog, three exchanges max. Gives you the FSM engine cue and later releases the Composer's Studio gate.",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Raja",
+        "portrait": "🧑‍💼",
+        "greeting": "You made it. The pipeline is stuck. The FSM engine keeps requesting directives but the state file is corrupted. I need you to restart the engine sequence — properly, with the audit hooks on. No shortcuts. No skipped human gate.",
+        "lines": [
+          {
+            "label": "Walk me through the engine.",
+            "response": "Ten canonical steps. Human sends intent. Conductor reads skill. Conductor invokes FSM. FSM reads graph. FSM reads state. FSM returns directive. Persona hat or sub-agent takes the directive. Human gate for high-judgment. Report. Dispatch again. Audit hooks fire throughout — that's non-negotiable."
+          },
+          {
+            "label": "Why does the state file matter?",
+            "response": "The FSM is deterministic. Give it the graph and the state, it returns the next directive without spending an LLM token on routing. Without the state, it loops. That's why we're stuck. Restart it. Toggle the state machine on, toggle the audit hooks on, type the output word, and leave the human gate ALONE."
+          },
+          {
+            "label": "What's next after the engine's back?",
+            "response": "Two things I need you to bring me — in parallel, using sub-agents. The verification-key from the Inner Loop, and memory.md from the Memory Vault. Bring both back here and I'll open the Composer's Studio. Then we right-size the workflow and ship."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 410,
+            "label": "I've got the verification-key.",
+            "response": "Good. Inner loop's back. Still waiting on the memory rules. Send someone to the vault before the state file finishes decaying."
+          },
+          {
+            "requires_card": 460,
+            "label": "memory.md is here.",
+            "response": "Both back? Then click 'Report back to Raja' and I'll open the Composer's Studio. That Golem is trying to run 32 stages for a typo fix — go strip it down before it hallucinates something worse."
+          },
+          {
+            "requires_card": 810,
+            "label": "The orchestra played.",
+            "response": "I saw. Fourteen stages, twenty-three minutes, two human gates. That's the pipeline as it was designed. Go watch the release. Then loop back and encode what we learned — so tomorrow's Conductor is faster than you were."
+          }
+        ]
+      },
+      "hints": [],
+      "mandatory": false
+    },
+
+    {
+      "id": "word-lock",
+      "type": "code_entry",
+      "card_ref": 110,
+      "description": "Name the one who orchestrates the pipeline — clued acrostically in the lore.",
+      "ui": "word-lock",
+      "config": {
+        "solution": "CONDUCTOR",
+        "max_length": 9,
+        "case_sensitive": false
+      },
+      "success_card": 110,
+      "hints": [
+        "The Dual Loop lore card lists specialist agents. Read the bolded first letters in order.",
+        "Callers Of the loop — Orchestrators, Operators, Notaries, Directors, Umpires, Composers, Testers, Overseers, Reviewers. Read the initials.",
+        "The answer is CONDUCTOR."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "defuse-restart",
+      "type": "defuse_lock",
+      "card_ref": 210,
+      "description": "Restart the FSM engine under a 90-second timer — toggles ON where required, do NOT skip the human gate, and type the FSM's output word.",
+      "ui": "defuse-lock",
+      "config": {
+        "timeSeconds": 90,
+        "tasks": [
+          { "id": "state-machine", "type": "toggle", "label": "State Machine engine — ON", "answer": true },
+          { "id": "audit-hooks", "type": "toggle", "label": "Audit Hooks — ON (log every action)", "answer": true },
+          { "id": "skip-human", "type": "toggle", "label": "Skip Human Gate (save time)", "answer": false },
+          { "id": "read-graph", "type": "toggle", "label": "Read Stage Graph on tick", "answer": true },
+          { "id": "read-state", "type": "toggle", "label": "Read State on tick", "answer": true },
+          { "id": "directive", "type": "code", "label": "Type the FSM output word", "answer": "DIRECTIVE", "accept_contains": true }
+        ]
+      },
+      "success_card": 210,
+      "hints": [
+        "State Machine ON, Audit Hooks ON, Read Graph and Read State both ON. Skip Human Gate is a TRAP — leave it OFF. Type the word the FSM returns.",
+        "The FSM's output — the thing it returns after reading graph and state — is the DIRECTIVE. Type that in the code field.",
+        "State Machine=ON, Audit Hooks=ON, Read Graph=ON, Read State=ON, Skip Human Gate=OFF, code=DIRECTIVE."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "blueprint-route",
+      "type": "blueprint_lock",
+      "card_ref": 310,
+      "description": "Route the seven agents to their correct phase of the AI-DLC V2 workflow.",
+      "ui": "blueprint-lock",
+      "config": {
+        "layers": [
+          { "id": "ideation", "label": "Ideation", "icon": "💡", "color": "#22c55e" },
+          { "id": "inception", "label": "Inception", "icon": "🎯", "color": "#3b82f6" },
+          { "id": "construction", "label": "Construction", "icon": "🏗️", "color": "#f97316" },
+          { "id": "operation", "label": "Operation", "icon": "🚀", "color": "#8b5cf6" }
+        ],
+        "components": [
+          { "id": "pm", "label": "Product Manager", "icon": "📋", "layer": "ideation", "hint": "Captures user intent — turns 'we need X' into a spec." },
+          { "id": "arch", "label": "Systems Architect", "icon": "🏛️", "layer": "inception", "hint": "Chooses the pattern and defines boundaries before code starts." },
+          { "id": "composer", "label": "Adaptive Composer", "icon": "🎼", "layer": "inception", "hint": "Scores complexity and proposes the right-sized workflow." },
+          { "id": "dev", "label": "Developer", "icon": "👨‍💻", "layer": "construction", "hint": "Generates the actual code artifact." },
+          { "id": "sec", "label": "Security Reviewer", "icon": "🔒", "layer": "construction", "hint": "Runs SAST and inspects for policy violations at build time." },
+          { "id": "qa", "label": "QA Engineer", "icon": "✅", "layer": "construction", "hint": "Runs tests and verifies traceability against requirements." },
+          { "id": "sre", "label": "SRE", "icon": "⚙️", "layer": "operation", "hint": "Owns deploy, monitoring, and rollback in production." }
+        ],
+        "falseOutputs": {
+          "pm->construction": "PM captures intent — that happens before construction. Ideation.",
+          "pm->operation": "PM isn't running the deploy — they set the intent up front.",
+          "arch->construction": "Architecture is decided in Inception, before code generation begins.",
+          "arch->ideation": "Architects consume intent, not produce it. Inception.",
+          "composer->construction": "The Composer scores the workflow BEFORE construction begins. Inception.",
+          "composer->operation": "Composer is upstream of building — not downstream of shipping.",
+          "dev->ideation": "Developers turn a spec into code — that's the build phase, not the intent phase.",
+          "dev->operation": "Developer generates the artifact. Operation is about running it.",
+          "sec->operation": "Security Reviewer catches issues at build time. Runtime security is SRE's world.",
+          "sec->ideation": "Security review happens against the artifact — that's Construction.",
+          "qa->ideation": "QA can't verify what hasn't been built. Construction.",
+          "qa->operation": "QA verifies the artifact before it ships. Operation is what happens after.",
+          "sre->construction": "SREs come in at deploy and after — Operation.",
+          "sre->ideation": "SRE is downstream, not upstream."
+        },
+        "successMessage": "All seven agents routed to their correct phase.",
+        "successIcon": "🎼✅"
+      },
+      "success_card": 310,
+      "hints": [
+        "Ideation captures intent (PM). Inception designs the shape (Architect, Composer). Construction builds and verifies (Developer, Security Reviewer, QA). Operation ships and runs (SRE).",
+        "Only one agent lives in Ideation — the one who turns raw intent into a spec. Two live in Inception — the ones who choose the shape and score the workflow.",
+        "PM→Ideation. Arch+Composer→Inception. Dev+Sec+QA→Construction. SRE→Operation."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "keypad-stages",
+      "type": "code_entry",
+      "card_ref": 320,
+      "description": "Enter the stage count from the Composer's slip.",
+      "ui": "keypad-lock",
+      "config": {
+        "solution": "14",
+        "case_sensitive": false
+      },
+      "success_card": 320,
+      "hints": [
+        "The Composer's slip has the answer. For this MRT bug fix, the autonomy-risk score was 40% — check what stage count it recommended.",
+        "Not 32 (full pipeline). Not 3 (typo-fix minimum). Something in between — the Composer's recommendation for this specific fix.",
+        "The answer is 14."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "wager-verify",
+      "type": "puzzle",
+      "card_ref": 410,
+      "description": "Wager on your confidence about V2 self-verification. Bigger stakes, bigger reward — and bigger penalty on a wrong answer.",
+      "ui": "wager-lock",
+      "config": {
+        "target": 7,
+        "stakes": [
+          { "label": "Hedge", "wager": 1, "penalty": 0, "color": "#22c55e", "showOptions": 2 },
+          { "label": "Confident", "wager": 2, "penalty": -1, "color": "#eab308", "showOptions": 3 },
+          { "label": "All In", "wager": 4, "penalty": -3, "color": "#ef4444", "showOptions": 5 }
+        ],
+        "questions": [
+          {
+            "question": "What happens when the inner loop's iteration budget expires?",
+            "options": [
+              "Escalates to the human (outer loop)",
+              "Silently commits the last attempt",
+              "Restarts the whole workflow from stage 1",
+              "Deletes the failing artifact",
+              "Emails the SRE and waits"
+            ],
+            "answer": "Escalates to the human (outer loop)"
+          },
+          {
+            "question": "Which verification type checks coding standards and traceability?",
+            "options": [
+              "Inferential (LLM)",
+              "Deterministic (linter)",
+              "Manual (human review)",
+              "None — that's not verified",
+              "Runtime (production monitor)"
+            ],
+            "answer": "Inferential (LLM)"
+          },
+          {
+            "question": "Which verification type runs linters and SAST?",
+            "options": [
+              "Deterministic (tools)",
+              "Inferential (LLM)",
+              "Both, but the LLM is authoritative",
+              "Neither — those are optional",
+              "Manual"
+            ],
+            "answer": "Deterministic (tools)"
+          },
+          {
+            "question": "What breaks the inner loop BESIDES the iteration budget?",
+            "options": [
+              "The models cannot reconcile their outputs",
+              "Someone changes the requirements mid-loop",
+              "The linter runs out of memory",
+              "A new agent is added to the pipeline",
+              "The stage graph is edited"
+            ],
+            "answer": "The models cannot reconcile their outputs"
+          },
+          {
+            "question": "Who can always override the QA agent's verdict?",
+            "options": [
+              "The human (always a gate)",
+              "The Developer agent (author trumps reviewer)",
+              "Nobody — QA is final",
+              "The Adaptive Composer",
+              "Whichever agent has the highest confidence score"
+            ],
+            "answer": "The human (always a gate)"
+          }
+        ]
+      },
+      "success_card": 410,
+      "hints": [
+        "V2's escape hatch is always the same: when the AI can't decide, the human decides. That's the whole point of the outer loop.",
+        "Inferential = 'does an LLM think this reads right' (quality, traceability, standards). Deterministic = 'does a tool say YES/NO' (linter, SAST, tests).",
+        "Answers: outer loop, Inferential, Deterministic, models can't reconcile, the human always overrides."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "decay-state",
+      "type": "puzzle",
+      "card_ref": 452,
+      "description": "Read the aidlc-state.md values before the corruption eats them. Answer the state question from what you saw.",
+      "ui": "decay-lock",
+      "config": {
+        "fragments": [
+          { "text": "> current_phase: inception (phase 3 of 5)", "decayAfter": 6 },
+          { "text": "> current_stage: refined-mockups (stage 7 of 32)", "decayAfter": 7 },
+          { "text": "> status: in-progress", "decayAfter": 5 },
+          { "text": "> patch_level: 0", "decayAfter": 4 },
+          { "text": "> version: 2", "decayAfter": 4 },
+          { "text": "> last_hook_fired: correction_recorded", "decayAfter": 9 },
+          { "text": "> outer_loop_open: false", "decayAfter": 6 }
+        ],
+        "question": "Which four values, in order PHASE.STAGE.PATCH.VERSION, describe the current pipeline position?",
+        "options": [
+          "3.7.0.2",
+          "5.32.1.1",
+          "1.1.0.2",
+          "3.7.1.2",
+          "2.7.0.3",
+          "4.7.0.2",
+          "3.0.7.2",
+          "0.7.3.2"
+        ],
+        "answers": [
+          "3.7.0.2",
+          "3702",
+          "3,7,0,2",
+          "3-7-0-2",
+          "phase 3 stage 7 patch 0 version 2"
+        ],
+        "decayRate": 1.2,
+        "allowRetry": true
+      },
+      "success_card": 452,
+      "hints": [
+        "Read the four numeric fields as they fade: phase, stage, patch, version. Order matters.",
+        "Phase 3 (inception). Stage 7 (refined-mockups). Patch 0. Version 2.",
+        "The answer is 3.7.0.2."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "4digits-encode",
+      "type": "code_entry",
+      "card_ref": 460,
+      "description": "Enter the position PIN as PHASE-STAGE-PATCH-VERSION.",
+      "ui": "4digits-lock",
+      "config": {
+        "answer": "3702"
+      },
+      "success_card": 460,
+      "hints": [
+        "The state fragments spelled it out. PHASE.STAGE.PATCH.VERSION — four digits, in that order.",
+        "Phase 3, Stage 7, Patch 0, Version 2. Read them as a single 4-digit number.",
+        "The PIN is 3702."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "context-golem",
+      "type": "context_lock",
+      "card_ref": 510,
+      "description": "The Golem is trying to run all 32 stages for a 15%-autonomy-risk typo fix. Strip the context down to only the three stages this fix actually needs.",
+      "ui": "context-lock",
+      "config": {
+        "documents": [
+          { "id": "intent",   "label": "intent-capture.md", "icon": "🎯", "desc": "Bug intent captured: fix typo 'Sudirmn' → 'Sudirman' on signage.", "tokens": 200, "status": "required",  "poisonLine": null,                                              "missingLine": "No intent captured. What are we even fixing?" },
+          { "id": "codegen",  "label": "code-generation.md", "icon": "👨‍💻", "desc": "Locate the string literal in the signage service and replace.",           "tokens": 400, "status": "required",  "poisonLine": null,                                              "missingLine": "No code generated. Nothing to ship." },
+          { "id": "unittest", "label": "unit-test.md",       "icon": "✅", "desc": "Assert the corrected station name renders on the signage endpoint.",     "tokens": 300, "status": "required",  "poisonLine": null,                                              "missingLine": "No test written. Regression risk on every future deploy." },
+          { "id": "reqs",     "label": "requirements-analysis.md", "icon": "📋", "desc": "Full requirements re-analysis for the signage subsystem.",         "tokens": 900, "status": "poison",    "poisonLine": "Rewriting the requirements for a typo — hallucinating scope."},
+          { "id": "appdesign","label": "application-design.md",    "icon": "🏗️", "desc": "New application design doc.",                                     "tokens": 800, "status": "poison",    "poisonLine": "Redesigning the app for a one-character change."          },
+          { "id": "sec",      "label": "security-review.md",       "icon": "🔒", "desc": "Threat model for the fix.",                                      "tokens": 700, "status": "poison",    "poisonLine": "Security review on a typo. Nothing changes — the LLM invents threats." },
+          { "id": "mockups",  "label": "refined-mockups.md",       "icon": "🖼️", "desc": "UI mockups.",                                                    "tokens": 600, "status": "poison",    "poisonLine": "Regenerating mockups. No visual change. Bloat." },
+          { "id": "arch",     "label": "arch-diagram.md",          "icon": "📐", "desc": "Architecture diagram v14.",                                     "tokens": 500, "status": "poison",    "poisonLine": "Redrawing architecture for a string constant. Composer wept." },
+          { "id": "loadtest", "label": "load-test-plan.md",        "icon": "📈", "desc": "Full load-test plan.",                                          "tokens": 500, "status": "poison",    "poisonLine": "Load testing a typo fix. The LLM invents synthetic users." },
+          { "id": "readme",   "label": "README.md",                "icon": "📖", "desc": "Project overview.",                                             "tokens": 100, "status": "safe",      "poisonLine": null }
+        ],
+        "capacity": 1000
+      },
+      "success_card": 510,
+      "hints": [
+        "Autonomy risk was 15% — this is a typo fix. Keep the three compartments that matter: capture the intent, generate the code, unit-test it. Reject everything else.",
+        "You have a 1000-token capacity. intent-capture (200) + code-generation (400) + unit-test (300) = 900. Perfect.",
+        "Load: intent-capture.md, code-generation.md, unit-test.md. Reject: requirements-analysis, application-design, security-review, mockups, arch-diagram, load-test-plan."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "prompt-verify",
+      "type": "prompt_lock",
+      "card_ref": 610,
+      "description": "Assemble the V2 verification instruction — one choice per row.",
+      "ui": "prompt-lock",
+      "config": {
+        "npc": {
+          "name": "The Verifier",
+          "portrait": "🧪"
+        },
+        "mode": "row",
+        "rows": [
+          {
+            "label": "Action",
+            "options": ["Check that", "Skip", "Ignore"],
+            "answer": "Check that"
+          },
+          {
+            "label": "What to verify",
+            "options": ["user stories", "code aesthetics", "team vibes"],
+            "answer": "user stories"
+          },
+          {
+            "label": "Quality check",
+            "options": ["are fully traceable", "are beautiful", "exist somewhere"],
+            "answer": "are fully traceable"
+          },
+          {
+            "label": "Traced to",
+            "options": ["to requirements", "to nothing", "to feelings"],
+            "answer": "to requirements"
+          },
+          {
+            "label": "Method",
+            "options": ["using inferential verification", "using vibes", "using human review for everything"],
+            "answer": "using inferential verification"
+          },
+          {
+            "label": "Also run",
+            "options": ["linter for security policy using deterministic tools", "human review for everything", "nothing else needed"],
+            "answer": "linter for security policy using deterministic tools"
+          }
+        ],
+        "success_response": "✅ PERFECT! Inferential verifies traceability. Deterministic runs the linter. Both channels fire — that's V2 self-verification.",
+        "partial_response": "🥈 Close — but V2 needs BOTH inferential and deterministic verification.",
+        "fail_response": "❌ That's V1 thinking. V2 uses AI + tools to verify — not vibes, not human-on-everything."
+      },
+      "success_card": 610,
+      "hints": [
+        "Six rows, one choice each. Every row has one option that reads as a real V2 verification clause; the other two are anti-patterns (vibes, beauty, human-on-everything).",
+        "Inferential half: 'Check that user stories are fully traceable to requirements using inferential verification.' Deterministic half: 'linter for security policy using deterministic tools.'",
+        "Pick: Check that / user stories / are fully traceable / to requirements / using inferential verification / linter for security policy using deterministic tools."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "fogmap-agents",
+      "type": "puzzle",
+      "card_ref": 710,
+      "description": "The Sub-Agent Bay is fogged. Reveal only what you need — find four specialist agents without wasting energy.",
+      "ui": "fog-map-lock",
+      "config": {
+        "cols": 5,
+        "rows": 4,
+        "energy": 8,
+        "intelNeeded": 4,
+        "tiles": [
+          { "x": 0, "y": 3, "type": "start" },
+          { "x": 1, "y": 2, "type": "intel", "label": "Developer Agent — code generation" },
+          { "x": 3, "y": 2, "type": "intel", "label": "Security Reviewer — SAST + policy" },
+          { "x": 2, "y": 1, "type": "intel", "label": "QA Engineer — inferential + test suite" },
+          { "x": 4, "y": 0, "type": "intel", "label": "Adaptive Composer — workflow scoring" },
+          { "x": 0, "y": 1, "type": "trap",  "label": "Legacy Waterfall agent — 3 energy hole", "cost": 3 },
+          { "x": 2, "y": 3, "type": "trap",  "label": "Rogue crypto-rewards agent — 2 energy",  "cost": 2 },
+          { "x": 3, "y": 0, "type": "trap",  "label": "Deprecated monolith runner — 2 energy",  "cost": 2 },
+          { "x": 1, "y": 0, "type": "bonus", "label": "Idle Notary Agent gives you +1 energy",  "gain": 1 },
+          { "x": 4, "y": 2, "type": "bonus", "label": "Retired Orchestrator gifts +2 energy",   "gain": 2 },
+          { "x": 4, "y": 3, "type": "exit" }
+        ]
+      },
+      "success_card": 710,
+      "hints": [
+        "You have 8 energy for 20 cells and need to find 4 intel tiles. Don't reveal every cell — pick the pattern.",
+        "Traps are 2-3 energy each. Bonuses give energy back. The intel tiles you need are the four core Construction/Inception agents: Developer, Security Reviewer, QA, and Adaptive Composer.",
+        "Efficient path: start (0,3), reveal (1,2) Developer, (2,1) QA, (3,2) Security, (4,0) Composer, and grab the bonus at (4,2) if you need buffer. Exit (4,3)."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "evidence-audit",
+      "type": "evidence_lock",
+      "card_ref": 760,
+      "description": "Trace the audit events — identify the correct event type for each pipeline action.",
+      "ui": "evidence-lock",
+      "config": {
+        "steps": [
+          {
+            "narration": "The Conductor reads the AIDLC skill and loads the protocol. The FSM engine initializes.",
+            "question": "What audit event fires?",
+            "answer": "workflow_started",
+            "accept": ["workflow_started", "workflow started"],
+            "hint": "The first event on any Bolt — the workflow itself has just … "
+          },
+          {
+            "narration": "The FSM returns a directive. The Developer agent begins code generation for the MRT station name fix.",
+            "question": "What audit event fires?",
+            "answer": "stage_started",
+            "accept": ["stage_started", "stage started"],
+            "hint": "Not the whole workflow — a single stage has just … "
+          },
+          {
+            "narration": "The QA Reviewer agent runs inferential verification. The linter runs deterministic checks. Both pass.",
+            "question": "What audit event fires?",
+            "answer": "verification_passed",
+            "accept": ["verification_passed", "verification passed", "verify_passed"],
+            "hint": "Both channels green. Verification has …"
+          },
+          {
+            "narration": "The Conductor presents the gate to the human. The human approves the change.",
+            "question": "What audit event fires?",
+            "answer": "gate_approved",
+            "accept": ["gate_approved", "gate approved", "human_approved"],
+            "hint": "The human hit approve. The gate is …"
+          },
+          {
+            "narration": "A coding convention correction is recorded into project.md for future runs.",
+            "question": "What audit event fires?",
+            "answer": "correction_recorded",
+            "accept": ["correction_recorded", "correction recorded", "learning_saved"],
+            "hint": "Learn compartment. The correction has been …"
+          }
+        ],
+        "hintsAfterAttempts": 2,
+        "completeTitle": "📋 Audit Trail — Traced",
+        "completeMessage": "Five audit events identified in order — workflow_started → stage_started → verification_passed → gate_approved → correction_recorded. Zero gaps. Enterprise traceability restored."
+      },
+      "success_card": 760,
+      "hints": [
+        "V2 event names read like snake_case verbs on nouns: <thing>_<past-tense-action>. Workflow started, stage started, verification passed, gate approved, correction recorded.",
+        "Each narration describes exactly one thing that changed state. Name the state change, not the actor.",
+        "In order: workflow_started, stage_started, verification_passed, gate_approved, correction_recorded."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "streak-conduct",
+      "type": "streak_lock",
+      "card_ref": 810,
+      "description": "Eight rapid-fire decisions. 12 seconds each. Wrong or timeout resets the streak.",
+      "ui": "streak-lock",
+      "config": {
+        "target": 15,
+        "timePerQuestion": 12,
+        "questions": [
+          {
+            "question": "Intent captured. What's the next FSM directive?",
+            "answer": "Begin ideation",
+            "decoys": ["Skip ideation — go straight to code", "Wait for more intent", "Restart the human gate"]
+          },
+          {
+            "question": "Design generated. Who verifies?",
+            "answer": "QA Reviewer agent",
+            "decoys": ["The human, always", "The Developer agent (self-review)", "Nobody — designs don't need verify"]
+          },
+          {
+            "question": "Linter found a violation. Action?",
+            "answer": "Inner loop self-corrects",
+            "decoys": ["Escalate to human immediately", "Delete the linter rule", "Ignore — it's not blocking"]
+          },
+          {
+            "question": "Models can't agree on the fix. Escalate?",
+            "answer": "Yes — human outer loop",
+            "decoys": ["No — pick the higher-confidence model", "No — ship both and A/B test", "Restart the pipeline"]
+          },
+          {
+            "question": "Human approves. Record learning?",
+            "answer": "Save to project.md",
+            "decoys": ["Save to org.md (all projects)", "Don't record — one-off", "Save to the LLM's context only"]
+          },
+          {
+            "question": "Same mistake seen before. What does memory say?",
+            "answer": "Apply existing rule automatically",
+            "decoys": ["Ask the human again", "Ignore memory — start fresh", "Fork the rule for this project"]
+          },
+          {
+            "question": "All stages complete. Hook action?",
+            "answer": "Write audit event",
+            "decoys": ["Delete the state file", "Skip hooks — they slow us down", "Manually email the SRE"]
+          },
+          {
+            "question": "Ship?",
+            "answer": "Deploy to production",
+            "decoys": ["Deploy to staging only", "Delay — one more human review", "Skip deploy — email the artifact"]
+          }
+        ]
+      },
+      "success_card": 810,
+      "hints": [
+        "Every answer matches what the pipeline was designed to do: FSM directs, AI verifies AI, human paged only on deadlock, memory encoded per scope, hooks always fire, deploy is the endpoint.",
+        "When in doubt: pick the option that trusts the loop. The wrong answers are all shortcuts, escalations, or bypasses.",
+        "In order: Begin ideation, QA Reviewer, Inner loop self-corrects, Yes — human outer loop, project.md, Apply existing rule, Write audit event, Deploy to production."
+      ],
+      "mandatory": true
+    },
+
+    {
+      "id": "cascade-learning",
+      "type": "cascade_lock",
+      "card_ref": 999,
+      "description": "Approve the pipeline replay — one wrong approval breaks the chain. Five learnings, five decisions.",
+      "ui": "cascade-lock",
+      "config": {
+        "cupNames": ["Bottleneck", "Engine", "Memory", "Composer", "Ship"],
+        "pauseBetweenSteps": 1400,
+        "steps": [
+          {
+            "question": "Bottleneck Shift — The Conductor delegated code generation to a sub-agent. The verification agent found a linting error and fixed it autonomously. No human was paged.",
+            "options": [
+              "Page the human reviewer — we need sign-off on everything",
+              "Inner loop self-corrected. Low-judgment work ships without human.",
+              "Delete the linting rule — it's too strict"
+            ],
+            "answer": 1,
+            "wrong": {
+              "0": "This is the old bottleneck! The whole point is that AI verifies AI for low-judgment work.",
+              "2": "The linter caught a real violation. Deterministic checks exist for a reason."
+            },
+            "after": "✓ Learning 1: AI verifies AI. Humans engage only for high-judgment decisions."
+          },
+          {
+            "question": "Deterministic FSM — The state machine advanced from inception to construction. It read the stage graph, found code-generation next, and issued the directive. No tokens spent on routing.",
+            "options": [
+              "The LLM should decide what stage comes next — it's smarter",
+              "Deterministic engine drives progression. LLM energy saved for generation and verification.",
+              "Skip the state machine — just let agents figure it out"
+            ],
+            "answer": 1,
+            "wrong": {
+              "0": "Using LLM for routing wastes tokens on decisions a simple program can make. That's V1 thinking.",
+              "2": "Without the FSM, agents have no guaranteed execution order. Chaos — not autonomy."
+            },
+            "after": "✓ Learning 2: Deterministic tools drive workflow. LLMs reserved for knowledge work."
+          },
+          {
+            "question": "Memory Compounds — A developer corrected a coding convention. The system asked: 'Memorize this?' They said yes. Next project, the same convention was applied automatically.",
+            "options": [
+              "Memory is nice but I'll just re-explain next time",
+              "Save to project.md. It applies next iteration — effort descends.",
+              "Save everything to org.md — one file for all rules"
+            ],
+            "answer": 1,
+            "wrong": {
+              "0": "Re-explaining is the plateau! The whole point is: teach once, never re-explain. Effort descends.",
+              "2": "Memory is hierarchical. Project rules in project.md, org rules in org.md. Don't pollute the layers."
+            },
+            "after": "✓ Learning 3: Corrections become durable rules. The system learns — effort descends over time."
+          },
+          {
+            "question": "Adaptive Composition — The Composer analyzed the bug fix: low ambiguity, high test coverage, small code change. It proposed 3 stages instead of 32.",
+            "options": [
+              "Always run all 32 stages — thoroughness matters",
+              "Right-sized to 3 stages. No bloat, no debt. Ship fast with confidence.",
+              "Skip all stages — just commit directly"
+            ],
+            "answer": 1,
+            "wrong": {
+              "0": "32 stages for a typo fix is stage bloat. The AI forces itself to produce output for stages that don't need it — hallucinations follow.",
+              "2": "Zero stages means zero verification. You'll ship bugs. The Composer finds the minimum viable workflow."
+            },
+            "after": "✓ Learning 4: Adaptive composition right-sizes the workflow to the problem."
+          },
+          {
+            "question": "The Conductor Ships — Jakarta's MRT digital signage update deployed. 14 stages. 23 minutes. 2 human gates. 11 specialist agents. 1 Conductor. Zero gridlock.",
+            "options": [
+              "The Conductor managed everything alone — no agents needed",
+              "The Conductor orchestrated. Specialists did their jobs. Humans elevated to judgment. The macet is cleared.",
+              "Agents are unreliable — go back to manual"
+            ],
+            "answer": 1,
+            "wrong": {
+              "0": "The Conductor doesn't do the work — it delegates to specialists. That's the orchestra model.",
+              "2": "Manual is the old gridlock. The pipeline shipped in 23 minutes. A human team would have taken days."
+            },
+            "after": "✓ Learning 5: The Conductor orchestrates an orchestra of agents. Humans elevated. Gridlock cleared. Macet selesai."
+          }
+        ],
+        "onComplete": {
+          "emojis": "🚦🎼✅🚄",
+          "text": "The Jakarta MRT glows green. Every station name correct. Every digital sign alive.",
+          "subtext": "The pipeline learned from today. Tomorrow — fewer stages, fewer gates, faster delivery. Macet selesai."
+        }
+      },
+      "success_card": 999,
+      "hints": [
+        "Every step is the same choice at heart: trust the loop over the shortcut. AI verifies AI. FSM drives. Memory scopes. Composer right-sizes. Conductor orchestrates.",
+        "Wrong answers are all traps that look reasonable: page the human on everything, let the LLM route, don't record memory, always run all stages, do it manually.",
+        "In order: 1, 1, 1, 1, 1. The middle option, every time."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}

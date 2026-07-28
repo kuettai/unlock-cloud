@@ -1,0 +1,11 @@
+{
+  "style_prefix": "Indonesian urban illustration, Jakarta evening rush hour, warm sunset tones, traffic jam aesthetic, ojek motorcycles and TransJakarta buses, neon Bahasa Indonesia signage, game card art.",
+  "style_prefix_location": "Indonesian urban illustration, Jakarta evening rush hour, warm sunset tones, traffic jam aesthetic, ojek motorcycles and TransJakarta buses, neon Bahasa Indonesia signage, wide angle, isometric, game card art.",
+  "style_prefix_item": "Indonesian urban illustration, single object on a clean surface, warm sunset tones, subtle neon accents, close-up, game card art.",
+  "style_prefix_object": "Indonesian urban illustration, single interactive element or console, warm sunset tones, subtle neon accents, close-up, game card art.",
+  "palette": ["#FF6B35", "#004E89", "#1A936F", "#F6F7EB", "#2D3047"],
+  "mood": "Urgent but vibrant — Jakarta evening rush hour energy",
+  "references": "Southeast Asian city illustration, ojek motorcycles, TransJakarta buses, warung food stalls, Sudirman road at sunset",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, realistic photo, UI elements",
+  "aspect_ratio": "16:9"
+}
