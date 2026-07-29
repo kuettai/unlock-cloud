@@ -765,6 +765,8 @@ function buildDiscoveryHtml() {
   const locked = all.filter(d => !d.done && !d.available);
   locked.forEach(d => {
     let reqHtml = '';
+    let missing = '';
+    const uid = 'lock-' + d.card_id;
     if (d.requires_item) {
       const reqs = Array.isArray(d.requires_item) ? d.requires_item : [d.requires_item];
       const missingItems = reqs.filter(r => !engine.inventory.includes(r) && !engine.visibleCards.has(r) && !engine.discoveredCards.has(r) && !(engine.revealedCards && engine.revealedCards.has(r)));
