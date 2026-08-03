@@ -33,6 +33,7 @@
         <h2>Episode 0: Boot Sequence</h2>
         <div id="lang-toggle-container" style="display:none;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap"></div>
         <div id="intro-text"></div>
+        <div id="intro-role-chooser"></div>
         <input id="player-name-input" type="text" placeholder="Enter your name..." maxlength="24" autocomplete="off" style="width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;margin-bottom:12px;text-align:center">
         <button id="start-btn" class="btn btn-primary btn-full" onclick="startGame()">Start</button>
         <div id="waiting-state" style="display:none;text-align:center;padding:16px 0">
@@ -91,6 +92,11 @@
       <button class="btn btn-sm btn-cancel" onclick="closeMap()">Close</button>
     </div>
     <div id="map-list"></div>
+    <!-- Room detail bottom sheet (mobile-first 2D map) -->
+    <div id="room-sheet-overlay" onclick="closeRoomSheet()"></div>
+    <div id="room-sheet">
+      <div id="room-sheet-content"></div>
+    </div>
   </div>
 
   <!-- Tools screen -->
@@ -202,6 +208,7 @@
 <script src="puzzle/fog-map-lock.js?v=3"></script>
 <script src="puzzle/deduction-grid-lock.js?v=3"></script>
 <script src="puzzle/streak-lock.js?v=3"></script>
+<script src="puzzle/traffic-lane-lock.js?v=3"></script>
 <script src="index.js?v=3" charset="utf-8"></script>
 </body>
 </html>

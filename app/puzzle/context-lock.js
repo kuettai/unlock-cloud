@@ -22,6 +22,9 @@ class ContextLock {
     // Themeable agent label — defaults to the original "golem" theme so existing
     // episodes are unaffected; ep8 (Macet) overrides it via config.
     this.agentName = opts.agentName || 'golem';
+    // Optional framing line shown above the puzzle before the player interacts.
+    // Backward compatible: no intro provided → nothing rendered.
+    this.intro = opts.intro || null;
     // Start with everything loaded
     this.loaded = new Set(this.documents.map(d => d.id));
     this._streamInterval = null;
@@ -81,6 +84,14 @@ class ContextLock {
 
     const wrap = document.createElement('div');
     wrap.className = 'ctxlk';
+
+    // Optional framing intro — explains the task before the player interacts.
+    if (this.intro) {
+      const intro = document.createElement('div');
+      intro.className = 'ctxlk-intro';
+      intro.textContent = this.intro;
+      wrap.appendChild(intro);
+    }
 
     const isClean = this._isClean();
     const used = this._getUsed();
@@ -184,6 +195,7 @@ class ContextLock {
     s.id = 'ctxlk-css';
     s.textContent = `
 .ctxlk{display:flex;flex-direction:column;gap:12px;padding:12px 0}
+.ctxlk-intro{font-size:12px;line-height:1.5;color:var(--text,#e0e6f0);background:rgba(59,130,246,.08);border:1px solid var(--accent,#3b82f6);border-radius:8px;padding:10px 12px}
 .ctxlk-monitor{background:#0d1117;border:2px solid #e94560;border-radius:10px;overflow:hidden;transition:border-color .5s}
 .ctxlk-monitor-clean{border-color:var(--green,#22c55e)}
 .ctxlk-mon-header{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#161b22;border-bottom:1px solid #30363d}
