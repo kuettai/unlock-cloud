@@ -115,7 +115,7 @@ let activePuzzlePopupId = null;
 let activePuzzleAward = null;
 let lastEvent = null;
 
-// ── Role system ("Choose Your Lane") ──
+// ── Role system ("Choose Your Role") ──
 // Puzzle configs may carry role variants (e.g. title_builder, components_planner).
 // resolveRoleCfg promotes the active role's variant onto the base key IN PLACE.
 // For any episode/puzzle without *_builder/_planner/_strategist keys this is a no-op,
@@ -160,7 +160,7 @@ function _injectRoleBar(mount, cfg) {
   const frag = document.createDocumentFragment();
   const bar = document.createElement('div');
   bar.className = 'role-bar';
-  bar.innerHTML = '<span class="rb-lbl">Lane</span>' + Object.entries(ROLE_META).map(([id, m]) =>
+  bar.innerHTML = '<span class="rb-lbl">Role</span>' + Object.entries(ROLE_META).map(([id, m]) =>
     `<button class="role-btn ${id === currentRole ? 'active' : ''}" title="${m.label}" onclick="setRole('${id}')">${m.icon}</button>`
   ).join('');
   frag.appendChild(bar);
@@ -176,8 +176,10 @@ function _injectRoleBar(mount, cfg) {
 function renderRoleChooser() {
   const host = document.getElementById('intro-role-chooser');
   if (!host) return;
-  host.innerHTML = '<div class="rc-title">Choose your lane</div>'
-    + '<div class="rc-sub">All lanes reach the same destination — same difficulty, same time, same learning. Switch anytime; no progress lost.</div>'
+  // Only offer role selection for episodes that ship role variants.
+  if (!(engine.meta && engine.meta.roles)) { host.innerHTML = ''; return; }
+  host.innerHTML = '<div class="rc-title">Choose your role</div>'
+    + '<div class="rc-sub">All roles reach the same destination — same difficulty, same time, same learning. Switch anytime; no progress lost.</div>'
     + '<div class="rc-row">'
     + Object.entries(ROLE_META).map(([id, m]) =>
         `<button class="rc-btn ${id === currentRole ? 'active' : ''}" onclick="pickRole('${id}')"><span class="rc-head"><span class="rc-icon">${m.icon}</span><span class="rc-name">${m.label}</span></span><span class="rc-tag">"${m.tagline}"</span><span class="rc-covers">${m.covers}</span></button>`
@@ -430,6 +432,7 @@ function renderIntro() {
     });
   }
   el.innerHTML = segments.map(s => `<p>${s.text || (s.ssml || '').replace(/<[^>]+>/g, '')}</p>`).join('');
+  renderRoleChooser();
   const metaTitle = engine.t('meta', null, 'title') || engine.meta.title;
   document.querySelector('#intro-screen h2').textContent = `Episode ${engine.meta.episode}: ${metaTitle}`;
   document.getElementById('intro-cover').src = `${ASSET_BASE}/assets/cover.png`;
@@ -764,9 +767,8 @@ function buildDiscoveryHtml() {
   });
   const locked = all.filter(d => !d.done && !d.available);
   locked.forEach(d => {
-    let reqHtml = '';
+    const uid = 'lock-missing-' + d.card_id;
     let missing = '';
-    const uid = 'lock-' + d.card_id;
     if (d.requires_item) {
       const reqs = Array.isArray(d.requires_item) ? d.requires_item : [d.requires_item];
       const missingItems = reqs.filter(r => !engine.inventory.includes(r) && !engine.visibleCards.has(r) && !engine.discoveredCards.has(r) && !(engine.revealedCards && engine.revealedCards.has(r)));
@@ -1497,6 +1499,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       capacity: cfg.capacity || 2000,
       documents: cfg.documents || [],
       agentName: cfg.agentName,
+      intro: cfg.intro || null,
       onSubmit() { onSolve(); },
       onWrong(msg) { onFail(msg); }
     });
@@ -1753,12 +1756,13 @@ function openMap() {
   renderMap();
   // Auto-scroll to current room
   requestAnimationFrame(() => {
-    const cur = document.querySelector('#map-list .map-room.current');
+    const cur = document.querySelector('#map-list .map-room.current, #map-list .flow-room.current, #map-list .iso-tile.current');
     if (cur) cur.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 }
 
 function closeMap() {
+  closeRoomSheet();
   document.getElementById('map-screen').classList.remove('active');
   document.getElementById('main').style.display = '';
   document.getElementById('bottom-bar').style.display = 'flex';
@@ -1772,17 +1776,27 @@ function renderMap() {
 
   // Check if rooms have map_pos (isometric) or fallback to list
   const hasPositions = roomDefs.some(r => r.map_pos);
+
+  // Mobile-first 2D vertical flowchart (opt-in via meta.map_style === 'flow').
+  // Independent of map_pos — layout comes from meta.map_flow rows (or a derived
+  // topological fallback), never from x/y coordinates or 3D transforms.
+  if (engine.meta.map_style === 'flow') { renderMapFlow(el, roomDefs, unlocked); return; }
+
   if (!hasPositions) { renderMapList(el, roomDefs, unlocked); return; }
 
   // Voxel map style — flat layout with pre-rendered isometric images
   if (engine.meta.map_style === 'voxel') { renderMapVoxel(el, roomDefs, unlocked); return; }
 
   let selectedMapRoom = null;
-  let html = '<div class="iso-container"><div class="iso-floor" id="iso-floor"></div><div class="iso-info" id="iso-info"><div style="color:#666;font-size:13px">Tap a room to see details</div></div></div>';
+  // Room details open in the fixed bottom sheet (openRoomSheet) — no in-floor
+  // #iso-info panel, which used to scroll away when the map was panned on mobile.
+  let html = '<div class="iso-container"><div class="iso-floor" id="iso-floor"></div></div>';
   el.innerHTML = html;
 
   const floor = document.getElementById('iso-floor');
-  const S = 1.4; // scale factor for spacing
+  // Spacing scale. Shrink on small screens so all 10 rooms fit without forcing
+  // the player to pan a huge floor on a ~375px phone.
+  const S = window.innerWidth < 500 ? 0.7 : 1.4;
 
   // Draw connectors
   roomDefs.forEach(r => {
@@ -1831,18 +1845,27 @@ function renderMap() {
 
     tile.addEventListener('click', () => {
       if (!isUnlocked) return;
-      if (selectedMapRoom === id) { goToRoom(id); return; }
-      selectedMapRoom = id;
+      // Highlight the tapped tile, then show details in the fixed bottom sheet.
+      // The sheet is position:fixed at the viewport bottom, so the "Go Here"
+      // button stays visible no matter how far the map has been panned.
       floor.querySelectorAll('.iso-tile').forEach(t => t.classList.remove('selected'));
       tile.classList.add('selected');
-      const status = isCurrent ? '📍 You are here' : remaining > 0 ? `⚠️ ${remaining} action${remaining > 1 ? 's' : ''} remaining` : '✅ Explored';
-      const info = document.getElementById('iso-info');
-      const unlockText = engine.t('rooms', id, 'unlock_text') || r.unlock_text;
-      info.innerHTML = `<div class="iso-info-name">${roomLabel}</div><div class="iso-info-status">${status}</div>${unlockText ? `<div class="iso-info-unlock">${unlockText}</div>` : ''}${!isCurrent ? `<button class="iso-info-btn" onclick="goToRoom(${id})">Go Here</button>` : ''}`;
+      selectedMapRoom = id;
+      openRoomSheet(id);
     });
 
     floor.appendChild(tile);
   });
+
+  // Size the floor so every tile falls inside the scroll area. Without this the
+  // floor stays a fixed 500x600 and rooms positioned beyond it are unreachable.
+  const placed = roomDefs.filter(r => r.map_pos);
+  if (placed.length) {
+    const maxX = Math.max(...placed.map(r => r.map_pos[0] * S)) + 160; // tile width + label
+    const maxY = Math.max(...placed.map(r => r.map_pos[1] * S)) + 180; // tile height + label
+    floor.style.width = Math.max(500, maxX) + 'px';
+    floor.style.height = Math.max(600, maxY) + 'px';
+  }
 }
 
 // Voxel map — flat layout with pre-rendered isometric voxel images
@@ -1913,6 +1936,149 @@ function renderMapVoxel(el, roomDefs, unlocked) {
 
     floor.appendChild(tile);
   });
+}
+
+// ── Mobile-first 2D flowchart map (map_style: "flow") ──
+// Renders unlocked rooms as a vertical stack of tap-target cards with simple
+// connector lines. No isometric transform, no absolute x/y positioning — the
+// whole thing flows in normal document order and scrolls reliably on mobile.
+// Room details open in a bottom sheet (openRoomSheet) instead of a tiny popup.
+function _flowRows(roomDefs) {
+  // Explicit layout wins: meta.map_flow is an array of rows, each a list of
+  // room card_ids. Falls back to a topological (BFS longest-path) grouping.
+  const byId = {};
+  roomDefs.forEach(r => { byId[r.card_id] = r; });
+  const explicit = engine.meta && engine.meta.map_flow;
+  if (Array.isArray(explicit) && explicit.length) {
+    return explicit.map(row => row.filter(id => byId[id])).filter(row => row.length);
+  }
+  const root = roomDefs.find(r => r.unlocked_by === null) || roomDefs[0];
+  if (!root) return [];
+  const level = { [root.card_id]: 0 };
+  const queue = [root.card_id];
+  while (queue.length) {
+    const id = queue.shift();
+    const lv = level[id];
+    (byId[id]?.connects_to || []).forEach(cid => {
+      if (!byId[cid]) return;
+      // Longest path keeps convergence points below all their parents.
+      if (level[cid] === undefined || level[cid] < lv + 1) { level[cid] = lv + 1; queue.push(cid); }
+    });
+  }
+  const rows = [];
+  Object.keys(level)
+    .sort((a, b) => level[a] - level[b])
+    .forEach(id => { const lv = level[id]; (rows[lv] = rows[lv] || []).push(Number(id)); });
+  return rows.filter(Boolean);
+}
+
+function _flowRoomState(roomDef, unlocked) {
+  const id = roomDef.card_id;
+  const card = engine.cards[id];
+  const isUnlocked = unlocked.has(id);
+  const isCurrent = id === engine.currentRoom;
+  const discoveries = card?.discoveries || [];
+  const remaining = discoveries.filter(d => {
+    if (d.puzzle) { const p = engine.puzzles[d.puzzle]; if (p && (p.type === 'tool' || p.ui === 'npc-dialog')) return false; }
+    return !engine.discoveredCards.has(d.card_id) && !engine.consumedCards.has(d.card_id);
+  }).length;
+  const isStart = roomDef.unlocked_by === null;
+  const isEnd = !(roomDef.connects_to || []).length;
+  return { id, card, isUnlocked, isCurrent, remaining, isStart, isEnd };
+}
+
+function renderMapFlow(el, roomDefs, unlocked) {
+  const byId = {};
+  roomDefs.forEach(r => { byId[r.card_id] = r; });
+  const rows = _flowRows(roomDefs);
+
+  let html = '<div class="flowmap">';
+  rows.forEach((row, ri) => {
+    if (ri > 0) {
+      // Connector turns green once the player has reached this depth.
+      const rowUnlocked = row.some(id => unlocked.has(id));
+      html += `<div class="flow-link ${rowUnlocked ? 'active' : ''}"></div>`;
+    }
+    html += '<div class="flow-row">';
+    row.forEach(id => {
+      const rd = byId[id];
+      if (!rd) return;
+      const s = _flowRoomState(rd, unlocked);
+      const label = engine.t('cards', id, 'title') || rd.name;
+      const stateCls = !s.isUnlocked ? 'locked' : s.isCurrent ? 'current' : 'explored';
+      const status = !s.isUnlocked ? 'Locked'
+        : s.isCurrent ? '📍 You are here'
+        : s.remaining > 0 ? `${s.remaining} action${s.remaining > 1 ? 's' : ''} left`
+        : '✅ Explored';
+      const tag = s.isStart ? '<span class="flow-tag start">Start</span>'
+        : s.isEnd ? '<span class="flow-tag end">End</span>' : '';
+      const badge = (s.remaining > 0 && s.isUnlocked) ? `<span class="flow-room-badge">${s.remaining}</span>` : '';
+      const lock = !s.isUnlocked ? '<span class="flow-lock">🔒</span>' : '';
+      // Room background: the room's location card (engine.cards[id]) may carry an
+      // `image` field. Resolve it via ASSET_BASE (same as every other card image)
+      // and lay it under a dark gradient so the label/status stay readable. Locked
+      // rooms use a heavier scrim to keep them looking dimmed. No image → plain bg
+      // handled by CSS (backward compatible).
+      const roomImage = s.card && s.card.type === 'location' && s.card.image;
+      let bgStyle = '';
+      if (roomImage) {
+        const overlay = s.isUnlocked
+          ? 'rgba(0,0,0,0.6), rgba(0,0,0,0.75)'
+          : 'rgba(0,0,0,0.78), rgba(0,0,0,0.88)';
+        bgStyle = ` style="background-image:linear-gradient(${overlay}),url('${ASSET_BASE}/${roomImage}');background-size:cover;background-position:center"`;
+      }
+      html += `<button class="flow-room ${stateCls}${roomImage ? ' has-bg' : ''}"${bgStyle} onclick="openRoomSheet(${id})">`
+        + badge
+        + `<span class="flow-room-head">${lock}${tag}</span>`
+        + `<span class="flow-room-name">${label}</span>`
+        + `<span class="flow-room-status">${status}</span>`
+        + `</button>`;
+    });
+    html += '</div>';
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+// Bottom sheet for room details — replaces the clipping isometric info popup.
+function openRoomSheet(id) {
+  const roomDef = engine.rooms.find(r => r.card_id === id);
+  if (!roomDef) return;
+  const unlocked = new Set(engine.unlockedRooms);
+  const s = _flowRoomState(roomDef, unlocked);
+  const label = engine.t('cards', id, 'title') || roomDef.name;
+  const desc = engine.t('cards', id, 'description') || roomDef.description || '';
+  const unlockText = engine.t('rooms', id, 'unlock_text') || roomDef.unlock_text || '';
+
+  const tag = s.isStart ? '<span class="flow-tag start">Start</span>'
+    : s.isEnd ? '<span class="flow-tag end">End</span>' : '';
+  const status = !s.isUnlocked ? '🔒 Locked — not yet reached'
+    : s.isCurrent ? '📍 You are here'
+    : s.remaining > 0 ? `⚠️ ${s.remaining} action${s.remaining > 1 ? 's' : ''} remaining`
+    : '✅ Explored';
+
+  let body = `<div class="rs-handle"></div>`;
+  body += `<div class="rs-head">${tag}<span class="rs-name">${label}</span></div>`;
+  body += `<div class="rs-status ${s.isCurrent ? 'current' : ''}">${status}</div>`;
+  if (desc) body += `<div class="rs-desc">${desc}</div>`;
+  if (unlockText) body += `<div class="rs-unlock">${unlockText}</div>`;
+  if (s.isUnlocked && !s.isCurrent) {
+    body += `<button class="btn btn-primary btn-full" onclick="goToRoom(${id})">Go Here →</button>`;
+  } else if (s.isCurrent) {
+    body += `<button class="btn btn-primary btn-full" onclick="closeRoomSheet();closeMap()">Continue Here</button>`;
+  }
+  body += `<button class="btn btn-full rs-close-btn" onclick="closeRoomSheet()">Close</button>`;
+
+  document.getElementById('room-sheet-content').innerHTML = body;
+  document.getElementById('room-sheet').classList.add('open');
+  document.getElementById('room-sheet-overlay').classList.add('open');
+}
+
+function closeRoomSheet() {
+  const sheet = document.getElementById('room-sheet');
+  const overlay = document.getElementById('room-sheet-overlay');
+  if (sheet) sheet.classList.remove('open');
+  if (overlay) overlay.classList.remove('open');
 }
 
 // Fallback list-based map for episodes without map_pos

@@ -71,7 +71,7 @@ class SpecLock {
     }
 
     if (this.currentRound >= this.rounds.length) {
-      const doneText = this.cfg.doneText || 'All specs validated! The golem knows exactly what to build.';
+      const doneText = this._txt.done;
       wrap.innerHTML += `<div class="speclk-done"><div class="speclk-done-icon">🤖✨</div><div class="speclk-done-text">${doneText}</div></div>`;
       this.container.appendChild(wrap);
       this._injectStyles();
@@ -93,7 +93,7 @@ class SpecLock {
 
     const intro = document.createElement('div');
     intro.className = 'speclk-intro';
-    const introText = this.cfg.introText || 'The golem awaits your command. What do you want it to build?';
+    const introText = this._txt.awaiting;
     intro.innerHTML = `<div class="speclk-intro-icon">🤖</div><div class="speclk-intro-text">${introText}</div>`;
     wrap.appendChild(intro);
 
@@ -116,7 +116,7 @@ class SpecLock {
 
     const btn = document.createElement('button');
     btn.className = 'speclk-btn speclk-btn-send';
-    btn.textContent = this.cfg.sendButton || '⏎ Send to Golem';
+    btn.textContent = this._txt.send;
     btn.addEventListener('click', () => { this.phase = 'chaos'; this._render(); });
     wrap.appendChild(btn);
   }

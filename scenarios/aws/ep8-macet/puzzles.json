@@ -72,10 +72,10 @@
         "answer": "SCOPE",
         "case_sensitive": false,
         "title": "What must you define first?",
-        "title_builder": "The crash report says 'scope of impact: routing only.' Spell it.",
-        "title_planner": "Before fixing anything — define the _____ of the problem. (5 letters)",
-        "title_strategist": "What's the boundary of business impact? (5 letters)",
-        "learning_card": "🧠 Adaptive Depth — AIDLC right-sizes the process. Small fix = small process. You just defined a focused scope instead of full analysis."
+        "title_builder": "What 5-letter word describes the boundary of the problem? The crash report defines it.",
+        "title_planner": "Define the _____ of the problem — the boundary that limits what you'll fix.",
+        "title_strategist": "What's the 5-letter word for the boundary of business impact?",
+        "learning_card": "🧠 Adaptive Depth — In AIDLC, the process depth matches the problem size. A routing-only bug gets a focused fix path, not a full system redesign. The scope you just identified tells Kiro how deep to dig."
       },
       "hints": [
         "5 letters. Starts with S. Defines the boundary.",
@@ -93,7 +93,7 @@
       "description": "Design the fix path",
       "config": {
         "title": "Design the fix path",
-        "title_builder": "Place each component in the correct order (the ⚠️ is the broken one).",
+        "title_builder": "Place each component in the correct order (the ⚠️ is the broken one). In this edge-cache topology, requests hit the cache layer before reaching the routing engine — reducing load on the broken component.",
         "title_planner": "Arrange the flow in order (the ⚠️ step is where it broke).",
         "title_strategist": "Put the process steps in order (the ⚠️ step failed).",
         "layers": [
@@ -155,22 +155,22 @@
         "events_builder": [
           { "id": "a", "label": "Deploy v2.3.1 (13:00)" },
           { "id": "b", "label": "Traffic spike to 450K (13:12)" },
-          { "id": "c", "label": "Memory overflow triggered (13:14)" },
-          { "id": "d", "label": "Null pointer in routing (13:14)" },
+          { "id": "c", "label": "Memory overflow triggered (connection pool exhausted) (13:14:20)" },
+          { "id": "d", "label": "Null pointer in routing (dereferenced freed memory from overflow) (13:14:45)" },
           { "id": "e", "label": "Cascade — all ETAs offline (13:15)" }
         ],
         "events_planner": [
           { "id": "a", "label": "New version released (13:00)" },
           { "id": "b", "label": "User count exceeds threshold (13:12)" },
-          { "id": "c", "label": "System overloaded (13:14)" },
-          { "id": "d", "label": "Core feature breaks (13:14)" },
+          { "id": "c", "label": "System overloaded (connection pool exhausted) (13:14:20)" },
+          { "id": "d", "label": "Core feature breaks (routing fails from the overload) (13:14:45)" },
           { "id": "e", "label": "All users affected (13:15)" }
         ],
         "events_strategist": [
           { "id": "a", "label": "Product update went live (13:00)" },
           { "id": "b", "label": "Peak demand exceeded capacity (13:12)" },
-          { "id": "c", "label": "System hit breaking point (13:14)" },
-          { "id": "d", "label": "Core service failed (13:14)" },
+          { "id": "c", "label": "System hit breaking point (capacity exhausted) (13:14:20)" },
+          { "id": "d", "label": "Core service failed (collapsed under the overload) (13:14:45)" },
           { "id": "e", "label": "500K customers lost service (13:15)" }
         ]
       },
@@ -192,6 +192,7 @@
         "capacity": 2000,
         "agentName": "Kiro",
         "title": "Feed the AI assistant, Kiro",
+        "intro": "Kiro builds from whatever context you feed it. Include only documents relevant to the routing bug — irrelevant docs waste the token budget and degrade Kiro's output.",
         "title_builder": "Give the AI the right inputs. Too much noise = wrong output.",
         "title_planner": "Select the info the AI needs. Leave out the noise.",
         "title_strategist": "Pick the inputs that matter. Drop the distractions.",

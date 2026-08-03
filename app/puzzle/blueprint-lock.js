@@ -46,6 +46,13 @@ class BlueprintLock {
 
     const comp = this._current();
 
+    // Interaction hint — tell the player HOW to play. This puzzle shows one
+    // component at a time and the player taps the step it belongs in.
+    const instruction = document.createElement('div');
+    instruction.className = 'bplk-instruction';
+    instruction.innerHTML = '👆 Tap the step slot where the highlighted component belongs.';
+    wrap.appendChild(instruction);
+
     // Current component card (the "incoming" piece)
     const incoming = document.createElement('div');
     incoming.className = 'bplk-incoming';
@@ -177,6 +184,7 @@ class BlueprintLock {
     s.id = 'bplk-css';
     s.textContent = `
 .bplk{display:flex;flex-direction:column;gap:12px;padding:12px 0}
+.bplk-instruction{font-size:12px;color:var(--muted,#7a8ba8);background:rgba(59,130,246,.06);border:1px solid var(--border,#1e2a45);border-radius:8px;padding:8px 12px;text-align:center;line-height:1.4}
 .bplk-incoming{text-align:center;padding:14px;background:var(--surface,#141b2d);border:2px solid var(--accent,#3b82f6);border-radius:10px}
 .bplk-incoming-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted,#7a8ba8);margin-bottom:8px}
 .bplk-incoming-card{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--bg,#0a0e17);border:2px solid var(--accent,#3b82f6);border-radius:8px;font-size:15px;font-weight:700;color:var(--text,#e0e6f0)}

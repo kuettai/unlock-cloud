@@ -7,7 +7,7 @@
       "connects_to": [200],
       "unlocked_by": null,
       "unlock_text": "Traffic hasn't moved in 20 minutes. Your phone lights up red.",
-      "map_pos": [140, 720]
+      "map_pos": [1080, 1080]
     },
     {
       "card_id": 200,
@@ -16,7 +16,7 @@
       "connects_to": [300, 600, 800],
       "unlocked_by": { "type": "item", "card_id": 103 },
       "unlock_text": "You open your laptop. A toll plaza blocks the road ahead.",
-      "map_pos": [140, 600]
+      "map_pos": [720, 1080]
     },
     {
       "card_id": 800,
@@ -25,7 +25,7 @@
       "connects_to": [200],
       "unlocked_by": { "type": "discovery", "from_room": 200 },
       "unlock_text": "Pak Budi waves you over to his warung for a quick kopi.",
-      "map_pos": [300, 600]
+      "map_pos": [1080, 720]
     },
     {
       "card_id": 300,
@@ -34,7 +34,7 @@
       "connects_to": [900, 600],
       "unlocked_by": { "type": "puzzle", "puzzle_id": "wordlock-scope" },
       "unlock_text": "The toll sign turns green. A wide overpass rises ahead.",
-      "map_pos": [0, 480]
+      "map_pos": [360, 1080]
     },
     {
       "card_id": 900,
@@ -43,7 +43,7 @@
       "connects_to": [400],
       "unlocked_by": { "type": "puzzle", "puzzle_id": "blueprint-arch" },
       "unlock_text": "Traffic stops dead. The crash logs scatter across your screen.",
-      "map_pos": [0, 360]
+      "map_pos": [360, 720]
     },
     {
       "card_id": 600,
@@ -52,7 +52,7 @@
       "connects_to": [400],
       "unlocked_by": { "type": "item", "card_id": 250 },
       "unlock_text": "The BRT gate opens onto empty, fast asphalt.",
-      "map_pos": [300, 480]
+      "map_pos": [1080, 360]
     },
     {
       "card_id": 400,
@@ -61,7 +61,7 @@
       "connects_to": [500],
       "unlocked_by": { "type": "discovery", "from_room": 900 },
       "unlock_text": "Cranes and cones. Your coding terminal waits on a makeshift desk.",
-      "map_pos": [140, 360]
+      "map_pos": [720, 360]
     },
     {
       "card_id": 500,
@@ -70,7 +70,7 @@
       "connects_to": [1000],
       "unlocked_by": { "type": "puzzle", "puzzle_id": "spec-validate" },
       "unlock_text": "Scanners and blinking lights block the lane ahead.",
-      "map_pos": [140, 240]
+      "map_pos": [360, 360]
     },
     {
       "card_id": 1000,
@@ -79,7 +79,7 @@
       "connects_to": [700],
       "unlocked_by": { "type": "puzzle", "puzzle_id": "wordlock-ship" },
       "unlock_text": "The fix is live — but Kiro wants to learn from your calls.",
-      "map_pos": [140, 120]
+      "map_pos": [180, 180]
     },
     {
       "card_id": 700,
@@ -88,7 +88,7 @@
       "connects_to": [],
       "unlocked_by": { "type": "puzzle", "puzzle_id": "match-learn" },
       "unlock_text": "GoLancar HQ. The map is waiting to light back up.",
-      "map_pos": [140, 0]
+      "map_pos": [0, 0]
     }
   ]
 }
