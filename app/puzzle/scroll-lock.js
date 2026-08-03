@@ -19,7 +19,16 @@
 class ScrollLock {
   constructor(container, opts = {}) {
     this.container = container;
-    this.title = opts.title || 'Royal Decree';
+    const rawTitle = opts.title || 'Royal Decree';
+    // If title starts with an emoji (non-ASCII char), use it as icon
+    const emojiMatch = rawTitle.match(/^(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/u);
+    if (emojiMatch) {
+      this.icon = emojiMatch[1];
+      this.title = rawTitle.slice(emojiMatch[0].length);
+    } else {
+      this.icon = opts.icon || '👑';
+      this.title = rawTitle;
+    }
     this.clauses = opts.clauses || [];
     this.constraints = opts.constraints || [];
     this.falseOutputs = opts.falseOutputs || [];
@@ -45,7 +54,7 @@ class ScrollLock {
 
     const seal = document.createElement('div');
     seal.className = 'scrlk-seal';
-    seal.textContent = '👑';
+    seal.textContent = this.icon;
     parch.appendChild(seal);
 
     this.clauseEls = [];

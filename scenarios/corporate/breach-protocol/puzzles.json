@@ -3,8 +3,8 @@
     {
       "id": "tip-extraction",
       "type": "keypad_lock",
-      "card_ref": 10,
-      "description": "Enter the 4-digit case reference number from the escalation email.\n\nFrom: company.secretary@firm.hk\nTo: transformation-team@firm.hk\nSubject: Urgent — Review Required: CR-2026-0312\n\nA connected transaction executed last week may not have followed the prescribed disclosure process. Please conduct an immediate review and confirm whether a Chapter 14A notification is required. HKEX filing window is active.",
+      "card_ref": 19,
+      "description": "Enter the 4-digit case reference number from the escalation email.",
       "ui": "keypad-lock",
       "config": {
         "answer": "0312",
@@ -19,31 +19,34 @@
     },
     {
       "id": "breach-identification",
-      "type": "wager_lock",
+      "type": "scroll_lock",
       "card_ref": 30,
-      "description": "Which transaction breaches the 5% threshold?",
-      "ui": "wager-lock",
+      "description": "Review the transaction records you've collected and identify the connected transaction that breaches the disclosure threshold.",
+      "ui": "scroll-lock",
       "config": {
-        "target": 2,
-        "stakes": [
-          { "label": "Answer", "wager": 1, "penalty": 0, "color": "#3b82f6", "showOptions": 4 }
-        ],
-        "questions": [
+        "title": "📋 Connected Transaction Breach Analysis",
+        "clauses": [
           {
-            "question": "Chapter 14A — Connected Transactions: where the value of a transaction with a connected person exceeds 5% of the listed issuer's market capitalisation, a disclosure obligation is triggered.\n\nA: HK$52M / HK$900M\nB: HK$48M / HK$1.1B\nC: HK$15M / HK$400M\nD: HK$30M / HK$750M\n\nWhich transaction breaches the 5% threshold?",
-            "options": ["Transaction A", "Transaction B", "Transaction C", "Transaction D"],
-            "answer": "Transaction A"
+            "text": "Under Chapter 14A, a connected transaction requires mandatory disclosure when it exceeds ___ of the issuer's market capitalisation.",
+            "options": ["2.5%", "5%", "10%", "25%"],
+            "answer": "5%"
           },
           {
-            "question": "What is the breach percentage for Transaction A (HK$52M / HK$900M)?",
+            "text": "The transaction that breaches the disclosure threshold is ___.",
+            "options": ["NT-2026-0847 (Director Zhang)", "NT-2026-0912 (Director Lee)", "NT-2026-0853 (Director Wong)", "NT-2026-0891 (Director Chan)"],
+            "answer": "NT-2026-0847 (Director Zhang)"
+          },
+          {
+            "text": "The breach ratio for this transaction is approximately ___.",
             "options": ["3.75%", "4.00%", "4.36%", "5.78%"],
             "answer": "5.78%"
           }
-        ]
+        ],
+        "falseOutputs": ["Incorrect. Re-check the transaction amounts against market capitalisation. The threshold is clear — one transaction exceeds it."]
       },
       "hints": [
-        "Percentage ratio: Amount ÷ Market Cap × 100.",
-        "52 ÷ 900 = 5.78%. That's above the 5% threshold."
+        "Calculate each transaction as: Amount ÷ Market Cap × 100. Which one exceeds the threshold?",
+        "52 ÷ 900 = 5.78%. That's above 5%."
       ],
       "mandatory": true
     },
@@ -69,6 +72,7 @@
           "operations": "uninformed",
           "compliance": "told-late"
         },
+        "submitLabel": "✓ Confirm",
         "falseOutputs": [
           "Incorrect. Re-read the statements — who contradicts whom?",
           "Wrong. Focus on the timeline gap."
@@ -81,59 +85,41 @@
     },
     {
       "id": "breach-filing",
-      "type": "wager_lock",
+      "type": "scroll_lock",
       "card_ref": 70,
-      "description": "Complete the breach notification. All four fields must be correct.",
-      "ui": "wager-lock",
+      "description": "Complete the breach notification form. All fields must be correct for submission.",
+      "ui": "scroll-lock",
       "config": {
-        "target": 4,
-        "stakes": [
-          { "label": "File", "wager": 1, "penalty": 0, "color": "#ef4444", "showOptions": 4 }
-        ],
-        "questions": [
+        "title": "📋 Breach Notification — Form BN-14A",
+        "clauses": [
           {
-            "question": "Which chapter was violated?",
-            "options": [
-              "Ch.13 Continuing Obligations",
-              "Ch.14 Notifiable Transactions",
-              "Ch.15 Options & Securities",
-              "Ch.37 Debt Securities"
-            ],
+            "text": "Listing Rule chapter violated: ___.",
+            "options": ["Ch.13 Continuing Obligations", "Ch.14 Notifiable Transactions", "Ch.15 Options & Securities", "Ch.37 Debt Securities"],
             "answer": "Ch.14 Notifiable Transactions"
           },
           {
-            "question": "What is the breach severity?",
-            "options": [
-              "Minor (under 2.5%)",
-              "Moderate (2.5-5%)",
-              "Major (over 5%)",
-              "Critical (over 25%)"
-            ],
+            "text": "Breach severity classification: ___.",
+            "options": ["Minor (under 2.5%)", "Moderate (2.5–5%)", "Major (over 5%)", "Critical (over 25%)"],
             "answer": "Major (over 5%)"
           },
           {
-            "question": "How should the breach be classified?",
-            "options": [
-              "Administrative Error",
-              "Negligence",
-              "Concealment",
-              "Fraud"
-            ],
+            "text": "Nature of non-compliance: ___.",
+            "options": ["Administrative Error", "Negligence", "Concealment", "Fraud"],
             "answer": "Concealment"
           },
           {
-            "question": "What is the reporting deadline?",
-            "options": [
-              "Immediately",
-              "2 business days",
-              "5 business days",
-              "30 calendar days"
-            ],
+            "text": "Mandatory reporting deadline from date of discovery: ___.",
+            "options": ["Immediately", "2 business days", "5 business days", "30 calendar days"],
             "answer": "2 business days"
           }
-        ]
+        ],
+        "falseOutputs": ["FILING REJECTED — One or more fields are incorrect. The Exchange requires accurate classification. Review your evidence and re-submit."]
       },
-      "hints": [],
+      "hints": [
+        "The transaction involved a connected party — which chapter covers that?",
+        "Finance approved it Tuesday but told Compliance on Thursday. That 2-day gap isn't negligence — it's deliberate.",
+        "Ch.14 Notifiable Transactions, Major (over 5%), Concealment, 2 business days."
+      ],
       "mandatory": true,
       "isFinal": true
     }
