@@ -152,6 +152,7 @@
       "color": "red",
       "title": "Scope Document",
       "description": "A clear one-page scope definition. → You'll need this to validate the AI's proposal.",
+      "image": "assets/scope-document.png",
       "image_prompt": "A single-page scope document with a highlighted boundary box, single object on dark background",
       "visible_to": "all",
       "room": "requirements-tollbooth"
@@ -172,6 +173,7 @@
       "color": "red",
       "title": "Architecture Blueprint",
       "description": "A fully hand-designed architecture. Thorough and complete. → Needed to trace the crash in the Log Jam ahead.",
+      "image": "assets/architecture-blueprint.png",
       "image_prompt": "A rolled architecture blueprint with layered diagrams, single object on dark background",
       "visible_to": "all",
       "room": "architecture-overpass"
@@ -182,6 +184,7 @@
       "color": "red",
       "title": "Crash Timeline",
       "description": "The full crash sequence, reconstructed by hand — deploy, spike, overload, failure, cascade. → Needed to start construction.",
+      "image": "assets/crash-timeline.png",
       "image_prompt": "A reconstructed incident timeline with ordered event markers, single object on dark background",
       "visible_to": "all",
       "room": "the-log-jam"
@@ -192,6 +195,7 @@
       "color": "red",
       "title": "Context Brief",
       "description": "AI-analyzed context summary — Kiro's read on the crash. → Present this to merge back onto the Construction Lane.",
+      "image": "assets/context-brief.png",
       "image_prompt": "A concise AI-generated context brief with key facts highlighted, single object on dark background",
       "visible_to": "all",
       "room": "express-lane"
@@ -202,6 +206,7 @@
       "color": "red",
       "title": "Validated Spec",
       "description": "Human-approved specification. The AI proposed, you validated. → Required for verification.",
+      "image": "assets/validated-spec.png",
       "image_prompt": "An approved specification document with a green human-approval stamp, single object on dark background",
       "visible_to": "all",
       "room": "construction-lane"
@@ -212,6 +217,7 @@
       "color": "red",
       "title": "Triage Report",
       "description": "Tasks sorted: AI handles, you decide, skip the rest. → Proves you understand the workflow.",
+      "image": "assets/triage-report.png",
       "image_prompt": "A triage report with three labeled columns for AI, human, and skip, single object on dark background",
       "visible_to": "all",
       "room": "construction-lane"
@@ -222,6 +228,7 @@
       "color": "red",
       "title": "Quality Stamp",
       "description": "Dual-loop verified. Sensors passed. Reviewer passed. YOU passed it. → Required to enter the Learning Loop.",
+      "image": "assets/quality-stamp.png",
       "image_prompt": "A glowing green quality-approved stamp, single object on dark background",
       "visible_to": "all",
       "room": "verification-checkpoint"
@@ -232,6 +239,7 @@
       "color": "red",
       "title": "Learning Rules",
       "description": "Encoded rules for next time. The system just got smarter. → Deploy with confidence.",
+      "image": "assets/learning-rules.png",
       "image_prompt": "A rule ledger card glowing with saved entries, single object on dark background",
       "visible_to": "all",
       "room": "the-learning-loop"

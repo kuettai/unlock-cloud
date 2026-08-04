@@ -265,13 +265,13 @@ function renderLearningRecap() {
   if (!document.getElementById('aidlc-recap-css')) {
     const s = document.createElement('style');
     s.id = 'aidlc-recap-css';
-    s.textContent = '.ar-card{background:linear-gradient(160deg,#141b2d,#0d1424);border:2px solid var(--purple,#a855f7);border-radius:14px;padding:18px;margin:18px 0;text-align:center;box-shadow:0 8px 30px rgba(168,85,247,.15)}.ar-title{font-size:15px;font-weight:800;color:var(--purple,#a855f7);margin-bottom:14px}.ar-cycle{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:14px}.ar-stage{display:flex;align-items:center;gap:8px;justify-content:center}.ar-box{background:var(--bg,#0a0e17);border:2px solid var(--accent,#3b82f6);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--text,#e0e6f0);min-width:120px}.ar-note{font-size:11px;color:var(--muted,#7a8ba8);text-align:left}.ar-arrow{color:var(--accent,#3b82f6);font-size:12px;line-height:1}.ar-benefits{display:flex;flex-direction:column;gap:5px;text-align:left;max-width:280px;margin:0 auto 12px}.ar-benefit{font-size:12px;color:var(--text,#e0e6f0)}.ar-link{display:inline-block;font-size:12px;color:var(--accent,#3b82f6);text-decoration:underline;word-break:break-all}';
+    s.textContent = '.ar-card{background:linear-gradient(160deg,#141b2d,#0d1424);border:2px solid var(--purple,#a855f7);border-radius:14px;padding:18px;margin:18px 0;text-align:center;box-shadow:0 8px 30px rgba(168,85,247,.15);max-width:100%;box-sizing:border-box;overflow:hidden}.ar-title{font-size:15px;font-weight:800;color:var(--purple,#a855f7);margin-bottom:14px}.ar-cycle{display:flex;flex-direction:column;align-items:stretch;gap:0;width:100%;max-width:300px;margin:0 auto 16px}.ar-stage{display:flex;align-items:center;gap:10px;width:100%;margin:3px 0}.ar-box{flex:0 0 128px;width:128px;box-sizing:border-box;text-align:center;background:var(--bg,#0a0e17);border:2px solid var(--accent,#3b82f6);border-radius:8px;padding:8px 6px;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--text,#e0e6f0)}.ar-note{flex:1;min-width:0;text-align:left;font-size:11px;color:var(--muted,#7a8ba8);line-height:1.35;word-break:break-word}.ar-arrow{align-self:flex-start;width:128px;text-align:center;color:var(--accent,#3b82f6);font-size:14px;line-height:1;margin:1px 0}.ar-benefits{display:flex;flex-direction:column;gap:6px;text-align:left;max-width:280px;margin:0 auto 12px}.ar-benefit{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--text,#e0e6f0);line-height:1.4}.ar-check{color:var(--green,#22c55e);font-weight:700;flex:0 0 auto}.ar-link{display:inline-block;font-size:12px;color:var(--accent,#3b82f6);text-decoration:underline;word-break:break-all}';
     document.head.appendChild(s);
   }
   const cycle = (r.cycle || []).map((c, i, arr) =>
     `<div class="ar-stage"><div class="ar-box">${c.stage}</div><div class="ar-note">← ${c.note}</div></div>` + (i < arr.length - 1 ? '<div class="ar-arrow">▼</div>' : '')
   ).join('');
-  const benefits = (r.benefits || []).map(b => `<div class="ar-benefit">✓ ${b}</div>`).join('');
+  const benefits = (r.benefits || []).map(b => `<div class="ar-benefit"><span class="ar-check">✓</span><span>${b}</span></div>`).join('');
   const link = r.link ? `<a class="ar-link" href="${r.link.url}" target="_blank" rel="noopener">🔗 ${r.link.label}</a>` : '';
   const el = document.createElement('div');
   el.id = 'aidlc-recap';
@@ -2418,33 +2418,60 @@ function showEndScreen() {
   });
   document.getElementById('end-lore').innerHTML = loreHtml;
 
-  // Read-only map
+  // Read-only map — vertical flow layout routed by depth, mirroring the in-game
+  // flow map so EVERY room (and its connections) is visible. The old recursive
+  // tree renderer laid branches out horizontally, so multi-way forks (room 200
+  // branches 3 ways here) overflowed the narrow end panel and clipped to the
+  // first couple of rooms. The flow layout stacks rooms top-to-bottom and wraps
+  // sibling branches onto one row, so nothing is cut off.
   const mapEl = document.getElementById('end-map');
   const roomDefs = engine.rooms;
   const unlocked = new Set(engine.unlockedRooms);
-  const renderedEnd = new Set();
-  function renderEndNode(roomDef) {
-    if (!roomDef) return '';
-    const id = roomDef.card_id;
-    if (renderedEnd.has(id)) return '';
-    renderedEnd.add(id);
-    const isUnlocked = unlocked.has(id);
-    const cls = `map-room ${isUnlocked ? '' : 'locked'}`;
-    const status = isUnlocked ? 'Explored' : 'Not reached';
-    let html = `<div class="map-node"><div class="${cls}" style="cursor:default"><div class="room-dot" ${isUnlocked ? '' : 'style="background:var(--border)"'}></div><div class="room-info"><div class="room-name">${engine.t('cards', id, 'title') || roomDef.name}</div><div class="room-status">${status}</div></div></div>`;
-    const children = (roomDef.connects_to || []).map(cid => roomDefs.find(r => r.card_id === cid)).filter(Boolean);
-    if (children.length === 1) {
-      html += `<div class="map-connector"><span class="line">│</span></div>`;
-      html += renderEndNode(children[0]);
-    } else if (children.length > 1) {
-      html += `<div class="map-connector"><span class="line">┣━━━━━━━━━┓</span></div><div class="map-branch">`;
-      children.forEach(child => { html += `<div class="map-branch-col">${renderEndNode(child)}</div>`; });
-      html += `</div>`;
-    }
-    html += `</div>`;
-    return html;
-  }
-  const root = roomDefs.find(r => r.unlocked_by === null);
-  mapEl.innerHTML = `<h3 style="font-size:14px;color:var(--green);margin-bottom:12px">Map</h3>` + (root ? renderEndNode(root) : '');
+  mapEl.innerHTML = `<h3 style="font-size:14px;color:var(--green);margin-bottom:12px">Map</h3>` + renderEndMapFlow(roomDefs, unlocked);
   renderLearningRecap();
+}
+
+// Read-only vertical flow map for the end screen. Reuses the in-game flow
+// layout (_flowRows for depth-based rows, _flowRoomState for status) but emits
+// non-interactive tiles (no onclick / bottom sheet) since the game is over.
+function renderEndMapFlow(roomDefs, unlocked) {
+  if (!roomDefs || !roomDefs.length) return '<p style="color:var(--muted);font-size:13px">No map data.</p>';
+  const byId = {};
+  roomDefs.forEach(r => { byId[r.card_id] = r; });
+  const rows = _flowRows(roomDefs);
+  let html = '<div class="flowmap">';
+  rows.forEach((row, ri) => {
+    if (ri > 0) {
+      const rowUnlocked = row.some(id => unlocked.has(id));
+      html += `<div class="flow-link ${rowUnlocked ? 'active' : ''}"></div>`;
+    }
+    html += '<div class="flow-row">';
+    row.forEach(id => {
+      const rd = byId[id];
+      if (!rd) return;
+      const s = _flowRoomState(rd, unlocked);
+      const label = engine.t('cards', id, 'title') || rd.name;
+      const stateCls = !s.isUnlocked ? 'locked' : 'explored';
+      const status = !s.isUnlocked ? 'Not reached' : '✅ Explored';
+      const tag = s.isStart ? '<span class="flow-tag start">Start</span>'
+        : s.isEnd ? '<span class="flow-tag end">End</span>' : '';
+      const lock = !s.isUnlocked ? '<span class="flow-lock">🔒</span>' : '';
+      const roomImage = s.card && s.card.type === 'location' && s.card.image;
+      let style = 'cursor:default';
+      if (roomImage) {
+        const overlay = s.isUnlocked
+          ? 'rgba(0,0,0,0.6), rgba(0,0,0,0.75)'
+          : 'rgba(0,0,0,0.78), rgba(0,0,0,0.88)';
+        style += `;background-image:linear-gradient(${overlay}),url('${ASSET_BASE}/${roomImage}');background-size:cover;background-position:center`;
+      }
+      html += `<div class="flow-room ${stateCls}${roomImage ? ' has-bg' : ''}" style="${style}">`
+        + `<span class="flow-room-head">${lock}${tag}</span>`
+        + `<span class="flow-room-name">${label}</span>`
+        + `<span class="flow-room-status">${status}</span>`
+        + `</div>`;
+    });
+    html += '</div>';
+  });
+  html += '</div>';
+  return html;
 }
