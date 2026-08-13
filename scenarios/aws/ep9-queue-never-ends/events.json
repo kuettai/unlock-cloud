@@ -1,0 +1,93 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 780,
+      "message": "Intercom: \"Attention all staff — queue backlog is now at critical. Operations Lead, please report progress.\"",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 600,
+      "message": "Mei over intercom: \"Ten minutes gone already? You're faster than the last three leads. They all quit by now.\"",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 450,
+      "message": "MID-EVENT: Halfway point. Director Tan's walkthrough approaching.",
+      "type": "narrative",
+      "triggers_narrative": "mid_event"
+    },
+    {
+      "id": "TE-04",
+      "time_remaining": 240,
+      "message": "Director Tan's PA: \"The Director has left his office. ETA: four minutes.\"",
+      "type": "atmosphere",
+      "voice": "director"
+    },
+    {
+      "id": "TE-05",
+      "time_remaining": 120,
+      "message": "System alert: \"Two minutes remaining. Director walkthrough imminent.\"",
+      "type": "alarm",
+      "voice": "system"
+    },
+    {
+      "id": "TE-06",
+      "time_remaining": 30,
+      "message": "Director Tan is at the door. Thirty seconds.",
+      "type": "alarm",
+      "voice": "director"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "hint-tooltip",
+      "trigger": "first_hint_request",
+      "message": "Hints are always available. They cost a few points but never block you. Use them if stuck — most players still get 3+ stars.",
+      "type": "tooltip",
+      "once": true
+    },
+    {
+      "id": "queues-sorted",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "sort-queues",
+      "result_card": 105,
+      "message": "Step 1 complete. Queue priorities set. Server Room unlocked.",
+      "type": "reveal"
+    },
+    {
+      "id": "flow-built",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "build-flow",
+      "result_card": 205,
+      "message": "Step 2 complete. Contact flow is live. Ops Dashboard unlocked.",
+      "type": "reveal"
+    },
+    {
+      "id": "bottleneck-found",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "find-bottleneck",
+      "result_card": 305,
+      "message": "Step 3 complete. Bottleneck identified. Training Room unlocked.",
+      "type": "reveal"
+    },
+    {
+      "id": "agents-assigned",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "assign-agents",
+      "result_card": 405,
+      "message": "Step 4 complete. Agents routed. Contact Center Warroom unlocked.",
+      "type": "reveal"
+    },
+    {
+      "id": "acw-completed",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "complete-acw",
+      "result_card": 599,
+      "message": "Call handled. ACW logged. Welcome to the team.",
+      "type": "ending"
+    }
+  ]
+}

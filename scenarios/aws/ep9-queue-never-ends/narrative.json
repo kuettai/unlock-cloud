@@ -1,0 +1,47 @@
+{
+  "voices": {
+    "system": { "voice_id": "Joanna", "role": "Contact Centre IVR — calm, professional, mildly ominous" },
+    "director": { "voice_id": "Matthew", "role": "Director Tan — stern, fair, expects results" },
+    "mei": { "voice_id": "Salli", "role": "Mei — veteran agent, sarcastic, secretly helpful" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "system", "text": "Welcome to the Ministry of Better Workplaces Contact Centre. You are now logged in as Operations Lead.", "pause_after_ms": 800 },
+      { "voice": "system", "text": "Current status: critical. All queues overloaded. Average wait time: forty-seven minutes. Citizens are... unhappy.", "pause_after_ms": 1000 },
+      { "voice": "mei", "text": "Oh good, the new lead's here. Don't worry — it's only been like this since six AM. The old system died. Something about an expired certificate. Classic Monday.", "pause_after_ms": 1000 },
+      { "voice": "director", "text": "This is Director Tan. I'm doing a walkthrough at noon. I expect the centre to be operational. No excuses. Fix it.", "pause_after_ms": 800 },
+      { "voice": "system", "text": "You have fifteen minutes. Good luck, Operations Lead.", "pause_after_ms": 600 }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 450,
+    "segments": [
+      { "voice": "system", "text": "Seven minutes remaining. Queue backlog: decreasing. Director walkthrough: imminent.", "pause_after_ms": 800 },
+      { "voice": "mei", "text": "You're actually not bad at this. Don't let it go to your head.", "pause_after_ms": 600 },
+      { "voice": "director", "text": "I can see the dashboards from my office. Keep it up.", "pause_after_ms": 600 }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "system", "text": "All queues operational. Average wait time: under two minutes. After Contact Work: logged correctly.", "pause_after_ms": 800 },
+        { "voice": "system", "text": "Contact centre status upgraded to: green.", "pause_after_ms": 1000, "emphasis": "strong" },
+        { "voice": "mei", "text": "Not bad for a first day. You actually filled in the case notes properly. Most people skip that part and wonder why follow-ups never happen.", "pause_after_ms": 800 },
+        { "voice": "director", "text": "Impressive. The dashboards are green, the agents are routing correctly, and you logged the case properly. Welcome to the team.", "pause_after_ms": 800 },
+        { "voice": "system", "text": "Congratulations, Operations Lead. You've restored service to the citizens of Better Workplaces." }
+      ],
+      "audio": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "system", "text": "Time expired. Queue backlog remains critical. Director walkthrough: in progress.", "pause_after_ms": 800, "emphasis": "strong" },
+        { "voice": "director", "text": "I see. We'll... reconvene tomorrow. With a plan this time.", "pause_after_ms": 800 },
+        { "voice": "mei", "text": "Hey. First days are rough. Come back tomorrow — I'll save you a parking spot. The good one, near the lift.", "pause_after_ms": 800 },
+        { "voice": "system", "text": "Session ended. You may retry at any time. The citizens will wait. They always wait." }
+      ],
+      "audio": null
+    }
+  }
+}

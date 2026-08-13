@@ -1,0 +1,21 @@
+{
+  "id": "ep9-queue-never-ends",
+  "title": "The Queue That Never Ends",
+  "episode": 9,
+  "arc": "standalone",
+  "category": "aws",
+  "description": "Monday morning at the Ministry of Better Workplaces. The contact centre crashed overnight and citizens are flooding in. You're the new ops lead — triage queues, rebuild the contact flow, read the dashboards, assign agents, and handle a live call before the Director's walkthrough.",
+  "difficulty": { "tier": 1, "label": "Event Session" },
+  "duration_minutes": 15,
+  "players": { "min": 1, "max": 6, "recommended": 3 },
+  "aws_topics": ["Amazon Connect", "Contact Flows", "Queues", "Routing Profiles", "Real-Time Metrics", "After Contact Work"],
+  "mechanics_taught": [
+    "puzzle_solving",
+    "navigation",
+    "hints",
+    "scoring"
+  ],
+  "version": "1.0",
+  "start_button": "Clock In",
+  "lore_label": "Memo"
+}

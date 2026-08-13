@@ -1,0 +1,127 @@
+{
+  "puzzles": [
+    {
+      "id": "sort-queues",
+      "type": "sort_lock",
+      "card_ref": 101,
+      "description": "Sort citizen requests into correct queue priority order — highest urgency first",
+      "ui": "sort-lock",
+      "config": {
+        "answer": [
+          "Work Pass Permits — expiring, time-sensitive",
+          "Workplace Safety — incident reported",
+          "General Enquiry — information only",
+          "Feedback — non-urgent"
+        ],
+        "distractors": []
+      },
+      "hints": [
+        "Expiring permits are the most urgent — they have a deadline. What's least urgent?",
+        "Permits expire (urgent), safety incidents need action, general enquiries can wait, feedback is lowest priority.",
+        "Order: Work Pass Permits → Workplace Safety → General Enquiry → Feedback"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "build-flow",
+      "type": "chain_lock",
+      "card_ref": 201,
+      "description": "Chain the contact flow blocks in the correct order to route calls",
+      "ui": "chain-lock",
+      "config": {
+        "items": [
+          { "id": "greet", "label": "Play Greeting", "icon": "👋" },
+          { "id": "identify", "label": "Get Customer Input", "icon": "🔢" },
+          { "id": "route", "label": "Check Queue Availability", "icon": "🔀" },
+          { "id": "queue", "label": "Transfer to Queue", "icon": "📋" },
+          { "id": "connect", "label": "Connect to Agent", "icon": "🎧" }
+        ],
+        "answer": ["greet", "identify", "route", "queue", "connect"]
+      },
+      "hints": [
+        "Every call starts with a greeting. What does the caller do next — identify their need.",
+        "After greeting and input: check if agents are free, put caller in queue, then connect them.",
+        "Order: Play Greeting → Get Customer Input → Check Queue Availability → Transfer to Queue → Connect to Agent. Hold Music is a distractor."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "find-bottleneck",
+      "type": "log_lock",
+      "card_ref": 301,
+      "description": "Read the real-time dashboard and identify why the Work Permits queue has a 47-minute wait",
+      "ui": "log-lock",
+      "config": {
+        "prompt": "Select the lines that explain why the Work Permits queue has a 47-minute wait time",
+        "lines": [
+          { "text": "09:01 [GENERAL] Agent Lim — Available — Avg Handle: 3m", "correct": false },
+          { "text": "09:01 [SALARY] Agent Wong — Available — Avg Handle: 8m", "correct": false },
+          { "text": "09:02 [WORK PERMITS] Agent Chan — After Contact Work — 22 minutes", "correct": true },
+          { "text": "09:02 [WORK PERMITS] Agent Lee — Offline — Reason: Break", "correct": true },
+          { "text": "09:03 [GENERAL] Agent Tan — Available — Avg Handle: 4m", "correct": false },
+          { "text": "09:03 [WORK PERMITS] Queue depth: 34 callers — 0 agents available", "correct": true },
+          { "text": "09:04 [SALARY] Queue depth: 3 callers — 2 agents available", "correct": false },
+          { "text": "09:04 [GENERAL] Queue depth: 1 caller — 3 agents available", "correct": false }
+        ]
+      },
+      "hints": [
+        "Focus on the WORK PERMITS queue only. What's unusual about agent availability there?",
+        "One agent has been in ACW for 22 minutes (way over target), another is offline. The queue has zero agents available.",
+        "Select: Agent Chan in ACW for 22 min, Agent Lee offline, and Queue depth 34 with 0 agents available."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "assign-agents",
+      "type": "match_lock",
+      "card_ref": 401,
+      "description": "Match each agent to the correct routing profile based on their skills and certifications",
+      "ui": "match-lock",
+      "config": {
+        "pairs": [
+          ["Agent Chan — Mandarin, Work Permits certified", "Work Permits Queue"],
+          ["Agent Wong — English/Malay, Salary specialist", "Salary Disputes Queue"],
+          ["Agent Lim — English, General trained", "General Enquiries Queue"],
+          ["Agent Raj — Tamil/English, Safety certified", "Workplace Safety Queue"]
+        ],
+        "cols": 4
+      },
+      "hints": [
+        "Match each agent's certification or specialisation to the queue that needs that skill.",
+        "Chan has Work Permits cert, Wong handles Salary, Raj is Safety certified. One remains.",
+        "Chan → Work Permits, Wong → Salary, Lim → General, Raj → Safety."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "complete-acw",
+      "type": "context_lock",
+      "card_ref": 501,
+      "description": "Complete the After Contact Work form by keeping correct entries and removing incorrect ones",
+      "ui": "context-lock",
+      "config": {
+        "agentName": "case-notes",
+        "shelfLabel": "ACW form fields — tap to remove incorrect entries",
+        "intro": "📞 CALL TRANSCRIPT:\n\"Hello, I submitted my work permit renewal three weeks ago — reference WP-20240815. I was told it would take 10 working days but I haven't received any update. My current permit expires next week and I'm worried I'll be out of compliance. Can someone check the status?\"\n\nComplete the After Contact Work form below. Remove incorrect entries — keep only what matches the call.",
+        "capacity": 400,
+        "documents": [
+          { "id": "cat-wp", "label": "Category: Work Permit Renewal", "tokens": 80, "status": "required", "missingLine": "⚠️ Missing category — case cannot be classified" },
+          { "id": "cat-salary", "label": "Category: Salary Dispute", "tokens": 80, "status": "poison", "poisonLine": "❌ Wrong category — this isn't a salary issue" },
+          { "id": "ref-correct", "label": "Reference: WP-20240815", "tokens": 60, "status": "required", "missingLine": "⚠️ No reference number — case cannot be traced" },
+          { "id": "ref-wrong", "label": "Reference: SD-20240101", "tokens": 60, "status": "poison", "poisonLine": "❌ Wrong reference number — doesn't match caller's case" },
+          { "id": "summary-correct", "label": "Summary: Permit renewal submitted 3 weeks ago, no update received, expires next week", "tokens": 100, "status": "required", "missingLine": "⚠️ Missing summary — follow-up team won't know the issue" },
+          { "id": "summary-wrong", "label": "Summary: Caller wants to file a new application", "tokens": 100, "status": "poison", "poisonLine": "❌ Inaccurate summary — caller is checking status, not filing new" },
+          { "id": "action-correct", "label": "Follow-up: Escalate to permits team for expedited status check", "tokens": 100, "status": "required", "missingLine": "⚠️ No follow-up action — case will sit unresolved" },
+          { "id": "action-wrong", "label": "Follow-up: No action required, case closed", "tokens": 100, "status": "poison", "poisonLine": "❌ Case isn't resolved — citizen still waiting for an answer" }
+        ]
+      },
+      "hints": [
+        "Read the transcript. What is the caller's issue? Match category, reference, summary, and follow-up.",
+        "It's a work permit renewal (not salary). Reference WP-20240815. They want a status check, not a new application.",
+        "Keep: Work Permit Renewal + WP-20240815 + 'submitted 3 weeks ago' summary + escalate to permits team. Remove everything else."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}
