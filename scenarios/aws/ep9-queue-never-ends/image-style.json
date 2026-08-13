@@ -1,0 +1,9 @@
+{
+  "style_prefix": "Digital illustration, Singapore government office interior, warm professional aesthetic, soft fluorescent lighting, contact centre operations theme, friendly clean style, game card art.",
+  "style_prefix_location": "Digital illustration, Singapore government contact centre interior, isometric wide-angle, warm fluorescent lighting, mix of modern tech screens and traditional office furniture, busy but organized, professional yet approachable, game environment art.",
+  "style_prefix_item": "Digital illustration, single office/tech prop on dark gradient background, warm orange-amber highlights, clean icon style, slightly cartoonish, centered, game inventory art.",
+  "style_prefix_object": "Digital illustration, interactive government office tech terminal or screen, soft moody background, orange and teal accents, close-up detail, professional tech vibe, game card art.",
+  "style_prefix_character": "Digital illustration, single character portrait, Singapore government office worker or director, professional but warm cartoon-realistic style, dark gradient background, expressive pose, game NPC art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, dark dystopian, horror, gore, AWS logo, Amazon branding",
+  "aspect_ratio": "16:9"
+}

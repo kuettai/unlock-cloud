@@ -1,0 +1,17 @@
+{
+  "base_score": 50,
+  "time_bonus_per_minute": 1,
+  "hint_penalty": -2,
+  "wrong_combination_penalty": -3,
+  "lore_bonus": 2,
+  "lore_ids": [110, 210, 310, 410, 510],
+  "all_lore_bonus": 5,
+  "stars": [
+    { "min": 60, "stars": 5 },
+    { "min": 50, "stars": 4 },
+    { "min": 35, "stars": 3 },
+    { "min": 20, "stars": 2 },
+    { "min": 0, "stars": 1 }
+  ],
+  "notes": "Event-friendly tuning. A clean run (no hints, finish with 5+ min remaining, find 3 lore) lands 4-5 stars. Most players should get 3+ stars to walk away happy."
+}

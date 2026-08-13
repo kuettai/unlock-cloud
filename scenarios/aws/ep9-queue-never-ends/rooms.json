@@ -1,0 +1,49 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Lobby",
+      "description": "Step 1 — Sort the queue priorities",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "Starting room",
+      "map_pos": [180, 360]
+    },
+    {
+      "card_id": 200,
+      "name": "Server Room",
+      "description": "Step 2 — Build the contact flow",
+      "connects_to": [300],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "sort-queues" },
+      "unlock_text": "Sorted the queue priorities",
+      "map_pos": [180, 270]
+    },
+    {
+      "card_id": 300,
+      "name": "Ops Dashboard",
+      "description": "Step 3 — Find the bottleneck",
+      "connects_to": [400],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "build-flow" },
+      "unlock_text": "Built the contact flow",
+      "map_pos": [180, 180]
+    },
+    {
+      "card_id": 400,
+      "name": "Training Room",
+      "description": "Step 4 — Assign agents to queues",
+      "connects_to": [500],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "find-bottleneck" },
+      "unlock_text": "Identified the bottleneck",
+      "map_pos": [180, 90]
+    },
+    {
+      "card_id": 500,
+      "name": "Contact Center Warroom",
+      "description": "Step 5 — Handle a live call",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "assign-agents" },
+      "unlock_text": "Assigned agents to routing profiles",
+      "map_pos": [180, 0]
+    }
+  ]
+}

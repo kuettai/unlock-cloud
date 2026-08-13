@@ -1956,12 +1956,14 @@ function _flowRows(roomDefs) {
   if (!root) return [];
   const level = { [root.card_id]: 0 };
   const queue = [root.card_id];
+  const visited = new Set([root.card_id]);
   while (queue.length) {
     const id = queue.shift();
     const lv = level[id];
     (byId[id]?.connects_to || []).forEach(cid => {
       if (!byId[cid]) return;
-      // Longest path keeps convergence points below all their parents.
+      if (visited.has(cid)) return; // prevent cycles (e.g. Warung→Tollbooth)
+      visited.add(cid);
       if (level[cid] === undefined || level[cid] < lv + 1) { level[cid] = lv + 1; queue.push(cid); }
     });
   }

@@ -620,6 +620,7 @@
       "id": 701,
       "type": "event",
       "color": "yellow",
+      "is_ending": true,
       "title": "Final Command",
       "description": "One word to ship — the word that defines everything you learned: ADAPT. You commit it, and the routing engine restarts clean. Across Jakarta, ETAs flicker back to life.",
       "reveals": [702],
