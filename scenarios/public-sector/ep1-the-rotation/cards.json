@@ -1,0 +1,331 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Orientation Room",
+      "description": "A bright meeting room with a 'Welcome to Your Rotation!' banner. You need to confirm your schedule before starting, but it's not posted anywhere. Quin waves from the back row. Your laptop shows Amazon Quick is ready.",
+      "image": "assets/orientation-room.png",
+      "image_prompt": "A bright government office meeting room with a welcome banner reading 'Cross-Department Rotation Program'. A corkboard with no schedule posted. Modern office furniture, warm lighting, a coffee station, a laptop showing an AI assistant. Flat illustration style, friendly and professional.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 102,
+          "label": "Chat with Quin",
+          "puzzle": "npc-quin-lobby"
+        },
+        {
+          "card_id": 103,
+          "label": "Chat with Amazon Quick, your AI assistant, to find your rotation schedule",
+          "puzzle": "ai-assistant-orientation"
+        },
+        {
+          "card_id": 110,
+          "label": "Confirm your schedule",
+          "puzzle": "orientation-sort"
+        }
+      ],
+      "visible_to": "all",
+      "room": "orientation-room"
+    },
+    {
+      "id": 102,
+      "type": "tool",
+      "color": "orange",
+      "title": "Quin (Orientation)",
+      "description": "Quin — your rotation buddy. Friendly senior officer who did this same program last year.",
+      "visible_to": "all",
+      "room": "orientation-room"
+    },
+    {
+      "id": 103,
+      "type": "tool",
+      "color": "orange",
+      "title": "Amazon Quick, your AI assistant",
+      "description": "Quick Chat — ask questions and get instant answers from your ministry systems.",
+      "visible_to": "all",
+      "room": "orientation-room"
+    },
+    {
+      "id": 110,
+      "type": "event",
+      "color": "red",
+      "title": "Sorted Schedule",
+      "description": "Your rotation is locked in. Let's go.",
+      "image": "assets/sorted-schedule.png",
+      "image_prompt": "A neatly organized schedule card with four weeks clearly labeled with department names and checkboxes. Clean, satisfying organization. Flat illustration.",
+      "reveals": [200],
+      "discoveries": []
+    },
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "Work Pass Processing Unit",
+      "description": "Week 1. A senior officer drops a thick folder on your desk: 'Renewal case — assess against eligibility criteria and recommend.' The policy manual is on the shelf but it's 180 pages. Your laptop shows Amazon Quick is ready.",
+      "image": "assets/pass-processing.png",
+      "image_prompt": "A government office with rows of workstations and dual monitors. Thick policy binders on shelves. A folder labeled 'CASE FILE' on a desk. A laptop screen showing an AI assistant interface. Professional, slightly overwhelming. Flat illustration, blues and grays.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 201,
+          "label": "Read the case file"
+        },
+        {
+          "card_id": 202,
+          "label": "Check message from Quin",
+          "puzzle": "npc-quin-pass"
+        },
+        {
+          "card_id": 203,
+          "label": "Research with Amazon Quick, your AI assistant, to find EP eligibility criteria"
+        },
+        {
+          "card_id": 210,
+          "label": "Assess the application",
+          "puzzle": "pass-review"
+        }
+      ],
+      "visible_to": "all",
+      "room": "pass-processing"
+    },
+    {
+      "id": 201,
+      "type": "item",
+      "color": "blue",
+      "title": "Work Pass Case File",
+      "description": "Applicant: Chen Wei, Software Engineer\nCompany: TechNova Pte Ltd (50 employees)\nSalary: $6,200/month\nPass type: Employment Pass renewal\nPass held: 2 years, expires in 14 days\nCompany FCF status: Registered\nCompliance history: No violations on record\n\nSupervisor's note: 'Check salary threshold, company FCF status, and compliance history. Recommend approve/reject/defer.'",
+      "image": "assets/case-file.png",
+      "image_prompt": "An open case folder with an application form, a passport photo clipped to the corner, and highlighted sections. Professional government document styling. Flat illustration.",
+      "reveals": [],
+      "discoveries": []
+    },
+    {
+      "id": 202,
+      "type": "tool",
+      "color": "orange",
+      "title": "Quin (Week 1)",
+      "description": "Quin checks in — tips for navigating the policy binder with Amazon Quick.",
+      "visible_to": "all",
+      "room": "pass-processing"
+    },
+    {
+      "id": 203,
+      "type": "item",
+      "color": "blue",
+      "title": "Amazon Quick Research Results",
+      "description": "📑 Quick Research found 3 matching policy documents.\n\nEmployment Pass Renewal Criteria (2024 Edition):\n\n1. Minimum salary: $5,000/month\n2. Company must have Fair Consideration Framework (FCF) — required for companies with 10+ employees\n3. No compliance violations during current pass period\n4. Role must remain relevant to qualifications\n\nAll four criteria must be met for approval. Any single failure = reject or defer.",
+      "image": "assets/quick-research.png",
+      "image_prompt": "A laptop screen showing AI research results with highlighted policy text and checkmarks. Professional, clean interface. Flat illustration.",
+      "reveals": [],
+      "discoveries": []
+    },
+    {
+      "id": 210,
+      "type": "event",
+      "color": "red",
+      "title": "Application Approved",
+      "description": "You matched all the criteria correctly. The renewal is approved. Your supervisor nods: 'Good work. Most new officers take twice as long on their first case.'",
+      "image": "assets/approved-stamp.png",
+      "image_prompt": "A document with a green 'APPROVED' stamp, with a checklist of criteria all ticked. Satisfying and official. Flat illustration, green accents.",
+      "reveals": [300],
+      "discoveries": []
+    },
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "Dispute Resolution Centre",
+      "description": "Week 2. A calm mediation room. The case officer briefs you: 'Salary dispute — worker claims unpaid overtime, employer disagrees. Review the evidence, then make your recommendation.' Amazon Quick is open on your laptop.",
+      "image": "assets/dispute-centre.png",
+      "image_prompt": "A calm mediation room with a round table, two chairs on each side, case files stacked neatly, a laptop showing an AI assistant, and a whiteboard showing 'Active Cases: 12'. Neutral tones, professional atmosphere. Flat illustration.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 301,
+          "label": "Review the worker's statement"
+        },
+        {
+          "card_id": 302,
+          "label": "Review the employer's response"
+        },
+        {
+          "card_id": 303,
+          "label": "Check message from Quin",
+          "puzzle": "npc-quin-dispute"
+        },
+        {
+          "card_id": 304,
+          "label": "Chat with Amazon Quick, your AI assistant, to analyze the Employment Act",
+          "puzzle": "ai-assistant-dispute"
+        },
+        {
+          "card_id": 310,
+          "label": "Mediate the dispute",
+          "puzzle": "dispute-mediation"
+        }
+      ],
+      "visible_to": "all",
+      "room": "dispute-centre"
+    },
+    {
+      "id": 301,
+      "type": "item",
+      "color": "blue",
+      "title": "Worker's Statement",
+      "description": "Mr. Tan (warehouse supervisor, FastLog Pte Ltd) states: 'I worked extra hours during the March stocktake. My manager asked me to come in on Saturday via WhatsApp. My payslip shows only base salary of $3,200. I believe I'm owed overtime pay for the hours worked.'",
+      "image": "assets/worker-statement.png",
+      "image_prompt": "A typed statement document with a worker's testimony, paperclipped to WhatsApp message printouts. Official formatting. Flat illustration.",
+      "reveals": [],
+      "discoveries": []
+    },
+    {
+      "id": 302,
+      "type": "item",
+      "color": "blue",
+      "title": "Employer's Response",
+      "description": "FastLog Pte Ltd responds: 'Our employment contract clearly states that all overtime must be pre-approved in writing through the official HR portal. We have no record of an approved overtime request for Mr. Tan in March. The company followed its contractual obligations.'",
+      "image": "assets/employer-response.png",
+      "image_prompt": "A formal company response letter on corporate letterhead with highlighted contract clauses. Professional, slightly cold tone. Flat illustration.",
+      "reveals": [],
+      "discoveries": []
+    },
+    {
+      "id": 303,
+      "type": "tool",
+      "color": "orange",
+      "title": "Quin (Week 2)",
+      "description": "Quin checks in — tips for navigating conflicting evidence in disputes.",
+      "visible_to": "all",
+      "room": "dispute-centre"
+    },
+    {
+      "id": 304,
+      "type": "tool",
+      "color": "orange",
+      "title": "Amazon Quick, your AI assistant",
+      "description": "Quick Chat — conversational analysis of evidence, summarizing positions, and referencing employment law.",
+      "visible_to": "all",
+      "room": "dispute-centre"
+    },
+    {
+      "id": 310,
+      "type": "event",
+      "color": "red",
+      "title": "Dispute Resolved",
+      "description": "You identified the key issue and made a fair recommendation. The case officer nods: 'Good judgment. You found the gap between process and substance — that's what this job is about.'",
+      "image": "assets/dispute-resolved.png",
+      "image_prompt": "A mediation room with two parties shaking hands across a table, a document labeled 'Resolution' in the center. Warm, positive outcome. Flat illustration, green and gold accents.",
+      "reveals": [400],
+      "discoveries": []
+    },
+    {
+      "id": 400,
+      "type": "location",
+      "color": "green",
+      "title": "Workplace Safety Desk",
+      "description": "Week 3. An open-plan area with incident dashboards on wall screens. A whiteboard reads 'Days Since Last Papercut: 3'. Your task: review Incident Report #2847 and identify the safety violations. The report is dense — 15 timeline entries from a construction site collapse.",
+      "image": "assets/safety-desk.png",
+      "image_prompt": "An open-plan government office with large wall-mounted screens showing safety dashboards and charts. A whiteboard with 'Days Since Last Papercut: 3' written in marker. Hard hats on a shelf. A laptop with AI assistant open. Flat illustration, yellows and safety orange.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 401,
+          "label": "Open the incident report"
+        },
+        {
+          "card_id": 402,
+          "label": "Check message from Quin",
+          "puzzle": "npc-quin-safety"
+        },
+        {
+          "card_id": 410,
+          "label": "Flag the violations manually",
+          "puzzle": "safety-review"
+        },
+        {
+          "card_id": 410,
+          "label": "⚡ Automate with Amazon Quick, your AI assistant, to flag violations instantly"
+        }
+      ],
+      "visible_to": "all",
+      "room": "safety-desk"
+    },
+    {
+      "id": 401,
+      "type": "item",
+      "color": "blue",
+      "title": "Incident Report #2847",
+      "description": "Site: Marina Bay Tower Project. Date: 15 March. Event: Scaffolding platform partially collapsed at Level 12. One worker sustained injuries.\n\nThe report contains 15 timeline entries covering: morning briefing, weather observations, equipment checks, work commencement, the incident, and response actions. Your supervisor wants you to flag entries that indicate regulatory violations.",
+      "image": "assets/incident-report.png",
+      "image_prompt": "A thick incident report document with sections highlighted in yellow, accompanied by a site photo showing scaffolding. Official government formatting. Flat illustration.",
+      "reveals": [],
+      "discoveries": []
+    },
+    {
+      "id": 402,
+      "type": "tool",
+      "color": "orange",
+      "title": "Quin (Week 3)",
+      "description": "Quin checks in — tips for the safety desk.",
+      "visible_to": "all",
+      "room": "safety-desk"
+    },
+    {
+      "id": 410,
+      "type": "event",
+      "color": "red",
+      "title": "Violations Flagged",
+      "description": "You identified three key violations. Your supervisor adds them to the enforcement notice. 'Sharp eyes. The weather angle is the one most people miss.'",
+      "image": "assets/violations-flagged.png",
+      "image_prompt": "A report with three items circled in red, with checkmarks next to each. A supervisor giving a thumbs up in the background. Professional and satisfying. Flat illustration, red and green accents.",
+      "reveals": [500],
+      "discoveries": []
+    },
+    {
+      "id": 500,
+      "type": "location",
+      "color": "green",
+      "title": "Director's Office",
+      "description": "Week 4. Final stop. The Director's office has a standing desk, one framed poster ('Data-Driven Empathy'), and a single instruction on your screen: 'Prepare a one-page rotation summary.' Amazon Quick is ready to help you structure your thoughts.",
+      "image": "assets/directors-office.png",
+      "image_prompt": "A modern corner office with floor-to-ceiling windows, a standing desk with a single monitor showing an AI assistant, and a framed poster reading 'Data-Driven Empathy'. Clean, minimal, impressive. Flat illustration, warm natural light.",
+      "reveals": [],
+      "discoveries": [
+        {
+          "card_id": 502,
+          "label": "Check final message from Quin",
+          "puzzle": "npc-quin-finale"
+        },
+        {
+          "card_id": 510,
+          "label": "⚡ Submit your rotation brief (generated by Amazon Quick, your AI assistant)"
+        }
+      ],
+      "visible_to": "all",
+      "room": "directors-office"
+    },
+    {
+      "id": 502,
+      "type": "tool",
+      "color": "orange",
+      "title": "Quin (Final Week)",
+      "description": "Quin's final check-in — tips for the Director's briefing.",
+      "visible_to": "all",
+      "room": "directors-office"
+    },
+    {
+      "id": 510,
+      "type": "event",
+      "color": "red",
+      "title": "Rotation Complete",
+      "description": "The Director reads your brief and nods: 'Clear, well-structured, and evidence-based. Most rotation officers struggle to connect the dots across departments. You've shown that AI tools don't replace judgment — they free up time for it.' Quin gives you a thumbs up through the glass wall.",
+      "image": "assets/rotation-complete.png",
+      "image_prompt": "A Director nodding approvingly while reading a one-page document. Through a glass wall behind, a colleague gives a thumbs up. Warm, celebratory moment. Flat illustration, golden hour lighting.",
+      "reveals": [],
+      "discoveries": [],
+      "is_ending": true
+    }
+  ]
+}

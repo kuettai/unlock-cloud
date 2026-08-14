@@ -1,0 +1,29 @@
+{
+  "id": "ep1-the-rotation",
+  "title": "The Rotation",
+  "episode": 1,
+  "arc": "Public Sector AI",
+  "description": "You're a public officer on a one-month cross-department rotation at the Ministry of Manpower. Your rotation buddy Quin has a knack for finishing work by 5pm — turns out the AI assistant on your laptop is the secret. Each week, a new department. Each challenge, a new way AI makes public service better.",
+  "difficulty": { "tier": 1, "label": "Accessible" },
+  "duration_minutes": 10,
+  "players": { "min": 1, "max": 4, "recommended": 2 },
+  "aws_topics": [
+    "Amazon Quick",
+    "Quick Research",
+    "Quick Flows",
+    "AI Assistants for Public Service",
+    "Policy Lookup",
+    "Document Summarization",
+    "Report Generation"
+  ],
+  "mechanics_used": [
+    "sort-lock",
+    "scroll-lock",
+    "cascade-lock",
+    "log-lock",
+    "prompt-lock",
+    "npc-dialog"
+  ],
+  "end_title": "Rotation Complete",
+  "lore_label": "AI Skills Discovered"
+}

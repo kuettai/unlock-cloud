@@ -1,0 +1,286 @@
+{
+  "puzzles": [
+    {
+      "id": "npc-quin-lobby",
+      "type": "tool",
+      "card_ref": 102,
+      "description": "Quin — your rotation buddy",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Quin",
+        "portrait": "👋",
+        "greeting": "Hey! You must be the new rotation officer. I'm Quin — did this same program last year. Best month of my career, honestly. Need any tips?",
+        "lines": [
+          { "label": "Any survival tips?", "response": "Biggest one: don't try to memorize every department's rules. And Amazon Quick on your laptop? Use it. I resisted for the first week and nearly drowned in policy documents. Now I can't imagine working without it." },
+          { "label": "What's Amazon Quick?", "response": "It's the AI assistant on your work laptop — the ministry rolled it out last quarter. It has a few key features you'll use during the rotation:\n\n• Quick Chat — ask it anything conversationally\n• Quick Research — deep-dives into policy documents and regulations\n• Quick Flows — automates tasks like compliance checking and report generation\n\nEach department will need a different feature. You'll see." },
+          { "label": "What should I expect?", "response": "Each stop teaches you a different AI skill. Work Pass Processing is about looking up policy criteria quickly. Dispute Resolution is about summarizing conflicting evidence. Workplace Safety is about spotting violations in long reports. And the Director's office is where you draft something from scratch. It builds — find, analyze, detect, create." }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "ai-assistant-orientation",
+      "type": "tool",
+      "card_ref": 103,
+      "description": "Amazon Quick — look up your rotation schedule",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Amazon Quick",
+        "portrait": "🤖",
+        "greeting": "I'm Amazon Quick, your AI assistant. This is Quick Chat — ask me anything and I'll find the answer from ministry systems. How can I help?",
+        "lines": [
+          { "label": "What's my rotation schedule?", "response": "I've pulled your confirmed rotation schedule from HR:\n\n• Week 1: Work Pass Processing Unit\n• Week 2: Dispute Resolution Centre\n• Week 3: Workplace Safety & Health\n• Week 4: Director's Office (final briefing)\n\nYou'll need to confirm this in the system before starting." },
+          { "label": "What should I prepare?", "response": "Each department will give you a real task. You won't know their rules in advance — that's normal for rotation officers. You can ask me anytime to look up policies, regulations, or precedents relevant to whatever you're working on. I'm here throughout." },
+          { "label": "Who's Quin?", "response": "Quin is your assigned rotation buddy — a senior officer who completed the same program last year. They can give you practical tips about each department. Between Quin's experience and my policy knowledge, you'll have solid support." }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "orientation-sort",
+      "type": "puzzle",
+      "card_ref": 110,
+      "description": "Confirm your rotation schedule",
+      "ui": "cascade-lock",
+      "config": {
+        "cupNames": ["Week 1", "Week 4"],
+        "steps": [
+          {
+            "question": "Your rotation schedule isn't posted anywhere. You asked Amazon Quick and it pulled your HR records.\n\nWhat's your first department (Week 1)?",
+            "options": ["Dispute Resolution", "Work Pass Processing", "Workplace Safety", "Director's Office"],
+            "answer": 1,
+            "wrong": {"0": "That's Week 2.", "2": "That's Week 3.", "3": "That's the final stop."}
+          },
+          {
+            "question": "And your final stop (Week 4)?",
+            "options": ["Work Pass Processing", "Workplace Safety", "Dispute Resolution", "Director's Office"],
+            "answer": 3,
+            "wrong": {"0": "That's Week 1.", "1": "That's Week 3.", "2": "That's Week 2."}
+          }
+        ]
+      },
+      "hints": [
+        "Your schedule isn't posted. Did you ask Amazon Quick?",
+        "Amazon Quick says: Week 1 Work Pass Processing, Week 2 Dispute Resolution, Week 3 Workplace Safety, Week 4 Director's Office."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "npc-quin-pass",
+      "type": "tool",
+      "card_ref": 202,
+      "description": "Quin — Week 1 tips",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Quin",
+        "portrait": "💬",
+        "greeting": "Week 1! How's Work Pass Processing treating you?",
+        "lines": [
+          { "label": "I don't know the eligibility criteria!", "response": "Nobody memorizes them — they change every year anyway. Open Amazon Quick and ask: 'What are the current eligibility criteria for an Employment Pass renewal?' It'll pull the exact thresholds. Then just match the applicant against them." },
+          { "label": "The case file doesn't mention thresholds...", "response": "Right — the case file tells you about the applicant. The RULES are in the policy manual (180 pages). Or just ask Quick. It knows every threshold, requirement, and exception." }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "pass-review",
+      "type": "puzzle",
+      "card_ref": 210,
+      "description": "Assess the work pass renewal application",
+      "ui": "scroll-lock",
+      "config": {
+        "title": "📋 Employment Pass Renewal",
+        "clauses": [
+          {
+            "text": "Salary ($6,200) vs. minimum threshold ($5,000): ___",
+            "options": ["Below threshold — reject", "Meets threshold exactly", "Exceeds threshold"],
+            "answer": "Exceeds threshold"
+          },
+          {
+            "text": "Company FCF status (50 employees, 10+ required): ___",
+            "options": ["Too small to require FCF", "Has FCF — compliant", "No FCF — non-compliant"],
+            "answer": "Has FCF — compliant"
+          },
+          {
+            "text": "Compliance history (2-year pass holder): ___",
+            "options": ["Violations found — reject", "No violations — clean record", "Unable to determine — defer"],
+            "answer": "No violations — clean record"
+          },
+          {
+            "text": "Final recommendation: ___",
+            "options": ["Reject — criteria not met", "Approve — all criteria satisfied", "Defer — need more information"],
+            "answer": "Approve — all criteria satisfied"
+          }
+        ],
+        "falseOutputs": [
+          "Check the salary against the $5,000 threshold.",
+          "Think about company size and FCF requirements.",
+          "Review the case file — what does it say about compliance?"
+        ]
+      },
+      "hints": [
+        "You need the minimum salary threshold — it's NOT in the case file. Did you check the Amazon Quick research results?",
+        "Quick Research says: minimum is $5,000. FCF required for 10+ employees.",
+        "All criteria met: $6,200 > $5,000, company has FCF, no violations. Approve."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "npc-quin-dispute",
+      "type": "tool",
+      "card_ref": 303,
+      "description": "Quin — Week 2 tips",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Quin",
+        "portrait": "💬",
+        "greeting": "Week 2 — dispute territory! Never straightforward.",
+        "lines": [
+          { "label": "Both sides blame each other...", "response": "Both sides will tell you what THEY think the rules are. But what does the Employment Act actually say? Ask Quick about the legal position on overtime approval. The law might not agree with either party." },
+          { "label": "How do I figure out who's right?", "response": "Three questions: Did the work happen? Was there authorization? What does the law say about informal authorization? The evidence tells you the first two. Quick tells you the third." }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "ai-assistant-dispute",
+      "type": "tool",
+      "card_ref": 304,
+      "description": "Amazon Quick — employment law lookup",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Amazon Quick",
+        "portrait": "🤖",
+        "greeting": "I'm Amazon Quick, your AI assistant. Let me use Quick Chat to help you analyze this dispute. I've loaded both parties' statements. Ask me anything.",
+        "lines": [
+          { "label": "What does the Employment Act say about overtime approval?", "response": "💬 Quick Chat analyzing Employment Act (Part IV, Section 38)...\n\nOvertime work directed by an employer or their authorized representative is compensable regardless of whether formal written approval was obtained. Key legal test: was work performed at employer's direction? The channel used doesn't matter." },
+          { "label": "Does a WhatsApp message from a manager count?", "response": "💬 Quick Chat searching TADM case precedents...\n\nYes. A direct message from an authorized manager requesting work = 'direction' under the Act. Internal processes (HR portal) are administrative, not legal prerequisites. Principle: substance over form." },
+          { "label": "Standard resolution for cases like this?", "response": "💬 Quick Chat summarizing resolution patterns...\n\nStandard resolution: (1) Overtime payment owed (substance over form), (2) Both parties reminded of proper channels, (3) Employer advised to align processes. Denying payment solely due to a process gap is not upheld." }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "dispute-mediation",
+      "type": "puzzle",
+      "card_ref": 310,
+      "description": "Mediate the salary dispute",
+      "ui": "cascade-lock",
+      "config": {
+        "cupNames": ["Evidence", "Law", "Resolution"],
+        "steps": [
+          {
+            "question": "Worker claims overtime. Employer says no portal approval. WhatsApp shows manager asked worker to come Saturday.\n\nDoes a manager's WhatsApp message constitute a work direction under the Employment Act?",
+            "options": ["No — only HR portal counts", "Yes — a manager's direct request is a 'direction' under the Act", "Depends on company policy"],
+            "answer": 1,
+            "wrong": {"0": "The Act focuses on substance, not the channel used.", "2": "Internal policies don't override statutory law."}
+          },
+          {
+            "question": "The employer argues their contract specifies HR portal as the only valid approval channel.\n\nDoes the company's internal process override the Employment Act?",
+            "options": ["Yes — employees agreed to contract terms", "No — the Employment Act takes precedence", "Partially — shared responsibility"],
+            "answer": 1,
+            "wrong": {"0": "Contractual terms cannot override statutory obligations.", "2": "The Act is clear — statutory rights take precedence."}
+          },
+          {
+            "question": "Work was legally directed. The Act takes precedence over internal processes.\n\nWhat is the correct resolution?",
+            "options": ["Split — pay half the overtime", "Full overtime pay — work was legally directed", "No payment — worker should have used the portal"],
+            "answer": 1,
+            "wrong": {"0": "The work was fully directed — splitting isn't proportionate.", "2": "The worker acted in good faith on a direct instruction."},
+            "after": "Resolution filed. Employer must pay overtime owed and align their processes."
+          }
+        ]
+      },
+      "hints": [
+        "The legal question is about what the Employment Act says. Did you ask Quick?",
+        "Quick explains: the Act focuses on whether work was 'directed' — the channel doesn't matter.",
+        "Directed work is compensable. Internal processes are administrative. Full payment owed."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "npc-quin-safety",
+      "type": "tool",
+      "card_ref": 402,
+      "description": "Quin — Week 3 tips",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Quin",
+        "portrait": "💬",
+        "greeting": "Week 3! Safety desk. These reports are long.",
+        "lines": [
+          { "label": "How do I know which entries are violations?", "response": "You need to know the WSH regulations to spot what's wrong. The report just states facts — some are normal, others violate specific rules. Ask Quick what the standards are, then match against the timeline." },
+          { "label": "There are so many entries...", "response": "Incident reports are 80% context, 20% signal. Ask Quick about scaffolding, PPE, and weather regulations. Then you'll know exactly what to look for." }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    },
+    {
+      "id": "safety-review",
+      "type": "puzzle",
+      "card_ref": 410,
+      "description": "Flag the safety violations in the incident report",
+      "ui": "log-lock",
+      "config": {
+        "prompt": "Select the 3 entries that indicate regulatory violations:",
+        "lines": [
+          { "text": "06:45 — Site supervisor arrived and conducted site walkthrough.", "correct": false },
+          { "text": "07:15 — Morning safety briefing held. 28 workers signed attendance.", "correct": false },
+          { "text": "07:30 — Light rain began. Site supervisor noted conditions and continued.", "correct": false },
+          { "text": "07:45 — Equipment check logged. Harnesses distributed to Level 12 crew.", "correct": false },
+          { "text": "08:00 — Scaffolding crew commenced work on Level 12 platform.", "correct": false },
+          { "text": "08:10 — Inspector's note: Scaffolding inspection certificate dated 14 months prior (validity: 12 months).", "correct": true },
+          { "text": "08:30 — Material hoist tested and operational. Supplies lifted to Level 12.", "correct": false },
+          { "text": "08:45 — Worker Lee reported harness clip malfunction to foreman. Foreman noted it and told Lee to continue carefully.", "correct": true },
+          { "text": "08:55 — Second rain measurement taken. Still classified as 'light'.", "correct": false },
+          { "text": "09:00 — Rain reclassified to 'heavy' by weather station. No stop-work order issued. Work continued.", "correct": true },
+          { "text": "09:05 — Worker Tan requested toilet break. Approved by foreman.", "correct": false },
+          { "text": "09:12 — Platform section B gave way at Level 12. Worker Lee fell 1.5m to catch net.", "correct": false },
+          { "text": "09:13 — Foreman raised emergency alarm. All workers evacuated from Levels 10-14.", "correct": false },
+          { "text": "09:25 — First aid administered to Worker Lee. Bruising to left arm, no fractures.", "correct": false },
+          { "text": "09:40 — MOM inspector arrived on site. Full investigation commenced.", "correct": false }
+        ]
+      },
+      "hints": [
+        "You need to know the WSH regulations to spot violations. Did you ask Quick?",
+        "Look for: something expired (12-month rule), defective equipment (must-stop rule), weather protocol (heavy rain rule).",
+        "Violations: expired certificate (14 > 12 months), broken harness continued (PPE violation), no stop-work in heavy rain."
+      ],
+      "mandatory": true,
+      "isFinal": false
+    },
+    {
+      "id": "npc-quin-finale",
+      "type": "tool",
+      "card_ref": 502,
+      "description": "Quin — final tips",
+      "ui": "npc-dialog",
+      "config": {
+        "name": "Quin",
+        "portrait": "💬",
+        "greeting": "Last week! The Director's briefing. You've got this.",
+        "lines": [
+          { "label": "How should I structure it?", "response": "Keep it simple: what you observed, what you learned, one recommendation. Ask Quick to help structure it — it knows what good policy briefs look like. Then put the conclusion in your own voice." },
+          { "label": "What makes a good recommendation?", "response": "The Director once said: 'Don't tell me to change the world. Tell me one thing I can do Monday morning.' Low-friction, practical, immediately actionable. No mandates, no pilots." }
+        ],
+        "state_lines": []
+      },
+      "hints": [],
+      "mandatory": false
+    }
+  ]
+}

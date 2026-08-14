@@ -19,7 +19,16 @@
 class ScrollLock {
   constructor(container, opts = {}) {
     this.container = container;
-    this.title = opts.title || 'Royal Decree';
+    const rawTitle = opts.title || 'Royal Decree';
+    // If title starts with an emoji (non-ASCII char), use it as icon
+    const emojiMatch = rawTitle.match(/^(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/u);
+    if (emojiMatch) {
+      this.icon = emojiMatch[1];
+      this.title = rawTitle.slice(emojiMatch[0].length);
+    } else {
+      this.icon = opts.icon || '👑';
+      this.title = rawTitle;
+    }
     this.clauses = opts.clauses || [];
     this.constraints = opts.constraints || [];
     this.falseOutputs = opts.falseOutputs || [];
@@ -45,7 +54,7 @@ class ScrollLock {
 
     const seal = document.createElement('div');
     seal.className = 'scrlk-seal';
-    seal.textContent = '👑';
+    seal.textContent = this.icon;
     parch.appendChild(seal);
 
     this.clauseEls = [];
@@ -89,7 +98,7 @@ class ScrollLock {
 
     const btn = document.createElement('button');
     btn.className = 'scrlk-btn';
-    btn.textContent = '🔏 Apply the Seal';
+    btn.textContent = this.title === 'Employment Pass Renewal' ? '✅ Confirm Assessment' : '🔏 Apply the Seal';
     btn.addEventListener('click', () => this._test());
     w.appendChild(btn);
 
@@ -140,7 +149,7 @@ class ScrollLock {
       }
     });
     if (allCorrect) {
-      this.statusEl.textContent = '✅ The decree is sealed!';
+      this.statusEl.textContent = this.title === 'Employment Pass Renewal' ? '✅ Assessment submitted — all criteria verified.' : '✅ The decree is sealed!';
       setTimeout(() => this.onSubmit(true), 400);
     } else {
       const msg = this.falseOutputs.length ? this.falseOutputs[Math.floor(Math.random() * this.falseOutputs.length)] : '❌ The decree is flawed — review your choices';

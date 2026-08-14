@@ -1,0 +1,31 @@
+{
+  "voices": [
+    { "id": "narrator", "engine": "generative", "voiceId": "Matthew", "role": "Narrator" },
+    { "id": "quin", "engine": "generative", "voiceId": "Joanna", "role": "Quin" }
+  ],
+  "intro": {
+    "segments": [
+      { "text": "Welcome to the Ministry of Manpower." },
+      { "text": "You're starting a one-month cross-department rotation today." },
+      { "text": "Your rotation buddy Quin is waiting — and Amazon Quick is ready on your laptop." }
+    ]
+  },
+  "ending": {
+    "success": {
+      "image": "assets/ending-success.svg",
+      "segments": [
+        { "text": "⚡ Amazon Quick generated your rotation brief:" },
+        { "text": "Opening: During my rotation across three departments, I observed how AI assistants enhance officer decision-making at each stage of public service delivery." },
+        { "text": "Key Insight: AI assistants are most valuable when officers lack domain expertise — they provide regulatory knowledge that enables confident judgment." },
+        { "text": "Recommendation: Include AI assistants in standard onboarding — alongside email and case systems — so using them becomes unremarkable." },
+        { "text": "The Director reads your brief and smiles: 'Clear, evidence-based, and actionable. Exactly what I needed.'" },
+        { "text": "Quin gives you a thumbs up through the glass. Rotation complete." }
+      ]
+    },
+    "failure": {
+      "segments": [
+        { "text": "Time's up — but you made good progress. The Director will wait for your brief." }
+      ]
+    }
+  }
+}

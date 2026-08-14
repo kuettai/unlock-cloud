@@ -25,5 +25,14 @@
     "color": "#dc2626",
     "episodes": 2,
     "description": "Navigate regulatory deadlines, impact assessments, and filing workflows under pressure."
+  },
+  {
+    "id": "public-sector",
+    "title": "Public Sector",
+    "subtitle": "AI-assisted public service delivery",
+    "icon": "🏛️",
+    "color": "#2563eb",
+    "episodes": 1,
+    "description": "Discover how AI assistants transform public officer workflows — from policy research to dispute resolution."
   }
 ]
