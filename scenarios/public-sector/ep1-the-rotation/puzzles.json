@@ -261,7 +261,7 @@
         "Violations: expired certificate (14 > 12 months), broken harness continued (PPE violation), no stop-work in heavy rain."
       ],
       "mandatory": true,
-      "isFinal": false
+      "isFinal": true
     },
     {
       "id": "npc-quin-finale",
