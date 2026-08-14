@@ -98,7 +98,7 @@ class ScrollLock {
 
     const btn = document.createElement('button');
     btn.className = 'scrlk-btn';
-    btn.textContent = '🔏 Apply the Seal';
+    btn.textContent = this.title === 'Employment Pass Renewal' ? '✅ Confirm Assessment' : '🔏 Apply the Seal';
     btn.addEventListener('click', () => this._test());
     w.appendChild(btn);
 
@@ -149,7 +149,7 @@ class ScrollLock {
       }
     });
     if (allCorrect) {
-      this.statusEl.textContent = '✅ The decree is sealed!';
+      this.statusEl.textContent = this.title === 'Employment Pass Renewal' ? '✅ Assessment submitted — all criteria verified.' : '✅ The decree is sealed!';
       setTimeout(() => this.onSubmit(true), 400);
     } else {
       const msg = this.falseOutputs.length ? this.falseOutputs[Math.floor(Math.random() * this.falseOutputs.length)] : '❌ The decree is flawed — review your choices';
