@@ -1,1 +1,5 @@
-{"default":"en","supported":["en"]}
+{
+  "locales": [
+    { "code": "id", "label": "Bahasa Indonesia", "flag": "🇮🇩" }
+  ]
+}
