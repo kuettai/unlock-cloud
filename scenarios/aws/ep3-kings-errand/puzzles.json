@@ -93,6 +93,10 @@
       "config": {
         "prompt": "steward@cloudmere:~$ dispatch soldier:",
         "answer": "fetch schedule from notice board",
+        "accept_keywords": [
+          ["schedule"],
+          ["notice board", "noticeboard", "notice-board", "board", "notice"]
+        ],
         "accept_variations": [
           "fetch the schedule from the notice board",
           "fetch schedule from the notice board",
