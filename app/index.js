@@ -1066,15 +1066,28 @@ function showPuzzlePopup(puzzleId, awardCardId) {
         }
       } else {
         const fo = cfg.falseOutputs;
-        if (fo && fo.no_prerequisite && cfg.prerequisite) {
+        // `falseOutputs` accepts two shapes. Object form (ep1) keys messages by
+        // failure kind. Array form (ep2, ep3, ep4) is a progressive ladder: each
+        // wrong answer shows the next entry, so authors can escalate from flavour
+        // to hint. Both are read here; neither shape changes the other's output.
+        const foList = Array.isArray(fo) ? fo : null;
+        if (fo && !foList && fo.no_prerequisite && cfg.prerequisite) {
           const req = cfg.prerequisite.requires_card;
           if (req && !engine.visibleCards.has(req)) {
             status.textContent = fo.no_prerequisite;
             return;
           }
         }
-        status.textContent = (fo && fo.wrong_answer) || 'Incorrect. Try again.';
-        onFail((fo && fo.wrong_answer) || 'Incorrect.');
+        let failMsg;
+        if (foList && foList.length) {
+          const step = Number(wrap.dataset.foStep || 0);
+          failMsg = foList[Math.min(step, foList.length - 1)];
+          wrap.dataset.foStep = String(step + 1);
+        } else {
+          failMsg = (fo && fo.wrong_answer) || 'Incorrect. Try again.';
+        }
+        status.textContent = failMsg;
+        onFail(failMsg);
       }
     };
     btn.addEventListener('click', doSubmit);
@@ -1133,6 +1146,16 @@ function showPuzzlePopup(puzzleId, awardCardId) {
         onSubmit(correct) { correct ? onSolve() : onFail('Wrong code. Try again.'); }
       });
     }
+  } else if (puzzle.ui === '4digits-lock') {
+    new DigitLock(mount, {
+      onSubmit(code) {
+        if (code === cfg.answer) {
+          onSolve();
+        } else {
+          onFail('Wrong combination. Try again.');
+        }
+      }
+    });
   } else if (puzzle.ui === 'hex-decoder') {
     const wrap = document.createElement('div');
     wrap.style.cssText = 'padding:16px 0;max-width:400px;margin:0 auto';
@@ -1558,6 +1581,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       target: cfg.target || 10,
       questions: cfg.questions || [],
       stakes: cfg.stakes || [],
+      maxRounds: cfg.maxRounds || null,
       onSubmit() { onSolve(); }
     });
   } else if (puzzle.ui === 'auction-lock') {
