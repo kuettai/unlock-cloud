@@ -510,7 +510,7 @@
       "type": "item",
       "color": "red",
       "title": "Trade Agreement",
-      "description": "Signed trade agreement with the Eastern merchants. Spices for the feast, silks for decoration, and fireworks for the grand finale — all secured through proper diplomatic protocol.",
+      "description": "Signed trade agreement with the Eastern merchants. Spices for the feast, silks for decoration, fireworks for the finale.\n\nTwo doors unseal with it: the Entertainment Guild, off the Bazaar — and the Chronicle Hall, back inside the castle through the Steward's Study.",
       "image": "assets/card-trade-agreement.png",
       "image_prompt": "An ornate trade agreement on fine parchment with two royal seals — one Western, one Eastern. Gold ribbon binding. Small illustrations of spices, silk, and fireworks in the margins. Diplomatic and elegant.",
       "reveals": [],
