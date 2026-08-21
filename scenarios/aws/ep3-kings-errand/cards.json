@@ -33,7 +33,6 @@
         { "card_id": 202, "label": "Check the Errand Board" },
         { "card_id": 203, "label": "Study the Knight Rank Chart" },
         { "card_id": 205, "label": "Issue your first command", "puzzle": "first-command" },
-        { "card_id": 1009, "label": "Examine the Champion's Equipment Rack", "requires_item": [205], "puzzle": "equipment-rack" },
         { "card_id": 300, "label": "Go to the Castle Kitchen" },
         { "card_id": 500, "label": "Go to the Castle Gate", "requires_item": [205] },
         { "card_id": 400, "label": "Go to the Chronicle Hall", "requires_item": [706] }
@@ -53,8 +52,8 @@
       "discoveries": [
         { "card_id": 304, "label": "Talk to Greta", "puzzle": "npc-greta" },
         { "card_id": 302, "label": "Examine the recipe archive" },
-        { "card_id": 306, "label": "Sort the recipe scrolls", "requires_item": [605], "puzzle": "recipe-sort" },
-        { "card_id": 303, "label": "Look at Greta's cooking pot" }
+        { "card_id": 303, "label": "Look at Greta's cooking pot" },
+        { "card_id": 306, "label": "Send your ally into the recipe archive", "requires_item": [605], "puzzle": "recipe-sort" }
       ],
       "visible_to": "all",
       "room": "castle-kitchen"
@@ -106,16 +105,16 @@
       "image_prompt": "A bustling medieval town square marketplace ringed by colorful merchant stalls with distinctive banners. An elegant scholarly pavilion with white drapes on one side. A boisterous open tent with red and blue flags on another. A grand guild hall dominates one corner. A quiet caravan with star charts on its awning sits at the edge. Crowds of merchants and shoppers, warm golden afternoon light, festive atmosphere.",
       "reveals": [],
       "discoveries": [
+        { "card_id": 601, "label": "Collect the Bazaar Token" },
         { "card_id": 602, "label": "Read the merchant stall directory" },
         { "card_id": 606, "label": "Talk to the Nova Company Clerk", "puzzle": "npc-novaclerk" },
-        { "card_id": 603, "label": "Talk to the Anthropic Scholar", "requires_item": [806], "puzzle": "npc-anthropic" },
         { "card_id": 604, "label": "Talk to the Meta Captain", "puzzle": "npc-metacaptain" },
-        { "card_id": 605, "label": "Recruit an ally for the Kitchen", "requires_item": [301], "puzzle": "bazaar-recruit" },
-        { "card_id": 601, "label": "Collect the Bazaar Token" },
+        { "card_id": 605, "label": "Recruit an ally for the Kitchen", "requires_item": [301, 601], "puzzle": "bazaar-recruit" },
+        { "card_id": 603, "label": "Talk to the Anthropic Scholar", "requires_item": [806], "puzzle": "npc-anthropic" },
         { "card_id": 700, "label": "Go to the Foreign Quarter", "requires_item": [505] },
-        { "card_id": 800, "label": "Go to the Entertainment Guild", "requires_item": [806] },
+        { "card_id": 800, "label": "Go to the Entertainment Guild", "requires_item": [706] },
         { "card_id": 900, "label": "Go to the Noble Quarter", "requires_item": [406] },
-        { "card_id": 1000, "label": "Go to the Proving Ground", "requires_item": [306, 706, 809, 909] }
+        { "card_id": 1000, "label": "Go to the Proving Ground", "requires_item": [306, 708, 809, 909] }
       ],
       "visible_to": "all",
       "room": "bedrock-bazaar"
@@ -173,6 +172,7 @@
         { "card_id": 902, "label": "Talk to Lady Birch", "puzzle": "npc-birch" },
         { "card_id": 904, "label": "Talk to the Court Painter", "puzzle": "npc-painter" },
         { "card_id": 903, "label": "Examine the stall layout map" },
+        { "card_id": 905, "label": "Read the Code of Honor tablet" },
         { "card_id": 906, "label": "Configure the Code of Honor", "requires_item": [406], "puzzle": "code-of-honor" },
         { "card_id": 909, "label": "Match stall designs to houses", "requires_item": [406, 906], "puzzle": "stall-design" }
       ],
@@ -192,7 +192,7 @@
         { "card_id": 1001, "label": "Talk to Sir Cedric", "puzzle": "npc-cedric" },
         { "card_id": 1002, "label": "Examine the Champion Assembly Rack" },
         { "card_id": 1005, "label": "Examine the Herald's Ledger" },
-        { "card_id": 1009, "label": "Assemble the Champion", "puzzle": "equipment-rack" },
+        { "card_id": 1009, "label": "Assemble the Champion", "requires_item": [1005], "puzzle": "equipment-rack" },
         { "card_id": 1010, "label": "Run the rehearsal", "requires_item": [1009], "puzzle": "rehearsal-run" }
       ],
       "visible_to": "all",
@@ -225,7 +225,7 @@
       "type": "object",
       "color": "blue",
       "title": "Pip's Handbook",
-      "description": "\"A knight is only as good as its instructions. Be specific! 'Fetch schedule' might get you a wooden plank. 'Fetch schedule from notice board' gets results.\" Also: \"Higher-rank merchants demand higher-rank knights. The Meta Tent serves anyone. The Anthropic Pavilion demands a Marshal.\"",
+      "description": "\"A knight is only as good as its instructions. Be specific! 'Fetch schedule' might get you a wooden plank. 'Fetch schedule from notice board' gets results.\" Also: \"Any stall will HIRE to you — gold is gold. But the masters themselves only give counsel to knights of rank. The Meta Captain chats with anyone. The Anthropic Scholar won't see you without the King's Seal.\"",
       "image": "assets/card-pips-handbook.png",
       "image_prompt": "A small, well-worn leather-bound handbook with dog-eared pages and ink stains. The cover has a simple embossed crest. Pages are visible with handwritten notes and doodles in the margins. A quill bookmark sticks out. Warm parchment tones, cozy study atmosphere.",
       "visible_to": "all",
@@ -292,6 +292,7 @@
       "color": "blue",
       "title": "Chronicle Shelves",
       "description": "Rows of crystals labeled by year and event. Most are dim. Six crystals glow brightly — fragments from recent festivals, ready to be sorted. A plaque reads: \"Memory persists across sessions. What was learned yesterday serves today.\"",
+      "reveals": [407],
       "image": "assets/card-chronicle-shelves.png",
       "image_prompt": "Rows of shelves carved into stone walls, holding hundreds of small crystals. Most are dim and grey, but six crystals glow brightly in blue and purple. Small labels beneath each crystal. A brass plaque is mounted on the wall. Deep blue ambient light, mystical archive atmosphere.",
       "visible_to": "all",
@@ -313,7 +314,7 @@
       "type": "object",
       "color": "blue",
       "title": "Merchant Stall Directory",
-      "description": "Anthropic Pavilion (reasoning, nuance — requires Marshal rank, cost: 40g). Nova Company (four departments — varies). Meta Tent (general purpose — no rank required, cost: 15g). DeepSeek Caravan (math, logic, code — requires Chronicler rank, cost: 25g). Qwen Traders (multilingual — requires Scout rank, cost: 20g).",
+      "description": "Hiring board — pay the fee, take the ally. Anthropic Pavilion (reasoning, nuance — 40g). Nova Company (four departments — varies, 30g). Meta Tent (general purpose — 15g). DeepSeek Caravan (math, logic, code — 25g). Qwen Traders (multilingual — 20g). Footnote: \"Fees buy hands, not counsel. To be received by a master in person, bring rank.\" Match the specialty to the errand — the cheapest ally is not always the one that succeeds.",
       "image": "assets/card-merchant-directory.png",
       "image_prompt": "A wooden signpost in a marketplace with five directional signs pointing different ways, each painted a different color with a merchant symbol. The signpost is decorated with carved vines. Cobblestone ground, colorful market stalls blurred in the background. Warm afternoon light, festive marketplace atmosphere.",
       "visible_to": "all",
@@ -324,7 +325,7 @@
       "type": "object",
       "color": "blue",
       "title": "Foreign Trade Ledger",
-      "description": "Lists available goods: Saffron (50g), Silk Bolts (30g), Festival Fireworks (40g), Jade Figurines (25g — decoy), Exotic Tea (10g — decoy). Notes: \"Merchants expect formal negotiation protocol. Greeting → Needs → Offer → Counter → Agreement.\"",
+      "description": "Lists available goods: Saffron (50g), Silk Bolts (30g), Festival Fireworks (40g). Notes on bargaining: \"Every merchant cycles through three moods, and shows the next one on their face — how hard they will push for coin (⚔️) and how guarded they are against argument (🛡️). Press your case when their guard is low; hold your composure when they push for coin, or your purse pays for it. Two cards per exchange, never more. A merchant who hears no argument at all simply names a higher price.\"",
       "image": "assets/card-trade-ledger.png",
       "image_prompt": "An open leather-bound trade ledger with columns of handwritten entries in ink. Small illustrations of goods in the margins — spices, silk, fireworks. A quill pen rests in the spine. Aged parchment pages, warm candlelight, merchant's desk atmosphere.",
       "visible_to": "all",
@@ -353,11 +354,22 @@
       "room": "noble-quarter"
     },
     {
+      "id": 905,
+      "type": "object",
+      "color": "blue",
+      "title": "Code of Honor Tablet",
+      "description": "A herald's tablet mounted at the plaza edge, where every Chronicler must swear before speaking on the crown's behalf. Four lines are carved with an empty shield beside each, waiting to be sworn DENY or ALLOW. \"A Chronicler who flatters one house is no witness. A Chronicler who repeats a house's private accounts is a gossip. A Chronicler who promises coin the treasury has not approved is a liar. But a Chronicler who cites the Chronicle Hall's own records — that one speaks with the realm's memory behind them, and must never be silenced.\"",
+      "image": "assets/card-honor-tablet.png",
+      "image_prompt": "A waist-high carved stone tablet at the edge of a cobblestone plaza, four lines of medieval script chiselled into its face with an empty heraldic shield beside each line. Three shields are stained dark, one is polished bright. Manicured hedges and heraldic banners behind it. Afternoon sunlight, weathered stone, solemn civic atmosphere.",
+      "visible_to": "all",
+      "room": "noble-quarter"
+    },
+    {
       "id": 1002,
       "type": "object",
       "color": "blue",
       "title": "Champion Assembly Rack",
-      "description": "Seven labeled slots in a chain: 1) Model (from Bazaar), 2) Gateway (from Castle Gate), 3) Memory (from Chronicle Hall), 4) Policy (from King's Seal), 5) Guardrails (from Code of Honor), 6) Observability (Herald's Ledger), 7) Runtime (Deploy). \"Insert capabilities in dependency order.\"",
+      "description": "Seven slots in a chain — Model (Bazaar), Gateway (Castle Gate), Negotiation Protocol (Foreign Quarter), Policy (King's Seal), Instruction Schema (Kitchen), Guardrails (Code of Honor), Memory (Chronicle Hall) — feeding one Runtime at the end. Engraved instructions: \"Gear from a finished errand strengthens the Champion. Gear from an unfinished one is severed, unsigned, or vague — switch it OFF rather than carry it. Order matters: the rack applies each slot in turn, so plain bonuses (+) must come BEFORE anything that multiplies (×), or you multiply almost nothing. Without the Herald's Ledger you deploy blind — no numbers, only the result.\"",
       "image": "assets/card-assembly-rack.png",
       "image_prompt": "A large wooden rack mounted on a platform with seven carved slots arranged in a chain, each slot labeled with a small brass plate. Some slots glow faintly, awaiting components. The rack is ornate with iron reinforcements. Training ground backdrop, afternoon light, military precision.",
       "visible_to": "all",
@@ -407,7 +419,7 @@
       "description": "The complete feast menu for the Grand Harvest Festival: Honeyed Fig & Walnut Salad, Roasted Butternut Soup, Crown Roast Pheasant with Herb Crust, Elderflower Cream Tart, Spiced Harvest Cider.",
       "image": "assets/card-feast-menu.png",
       "image_prompt": "An elegant parchment menu with ornate calligraphy listing five courses. Decorative food illustrations in the margins — figs, pheasant, elderflower. Gold leaf border, rich warm tones, royal feast aesthetic.",
-      "consumes": [605],
+      "consumes": [605, 301],
       "visible_to": "all",
       "room": "castle-kitchen"
     },
@@ -430,8 +442,7 @@
       "description": "Last year's festival layout reconstructed from memory crystals: Ashford=east, Birch=west, shared=north. Both houses praised the arrangement at the Winter Solstice.",
       "image": "assets/card-chronicle-report.png",
       "image_prompt": "A glowing parchment report with a reconstructed festival layout diagram. Faint crystal-blue light emanates from the page. A wax seal at the bottom. Mystical yet official, chronicle archive aesthetic.",
-      "consumes": [405],
-      "reveals": [900, 407],
+      "reveals": [],
       "visible_to": "all",
       "room": "chronicle-hall"
     },
@@ -444,7 +455,7 @@
       "image": "assets/card-gate-pass.png",
       "image_prompt": "A heavy iron-and-parchment gate pass with a portcullis emblem stamped in wax. A copper key is attached by a chain. Official and sturdy, medieval gatehouse aesthetic.",
       "consumes": [205],
-      "reveals": [600, 505, 506],
+      "reveals": [505, 506],
       "visible_to": "all",
       "room": "castle-gate"
     },
@@ -478,8 +489,8 @@
       "description": "A signed contract with a Bazaar merchant to assist with the recipe archive search. The ally is ready to work in the Castle Kitchen.",
       "image": "assets/card-ally-contract.png",
       "image_prompt": "A formal parchment contract with two signatures at the bottom and a wax seal. A handshake illustration in the header. Neat calligraphy, official merchant document aesthetic.",
-      "consumes": [301, 501, 601],
-      "reveals": [700, 607],
+      "consumes": [601],
+      "reveals": [607],
       "visible_to": "all",
       "room": "bedrock-bazaar"
     },
@@ -502,8 +513,7 @@
       "description": "Signed trade agreement with the Eastern merchants. Spices for the feast, silks for decoration, and fireworks for the grand finale — all secured through proper diplomatic protocol.",
       "image": "assets/card-trade-agreement.png",
       "image_prompt": "An ornate trade agreement on fine parchment with two royal seals — one Western, one Eastern. Gold ribbon binding. Small illustrations of spices, silk, and fireworks in the margins. Diplomatic and elegant.",
-      "consumes": [705, 505],
-      "reveals": [800, 400],
+      "reveals": [],
       "visible_to": "all",
       "room": "foreign-quarter"
     },
@@ -522,8 +532,8 @@
       "type": "item",
       "color": "red",
       "title": "Fireworks Contract",
-      "description": "The Fireworks Master will provide the grand finale pyrotechnics. All three foreign goods are secured!",
-      "consumes": [707],
+      "description": "The Fireworks Master will provide the grand finale pyrotechnics. Spices, silks, and fireworks — all three foreign goods are secured, and Sir Cedric will not open the Proving Ground without them.",
+      "consumes": [707, 705, 706],
       "reveals": [],
       "visible_to": "all",
       "room": "foreign-quarter"
@@ -547,7 +557,6 @@
       "description": "A royal policy document granting authority to book performers on behalf of the crown. Max 50 gold per act, forbidden from hiring Sir Reginald, extends to all venues. Cedar policy in action.",
       "image": "assets/card-kings-seal.png",
       "image_prompt": "A heavy wax seal pressed into a royal document — a golden crown emblem with a cedar tree beneath it. Rich red wax, gold leaf on the parchment edges. Regal, authoritative, policy document aesthetic.",
-      "consumes": [803],
       "reveals": [807],
       "visible_to": "all",
       "room": "entertainment-guild"
@@ -560,7 +569,7 @@
       "description": "All performers assigned to their stages: Fire-Breathers on Main Stage, Wandering Bard in Tavern Corner, Juggling Troupe in Children's Area, Royal Choir on Grand Finale Stage.",
       "image": "assets/card-performance-roster.png",
       "image_prompt": "A completed booking sheet on parchment with four entries, each with a checkmark. Small stage icons next to each entry. A theatrical mask watermark. Organized, complete, satisfying aesthetic.",
-      "consumes": [806],
+      "consumes": [806, 803],
       "visible_to": "all",
       "room": "entertainment-guild"
     },
@@ -583,8 +592,8 @@
       "description": "Three stall designs matched to their houses: Crimson Canopy + Oak Signage for House Ashford (East Row), Emerald Silk + Willow Signage for House Birch (West Row), Neutral Gold + Iron Signage for the Shared North Row.",
       "image": "assets/card-stall-designs.png",
       "image_prompt": "Three miniature stall designs on parchment — one with a crimson canopy and oak frame, one with emerald silk drapes and willow frame, one with gold fabric and iron frame. Architectural sketches, colorful and detailed, designer's blueprint aesthetic.",
-      "consumes": [406, 906],
-      "reveals": [1000],
+      "consumes": [406, 906, 405],
+      "reveals": [],
       "visible_to": "all",
       "room": "noble-quarter"
     },
@@ -593,7 +602,7 @@
       "type": "item",
       "color": "red",
       "title": "Herald's Ledger",
-      "description": "A blank ledger ready to record every action the Champion takes. Who it talked to, what tools it used, what decisions it made. The King reviews the Ledger after every mission.",
+      "description": "A blank ledger ready to record every action the Champion takes. Who it talked to, what tools it used, what decisions it made. The King reviews the Ledger after every mission — and Sir Cedric will not let you touch the assembly rack until the Ledger is in hand. Observability first, or you are guessing.",
       "image": "assets/card-heralds-ledger.png",
       "image_prompt": "A large blank leather-bound ledger with a herald's trumpet emblem on the cover. The pages are crisp and empty, ready for entries. A quill and inkwell sit beside it. Official, pristine, record-keeping aesthetic.",
       "visible_to": "all",

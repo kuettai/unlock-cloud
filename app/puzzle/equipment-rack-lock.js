@@ -74,6 +74,18 @@ class EquipmentRackLock {
     return this.tiers[this.tiers.length - 1];
   }
 
+  /**
+   * The target tier is a floor, not an exact match — a deploy that lands ABOVE
+   * it still passes. Overshooting used to silently fail: a fully upgraded rack
+   * arranged for maximum score reaches the top tier, which never equalled a
+   * mid-tier `target`, so the puzzle could not be completed by playing well.
+   */
+  _meetsTarget(tier) {
+    const want = this.tiers.find(t => t.label.toLowerCase() === this.target.toLowerCase());
+    if (!want) return tier.label.toLowerCase() === this.target.toLowerCase();
+    return tier.min >= want.min;
+  }
+
   _render() {
     this.container.innerHTML = '';
     const wrap = document.createElement('div');
@@ -199,7 +211,7 @@ class EquipmentRackLock {
     this.resultEl.className = 'eqrk-result eqrk-show';
 
     this.onDeploy(tier);
-    if (tier.label.toLowerCase() === this.target.toLowerCase()) {
+    if (this._meetsTarget(tier)) {
       setTimeout(() => this.onSubmit(tier), 600);
     }
 

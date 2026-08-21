@@ -95,8 +95,18 @@
         "answer": "fetch schedule from notice board",
         "accept_variations": [
           "fetch the schedule from the notice board",
+          "fetch schedule from the notice board",
+          "fetch the schedule from notice board",
           "fetch festival schedule from notice board",
-          "fetch the festival preparation schedule from the notice board"
+          "fetch the festival schedule from the notice board",
+          "fetch festival schedule from the notice board",
+          "fetch the festival preparation schedule from the notice board",
+          "fetch festival preparation schedule from notice board",
+          "get schedule from notice board",
+          "get the schedule from the notice board",
+          "bring schedule from notice board",
+          "bring the schedule from the notice board",
+          "fetch schedule from the notice board in the courtyard"
         ],
         "history": [
           "[Steward's Study — Speaking Tube Active]",
@@ -474,9 +484,9 @@
         }
       },
       "hints": [
-        "Greta needs someone who can REASON through archives. Which merchant specializes in reasoning?",
-        "The Anthropic Pavilion specializes in reasoning and nuance — perfect for searching archives. But they cost the most.",
-        "Assign 'Search the recipe archives' to the Anthropic Pavilion for gold tier, or any other valid stall for silver/bronze."
+        "Greta needs someone who can REASON through hundreds of scrolls, not just carry them. Check the stall directory for specialties.",
+        "The Anthropic Pavilion specializes in reasoning and nuance — the best fit, and the priciest at 40g. Qwen's multilingual talent cannot judge course order at all.",
+        "Assign 'Search the recipe archives' to the Anthropic Pavilion for gold tier. Nova Frontier or DeepSeek also succeed at lower tier; Qwen fails."
       ],
       "mandatory": true
     },
@@ -488,7 +498,7 @@
       "ui": "prompt-lock",
       "config": {
         "npc": {
-          "name": "Anthropic Scholar",
+          "name": "Your Bazaar Ally",
           "portrait": "🧙"
         },
         "fragments": [
@@ -626,7 +636,7 @@
         "lines": [
           {
             "label": "What do we need from them?",
-            "response": "Spices for Greta's feast, silks for decoration, fireworks for grand finale. Three things. But negotiation has protocol — greeting first, then state needs, then hear offer, then counter, then agreement. Skip a step and they walk away!"
+            "response": "Spices for Greta's feast, silks for decoration, fireworks for grand finale. THREE merchants, one after another — spice trader first, then silk, then fireworks, each harder than the last. And each cycles three moods: open, grasping, wavering. Press your argument when they are open. Keep your composure when they grasp for coin. Two cards each exchange, no more."
           },
           {
             "label": "Why can't you translate?",
@@ -641,7 +651,7 @@
           {
             "requires_card": 705,
             "label": "The Tongue of Babel is ready!",
-            "response": "Wonderful! Now follow the negotiation path carefully. Greeting → State needs → Hear offer → Counter-offer → Agreement."
+            "response": "Wonderful! Now watch their face each exchange — it tells you what they will take from your purse and how much argument they will shrug off. Argue when their guard drops, hold composure when they push for coin."
           },
           {
             "requires_card": 706,
@@ -671,7 +681,7 @@
           },
           {
             "label": "Any tips for the negotiation?",
-            "response": "Start with a greeting — it's cultural respect. Then state your needs clearly. Listen to their counter-offer before making yours. And NEVER skip straight to demands."
+            "response": "Never spend a big argument against a raised guard — it is wasted breath. Wait for the mood where their guard drops, then spend everything. And when they lunge for your purse, answer with composure, not words. Our own card is worth six arguments — save it for the walls."
           },
           {
             "label": "Why do you argue?",
@@ -752,9 +762,9 @@
         "gold": 80
       },
       "hints": [
-        "The merchant cycles through 3 moods. Watch the pattern — go all-in persuasion when block is 0.",
-        "Play 2 cards per turn. Mix Persuasion (deals conviction) and Composure (blocks gold loss).",
-        "With only starting cards, you'll lose ~15-20g. Complete more quests first to add stronger cards to your deck."
+        "Read the merchant's face before you play — it shows this turn's ⚔️ (gold they take) and 🛡️ (argument they shrug off). The Spice Trader opens with 🛡️0.",
+        "Two cards per turn. Persuasion above their 🛡️ fills the conviction bar; Composure at or above their ⚔️ keeps your gold. Your deck reshuffles, so a long haggle is fine.",
+        "Turn 1 (🛡️0): play both Persuasion. Turn 2 (⚔️5) : lead with Composure. Turn 3 (🛡️3): only your 3-value Persuasion gets through. Repeat — 80g is far more than this trader can drain."
       ],
       "mandatory": true
     },
@@ -833,9 +843,9 @@
         "gold": 80
       },
       "hints": [
-        "The Silk Merchant alternates between defensive and aggressive. Save composure for the 7g attack turn.",
-        "When block is only 1, go all-in persuasion. When block is 3, play composure to survive.",
-        "You need the Tongue of Babel (🗣️6) to push through the high-block turns efficiently."
+        "The Silk Merchant alternates defensive and aggressive. Save Composure for the ⚔️7 turn.",
+        "When 🛡️ is only 1, go all-in Persuasion. When 🛡️ is 3, play Composure and ride it out.",
+        "The Tongue of Babel card (🗣️6) is the only one that clears the 🛡️3 turns on its own — hold it for those, and spend the small greetings on the 🛡️1 turn."
       ],
       "mandatory": true
     },
@@ -928,7 +938,7 @@
       "hints": [
         "The Fireworks Master has extreme swings. Turn 1 hits for 8g but has 0 block — go all-in persuasion!",
         "Turn 2 barely hurts (2g) but walls you with 5 block. Play composure and wait for the next opening.",
-        "You need Royal Authority (🗣️5) and Tongue of Babel (🗣️6) to push through the 5-block wall."
+        "Only Royal Authority (🗣️5) and Tongue of Babel (🗣️6) beat the 🛡️5 wall — save them for turn 2 and spend greetings on turn 1's open guard."
       ],
       "mandatory": true
     },
@@ -1359,9 +1369,9 @@
         ]
       },
       "hints": [
-        "The Chronicler must be fair. Block harmful content, but allow factual evidence.",
-        "Block favoritism, block private details, block overspending — but ALLOW factual historical references.",
-        "Set first three to DENY (block bad content), last one to ALLOW (permit facts)."
+        "The Code of Honor tablet in the plaza states the oath in order — three things a Chronicler must never say, one it must always be free to say.",
+        "Block favoritism, block private financial details, block budget promises — but ALLOW factual historical references.",
+        "Set the first three to DENY, the last one to ALLOW."
       ],
       "mandatory": true
     },
@@ -1510,11 +1520,11 @@
           },
           {
             "label": "What order do they go in?",
-            "response": "Dependencies matter. You can't add Memory before you have a Gateway. You can't enforce Policy without Identity. And you can't observe what hasn't been deployed. Think about what depends on what."
+            "response": "The rack applies each slot in turn, and some slots MULTIPLY what came before them. Put your plain bonuses first and your multipliers last, or you multiply nothing. And gear from an errand you never finished is dead weight — severed, unsigned, vague. Switch it off rather than drag it into the field."
           },
           {
             "label": "What's the Herald's Ledger?",
-            "response": "Every action the Champion takes gets recorded. Who it talked to, what tools it used, what decisions it made. The King reviews the Ledger after every mission. No Ledger, no accountability."
+            "response": "Every action the Champion takes gets recorded. Who it talked to, what tools it used, what decisions it made. The King reviews it after every mission. Take it from the platform before you touch the rack — without it you assemble blind, guessing at numbers you cannot see. No Ledger, no accountability."
           },
           {
             "label": "What happens after assembly?",
@@ -1681,9 +1691,9 @@
         ]
       },
       "hints": [
-        "Some components are broken — they drag the Champion down. Try disabling items that sound severed, unsigned, or vague.",
-        "Complete errands to upgrade capabilities. The Bazaar upgrades your Model Core, the Gate upgrades your Gateway Link.",
-        "Once you can see the numbers (Observability), arrange flat bonuses (+N) before multipliers (×N) for maximum power."
+        "Every errand you finished has already upgraded its slot. Anything still named severed, unsigned, broken or vague belongs to an errand you skipped — switch it OFF instead of carrying it.",
+        "The rack applies slots top to bottom, so order changes the result. Plain bonuses (+N) must sit above anything that multiplies (×N).",
+        "Drag the four + slots up (MCP Gateway Link, Negotiation Protocol, Instruction Schema, Memory Crystal), then the three × slots below (Foundation Model Core, Cedar Seal, Guardrail Mantle). Deploy — Strides or better passes."
       ],
       "mandatory": true
     },
@@ -1831,8 +1841,8 @@
         ]
       },
       "hints": [
-        "You need ALL capabilities upgraded and properly ordered to reach Soars.",
-        "With Observability enabled, you can see the numbers. Put flat bonuses (+N) before multipliers (×N).",
+        "Soars needs 100. Every slot must be ON and upgraded — a single disabled slot costs you the tier.",
+        "Observability is live now, so the score is on screen. Watch it change as you reorder: put flat bonuses (+N) before multipliers (×N).",
         "Optimal order: +N first (Gateway, Protocol, Instruction Schema, Memory Crystal), then ×N (Model Core, Cedar Seal, Guardrail Mantle). Score: 128."
       ],
       "mandatory": true,

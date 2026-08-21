@@ -59,7 +59,7 @@
       "name": "Foreign Quarter",
       "description": "Colorful district of silk canopies, spice stalls, and unfamiliar scripts",
       "connects_to": [],
-      "unlocked_by": { "type": "item", "card_id": 605 },
+      "unlocked_by": { "type": "item", "card_id": 505 },
       "unlock_text": "Colorful foreign banners mark the entrance to the Foreign Quarter.",
       "map_pos": [0, 0]
     },
@@ -86,7 +86,7 @@
       "name": "The Proving Ground",
       "description": "Open field with training dummies and Champion assembly platform",
       "connects_to": [],
-      "unlocked_by": { "type": "items", "card_ids": [306, 706, 809, 909] },
+      "unlocked_by": { "type": "items", "card_ids": [306, 708, 809, 909] },
       "unlock_text": "Sir Cedric stands at the gate. \"Show me what you've built.\"",
       "map_pos": [280, 130]
     }
