@@ -65,7 +65,7 @@
   "cards": {
     "100": {
       "title": "Ruang Perang — Inception",
-      "description": "Sebuah ruang perang startup modern. Whiteboard membentang dari dinding ke dinding, penuh sticky notes dan sketsa tisu. Monitor di dinding menampilkan: \"BOLT #001 — DIMULAI. Sisa waktu: 15:00.\"\n\nProduct Owner mondar-mandir. Mereka memberi Agent satu kalimat — \"portal umpan balik pelanggan\" — dan Agent sudah mengembangkannya menjadi spec lengkap: tiga user stories, masing-masing dengan who/what/why. Beberapa opsi itu dikarang dari udara kosong.\n\nLoop AI-DLC dimulai di sini di Inception: PO menyatakan intent, Agent mengusulkan spec, Anda memvalidasi spec itu terhadap permintaan asli PO. Trust, but verify.",
+      "description": "Whiteboard membentang dari dinding ke dinding, sticky notes, sketsa tisu. Monitor menampilkan: \"BOLT #001 — DIMULAI. Sisa waktu: 15:00.\"\n\nPO memberi Agent satu kalimat — \"portal umpan balik pelanggan\" — dan Agent kembali dengan spec penuh: tiga user story, masing-masing dengan who/what/why. Sebagian opsi itu dia karang sendiri.",
       "discoveries": {
         "102": "Dengar PO 📋",
         "105": "Validasi Papan Spesifikasi"
@@ -77,7 +77,7 @@
     },
     "103": {
       "title": "Papan Spesifikasi",
-      "description": "Draf spec dari Agent: tiga user stories yang diambil dari brief satu kalimat PO (\"portal umpan balik pelanggan\"). Untuk setiap story, Agent mencantumkan opsi yang terlihat masuk akal untuk SIAPA yang menggunakannya, APA yang mereka lakukan, dan MENGAPA itu penting.\n\nBeberapa opsi tepat sekali. Yang lain murni karangan — crypto rewards, surveillance, auto-post ke sosmed, hal-hal yang tidak pernah diminta PO. Tugas Anda: pilih opsi yang cocok dengan intent asli PO untuk setiap who/what/why, di setiap story.\n\nIni langkah Inception AI-DLC. AI mengusulkan. Anda memutuskan."
+      "description": "Draf spec Agent: tiga user story dari satu kalimat PO. Untuk masing-masing, dia mendaftar opsi SIAPA yang memakai, APA yang mereka lakukan, MENGAPA itu penting. Ada yang tepat. Ada yang karangan — crypto rewards, surveillance, auto-post media sosial.\n\nPilih opsi yang cocok dengan maksud asli PO, setiap who/what/why, setiap story."
     },
     "105": {
       "title": "Spec Tervalidasi. Dua Jalur Terbuka.",
@@ -85,7 +85,7 @@
     },
     "200": {
       "title": "Lab Konteks — Manajemen Konteks",
-      "description": "Sebuah studio desain yang terang. Dinding kaca menampilkan working memory Agent — setumpuk dokumen yang ia tarik masuk untuk Feedback Portal. Tumpukannya terlalu tinggi. Meteran kapasitas terbaca OVER BUDGET. Aliran build langsung tersendat-sendat oleh kontradiksi: \"menyambungkan MongoDB di sebelah DynamoDB… menambahkan crypto rewards… auto-post sosmed…\"\n\nTidak ada orang di ruangan ini. Hanya dokumen dan panel yang bercahaya. Agent meninggalkan satu catatan: \"Saya muat semua yang saya bisa temukan. Sepertinya sebagian besar sudah usang. Bantu saya pangkas.\"\n\nLebih banyak konteks bukan konteks yang lebih baik. Kurasi.",
+      "description": "Dinding kaca memperlihatkan working memory Agent: setumpuk dokumen untuk Feedback Portal. Terlalu tinggi. Pengukur kapasitas membaca OVER BUDGET, dan build stream tersendat — \"wiring MongoDB di sebelah DynamoDB… menambah crypto rewards…\"\n\nCatatan dari Agent: \"Saya muat semua yang saya temukan. Sebagian besar sudah usang. Bantu saya memangkasnya.\"",
       "discoveries": {
         "210": "Baca kartu 'Konteks adalah Raja' di dinding",
         "205": "Pangkas Konteks Agent",
@@ -94,7 +94,7 @@
     },
     "202": {
       "title": "Panel Memori Agent",
-      "description": "Working memory Agent, terekspos. Aliran build yang bergulir menunjukkan apa yang sedang ia hasilkan sekarang — dan sekarang ia sedang menghasilkan kontradiksi, karena setengah dokumen di kepalanya usang atau off-spec.\n\n• Dokumen saat ini (requirements, arsitektur, kontrak API) — yang ingin Anda muat.\n• Dokumen usang (desain MongoDB Marcus, draf v1 dengan fitur yang dipotong) — aktif meracuni output.\n• Dokumen off-spec (brainstorm dengan crypto/AR, spec auto-post sosmed) — fitur yang secara eksplisit dibunuh PO.\n\nHapus dokumen sampai aliran build hijau dan meteran kapasitas kembali di dalam budget. Sampah masuk → sampah keluar dengan percaya diri. Kurasi konteksnya."
+      "description": "Working memory Agent, terbuka. Build stream menghasilkan kontradiksi karena separuh dokumen di kepalanya usang atau off-spec.\n\n• Terkini (requirements, architecture, API contract) — pertahankan.\n• Usang (desain MongoDB Marcus, draf v1 dengan fitur yang dibuang) — meracuni output.\n• Off-spec (brainstorm crypto/AR, spec auto-post) — fitur yang sudah dibatalkan PO.\n\nHapus dokumen sampai build stream hijau dan pengukur masuk anggaran."
     },
     "205": {
       "title": "Konteks Terkurasi.",
@@ -110,7 +110,7 @@
     },
     "300": {
       "title": "Ruang Arsitektur — Construction Design",
-      "description": "Lantai workshop terbuka. Agent telah menggambar arsitektur berlapis — presentation, application, data, infrastructure, dari atas ke bawah. Delapan komponen AWS antre, menunggu ditempatkan di lantai yang benar pada diagram.\n\nDi bangku samping, dua blueprint komponen lepas telah ditinggalkan — Lambda dan CloudFront — dengan peringatan tertempel: \"JANGAN SAMBUNGKAN INI LANGSUNG. Ada lapisan API di antara keduanya untuk suatu alasan.\"\n\nTidak ada yang di sini untuk memegang tangan Anda. Kalau Anda salah tempatkan komponen, diagram akan menjelaskan alasannya. Kalau Anda iseng menggabungkan dua blueprint yang salah… Anda akan tahu.",
+      "description": "Agent sudah membuat draf arsitektur berlapis — presentation, application, data, infrastructure. Delapan komponen AWS menunggu ditempatkan.\n\nDi bangku samping, dua blueprint tergeletak: Lambda dan CloudFront, dengan peringatan tertempel. \"JANGAN WIRE LANGSUNG. Ada API layer di antaranya, dan itu ada alasannya.\"",
       "discoveries": {
         "310": "Baca kartu 'Anti-Pattern' di dinding",
         "320": "Ambil blueprint Lambda yang lepas",
@@ -121,7 +121,7 @@
     },
     "302": {
       "title": "Diagram Arsitektur",
-      "description": "Tumpukan arsitektur empat lapis: Presentation di atas, lalu Application, lalu Data, lalu Infrastructure di fondasi. Delapan komponen AWS — React, CloudFront, API Gateway, Lambda, DynamoDB, S3, CDK Stack, IAM Roles — antre satu per satu untuk ditempatkan.\n\nUntuk masing-masing, tentukan di lapisan mana ia berada. Kalau Anda salah tempatkan satu, diagram akan menjelaskan mengapa tidak cocok. Verifikasi setiap komponen. Bangun gedungnya."
+      "description": "Empat lapisan: Presentation, Application, Data, Infrastructure. Delapan komponen masuk satu per satu — React, CloudFront, API Gateway, Lambda, DynamoDB, S3, CDK Stack, IAM Roles.\n\nTentukan lapisan untuk masing-masing. Salah tempat, diagram akan menjelaskan alasannya."
     },
     "305": {
       "title": "Arsitektur Terverifikasi.",
@@ -153,7 +153,7 @@
     },
     "400": {
       "title": "Ruang Review — Mob Construction",
-      "description": "Ruangan yang lebih tenang. Satu konsol panjang di tengah. Enam cangkir kopi berjajar di atas konsol — satu per subsistem yang akan Agent hidupkan: Spec, Konteks, Arch, Code, Deploy, Verify. Setiap cangkir akan menyala saat Agent menyelesaikan langkahnya.\n\nAgent berdiri di konsol, tangan siap. \"Konteks yang Anda kurasi dan arsitektur yang Anda verifikasi sudah saya muat. Saya akan mengeksekusi seluruh loop di depan Anda. Setiap langkah, saya akan berhenti dan minta Anda mengonfirmasi hasilnya. Perhatikan yang terlihat benar tapi sebenarnya tidak.\"\n\nInilah Mob Construction: AI mengeksekusi, manusia memverifikasi hasil — bukan rencana. Live.",
+      "description": "Satu konsol panjang. Enam cangkir kopi di atasnya, satu untuk tiap subsistem yang akan dinyalakan Agent: Spec, Context, Arch, Code, Deploy, Verify.\n\nAgent: \"Context dan arsitektur Anda sudah saya pegang. Saya akan menjalankan seluruh loop di depan Anda, berhenti di tiap langkah untuk Anda konfirmasi outcome-nya. Awasi yang tampak benar tapi sebenarnya tidak.\"",
       "discoveries": {
         "401": "Sinkron dengan Agent 🤖",
         "410": "Baca kartu 'Sang Loop' di dinding",
@@ -166,7 +166,7 @@
     },
     "402": {
       "title": "Konsol Build Langsung",
-      "description": "Konsol eksekusi Agent. Enam langkah antre: Spec → Konteks → Arch → Code → Deploy → Verify. Untuk setiap langkah, Agent mengusulkan tindakan dan menawarkan tiga opsi. Pilih opsi yang cocok dengan hasil yang Anda inginkan.\n\nSatu persetujuan yang salah dan rantainya patah — Anda kehilangan detik dari Bolt. Amati setiap langkah."
+      "description": "Enam langkah: Spec → Context → Arch → Code → Deploy → Verify. Di tiap langkah Agent mengusulkan tindakan dan menawarkan tiga opsi. Pilih yang cocok dengan outcome yang benar-benar Anda inginkan.\n\nSatu persetujuan salah memutus rantai dan memakan waktu Anda."
     },
     "405": {
       "title": "Hasil Terverifikasi.",
@@ -178,14 +178,14 @@
     },
     "500": {
       "title": "Landasan Peluncuran — Operations",
-      "description": "Ruangan kecil bergaya mission control. Dinding monitor menampilkan deploy yang sudah berjalan — CDK stack didorong, frontend diunggah — tapi dua indikator berkedip merah. Error CORS. Env var hilang. Timer di atas konsol terbaca \"DEFUSE: 0:45\" dan menghitung mundur.\n\nTidak ada NPC, tidak ada lore, tidak ada bacaan. Hanya saklar, satu input, dan hitung mundur. Ada toggle 'skip tests' di tengah konsol — itu jebakannya. Jangan sentuh.\n\nOperations. Ship atau lewatkan Bolt.",
+      "description": "Ruang mission control. Deploy sudah berjalan — CDK stack terkirim, frontend terunggah — tapi dua indikator berkedip merah. CORS errors. Env var hilang. Timer membaca \"DEFUSE: 0:45\" dan terus turun.\n\nSaklar, satu input, hitungan detik. Toggle 'skip tests' itu jebakannya.",
       "discoveries": {
         "599": "Perbaiki deploy dan ship"
       }
     },
     "502": {
       "title": "Konsol Deploy (Langsung)",
-      "description": "Deploy sedang berjalan dan rusak. Empat puluh lima detik di timer defuse.\n\nEmpat saklar dan satu input:\n• Add CORS headers to Lambda response — perlu (browser preflight gagal)\n• Redeploy API Gateway stage — perlu (agar header baru berlaku)\n• Skip integration tests — JEBAKAN (jangan pernah lewatkan verify, apalagi di bawah tekanan)\n• API Gateway stage name — butuh nilai stage prod standar\n\nPerbaiki deploy sebelum Bolt berakhir."
+      "description": "Deploy sedang berjalan dan rusak. Empat puluh lima detik.\n\n• Add CORS headers to Lambda response — perlu (browser preflight gagal)\n• Redeploy API Gateway stage — perlu (agar header berlaku)\n• Skip integration tests — JEBAKAN (jangan pernah lewati verify saat tertekan)\n• Nama stage API Gateway — nilai stage prod yang standar"
     },
     "599": {
       "title": "Terkirim! Bolt Selesai.",
@@ -217,7 +217,7 @@
           },
           {
             "label": "Kenapa ada dua ruangan paralel setelah ini?",
-            "response": "Karena konteks dan arsitektur itu independen — Anda bisa mengurasi memori sementara orang lain menempatkan komponen. AI-DLC menyebut itu fase mob nanti. Untuk sekarang: bagi tugas, ketemu di Ruang Review."
+            "response": "Context dan arsitektur itu independen — Anda bisa mengurasi memory sementara orang lain menempatkan komponen. Bagi pekerjaannya, bertemu di Review Room."
           }
         ]
       }
@@ -383,15 +383,15 @@
         "lines": [
           {
             "label": "Apa itu Mob Construction, tepatnya?",
-            "response": "Di AI-DLC, ini fase di mana AI melakukan pembangunan sesungguhnya — tapi manusia berkerumun di sekitarnya, memverifikasi setiap hasil secara live. Bukan rencana. Hasilnya. Anda sudah mengamati rencananya; sekarang Anda mengamati hasilnya."
+            "response": "Fase di mana AI melakukan pembangunan dan manusia mengerumuninya, memverifikasi tiap outcome secara live. Bukan rencananya — outcome-nya. Rencananya sudah Anda periksa tadi."
           },
           {
             "label": "Kenapa saya harus mengonfirmasi setiap langkah?",
-            "response": "Karena Agent — saya — bisa menghasilkan sesuatu yang terlihat benar tapi sebenarnya tidak. Test yang jalan tapi tidak menguji apa pun yang nyata. Deploy yang berhasil tapi menunjuk ke stage yang salah. Memverifikasi hasil menangkap itu. Memverifikasi rencana tidak."
+            "response": "Karena saya bisa menghasilkan sesuatu yang tampak benar tapi tidak. Test yang jalan tapi tak menguji apa pun. Deploy yang sukses tapi ke stage yang salah. Verifikasi outcome menangkap itu; verifikasi rencana tidak."
           },
           {
             "label": "Apa yang terjadi kalau saya menyetujui opsi yang salah?",
-            "response": "Rantainya patah. Anda kehilangan detik dari Bolt dan saya rollback lalu menawarkan opsi lagi. Tidak fatal. Hanya mahal. Intinya adalah Anda menangkap yang terlihat masuk akal tapi sebenarnya tidak."
+            "response": "Rantainya putus. Anda kehilangan beberapa detik, saya roll back dan menawarkan opsi itu lagi. Tidak fatal, hanya mahal. Intinya Anda menangkap yang tampak masuk akal tapi sebenarnya tidak."
           }
         ],
         "state_lines": [
@@ -403,7 +403,7 @@
           {
             "requires_card": 305,
             "label": "Arsitekturnya solid.",
-            "response": "Memang. DynamoDB tidak di presentation. Lambda tidak disambung langsung ke CloudFront. Ketika saya mengeksekusi sebentar lagi, batas lapisan bertahan — itu berkat Anda."
+            "response": "Benar. DynamoDB tidak di presentation. Lambda tidak di-wire langsung ke CloudFront. Batas lapisan akan bertahan saat saya execute — itu jasa Anda."
           },
           {
             "requires_card": 405,

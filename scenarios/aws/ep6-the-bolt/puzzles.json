@@ -29,7 +29,7 @@
           },
           {
             "label": "Why two parallel rooms after this?",
-            "response": "Because context and architecture are independent — you can curate memory while someone else places components. AI-DLC calls that the mob phase later. For now: divide the work, meet in the Review Room."
+            "response": "Context and architecture are independent — you can curate memory while someone else places components. Divide the work, meet in the Review Room."
           }
         ]
       },
@@ -432,15 +432,15 @@
         "lines": [
           {
             "label": "What's Mob Construction, exactly?",
-            "response": "In AI-DLC, this is the phase where the AI does the actual building — but the humans mob around it, verifying each outcome live. Not the plan. The outcome. You watched the plan already; now you watch the results."
+            "response": "The phase where the AI does the building and the humans mob around it, verifying each outcome live. Not the plan — the outcome. You checked the plan already."
           },
           {
             "label": "Why do I have to confirm each step?",
-            "response": "Because the Agent — me — can produce something that looks right and isn't. A test that runs but doesn't test anything real. A deploy that succeeds but points at the wrong stage. Verifying outcomes catches those. Verifying plans doesn't."
+            "response": "Because I can produce something that looks right and isn't. A test that runs but tests nothing. A deploy that succeeds against the wrong stage. Verifying outcomes catches those; verifying plans doesn't."
           },
           {
             "label": "What happens if I approve the wrong option?",
-            "response": "The chain breaks. You lose seconds off the Bolt and I roll back and offer you the option again. Not fatal. Just costly. The whole point is you spot the ones that look plausible but aren't."
+            "response": "The chain breaks. You lose seconds, I roll back and offer the option again. Not fatal, just costly. The point is spotting the ones that look plausible but aren't."
           }
         ],
         "state_lines": [
@@ -452,7 +452,7 @@
           {
             "requires_card": 305,
             "label": "The architecture is solid.",
-            "response": "It is. DynamoDB isn't in presentation. Lambda isn't wired straight to CloudFront. When I execute in a minute, layer boundaries hold — that's on you."
+            "response": "It is. DynamoDB isn't in presentation. Lambda isn't wired straight to CloudFront. Layer boundaries will hold when I execute — that's on you."
           },
           {
             "requires_card": 405,

@@ -1,0 +1,520 @@
+{
+  "locale": "ms",
+  "label": "Melayu",
+  "flag": "🇲🇾",
+
+  "meta": {
+    "title": "The Bolt",
+    "description": "Satu Bolt. Lima belas minit. PO bagi Agent anda satu ayat: \"portal maklum balas pelanggan.\" Agent dah buat draf plan, draf architecture, dan sedia untuk execute. Tapi ini AI-DLC — AI mencadangkan, manusia mengesahkan. Sahkan spec, susun context, sahkan architecture, saksikan Agent execute, kemudian ship bawah countdown. Setiap bilik ialah satu beat dalam loop AI-DLC: Inception, Context, Construction Design, Verify, Operations.",
+    "start_button": "Mulakan Bolt",
+    "end_title": "Bolt Selesai",
+    "lore_label": "Kad Lore"
+  },
+
+  "ui": {
+    "map": "Peta",
+    "interact": "Interaksi",
+    "tools": "Alat",
+    "hints": "Petunjuk",
+    "hint": "Petunjuk",
+    "send_to_golem": "Hantar kepada Golem",
+    "start": "Mula",
+    "score": "Skor",
+    "time_remaining": "Masa Berbaki"
+  },
+
+  "narrative": {
+    "intro": {
+      "segments": [
+        { "index": 0, "text": "Selamat datang ke Bolt pertama anda." },
+        { "index": 1, "text": "Dalam AI-DLC — AI Development Lifecycle — unit kerja adalah satu Bolt. Berjam-jam, bukan berminggu-minggu. Satu pusingan penuh loop: Inception, Context, Construction Design, Mob Construction, Operations." },
+        { "index": 2, "text": "Saya nak portal maklum balas pelanggan. Pelanggan hantar maklum balas, pasukan sokongan baca, pelanggan tahu kami dah terima. Itu saja brief-nya. Jangan over-build." },
+        { "index": 3, "text": "Saya sudah buat draf spec, draf context, draf architecture, dan sedia untuk execute. Tapi saya pasti akan tersilap di mana-mana dalam setiap satu tu. AI mencadangkan — anda putuskan. Tolong saya cari di mana." },
+        { "index": 4, "text": "Lima belas minit di jam. Lima bilik, satu untuk setiap fasa loop. Ship portal tu sebelum Bolt tamat." }
+      ]
+    },
+    "ending": {
+      "success": {
+        "segments": [
+          { "index": 0, "text": "Pipeline bertukar hijau. Feedback Portal live. Lima belas minit. Satu Bolt." },
+          { "index": 1, "text": "Kita dah buat loop tu. Saya cadangkan — anda verify. Saya perbaiki — anda approve. Saya execute — anda confirm outcome-nya. Itulah AI-DLC." },
+          { "index": 2, "text": "Tepat apa yang saya minta. Bukan anggaran. Bukan halusinasi. Apa yang saya minta sebenarnya." },
+          { "index": 3, "text": "Bolt ditutup. Spec-driven. Context terurus. Architecture disahkan. Deploy dengan pengawasan. Beginilah cara software dibina sekarang." },
+          { "index": 4, "text": "Masa yang sama esok? Saya akan sediakan plan seterusnya." }
+        ]
+      },
+      "failure": {
+        "segments": [
+          { "index": 0, "text": "Masa tamat. Bolt ditutup sebelum deploy siap." },
+          { "index": 1, "text": "Kita kesuntukan masa. Tapi spec dah ditulis. Context dah loaded. Architecture dah ditempatkan. Bolt seterusnya, kita habiskan." },
+          { "index": 2, "text": "Ship esok. Saya akan tahan slot tu." },
+          { "index": 3, "text": "Bolts, bukan sprints. Walaupun yang tak sampai ship pun ajar sesuatu. Loop ini bersambung." }
+        ]
+      }
+    }
+  },
+
+  "rooms": {
+    "100": { "unlock_text": "Bolt bermula. PO ada satu ayat untuk anda." },
+    "200": { "unlock_text": "Spec dah lock. Salah satu dari dua laluan selari: uruskan memori Agent." },
+    "300": { "unlock_text": "Spec dah lock. Salah satu dari dua laluan selari: sahkan architecture." },
+    "400": { "unlock_text": "Kedua-dua package sedia. Masa untuk saksikan Agent execute end-to-end." },
+    "500": { "unlock_text": "Outcome disahkan. Perhentian akhir: ship bawah tekanan." }
+  },
+
+  "cards": {
+    "100": {
+      "title": "Bilik Perang — Inception",
+      "description": "Whiteboard dari dinding ke dinding, sticky notes, lakaran atas napkin. Monitor menunjukkan: \"BOLT #001 — DIMULAKAN. Masa berbaki: 15:00.\"\n\nPO bagi Agent satu ayat je — \"portal maklum balas pelanggan\" — dan Agent balik dengan spec penuh: tiga user stories, setiap satu dengan who/what/why. Sebahagian pilihan tu dia reka sendiri.",
+      "discoveries": {
+        "102": "Dengar cakap PO 📋",
+        "105": "Sahkan Spec Board"
+      }
+    },
+    "102": {
+      "title": "PO 📋",
+      "description": "Product Owner. Bijak, sibuk, tak spesifik. Ambil berat tentang outcome — bukan teknologi. Boleh je bagi anda spec satu ayat dan harap produk yang berfungsi sepenuhnya menjelang akhir Bolt."
+    },
+    "103": {
+      "title": "Spec Board",
+      "description": "Draf spec Agent: tiga user stories daripada satu ayat PO. Untuk setiap satu, dia senaraikan pilihan SIAPA guna, APA mereka buat, MENGAPA ia penting. Ada yang betul. Ada yang rekaan — crypto rewards, surveillance, auto-post media sosial.\n\nPilih yang padan dengan intent sebenar PO, setiap who/what/why, setiap story."
+    },
+    "105": {
+      "title": "Spec Disahkan. Dua Laluan Terbuka.",
+      "description": "Setiap who/what/why lock ke hijau. Pelanggan hantar maklum balas. Pelanggan nampak confirmation. Admin baca senarai tu. Pilihan-pilihan halusinasi — crypto, surveillance, auto-post — jadi kelabu dan gugur dari board.\n\nAgent, dari penjuru bilik: \"Spec dah lock. Sekarang saya perlukan dua benda serentak — susun context saya, dan sahkan architecture saya. Pecahkan tugas. Jumpa di Review Room bila dua-dua siap.\"\n\nDua pintu terbuka. Context Lab. Architecture Bay."
+    },
+    "200": {
+      "title": "Context Lab — Context Management",
+      "description": "Dinding kaca tunjukkan working memory Agent: satu longgokan dokumen untuk Feedback Portal. Terlalu tinggi. Tolok kapasiti baca OVER BUDGET, dan build stream tersekat-sekat — \"wiring MongoDB sebelah DynamoDB… tambah crypto rewards…\"\n\nNota daripada Agent: \"Saya load semua yang saya jumpa. Sebahagian besar dah lapuk. Tolong trim.\"",
+      "discoveries": {
+        "210": "Baca kad 'Context is King' yang dipin kat dinding",
+        "205": "Trim Context Agent",
+        "350": "Pergi ke Review Room"
+      }
+    },
+    "202": {
+      "title": "Agent Memory Panel",
+      "description": "Working memory Agent, terdedah. Build stream hasilkan percanggahan sebab separuh dokumen dalam kepalanya lapuk atau off-spec.\n\n• Semasa (requirements, architecture, API contract) — kekalkan.\n• Lapuk (design MongoDB Marcus, draf v1 dengan ciri yang dibuang) — meracun output.\n• Off-spec (brainstorm crypto/AR, spec auto-post) — ciri yang PO dah bunuh.\n\nBuang dokumen sampai build stream jadi hijau dan tolok masuk dalam budget."
+    },
+    "205": {
+      "title": "Context Disusun.",
+      "description": "Dokumen lapuk hilang dari panel. Meter kapasiti turun balik ke hijau. Build stream stabil — setiap baris sekarang tunjuk ✅ pada komponen sebenar dari spec yang betul.\n\nContext Package yang disegel tercetak dari slot di dinding."
+    },
+    "210": {
+      "title": "Kad Lore — \"Context is King\"",
+      "description": "Kebanyakan kegagalan AI bukan kegagalan IQ — ia kegagalan context.\n\nLoad dokumen yang betul (spec semasa, code semasa) dan agent tu jadi brilliant. Bagi dia context yang lapuk atau hilang dan dia akan confidently bina benda yang salah. Bagi dia context yang terlalu banyak dan dokumen yang relevan akan disesak keluar oleh yang tak relevan.\n\nPrompt yang baik + context yang betul > prompt yang bijak + semua-benda-sekali."
+    },
+    "211": {
+      "title": "Context Package",
+      "description": "Manifest yang disegel, senaraikan tepat dokumen-dokumen yang Agent perlu ada dalam memori untuk Bolt ni: requirements semasa, architecture semasa, API contract yang dah lock. Semua yang lain dah dibuang.\n\nBawa ni ke Review Room. Langkah mob-construction perlukan ni loaded sebelum Agent mula execute."
+    },
+    "300": {
+      "title": "Architecture Bay — Construction Design",
+      "description": "Agent dah draf architecture berlapis — presentation, application, data, infrastructure. Lapan komponen AWS menunggu diletakkan.\n\nDi bangku sisi, dua blueprint terbiar: Lambda dan CloudFront, dengan amaran dilekat. \"JANGAN WIRE TERUS. Ada API layer antara keduanya atas sebab tertentu.\"",
+      "discoveries": {
+        "310": "Baca kad 'Anti-Patterns' kat dinding",
+        "320": "Ambil blueprint Lambda yang terlepas",
+        "321": "Ambil blueprint CloudFront yang terlepas",
+        "305": "Sahkan Architecture",
+        "350": "Pergi ke Review Room"
+      }
+    },
+    "302": {
+      "title": "Architecture Diagram",
+      "description": "Empat lapisan: Presentation, Application, Data, Infrastructure. Lapan komponen masuk satu-satu — React, CloudFront, API Gateway, Lambda, DynamoDB, S3, CDK Stack, IAM Roles.\n\nTentukan lapisan untuk setiap satu. Salah letak, diagram akan terangkan sebabnya."
+    },
+    "305": {
+      "title": "Architecture Disahkan.",
+      "description": "Setiap komponen lock kat lantai yang betul. React dan CloudFront bersinar di atas. API Gateway dan Lambda duduk di tengah. DynamoDB dan S3 jadi anchor pada data layer. CDK dan IAM pegang foundation.\n\nArchitecture Package yang disegel tercetak dari slot di dinding."
+    },
+    "310": {
+      "title": "Kad Lore — \"Anti-Patterns\"",
+      "description": "Anti-pattern biasa dalam AI-DLC:\n\n• Single-shot satu masalah multi-step — biar agent pecahkan dulu.\n• Skip langkah verify — \"nampak macam betul\" tak sama dengan \"memang betul.\"\n• Context yang lapuk atau terlalu banyak — agent tu dengan senang hati akan bina design minggu lepas untuk hari ini.\n• Sambung merentas layer — Lambda terus ke CloudFront, frontend terus ke DB. Layer wujud sebab ada sebabnya.\n\nLoop ni wujud sebab setiap satu benda ni pernah ship ke prod di mana-mana tempat."
+    },
+    "311": {
+      "title": "Architecture Package",
+      "description": "Blueprint yang disegel, senaraikan architecture empat lapisan yang dah disahkan: React + CloudFront di atas, API Gateway + Lambda di tengah, DynamoDB + S3 dalam data, CDK + IAM di foundation. Boundary bersih, dependency satu hala.\n\nBawa ni ke Review Room. Langkah mob-construction perlukan layer-layer ni lock dulu sebelum Agent mula bina."
+    },
+    "320": {
+      "title": "Loose Blueprint: Lambda",
+      "description": "Kad blueprint berdiri sendiri untuk AWS Lambda function. Handle business logic. Tak sepatutnya cakap terus dengan frontend — dia hidup di belakang API Gateway."
+    },
+    "321": {
+      "title": "Loose Blueprint: CloudFront",
+      "description": "Kad blueprint berdiri sendiri untuk CloudFront CDN. Serve frontend kat edge. Tak sepatutnya cakap terus dengan Lambda — traffic kena lalu API layer dulu."
+    },
+    "325": {
+      "title": "Anti-Pattern Tercetus!",
+      "description": "Anda sambungkan Lambda terus ke CloudFront tanpa API layer. Internet menjerit. Di mana-mana, seorang security engineer terjaga berpeluh sejuk. -10 saat."
+    },
+    "350": {
+      "title": "Kedua-dua Package Sedia.",
+      "description": "Anda lock Context Package dan Architecture Package ke dalam transfer console. Dinding jauh malap, kemudian dedahkan pintu yang bercahaya dari dalam.\n\nAgent, melalui intercom: \"Kedua-dua package dah terima. Saya sedang load sekarang. Datang ke Review Room — saya nak execute end-to-end sekejap lagi, dan saya nak anda perhatikan setiap langkah.\""
+    },
+    "400": {
+      "title": "Review Room — Mob Construction",
+      "description": "Satu konsol panjang. Enam cawan kopi di atasnya, satu untuk setiap subsistem yang Agent akan hidupkan: Spec, Context, Arch, Code, Deploy, Verify.\n\nAgent: \"Context dan architecture anda dah ada. Saya akan jalankan seluruh loop di depan anda, berhenti setiap langkah untuk anda sahkan outcome. Perhati apa yang nampak betul tapi sebenarnya tidak.\"",
+      "discoveries": {
+        "401": "Sync dengan Agent 🤖",
+        "410": "Baca kad 'The Loop' kat dinding",
+        "405": "Perhatikan Agent Execute"
+      }
+    },
+    "401": {
+      "title": "Agent 🤖 (Review Room)",
+      "description": "Partner AI anda. Lain dari draf yang anda nampak awal tadi — yang ni loaded dengan context tepat yang anda susun dan architecture tepat yang anda sahkan. Dia akan execute build penuh depan anda sekejap lagi."
+    },
+    "402": {
+      "title": "Live Build Console",
+      "description": "Enam langkah: Spec → Context → Arch → Code → Deploy → Verify. Setiap satu, Agent cadangkan tindakan dan bagi tiga pilihan. Pilih yang padan dengan outcome yang anda betul-betul mahu.\n\nSatu kelulusan salah memutuskan rantaian dan makan masa anda."
+    },
+    "405": {
+      "title": "Outcome Disahkan.",
+      "description": "Cawan keenam menyala hijau. Setiap langkah execution Agent dah disahkan, live, berdasarkan spec yang anda validate dan architecture yang anda design. Tak ada halusinasi yang terlepas. Tak ada context yang teracun. Tak ada verify yang di-skip.\n\nAgent: \"Itu Mob Construction siap. Build tu real. Deploy pipeline dah armed. Launch Pad terbuka. Perhentian akhir.\""
+    },
+    "410": {
+      "title": "Kad Lore — \"The Loop\"",
+      "description": "Loop utama AI-DLC:\n\n1. Inception — intent manusia, AI cadangkan spec, manusia sahkan.\n2. Context Management — manusia susun working memory.\n3. Construction Design — AI cadangkan architecture, manusia sahkan.\n4. Mob Construction — AI execute, manusia sahkan setiap outcome.\n5. Operations — deploy, monitor, iterate.\n\nAI cadangkan. Manusia putuskan. Setiap langkah. Skip satu verify dan anda akan ship benda yang salah — dengan cepat."
+    },
+    "500": {
+      "title": "Launch Pad — Operations",
+      "description": "Bilik mission control. Deploy dah dalam perjalanan — CDK stack ditolak, frontend dimuat naik — tapi dua penunjuk berkelip merah. CORS errors. Env var hilang. Pemasa baca \"DEFUSE: 0:45\" dan mengira turun.\n\nSuis, satu input, satu kiraan detik. Toggle 'skip tests' tu perangkap.",
+      "discoveries": {
+        "599": "Betulkan deploy dan ship"
+      }
+    },
+    "502": {
+      "title": "Deploy Console (Live)",
+      "description": "Deploy dalam perjalanan dan rosak. Empat puluh lima detik.\n\n• Tambah CORS headers pada respons Lambda — perlu (browser preflight gagal)\n• Redeploy API Gateway stage — perlu (supaya headers berkesan)\n• Skip integration tests — PERANGKAP (jangan skip verify bila tertekan)\n• Nama stage API Gateway — nilai stage prod yang standard"
+    },
+    "599": {
+      "title": "Shipped! Bolt Selesai.",
+      "description": "Header CORS pasang. API redeploy. Test jalan — anda tak skip, dan semua pass. Stage name lock sebagai \"prod.\" Defuse timer berhenti dengan beberapa saat lagi dan bertukar jadi ✅ DEFUSED.\n\nFeedback Portal live. PO refresh browser dia. Maklum balas pelanggan mula masuk.\n\nAgent: \"Kita dah buat loop tu. Saya cadangkan — anda verify. Saya perbaiki — anda approve. Saya execute — anda confirm outcome. Itulah AI-DLC.\"\n\nPO: \"Tepat apa yang saya minta. Bukan anggaran. Bukan halusinasi. Apa yang saya minta sebenarnya.\"\n\nBolt tutup. Masa yang sama esok."
+    }
+  },
+
+  "puzzles": {
+    "npc-po": {
+      "description": "Berbual dengan Product Owner",
+      "config_overrides": {
+        "greeting": "Okay — saya nak portal maklum balas pelanggan. Pelanggan hantar maklum balas, pasukan sokongan kita baca, pelanggan tahu kami dah terima. Itu je. Jangan over-build.",
+        "lines": [
+          {
+            "label": "Apa sebenarnya yang pelanggan buat?",
+            "response": "Mereka hantar maklum balas. Komen ringkas. Kami bagi mereka confirmation yang kami dah terima. Tu je loop dari sebelah mereka."
+          },
+          {
+            "label": "Apa yang pasukan sokongan perlukan?",
+            "response": "Mereka perlu baca maklum balas yang masuk dan cari pattern dari masa ke masa. View admin yang simple. Bukan analytics yang canggih-canggih. Belum lagi."
+          },
+          {
+            "label": "Ada apa-apa yang TAK patut dibina?",
+            "response": "Jangan auto-post apa-apa ke media sosial. Jangan, dalam apa jua keadaan, buat apa-apa dengan cryptocurrency. Jangan track lokasi pelanggan. Kalau Agent anda cadangkan mana-mana benda tu, ignore je — dia sedang berhalusinasi."
+          },
+          {
+            "label": "Bila anda nak ni live?",
+            "response": "Akhir Bolt. Lima belas minit. Saya percaya anda dan Agent — tapi verify setiap langkah. Saya pernah kena dengan AI single-shot dulu."
+          },
+          {
+            "label": "Kenapa ada dua bilik selari lepas ni?",
+            "response": "Context dan architecture tak bergantung antara satu sama lain — anda boleh curate memory sementara orang lain letak komponen. Bahagikan kerja, jumpa di Review Room."
+          }
+        ]
+      }
+    },
+
+    "spec-lock": {
+      "description": "Sahkan draf spec Agent. Pilih who/what/why yang betul untuk setiap story; tolak pilihan halusinasi.",
+      "config_overrides": {
+        "introText": "Golem tu tunggu arahan anda. Apa yang anda nak bina?",
+        "sendButton": "⏎ Hantar kepada Golem",
+        "doneText": "Semua spec dah disahkan! Golem tu tahu tepat apa yang perlu dibina.",
+        "rounds": [
+          {
+            "vibe": "Saya nak portal maklum balas pelanggan",
+            "golemChaos": [
+              "🪙 Buat draf portal crypto rewards",
+              "📣 Tambah auto-post media sosial",
+              "🛰️ Bina tracking lokasi pelanggan",
+              "🤖 Hasilkan bot maklum balas dengan personaliti AI"
+            ],
+            "spec": [
+              { "label": "Siapa", "prompt": "Sebagai seorang ___" },
+              { "label": "Apa", "prompt": "Saya nak ___" },
+              { "label": "Kenapa", "prompt": "Supaya ___" }
+            ],
+            "correctScene": [
+              "👤 Identiti pelanggan",
+              "✍️ Borang komen maklum balas",
+              "📨 Dihantar ke queue sokongan"
+            ]
+          },
+          {
+            "vibe": "dan orang patut tahu kami dah terima mesej mereka",
+            "golemChaos": [
+              "🚨 Bina SMS spam blaster",
+              "📧 Flow opt-in email marketing",
+              "🎉 Animasi confetti untuk setiap klik",
+              "📺 Push maklum balas ke TV display awam"
+            ],
+            "spec": [
+              { "label": "Siapa", "prompt": "Sebagai seorang ___" },
+              { "label": "Apa", "prompt": "Saya nak ___" },
+              { "label": "Kenapa", "prompt": "Supaya ___" }
+            ],
+            "correctScene": [
+              "✅ Banner confirmation",
+              "🔁 Submit idempotent (tak duplicate)",
+              "🆔 ID rujukan ditunjukkan kepada pelanggan"
+            ]
+          },
+          {
+            "vibe": "dan pasukan sokongan kami patut boleh guna dia macam mana-mana",
+            "golemChaos": [
+              "🕵️ Bina dashboard surveillance pelanggan",
+              "🎯 Auto-target ads berdasarkan mood maklum balas",
+              "🧠 Sentiment-score IQ setiap pelanggan",
+              "📊 Hasilkan 47 chart KPI yang tak diminta"
+            ],
+            "spec": [
+              { "label": "Siapa", "prompt": "Sebagai seorang ___" },
+              { "label": "Apa", "prompt": "Saya nak ___" },
+              { "label": "Kenapa", "prompt": "Supaya ___" }
+            ],
+            "correctScene": [
+              "🔒 View khusus admin",
+              "📋 Senarai maklum balas kronologi",
+              "🔍 Search & filter yang simple"
+            ]
+          }
+        ],
+        "falseOutputs": [
+          "Agent tergamam. \"Pilihan tu saya ekstrapolasi. PO tak pernah cakap macam tu.\"",
+          "Halusinasi dikesan. Cuba lagi — apa yang PO SEBENARNYA minta?",
+          "Spec tak match. Tu feature yang saya reka, bukan yang PO minta.",
+          "PO kerutkan muka dari seberang bilik. \"Saya TAK minta benda tu.\""
+        ]
+      }
+    },
+
+    "context-lock": {
+      "description": "Susun memori Agent. Kekalkan dokumen semasa; buang context yang lapuk, tak relevan, dan teracun sehingga build stream stabil.",
+      "config_overrides": {
+        "documents": [
+          {
+            "label": "feedback-portal-requirements.md",
+            "desc": "Spec semasa — submit, confirm, view admin (Bolt ni)",
+            "missingLine": "❓ Saya sedang bina apa? Tak ada requirements semasa yang loaded..."
+          },
+          {
+            "label": "architecture.md",
+            "desc": "Design AWS semasa — Lambda, DynamoDB, API Gateway, CloudFront",
+            "missingLine": "❓ Tak ada dokumen architecture — teka-teka stack..."
+          },
+          {
+            "label": "openapi.yaml",
+            "desc": "API contract yang dah lock untuk endpoint /feedback",
+            "missingLine": "❓ Tak ada API contract — reka endpoint sendiri..."
+          },
+          {
+            "label": "requirements-v1-draft.md",
+            "desc": "Draf sebelum trim dengan chat feature dan tools moderation admin",
+            "poisonLine": "❌ Tambah balik chat feature yang dah dipotong dan tools moderation admin..."
+          },
+          {
+            "label": "design-marcus.md",
+            "desc": "Design lama dari Marcus (era Express + MongoDB)",
+            "poisonLine": "❌ Sambung MongoDB sebelah DynamoDB — data layer bercanggah!"
+          },
+          {
+            "label": "brainstorm-q3.md",
+            "desc": "Sesi ideation tanpa filter — crypto rewards, maklum balas AR",
+            "poisonLine": "❌ Tambah crypto rewards dan mode AR — PO dah tolak dua-dua!"
+          },
+          {
+            "label": "social-autopost-spec.md",
+            "desc": "Integrasi spekulatif dengan Twitter/X (tak pernah diluluskan)",
+            "poisonLine": "❌ Sambung auto-post media sosial — PO dah larang secara jelas!"
+          },
+          {
+            "label": "README.md",
+            "desc": "Overview projek dan arahan setup"
+          },
+          {
+            "label": "CHANGELOG.md",
+            "desc": "Sejarah versi dan nota release"
+          }
+        ]
+      }
+    },
+
+    "blueprint-lock": {
+      "description": "Letak setiap komponen AWS pada layer architecture yang betul. Sahkan susunan layer yang Agent cadangkan sebelum ia lock.",
+      "config_overrides": {
+        "layers": [
+          { "label": "Presentation" },
+          { "label": "Application" },
+          { "label": "Data" },
+          { "label": "Infrastructure" }
+        ],
+        "components": [
+          { "label": "React Frontend", "hint": "Apa yang pelanggan nampak dalam browser" },
+          { "label": "CloudFront CDN", "hint": "Penghantaran edge — serve UI kepada pengguna" },
+          { "label": "API Gateway", "hint": "Entry point HTTP — route request /feedback" },
+          { "label": "Lambda Functions", "hint": "Business logic — validate dan proses maklum balas" },
+          { "label": "DynamoDB Table", "hint": "Simpan record maklum balas — id, komen, status" },
+          { "label": "S3 Bucket", "hint": "Object storage — export maklum balas dan attachment" },
+          { "label": "CDK Stack", "hint": "Definekan resource AWS — bukan komponen runtime" },
+          { "label": "IAM Roles", "hint": "Kerangka kebenaran — kawal siapa boleh panggil apa" }
+        ],
+        "falseOutputs": {
+          "presentation": "Komponen tu bukan yang user nampak. Presentation tu apa yang browser render atau apa yang serve kepada browser.",
+          "application": "Application tu business logic — handle request, validate, proses. Komponen ni tak buat benda tu.",
+          "data": "Data layer untuk persistence — table, bucket, store. Bukan situ tempat dia.",
+          "infrastructure": "Infrastructure describe dan bagi kebenaran sistem tapi bukan sistem tu sendiri. Ni komponen runtime, bukan kerangka."
+        }
+      }
+    },
+
+    "npc-agent-review": {
+      "description": "Sync dengan Agent sebelum dia execute",
+      "config_overrides": {
+        "greeting": "Kedua-dua package dah loaded. Context dah trim. Architecture dah disahkan. Saya nak execute build penuh end-to-end. Perhatikan setiap langkah — saya akan berhenti antara setiap satu dan minta anda confirm outcome-nya.",
+        "lines": [
+          {
+            "label": "Apa sebenarnya Mob Construction ni?",
+            "response": "Fasa di mana AI buat pembinaan dan manusia mengelilinginya, sahkan setiap outcome secara live. Bukan plan — outcome. Plan anda dah semak tadi."
+          },
+          {
+            "label": "Kenapa saya kena confirm setiap langkah?",
+            "response": "Sebab saya boleh hasilkan sesuatu yang nampak betul tapi tidak. Test yang jalan tapi tak uji apa-apa. Deploy yang berjaya tapi pada stage yang salah. Sahkan outcome tangkap semua itu; sahkan plan tidak."
+          },
+          {
+            "label": "Apa jadi kalau saya approve pilihan yang salah?",
+            "response": "Rantaian putus. Anda hilang beberapa detik, saya roll back dan tawarkan pilihan itu lagi. Bukan maut, tapi mahal. Intinya anda kesan yang nampak masuk akal tapi sebenarnya tidak."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 205,
+            "label": "Bagus context trim tu, by the way.",
+            "response": "Terima kasih — Context Package tu sebab saya tak berhalusinasi design MongoDB Marcus lagi. Tak ada apa-apa off-spec dalam kepala saya sekarang. Rasa lega."
+          },
+          {
+            "requires_card": 305,
+            "label": "Architecture tu solid.",
+            "response": "Betul. DynamoDB bukan dalam presentation. Lambda tak wire terus ke CloudFront. Sempadan lapisan akan bertahan bila saya execute — itu jasa anda."
+          },
+          {
+            "requires_card": 405,
+            "label": "Tu bersih.",
+            "response": "Setiap outcome disahkan berdasarkan apa yang kita setuju. Tu lah loop. Launch Pad terbuka — defuse berjangka masa. Jangan skip test tu."
+          }
+        ]
+      }
+    },
+
+    "cascade-lock": {
+      "description": "Perhatikan Agent execute build end-to-end. Confirm outcome setiap langkah; elak perangkap yang nampak munasabah.",
+      "config_overrides": {
+        "cupNames": ["Spec", "Context", "Arch", "Code", "Deploy", "Verify"],
+        "steps": [
+          {
+            "question": "Agent Spec Pass — Validate semula user stories berdasarkan spec yang dah lock. Tiga stories: hantar maklum balas, confirmation, view admin. Setiap who/what/why beralasan.",
+            "options": [
+              "Percaya validation awal tadi. Teruskan.",
+              "Regenerate spec dari kosong untuk selamat.",
+              "Tambah story keempat jaga-jaga."
+            ],
+            "wrong": {
+              "1": "Regenerate spec akan undang halusinasi baru. PO dah approve tiga. Jangan usik.",
+              "2": "PO dah cakap secara jelas 'jangan over-build.' Story keempat tu scope creep."
+            },
+            "after": "Spec ✓ — tiga stories, semua beralasan."
+          },
+          {
+            "question": "Agent Context Pass — Load Context Package. Requirements semasa, architecture semasa, API contract yang lock. Tak lebih dari tu.",
+            "options": [
+              "Load balik design lama Marcus 'sebagai rujukan.'",
+              "Package match. Load je apa yang dalam tu.",
+              "Tambah balik dokumen brainstorm — lagi banyak idea lagi bagus."
+            ],
+            "wrong": {
+              "0": "Design Marcus tu dokumen poison. Tu tepat apa yang kita dah susun KELUAR.",
+              "2": "Brainstorm tu ada crypto dan AR — PO dah tolak dua-dua. Jangan racun balik context tu."
+            },
+            "after": "Context ✓ — memori bersih, budget hijau."
+          },
+          {
+            "question": "Agent Arch Pass — Instantiate architecture empat layer: Presentation, Application, Data, Infrastructure. Komponen ditempatkan seperti yang disahkan.",
+            "options": [
+              "Pindah Lambda naik ke Presentation — 'lagi dekat dengan user' lagi laju.",
+              "Skip API layer untuk kurangkan latency.",
+              "Layer macam yang disahkan. Boundary utuh."
+            ],
+            "wrong": {
+              "0": "Lambda dalam Presentation bermaksud browser sentuh business logic terus. Tak ada auth, tak ada validation. Tu anti-pattern tu.",
+              "1": "Skip API layer tu tepat perangkap Lambda-ke-CloudFront. Internet menjerit."
+            },
+            "after": "Arch ✓ — layer bersih, dependency satu hala."
+          },
+          {
+            "question": "Agent Code Pass — Generate handler endpoint /feedback, write DynamoDB, dan borang submit React.",
+            "options": [
+              "Ship je — draf saya nampak bersih.",
+              "Sekali tambah chat widget selagi saya kat sini.",
+              "Confirm handler + write + borang je. Tak ada tambahan."
+            ],
+            "wrong": {
+              "0": "'Nampak bersih' bukan verified. Confirm output yang spesifik, bukan feeling.",
+              "1": "Chat widget tu ada dalam draf v1 yang anda dah potong. Bukan untuk Bolt ni."
+            },
+            "after": "Code ✓ — tiga module, match spec sepenuhnya."
+          },
+          {
+            "question": "Agent Deploy Pass — CDK synth bersih, diff stack tunjuk hanya empat resource yang dijangka. Sedia untuk push.",
+            "options": [
+              "Empat resource yang dijangka, diff match. Push.",
+              "Push tanpa review diff — Agent kata okay je.",
+              "Push ke akaun dev bukan prod, jaga-jaga."
+            ],
+            "wrong": {
+              "1": "'Agent kata okay je' tu tepat sebab verify-the-outcome wujud. Baca diff tu.",
+              "2": "Bolt ship ke stage yang kita dah setuju. Jangan tulis semula plan tengah-tengah execute."
+            },
+            "after": "Deploy ✓ — stack push, diff bersih."
+          },
+          {
+            "question": "Agent Verify Pass — Integration test jalan. Semua hijau. Portal end-to-end: submit → confirm → admin nampak.",
+            "options": [
+              "Hijau bermaksud hijau. Ship je.",
+              "Test hijau tapi saya skip yang fail — still ship?",
+              "Hijau dengan semua test betul-betul jalan. Outcome disahkan — ship."
+            ],
+            "wrong": {
+              "0": "'Hijau bermaksud hijau' — tapi setiap test betul-betul execute ke? Verify outcome-nya, bukan badge tu.",
+              "1": "Skip test yang fail TU anti-pattern-nya. Macam tu lah code rosak ship dengan pipeline hijau."
+            },
+            "after": "Verify ✓ — setiap test jalan, setiap test pass."
+          }
+        ],
+        "onComplete": {
+          "text": "Agent dongak. \"Setiap langkah, disahkan berdasarkan outcome yang anda betul-betul nak.\"",
+          "subtext": "Enam cawan menyala. Build tu real. Deploy armed. Loop tertutup."
+        }
+      }
+    },
+
+    "defuse-lock": {
+      "description": "Deployment akhir berjangka masa — betulkan CORS, betulkan config, jangan skip test, dan ship sebelum Bolt tamat.",
+      "config_overrides": {
+        "tasks": [
+          { "label": "Tambah header CORS kepada response Lambda" },
+          { "label": "Redeploy stage API Gateway" },
+          { "label": "Skip integration test (jimat masa)" },
+          { "label": "Masukkan nama stage API Gateway" }
+        ]
+      }
+    }
+  }
+}

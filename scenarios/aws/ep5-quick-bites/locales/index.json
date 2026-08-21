@@ -1,6 +1,5 @@
 {
   "locales": [
-    { "code": "id", "label": "Indonesia", "flag": "🇮🇩" },
     { "code": "ms", "label": "Melayu", "flag": "🇲🇾" }
   ]
 }

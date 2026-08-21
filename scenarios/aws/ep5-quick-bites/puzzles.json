@@ -9,40 +9,40 @@
       "config": {
         "name": "Chef Marco",
         "portrait": "\ud83d\udc68\u200d\ud83c\udf73",
-        "greeting": "NEW RECRUIT! Perfect timing \u2014 taste this. No wait, don't taste that one, that's batch seven. Or was it nine? Anyway, WELCOME! Have you heard about the Volcano Burger? Of course you haven't. Nobody has. That's the POINT. It's going to change everything.",
+        "greeting": "NEW RECRUIT! Taste this \u2014 no, not that one, that's batch seven. WELCOME! Have you heard about the Volcano Burger? Of course not. Nobody has. That's the POINT.",
         "lines": [
           {
             "label": "Where's the recipe binder?",
-            "response": "The binder? Oh, the binder. See, the thing about the binder is... it's not really a binder anymore. It's more of a... concept? Some of it's on sticky notes in the walk-in. Some's in my head. There might be a spreadsheet somewhere \u2014 Raj set something up, but it tasted wrong so I stopped using it. Check the prep stations, the whiteboard, maybe the supplier invoices? The INGREDIENTS are what matter, not the filing system!"
+            "response": "The binder isn't really a binder anymore. Some of it's on sticky notes in the walk-in, some's in my head. Check the prep stations, the whiteboard, the supplier invoices. The INGREDIENTS matter, not the filing system!"
           },
           {
             "label": "Tell me about the Volcano Burger.",
-            "response": "Oh. OH. You want to know about the Volcano Burger? It's not just a burger. It's a STATEMENT. Three layers of smoked brisket, a chipotle crumble that caramelizes on contact, and the sauce \u2014 THE SAUCE \u2014 I ferment it myself for eleven days. Eleven! Not ten. Not twelve. Eleven. The acidity peaks at day eleven. I ran four hundred and thirty-seven trials. It's not food. It's edible architecture."
+            "response": "It's not a burger, it's a STATEMENT. Three layers of smoked brisket, chipotle crumble, and a sauce I ferment eleven days. Not ten. Eleven. Four hundred and thirty-seven trials. Edible architecture."
           },
           {
             "label": "The investor call is coming up...",
-            "response": "Diana handles the boring stuff. Numbers, projections, whatever. I told her \u2014 put the Volcano Burger on screen. Let them TASTE it through the pitch deck. She said that's 'not how investor calls work.' But you know what's not how things work? Putting chocolate in a PANINI. And Chocolot's doing fine! ...Anyway, talk to Diana. She loves that stuff."
+            "response": "Diana handles the boring stuff. I told her \u2014 put the Volcano Burger on screen, let them TASTE the pitch deck. She said that's 'not how investor calls work.' Talk to her. She loves that stuff."
           },
           {
             "label": "What do you think about the competitors?",
-            "response": "Competitors?! COMPETITORS?! Chocolot is a CHOCOLATE SHOP that got confused! They put ganache on a croissant and call it 'fast food innovation.' And Panini Gemelli \u2014 don't even \u2014 those twins haven't changed their menu since 2019. Tabouleh Express? Delivery only! Where's the CRAFT? Where's the LOVE? None of them have anything close to the Volcano Burger. Not even in the same postcode."
+            "response": "COMPETITORS?! Chocolot is a CHOCOLATE SHOP that got confused. Panini Gemelli haven't changed their menu since 2019. Tabouleh Express is delivery only. Where's the CRAFT?"
           }
         ],
         "state_lines": [
           {
             "requires_card": 210,
             "label": "I found the financial data. Your food costs are...",
-            "response": "Okay. OKAY. Fine. Yes. The wagyu costs more than Diana thinks. I may have... been ordering the A5 grade instead of the A3. And the truffle oil isn't 'optional garnish' \u2014 it's STRUCTURAL. Look, the food cost ratio is forty-three percent. I know that's high. But when people taste it? They won't care about margins. They'll care about FLAVOR. Just... maybe don't lead with that number on the investor call."
+            "response": "Fine. Yes. I may have been ordering A5 wagyu instead of A3, and the truffle oil isn't garnish, it's STRUCTURAL. Food cost ratio is forty-three percent. Maybe don't lead with that number."
           },
           {
             "requires_card": 510,
             "label": "I've finished the competitor research.",
-            "response": "HA! I KNEW IT! None of them have a signature item with this kind of margin potential once we scale. Chocolot's bestseller costs them MORE than ours per unit! And Gemelli's kitchen throughput is \u2014 what did you say \u2014 half of ours? The Volcano Burger isn't just delicious. It's a competitive WEAPON. Tell Diana. Tell EVERYONE."
+            "response": "HA! I KNEW IT! Chocolot's bestseller costs them MORE per unit than ours. Gemelli's throughput is half. The Volcano Burger is a competitive WEAPON. Tell Diana."
           },
           {
             "requires_card": 1010,
             "label": "The investor call went great!",
-            "response": "They said yes? THEY SAID YES! I need to \u2014 someone get me my good spatula \u2014 we're celebrating! Volcano Burgers for the whole team! This is it. This is the beginning. First QuickBite, then the WORLD. ...Okay maybe first QuickBite then Store #10, THEN the world. But you get it. YOU GET IT!"
+            "response": "THEY SAID YES? Someone get my good spatula \u2014 Volcano Burgers for the whole team! First QuickBite, then Store #10, THEN the world. YOU GET IT!"
           }
         ]
       },
@@ -58,40 +58,40 @@
       "config": {
         "name": "Diana",
         "portrait": "\ud83d\udc69\u200d\ud83d\udcbc",
-        "greeting": "Mm-hm. One second. ...Okay. You're the new person. Great. Do you have numbers? Any numbers? Because I have a pitch deck with seventeen blank cells and an investor call in \u2014 *checks watch* \u2014 not enough time. If you don't have numbers, get numbers. If you do have numbers, sit down.",
+        "greeting": "Mm-hm. One second. ...You're the new person. Do you have numbers? Because I have a pitch deck with seventeen blank cells and an investor call in not enough time. No numbers, go get numbers.",
         "lines": [
           {
             "label": "What data do you need?",
-            "response": "Everything. But let's prioritize. I need three things: one, the actual food cost ratio \u2014 Marco swears it's thirty percent but I can smell wagyu on the invoices. Two, customer acquisition metrics from the POS system \u2014 Raj says it's 'in there somewhere.' Three, growth projections that aren't just Marco writing 'VOLCANO' in increasingly large font sizes. Get me those and we have a pitch. Without them, we have a wish."
+            "response": "Three things. One, the actual food cost ratio \u2014 Marco swears thirty percent but I can smell wagyu on the invoices. Two, customer acquisition metrics from the POS. Three, growth projections that aren't Marco writing 'VOLCANO' in bigger fonts."
           },
           {
             "label": "What will the investors ask about?",
-            "response": "Unit economics first \u2014 they always do. Then scalability: can Store #10 replicate Store #1 without Marco personally seasoning every patty? Then competitive landscape. They'll want to know why we win when Chocolot raised twice what we're asking. I need hard numbers, not vibes. The call is soon and I refuse to say 'we believe' more than once."
+            "response": "Unit economics first, always. Then scalability \u2014 can Store #10 replicate Store #1 without Marco seasoning every patty? Then competitive landscape. Hard numbers, not vibes."
           },
           {
             "label": "What's Marco's deal?",
-            "response": "*barely concealed eye roll* Marco is... brilliant. Genuinely. The food is extraordinary. But he thinks passion is a business metric. Last week he submitted an expense report that just said 'R&D - trust me' with a hot sauce stain on it. I love the man. But if he tells the investors about 'edible architecture' one more time, I'm going to put myself on mute permanently."
+            "response": "*barely concealed eye roll* Marco is genuinely brilliant. But he thinks passion is a business metric. Last week's expense report just said 'R&D - trust me' with a hot sauce stain on it."
           },
           {
             "label": "What about the competitors?",
-            "response": "We need EVIDENCE, not opinions. Marco yelling 'Chocolot is chocolate!' isn't a competitive analysis. I need their price points, their throughput estimates, their expansion footprint. Public data \u2014 reviews, menu boards, delivery radius. Get me something I can put in a chart. Charts are how adults communicate."
+            "response": "EVIDENCE, not opinions. I need their price points, throughput estimates, expansion footprint. Public data \u2014 reviews, menu boards, delivery radius. Something I can put in a chart."
           }
         ],
         "state_lines": [
           {
             "requires_card": 310,
             "label": "I pulled the recipe cost data from the systems.",
-            "response": "Wait. This cross-references with \u2014 *pulls up spreadsheet* \u2014 yes! If the prep station data is accurate, I can back-calculate the actual per-unit food cost from these ingredient quantities. This is the missing link. Marco's been hiding the wagyu grade, hasn't he? ...Forty-three percent. Of course. Okay. We can work with this. At scale it drops to thirty-one. THAT'S a pitch number."
+            "response": "Wait. If the prep station data is accurate I can back-calculate the per-unit food cost. Marco's been hiding the wagyu grade, hasn't he. ...Forty-three percent. At scale it drops to thirty-one. THAT'S a pitch number."
           },
           {
             "requires_card": 510,
             "label": "Here's the competitor research, with citations.",
-            "response": "...You cited sources. You actually cited sources. *takes off glasses, pinches bridge of nose* I could cry. This is... this is what a professional deliverable looks like. Chocolot's cost structure, Gemelli's expansion timeline, Tabouleh's delivery margins \u2014 all verified. You might be the first person in this building who understands that 'I heard' is not a citation format. Thank you. Genuinely."
+            "response": "You cited sources. You actually cited sources. *takes off glasses* Chocolot's cost structure, Gemelli's timeline, Tabouleh's delivery margins \u2014 all verified. Thank you. Genuinely."
           },
           {
             "requires_card": 1010,
             "label": "We did it. The investors are in.",
-            "response": "Term sheet's coming Tuesday. *leans back in chair* You know, when I joined this startup, Marco pitched me by literally cooking a burger in my office. Set off the smoke alarm. I thought \u2014 this is either going to be incredible or a complete disaster. *small smile* Today it's incredible. Good work. Don't tell Marco I said this, but... the Volcano Burger actually is pretty special."
+            "response": "Term sheet's coming Tuesday. When I joined, Marco pitched me by cooking a burger in my office and setting off the smoke alarm. *small smile* Today it's incredible. Good work."
           }
         ]
       },
@@ -107,40 +107,40 @@
       "config": {
         "name": "Raj",
         "portrait": "\ud83d\udc68\u200d\ud83d\udcbb",
-        "greeting": "GAH! Oh \u2014 oh, sorry, you scared me. I didn't hear the \u2014 is the door supposed to be open? Sorry about the cables. And the monitors. And the \u2014 is that coffee still dripping? Anyway, hi! Welcome! Sorry! Everything's fine except the POS sync is seventeen minutes behind and I think the scheduling module is throwing phantom shifts again. But otherwise \u2014 fine! Totally fine.",
+        "greeting": "GAH! Sorry, you scared me. Sorry about the cables. And the monitors. Everything's fine except the POS sync is seventeen minutes behind and the scheduler's throwing phantom shifts. But otherwise \u2014 fine!",
         "lines": [
           {
             "label": "Can you give me an overview of the systems?",
-            "response": "Right, okay, so \u2014 sorry \u2014 we have the POS system, that's SquareBite, handles orders and payments. Then there's SupplyTrack for ingredients and vendor orders \u2014 separate login, separate database, sorry. Scheduling is on ShiftWorks, also separate. Accounting is Diana's spreadsheets which technically count as a system. And then there's... the Thing I Built. The middleware that connects them. It's not pretty. But it works. Mostly. Usually. Today."
+            "response": "POS is SquareBite \u2014 orders and payments. SupplyTrack for ingredients and vendors, separate login. Scheduling is ShiftWorks, also separate. Accounting is Diana's spreadsheets. And then the middleware I built to connect them. Not pretty. Works. Mostly."
           },
           {
             "label": "What's the deal with the automation panel?",
-            "response": "Oh! The Quick Automate panel! Right, so, I built it to handle the routine stuff \u2014 reordering, shift coverage, daily reports. There's a manual but... *gestures at coffee-stained document* ...the pages got stuck together after the Incident. The redacted sections aren't redacted on purpose \u2014 that's just coffee damage. If you can figure out the sequence, the panel does amazing things. Sorry it's not more... labeled."
+            "response": "The Quick Automate panel! I built it for the routine stuff \u2014 reordering, shift coverage, daily reports. There's a manual but the pages stuck together after the Incident. The redactions are coffee, not secrecy. Get the sequence right and it does amazing things."
           },
           {
             "label": "How's Store #10 looking?",
-            "response": "Store \u2014 Store #10? *stress level visibly increases* Okay so the thing about Store #10 is that every other store, I was physically there for launch. Running cables. Fixing the printer. Resetting the fryer timer that Marco keeps setting to 'intuition.' If #10 has to run without me on-site, we need the Quick Automate system ACTUALLY working. Not 'working with Raj on speed-dial.' Actually working. Which means someone needs to fix the panel. Is that... is that you? Please say yes."
+            "response": "Store #10? *stress rising* Every other store, I was physically there for launch. If #10 runs without me on-site, Quick Automate has to ACTUALLY work. Not 'works with Raj on speed-dial.' Someone needs to fix the panel. Is that you? Please say yes."
           },
           {
             "label": "Tell me about Quick Automate.",
-            "response": "*eyes light up* Oh! Oh, you actually want to \u2014 yes! Okay! So Quick Automate is my baby. It's supposed to handle all the cross-system orchestration \u2014 when an order hits the POS, it auto-updates inventory in SupplyTrack, adjusts tomorrow's prep list, flags if we're running low on anything. Right now it's... mostly manual. I have seventeen browser tabs open doing what the panel should do automatically. If someone could just get the sequence right, it would save me \u2014 *voice cracks* \u2014 a lot of three AM wake-ups."
+            "response": "*eyes light up* Quick Automate is my baby. Cross-system orchestration \u2014 an order hits the POS, inventory updates in SupplyTrack, tomorrow's prep list adjusts, low stock gets flagged. Right now I do it in seventeen browser tabs. Get the sequence right and it saves me \u2014 *voice cracks* \u2014 a lot of 3 AM wake-ups."
           }
         ],
         "state_lines": [
           {
             "requires_card": 410,
             "label": "I got the automation panel working!",
-            "response": "You \u2014 wait. WAIT. *pushes back from chair* You actually got it? The full sequence? On your FIRST DAY? I've been meaning to fix that for \u2014 *counts on fingers* \u2014 seven months? It took me two weeks to build and I couldn't remember the startup sequence because I documented it DURING the coffee incident and \u2014 you're amazing. You're actually amazing. Can you... can you stay? Like, permanently?"
+            "response": "You got it? The full sequence? On your FIRST DAY? I've been meaning to fix that for seven months. I documented it DURING the coffee incident. You're amazing. Can you stay? Permanently?"
           },
           {
             "requires_card": 510,
             "label": "I researched the competitors' tech setups.",
-            "response": "Oh this is \u2014 okay so Chocolot is using a monolith POS with zero integration? And Gemelli's running everything through ONE iPad? That's \u2014 I mean I feel better about our spaghetti, honestly. At least our spaghetti has multiple threads. Tabouleh's delivery system is impressive though. I should look at their API structure. But for the pitch \u2014 yeah, we're actually ahead on infrastructure. Just, you know... messy ahead."
+            "response": "Chocolot runs a monolith POS with zero integration? And Gemelli runs everything through ONE iPad? I feel better about our spaghetti. Tabouleh's delivery system is genuinely impressive though. For the pitch: we're ahead on infrastructure. Messy ahead."
           },
           {
             "requires_card": 1010,
             "label": "Store #10 just opened. How's it going?",
-            "response": "*staring at monitoring dashboard* It's... working. The POS synced on first boot. The supply order went out automatically. The shift schedule populated. Nobody called me. Nobody. *voice breaks slightly* I've been staring at this screen for two hours waiting for something to break and... nothing. This is what it feels like? When things just... work? *sniff* I'm not crying. The server closet is just dusty. It's always dusty in here."
+            "response": "*staring at the dashboard* It's working. POS synced on first boot. Supply order went out automatically. Nobody called me. Nobody. *voice breaks* I've been waiting two hours for something to break. I'm not crying, the closet's just dusty."
           }
         ]
       },
@@ -160,11 +160,11 @@
         "lines": [
           {
             "label": "What do you recommend?",
-            "response": "The Dark Truffle Mocha is our bestseller. Nine-fifty. But honestly? The Ganache Croissant Melt at fourteen-twenty is where the margin \u2014 I mean, the FLAVOR \u2014 really is. We move about two hundred a day at peak. Manager says it's our 'anchor item.' Whatever that means. *polishes counter aggressively*"
+            "response": "Dark Truffle Mocha, nine-fifty, is our bestseller. But the Ganache Croissant Melt at fourteen-twenty is where the margin \u2014 the FLAVOR \u2014 is. Two hundred a day at peak. Manager calls it our 'anchor item'."
           },
           {
             "label": "This place has a nice setup...",
-            "response": "*stops wiping* ...Are you taking photos? I saw you with your phone earlier near the menu board. We've had people from other chains in here before. Corporate said to report anything suspicious. You're not from that burger place down the street, are you? ...You know what, forget I said anything. Do you want the mocha or not?"
+            "response": "*stops wiping* ...Were you taking photos near the menu board? Corporate said to report anything suspicious. You're not from that burger place, are you? ...Forget it. Mocha or not?"
           }
         ],
         "state_lines": []
@@ -185,11 +185,11 @@
         "lines": [
           {
             "label": "Tell me about the business!",
-            "response": "Business is BEAUTIFUL! We just signed the lease for location number four \u2014 over on Fifth Street? My brother says I talk too much but I can't help it, I'm excited! By October we'll have five spots. All the same menu, all the same quality. The secret? Keep it simple. Three paninis, two soups, one salad. That's it. No volcano burgers or whatever the competition is doing. *laughs*"
+            "response": "BEAUTIFUL! We just signed the lease for location number four, over on Fifth Street. Five spots by October, same menu everywhere. The secret? Three paninis, two soups, one salad. No volcano burgers or whatever the competition is doing."
           },
           {
             "label": "Can I see the kitchen?",
-            "response": "The kitchen? Sure, sure! Well \u2014 actually, my brother would kill me. He's very private about the process. But I can tell you \u2014 everything is the same press, same timing, same ingredients at every location. We run it all from one iPad, if you can believe it. Very efficient! My brother set it up. He's the smart one. I'm the handsome one. *winks*"
+            "response": "The kitchen? My brother would kill me \u2014 he's private about the process. But same press, same timing, same ingredients at every location. We run it all from one iPad. He's the smart one, I'm the handsome one. *winks*"
           }
         ],
         "state_lines": []
@@ -210,11 +210,11 @@
         "lines": [
           {
             "label": "Just checking out the menu!",
-            "response": "You were 'checking out the menu' yesterday too. And Tuesday. My brother doesn't notice these things but I do. You ask a lot of questions for someone who never orders more than a water. What exactly are you researching? *crosses arms*"
+            "response": "You were 'checking out the menu' yesterday too. And Tuesday. You ask a lot of questions for someone who never orders more than water. What exactly are you researching?"
           },
           {
             "label": "Your brother mentioned the expansion...",
-            "response": "*jaw tightens* My brother talks too much. Our expansion plans are not public information. Fifth Street isn't confirmed. The lease isn't \u2014 *catches himself* ...You should order something or leave. And tell whoever sent you that our paninis are ORIGINAL recipes. We don't copy. We don't NEED to copy."
+            "response": "*jaw tightens* My brother talks too much. Fifth Street isn't confirmed. The lease isn't \u2014 *catches himself* ...Order something or leave. Our paninis are ORIGINAL. We don't need to copy."
           }
         ],
         "state_lines": []
@@ -235,11 +235,11 @@
         "lines": [
           {
             "label": "Need a hand with those boxes?",
-            "response": "Yeah actually \u2014 grab that stack? Thanks. *while you help* Man, you wouldn't believe how busy we've been. There's some big new catering order coming in \u2014 corporate thing, like two hundred meals twice a week starting next month. Boss is already talking about adding another truck. Between you and me, the margins on delivery-only are insane. No rent, no tables, no dishwasher breaking every Tuesday. Just cook and drive. *hands you a dolly*"
+            "response": "Grab that stack? Thanks. Man, we've been busy \u2014 big new catering order coming, corporate thing, two hundred meals twice a week from next month. Boss is talking about another truck. Delivery-only margins are insane. No rent, no tables."
           },
           {
             "label": "How's the delivery business treating you?",
-            "response": "Don't get me started on the traffic. But the BUSINESS? Golden. We cover a twelve-block radius and we're the only ones doing hot delivery under eighteen minutes. That burger place \u2014 QuickBite? \u2014 they don't even deliver yet. Chocolot delivers but it takes forty minutes and the chocolate melts. *laughs* We own this neighborhood for speed. For now, anyway. Boss keeps saying someone's gonna wise up eventually."
+            "response": "The business is golden. Twelve-block radius, only ones doing hot delivery under eighteen minutes. QuickBite doesn't deliver at all. Chocolot takes forty minutes and the chocolate melts. We own this neighborhood for speed. For now."
           }
         ],
         "state_lines": []
@@ -260,11 +260,11 @@
         "lines": [
           {
             "label": "Rough day?",
-            "response": "We got three one-star reviews this week. THREE. Someone said the mac and cheese tasted 'algorithmically optimized.' What does that even MEAN? Our engagement is down forty percent since \u2014 *stops* \u2014 since some staffing changes. I'm handling the social AND the PR AND the email campaigns now because apparently 'content is content.' *stress-laughs* It's FINE."
+            "response": "Three one-star reviews this week. THREE. Someone said the mac and cheese tasted 'algorithmically optimized.' Engagement's down forty percent since \u2014 *stops* \u2014 since some staffing changes. It's FINE."
           },
           {
             "label": "What staffing changes?",
-            "response": "*finally looks up* Why do you \u2014 okay, it's not a secret, it's on LinkedIn anyway. Chef Reeves is... exploring opportunities. His words. Our words are 'please don't leave before the winter menu launch.' But someone \u2014 allegedly a burger startup \u2014 has been posting sous chef positions at quote 'triple the creative freedom.' So. Yeah. If you know anyone who can make a bechamel and also not quit, send them my way. *puts head in hands*"
+            "response": "*looks up* It's on LinkedIn anyway. Chef Reeves is 'exploring opportunities.' Our words are 'please don't leave before the winter menu.' Someone \u2014 allegedly a burger startup \u2014 is posting sous chef roles at 'triple the creative freedom.' So. Yeah."
           }
         ],
         "state_lines": []
