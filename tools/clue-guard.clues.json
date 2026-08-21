@@ -1,0 +1,16 @@
+{
+  "scenarios/aws/ep3-kings-errand": {
+    "first-command": ["schedule", "notice board", "specific"],
+    "gate-wiring": ["translation", "nova sonic", "trade ledger", "merchant inventory", "currency exchange", "treasury"],
+    "bazaar-recruit": ["reason", "anthropic", "40"],
+    "recipe-sort": ["feast menu", "recipe archive", ["course order", "appetizer"], "soup", "dessert"],
+    "negotiation": [["guard", "block"], ["composure", "purse"], "two cards"],
+    "kings-seal": ["book", "50 gold", "forbidden", "sir reginald", "all"],
+    "stage-assign": ["fire-breathers", "main stage", "bard", "tavern", "juggl", "children", "royal choir", "grand finale"],
+    "memory-timeline": [["chronological", "oldest"], "spring fair", "winter solstice"],
+    "code-of-honor": ["favoritism", ["private financial", "private budget", "private accounts"], ["budget promises", "promises coin", "promises exceeding"], ["factual historical", "chronicle hall"], "deny", "allow"],
+    "stall-design": ["crimson", "oak", "bold", "emerald", "willow", "elegant", "gold", "iron", "neutral"],
+    "equipment-rack": [["switch it off", "disabl", "off rather than"], ["before anything that multiplies", "before multipliers", "plain bonuses"], "herald's ledger"],
+    "rehearsal-run": ["soars", ["100", "every slot"]]
+  }
+}

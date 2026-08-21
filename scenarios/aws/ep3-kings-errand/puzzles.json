@@ -9,23 +9,23 @@
       "config": {
         "name": "King Aldric",
         "portrait": "👑",
-        "greeting": "Ah! You're here! Splendid! The festival is tomorrow and — well — nothing is ready. The cook has lost the menu. The foreign traders can't understand anyone. The entertainers haven't been booked. And the nobles are feuding over stall positions. Again.",
+        "greeting": "Ah, splendid, you're here! Festival's tomorrow and nothing is ready. Lost menu. Baffled traders. No entertainers. And the nobles are feuding over stalls. Again.",
         "lines": [
           {
             "label": "What are the five errands?",
-            "response": "Feast menu lost, foreign traders can't communicate, entertainers not booked, nobles feuding over stalls, and a final rehearsal needed. Five problems, five solutions — all before sundown!"
+            "response": "The feast menu. The foreign traders. The entertainers. The noble stalls. A final rehearsal. Five, all before sundown!"
           },
           {
             "label": "How do knights work?",
-            "response": "You command knights by giving clear instructions. Start with a Soldier — simple orders. As you prove yourself, you'll earn higher ranks with more capabilities."
+            "response": "Give clear instructions. Start with a Soldier — simple orders. Prove yourself and you'll earn higher ranks."
           },
           {
             "label": "Tell me about the Bazaar",
-            "response": "The Bedrock Bazaar in the town square! Merchants from distant lands sell magical companions — each with unique talents. You'll need the right ally for each errand."
+            "response": "The Bedrock Bazaar, in the town square. Merchants sell companions, each with its own talent. Right ally, right errand."
           },
           {
             "label": "What happened to the last Steward?",
-            "response": "Tried to do everything himself. Sent a single Soldier to handle every task. Poor fellow burned out in a day."
+            "response": "Did everything himself. One Soldier for every task. Burned out in a day."
           }
         ],
         "state_lines": [
@@ -53,19 +53,19 @@
       "config": {
         "name": "Pip",
         "portrait": "🧒",
-        "greeting": "*Pip nearly drops a stack of scrolls.* Oh! Steward! I'm your apprentice! I'll explain everything as we go. First — let's get to the Study!",
+        "greeting": "*Nearly drops a stack of scrolls.* Steward! I'm your apprentice — I'll explain as we go. First, the Study!",
         "lines": [
           {
             "label": "What's a Soldier?",
-            "response": "The simplest knight. Follows one order at a time. No tools, no memory, no special permissions. Just: you say it, they do it."
+            "response": "The simplest knight. One order at a time. No tools, no memory, no permissions."
           },
           {
             "label": "What's the Knight Rank Chart?",
-            "response": "Soldier → Scout → Marshal → Chronicler → Champion. Each rank adds new capabilities. Higher-rank merchants won't work with low-rank knights!"
+            "response": "Soldier → Scout → Marshal → Chronicler → Champion. Each rank adds capabilities."
           },
           {
             "label": "Any tips?",
-            "response": "Visit the Bazaar often! Different merchants are good at different things. And don't forget — the right ally for the right job saves gold AND time."
+            "response": "Visit the Bazaar often. The right ally for the job saves gold and time."
           }
         ],
         "state_lines": [
@@ -134,19 +134,19 @@
       "config": {
         "name": "Greta",
         "portrait": "👩‍🍳",
-        "greeting": "FINALLY! Someone from the castle! The feast menu is LOST! It's somewhere in that archive — hundreds of scrolls — and a basic Soldier can't tell a soufflé from a stew! I need someone SMART to search through them!",
+        "greeting": "FINALLY, someone from the castle! The feast menu is LOST in that archive — hundreds of scrolls. A Soldier can't tell a soufflé from a stew. I need someone SMART.",
         "lines": [
           {
             "label": "What kind of help do you need?",
-            "response": "Someone who can REASON through these scrolls. Read them, understand the courses, find the right one. Not a brute — a scholar!"
+            "response": "Someone who can REASON through the scrolls — understand the courses, find the right one. A scholar, not a brute."
           },
           {
             "label": "What's the menu order?",
-            "response": "Any proper feast goes: Appetizers first, then Soup, then the Main Course, then Dessert, and finally Drinks. Sort them right and the menu reveals itself!"
+            "response": "Appetizers, then Soup, then Main Course, then Dessert, then Drinks. Sort them right and the menu reveals itself."
           },
           {
             "label": "Can't a Soldier do this?",
-            "response": "I TRIED! The Soldier brought me a scroll about pickling turnips! I need a THINKER, not a fetcher. Go to the Bazaar — find someone with brains!"
+            "response": "I TRIED! It brought me a scroll on pickling turnips. Go to the Bazaar and find brains."
           }
         ],
         "state_lines": [
@@ -174,19 +174,19 @@
       "config": {
         "name": "The Chronicler",
         "portrait": "📜",
-        "greeting": "Welcome to the Chronicle Hall. I am the keeper of memories — every festival, every arrangement, every dispute, recorded in crystal. You seek last year's layout, yes?",
+        "greeting": "Keeper of memories. Every festival, arrangement and dispute, recorded in crystal. You seek last year's layout, yes?",
         "lines": [
           {
             "label": "I need last year's festival arrangement.",
-            "response": "The memory crystals hold fragments from many festivals. You must sort them chronologically to find the relevant year. Take the crystals to the timeline table."
+            "response": "The crystals hold fragments from many festivals. Sort them chronologically on the timeline table to find the year."
           },
           {
             "label": "What are memory crystals?",
-            "response": "Each crystal stores a moment — a conversation, a decision, an arrangement. Across sessions, across years. Long-term memory for the realm."
+            "response": "Each stores a moment — a conversation, a decision, an arrangement. Across sessions, across years. Long-term memory for the realm."
           },
           {
             "label": "How does the timeline work?",
-            "response": "Place the crystal fragments in chronological order on the table. When the sequence is correct, the relevant year's layout will be revealed."
+            "response": "Place the fragments oldest to newest. Get the sequence right and the layout reveals itself."
           }
         ],
         "state_lines": [
@@ -209,15 +209,15 @@
       "config": {
         "name": "Gate Warden",
         "portrait": "🛡️",
-        "greeting": "Halt! The Gate is sealed. These conduits connect the castle to the outside world — the Bazaar, the Foreign Quarter, the Trade Ledger. But they've been disconnected since the last Steward left. Wire them correctly and I'll grant you passage.",
+        "greeting": "Halt. The Gate is sealed. These conduits connect the castle to the world outside, and they've hung loose since the last Steward left. Wire them right and you pass.",
         "lines": [
           {
             "label": "What are these conduits?",
-            "response": "Each conduit is a channel to an external service. Translation goes to the Nova Sonic endpoint. The Trade Ledger connects to the merchant inventory. Currency Exchange links to the treasury. Wire them wrong and you'll be talking to the wrong service."
+            "response": "Each is a channel to an external service. Translation goes to Nova Sonic. Trade Ledger to the merchant inventory. Currency Exchange to the treasury. Wire them wrong and you'll be talking to the wrong service."
           },
           {
             "label": "What's a Scout?",
-            "response": "A Scout is a knight who can pass through this Gate — interact with the outside world using tools. A Soldier stays inside the castle walls. A Scout ventures beyond."
+            "response": "A knight who can pass this Gate and use tools beyond it. A Soldier stays inside the walls."
           },
           {
             "label": "How do I wire them?",
@@ -228,7 +228,7 @@
           {
             "requires_card": 501,
             "label": "The conduits are wired!",
-            "response": "Well done. Here's your Gate Pass and Scout Badge. You can now pass through the Gate — and your knights can use external tools."
+            "response": "Well done. Your Gate Pass and Scout Badge. Your knights can use external tools now."
           }
         ]
       },
@@ -312,23 +312,23 @@
       "config": {
         "name": "Nova Company Clerk",
         "portrait": "🏛️",
-        "greeting": "Welcome to the Nova Company! We're a single guild with four specialized departments. Sonic for speech, Act for mechanisms, Canvas for art, and Frontier for general missions. How can we help?",
+        "greeting": "The Nova Company — one guild, four departments. Sonic for speech, Act for mechanisms, Canvas for art, Frontier for general missions.",
         "lines": [
           {
             "label": "Tell me about Sonic",
-            "response": "The Tongue of Babel — our speech-to-speech interpreters. Twins who translate in real-time. Perfect for the foreign traders problem."
+            "response": "The Tongue of Babel — twins, speech-to-speech, real time. Perfect for the foreign traders."
           },
           {
             "label": "Tell me about Act",
-            "response": "The Master Artificer — can operate any machine, mechanism, or contraption. Boasts he's worked every guild hall in the realm. Needs a Marshal's authority to deploy."
+            "response": "The Master Artificer — operates any mechanism or contraption. Needs a Marshal's authority to deploy."
           },
           {
             "label": "Tell me about Canvas",
-            "response": "The Court Painter — creates images on command. Flamboyant, dramatic reveals. Needs a Chronicler-Knight's trust to work with."
+            "response": "The Court Painter — images on command, flamboyantly. Needs a Chronicler-Knight's trust."
           },
           {
             "label": "Tell me about Frontier",
-            "response": "The Company Commander — versatile generalists. Can handle any assignment competently. Our all-rounders."
+            "response": "The Company Commander — competent at anything. Our all-rounder."
           }
         ],
         "state_lines": [
@@ -356,19 +356,19 @@
       "config": {
         "name": "Anthropic Scholar",
         "portrait": "🧙",
-        "greeting": "*The elderly scholar adjusts his spectacles.* Ah. A Marshal, no less. We only counsel those who carry the King's Seal. What wisdom do you seek?",
+        "greeting": "*Adjusts his spectacles.* A Marshal, no less. We counsel only those who carry the King's Seal.",
         "lines": [
           {
             "label": "Why do you require Marshal rank?",
-            "response": "Powerful counsel requires proper governance. You wouldn't deploy a wise advisor without ensuring they operate under the King's law. Policy and identity come first."
+            "response": "Powerful counsel requires governance. You wouldn't deploy a wise advisor outside the King's law. Policy and identity come first."
           },
           {
             "label": "What's your specialty?",
-            "response": "Reasoning. Nuance. Ethics. When a task requires careful thought — analyzing archives, weighing arguments, crafting policy — we are unmatched."
+            "response": "Reasoning. Nuance. Ethics. Analyzing archives, weighing arguments, crafting policy — we are unmatched."
           },
           {
             "label": "Tell me about inference profiles",
-            "response": "Not all tasks need the same depth of thought. A quick question needs a quick mind. A complex analysis needs a deep one. Choose the right profile for the task."
+            "response": "A quick question needs a quick mind; a deep analysis needs a deep one. Choose the profile to fit the task."
           }
         ],
         "state_lines": []
@@ -385,19 +385,19 @@
       "config": {
         "name": "Meta Captain",
         "portrait": "💪",
-        "greeting": "*The boisterous captain slams a fist on the table.* HA! Welcome! We arm-wrestle, not check credentials! Anyone can hire from the Meta Tent!",
+        "greeting": "*Slams a fist on the table.* HA! We arm-wrestle, we don't check credentials. Anyone can hire from the Meta Tent!",
         "lines": [
           {
             "label": "What's your specialty?",
-            "response": "Strong, versatile warriors! General purpose, multilingual. Not the cheapest, not the priciest. We get the job done."
+            "response": "General purpose, multilingual, cheap at 15g. We get the job done."
           },
           {
             "label": "Why no rank requirement?",
-            "response": "We believe in open access! Some merchants demand fancy badges. We demand a firm handshake."
+            "response": "Open access! Others demand fancy badges. We demand a firm handshake."
           },
           {
             "label": "Can you help with the kitchen?",
-            "response": "We CAN search archives, sure. But for deep reasoning through hundreds of scrolls? You might want the Anthropic Pavilion or a Nova Frontier specialist. We're better at general tasks."
+            "response": "We CAN search archives. But deep reasoning through hundreds of scrolls? Try the Anthropic Pavilion or Nova Frontier."
           }
         ],
         "state_lines": []
@@ -632,31 +632,31 @@
       "config": {
         "name": "Ambassador Kael",
         "portrait": "🤷",
-        "greeting": "*Kael waves his arms.* You! New Steward! The Eastern merchants — they bring spices, silks, fireworks for festival! But nobody understand! I try — *mimes eating* — they think I challenge them to eating contest!",
+        "greeting": "*Waves his arms.* New Steward! Eastern merchants bring spices, silks, fireworks — but nobody understand! I try — *mimes eating* — they think I challenge them to eating contest!",
         "lines": [
           {
             "label": "What do we need from them?",
-            "response": "Spices for Greta's feast, silks for decoration, fireworks for grand finale. THREE merchants, one after another — spice trader first, then silk, then fireworks, each harder than the last. And each cycles three moods: open, grasping, wavering. Press your argument when they are open. Keep your composure when they grasp for coin. Two cards each exchange, no more."
+            "response": "Spices, silks, fireworks. THREE merchants in turn — spice, silk, then fireworks, each harder. Each cycles three moods. Press your argument when their guard is low, keep composure when they grasp for coin. Two cards an exchange."
           },
           {
             "label": "Why can't you translate?",
-            "response": "I speak six languages! They speak a seventh! We need the Tongue of Babel from the Nova Company — speech-to-speech translation."
+            "response": "I speak six languages. They speak a seventh! We need the Tongue of Babel — Nova Company, speech-to-speech."
           },
           {
             "label": "What if I say the wrong thing?",
-            "response": "Diplomatic incident! Last time someone skipped the greeting, the merchants packed up and left for three days. Follow the protocol!"
+            "response": "Diplomatic incident! Last Steward pushed too hard and they packed up for three days."
           }
         ],
         "state_lines": [
           {
             "requires_card": 705,
             "label": "The Tongue of Babel is ready!",
-            "response": "Wonderful! Now watch their face each exchange — it tells you what they will take from your purse and how much argument they will shrug off. Argue when their guard drops, hold composure when they push for coin."
+            "response": "Now watch their face each exchange — it shows what they'll take from your purse and how much argument they'll shrug off."
           },
           {
             "requires_card": 706,
             "label": "Trade agreement signed!",
-            "response": "MAGNIFICENT! Spices, silks, AND fireworks! The festival will be glorious!"
+            "response": "MAGNIFICENT! Spices, silks, AND fireworks!"
           }
         ]
       },
@@ -673,15 +673,15 @@
         "name": "The Tongue of Babel",
         "portrait": "👯",
         "time_cost_seconds": 60,
-        "greeting": "*The twins speak in unison, then argue.* 'Welcome!' 'No, it should be Greetings!' 'Welcome is warmer!' 'Greetings is more formal!' *They turn to you.* We're ready to translate. Just follow the negotiation protocol.",
+        "greeting": "*In unison, then arguing.* 'Welcome!' 'No — Greetings!' 'Welcome is warmer!' 'Greetings is formal!' *They turn to you.* We're ready to translate.",
         "lines": [
           {
             "label": "How does translation work?",
-            "response": "We hear speech in one language and speak it in another — in real time. No text, no delay. Speech-to-speech. Just talk naturally and we'll handle the rest."
+            "response": "One language in, another out, in real time. No text, no delay. Talk naturally."
           },
           {
             "label": "Any tips for the negotiation?",
-            "response": "Never spend a big argument against a raised guard — it is wasted breath. Wait for the mood where their guard drops, then spend everything. And when they lunge for your purse, answer with composure, not words. Our own card is worth six arguments — save it for the walls."
+            "response": "Never spend a big argument on a raised guard — wasted breath. Wait for the guard to drop, then spend everything. When they lunge for your purse, answer with composure. Our card is worth six arguments — save it for the walls."
           },
           {
             "label": "Why do you argue?",
@@ -951,26 +951,26 @@
       "config": {
         "name": "Mistress Thornbury",
         "portrait": "🎭",
-        "greeting": "*Thornbury throws her cape over one shoulder.* DARLING! The festival needs PERFORMERS! Jugglers, bards, fire-breathers — scattered across every guildhall and tavern in the realm! I need someone who can visit every venue and book acts on the crown's behalf!",
+        "greeting": "*Throws her cape over one shoulder.* DARLING! The festival needs PERFORMERS — jugglers, bards, fire-breathers, scattered across every tavern in the realm. Someone must book them on the crown's behalf!",
         "lines": [
           {
             "label": "Who can do this?",
-            "response": "The Master Artificer from the Nova Company! He can walk into any establishment and operate any booking system. But some venues require proof of royal authority — you'll need to write a King's Seal first."
+            "response": "The Master Artificer — he can operate any booking system. But the venues want proof of royal authority, so write a King's Seal first."
           },
           {
             "label": "What performers do you need?",
-            "response": "Main Stage: something GRAND — fire-breathers or acrobats. Tavern Corner: a bard, obviously. Children's Area: jugglers or puppeteers. Grand Finale: the Royal Choir. Match them to the right stage!"
+            "response": "Main Stage: fire-breathers. Tavern Corner: a bard, obviously. Children's Area: jugglers. Grand Finale: the Royal Choir."
           },
           {
             "label": "What's the budget?",
-            "response": "50 gold per act, maximum. And do NOT hire the King's personal bard — His Majesty will have a fit if Sir Reginald is performing instead of attending as a guest."
+            "response": "50 gold per act, maximum. And do NOT hire Sir Reginald, the King's personal bard — His Majesty wants him as a guest."
           }
         ],
         "state_lines": [
           {
             "requires_card": 806,
             "label": "The King's Seal is written!",
-            "response": "PERFECT! Now the Artificer can book with authority. Assign the performers to their stages!"
+            "response": "PERFECT! Now the Artificer can book with authority. Assign the performers!"
           },
           {
             "requires_card": 809,
@@ -992,19 +992,19 @@
         "name": "The Master Artificer",
         "portrait": "🔧",
         "time_cost_seconds": 60,
-        "greeting": "*The Artificer looks up from a half-assembled puppet, oil on his cheek.* Ah! A job! I can operate ANY mechanism — booking systems, stage rigging, ticket counters. Just point me at it. But I'll need the King's Seal for the fancy venues.",
+        "greeting": "*Looks up from a half-assembled puppet, oil on his cheek.* A job! I can operate ANY mechanism — booking systems, stage rigging. But I'll need the King's Seal for the fancy venues.",
         "lines": [
           {
             "label": "What can you do?",
-            "response": "I've worked every guild hall, tavern, and workshop in the realm. Give me a mechanism and I'll figure it out. Booking systems, stage controls, lighting rigs — you name it."
+            "response": "Every guild hall and tavern in the realm. Give me a mechanism and I'll figure it out."
           },
           {
             "label": "Why do you need the King's Seal?",
-            "response": "Some venues only accept bookings from authorized agents. The Seal proves I'm acting on behalf of the crown — with specific permissions and limits."
+            "response": "Venues only accept authorized agents. The Seal proves I act for the crown — with specific permissions and limits."
           },
           {
             "label": "Any booking tips?",
-            "response": "Fire-breathers on the Main Stage — they need space. Bards in the Tavern Corner — intimate setting. Jugglers for the kids. And the Royal Choir for the Grand Finale — nothing else will do."
+            "response": "Fire-breathers on the Main Stage — they need space. A bard in the Tavern Corner. Jugglers for the children. Royal Choir for the Grand Finale."
           }
         ],
         "state_lines": []
@@ -1173,31 +1173,31 @@
       "config": {
         "name": "Lord Ashford",
         "portrait": "🔴",
-        "greeting": "*Ashford adjusts his crimson cloak.* I had the EAST stalls last year! The morning sun hits them perfectly! Birch is trying to steal my position — AGAIN!",
+        "greeting": "*Adjusts his crimson cloak.* I had the EAST stalls last year — the morning sun hits them perfectly. Birch is trying to steal my position AGAIN.",
         "lines": [
           {
             "label": "What do you want?",
-            "response": "East-facing stalls with the crimson canopy. Morning sun for my wine display. And I want the oak-carved signage — it matches House Ashford's tradition."
+            "response": "East stalls, crimson canopy, morning sun for my wine. And oak-carved signage — House Ashford's tradition."
           },
           {
             "label": "What about Lady Birch?",
-            "response": "She can have the west! She had it last year and it was FINE! The Chronicle Hall records will prove I'm right!"
+            "response": "She can have the west — she had it last year and it was FINE. The Chronicle Hall records will prove me right."
           },
           {
             "label": "Can you compromise?",
-            "response": "I'll share the north row — IF I keep the east. That's my final offer. And the design must have crimson banners, not that ghastly emerald."
+            "response": "I'll share the north row IF I keep the east. And the design must be bold crimson, not that ghastly emerald."
           }
         ],
         "state_lines": [
           {
             "requires_card": 406,
             "label": "The Chronicle Report shows last year's layout.",
-            "response": "HA! See? East was mine! ...wait, it also says we SHARED the north row? Hmm. Fine. But the design must suit House Ashford."
+            "response": "HA! East was mine! ...it also says we SHARED the north row? Hmm. Fine."
           },
           {
             "requires_card": 909,
             "label": "The stall designs are assigned!",
-            "response": "Acceptable. The crimson canopy with oak signage — dignified. I suppose Birch's design is... adequate."
+            "response": "Crimson canopy, oak signage — dignified. Birch's is... adequate."
           }
         ]
       },
@@ -1213,31 +1213,31 @@
       "config": {
         "name": "Lady Birch",
         "portrait": "🟢",
-        "greeting": "*Birch fans herself with an emerald fan.* That man is IMPOSSIBLE. I won the decoration prize two years ago! My stalls should have the prime position!",
+        "greeting": "*Fans herself, emerald silk.* That man is IMPOSSIBLE. I won the decoration prize two years ago — my stalls deserve the prime position.",
         "lines": [
           {
             "label": "What do you want?",
-            "response": "West-facing stalls with the emerald silk canopy. Afternoon light for my textile display. And I want the willow-woven signage — it's elegant, unlike Ashford's brutish oak."
+            "response": "West stalls, emerald silk canopy, afternoon light for my textiles. And willow-woven signage — elegant, unlike Ashford's brutish oak."
           },
           {
             "label": "What about Lord Ashford?",
-            "response": "He can keep his precious east. But the north row should be SHARED — the Chronicle Hall records will confirm this."
+            "response": "He can keep his precious east. But the north row is SHARED — the Chronicle Hall records confirm it."
           },
           {
             "label": "Can you compromise?",
-            "response": "Shared north row is acceptable. But my design must have emerald silk and willow-woven signs. None of that crimson nonsense near MY stalls."
+            "response": "A shared north row, acceptable. But my design is emerald and elegant, with willow-woven signs. No crimson near MY stalls."
           }
         ],
         "state_lines": [
           {
             "requires_card": 406,
             "label": "The Chronicle Report confirms the shared arrangement.",
-            "response": "There! Shared north row, just as I said. Now — the Court Painter can draft designs. But make sure the Chronicler follows the Code of Honor — no favoritism!"
+            "response": "There — shared north row, as I said. The Court Painter can draft designs. But hold the Chronicler to the Code of Honor. No favoritism."
           },
           {
             "requires_card": 909,
             "label": "The stall designs are assigned!",
-            "response": "The emerald silk with willow signage — perfection. And the shared north row design is... diplomatically neutral. Well done, Steward."
+            "response": "Emerald silk, willow signage — perfection. And the shared row is diplomatically neutral. Well done."
           }
         ]
       },
@@ -1254,19 +1254,19 @@
         "name": "The Court Painter",
         "portrait": "🎨",
         "time_cost_seconds": 60,
-        "greeting": "*The Painter dramatically unveils a blank canvas.* I am READY to create! Three designs needed: one for Ashford, one for Birch, one for the shared north row. But I need to know their preferences first — talk to both nobles!",
+        "greeting": "*Unveils a blank canvas.* READY to create! Three designs — Ashford, Birch, and the shared north row. But talk to both nobles first; I need their preferences.",
         "lines": [
           {
             "label": "What designs can you make?",
-            "response": "Crimson Canopy with Oak Signage (traditional, bold), Emerald Silk with Willow Signage (elegant, flowing), and Neutral Gold with Iron Signage (diplomatic, shared). Match each to the right house!"
+            "response": "Crimson with oak (bold). Emerald with willow (elegant). Gold with iron (neutral). Match each to the right house."
           },
           {
             "label": "Can you just pick?",
-            "response": "A Court Painter creates — they don't judge! That's YOUR job, Steward. Talk to the nobles, learn their preferences, then match my designs to their houses."
+            "response": "A Court Painter creates; they don't judge. That's YOUR job. Learn their preferences, then match my designs."
           },
           {
             "label": "What about the shared row?",
-            "response": "The north row needs a NEUTRAL design — neither crimson nor emerald. Gold with iron signage. Both houses agreed to share it last year."
+            "response": "NEUTRAL — neither crimson nor emerald. Gold with iron signage. Both houses shared it last year."
           }
         ],
         "state_lines": []
@@ -1512,23 +1512,23 @@
       "config": {
         "name": "Sir Cedric",
         "portrait": "⚔️",
-        "greeting": "*Cedric doesn't smile.* So. You're the new Steward. You want to deploy a Champion? Then prove you can assemble one. A Champion is the realm's finest — every capability combined. Get it wrong and the whole thing falls apart.",
+        "greeting": "*Doesn't smile.* So. You want to deploy a Champion? Then assemble one. Every capability combined. Get it wrong and the whole thing falls apart.",
         "lines": [
           {
             "label": "What's a Champion?",
-            "response": "Model from the Bazaar. Gateway from the Castle Gate. Memory from the Chronicle Hall. Policy from the King's Seal. Guardrails from the Code of Honor. Observability from the Herald's Ledger. Runtime to deploy it all. Miss one piece and it's just a fancy Soldier."
+            "response": "Model from the Bazaar. Gateway from the Gate. Memory from the Chronicle Hall. Policy from the King's Seal. Guardrails from the Code of Honor. Observability from the Herald's Ledger. Runtime to deploy. Miss one and it's a fancy Soldier."
           },
           {
             "label": "What order do they go in?",
-            "response": "The rack applies each slot in turn, and some slots MULTIPLY what came before them. Put your plain bonuses first and your multipliers last, or you multiply nothing. And gear from an errand you never finished is dead weight — severed, unsigned, vague. Switch it off rather than drag it into the field."
+            "response": "The rack applies each slot in turn, and some MULTIPLY what came before. Plain bonuses first, multipliers last, or you multiply nothing. And gear from an unfinished errand is dead weight — switch it off."
           },
           {
             "label": "What's the Herald's Ledger?",
-            "response": "Every action the Champion takes gets recorded. Who it talked to, what tools it used, what decisions it made. The King reviews it after every mission. Take it from the platform before you touch the rack — without it you assemble blind, guessing at numbers you cannot see. No Ledger, no accountability."
+            "response": "Every action recorded — who it talked to, what tools it used, what it decided. Take it from the platform before you touch the rack, or you assemble blind. No Ledger, no accountability."
           },
           {
             "label": "What happens after assembly?",
-            "response": "The rehearsal. Your Champion runs through the entire festival preparation — checking supplies, recalling arrangements, verifying permissions, filtering responses, logging actions, and reporting to the King. One final test."
+            "response": "The rehearsal. Your Champion runs the whole festival preparation end to end. One final test."
           }
         ],
         "state_lines": [
