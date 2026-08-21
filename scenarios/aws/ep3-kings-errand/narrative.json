@@ -7,15 +7,11 @@
   },
   "intro": {
     "segments": [
-      { "voice": "narrator", "text": "The Kingdom of Cloudmere. The morning sun warms the castle walls. Banners flutter in the breeze.", "pause_after_ms": 1000 },
-      { "voice": "narrator", "text": "Today is the day before the Grand Harvest Festival — the biggest celebration of the year. And nothing is ready.", "pause_after_ms": 800 },
-      { "voice": "narrator", "text": "The previous Steward of Errands quit without warning. Rumor says he tried to do everything himself instead of delegating to knights.", "pause_after_ms": 600 },
-      { "voice": "narrator", "text": "You've been summoned to the Throne Room. King Aldric paces before his throne, muttering about decorations.", "pause_after_ms": 800 },
-      { "voice": "aldric", "text": "Ah! You're here! Splendid! The festival is tomorrow and — well — nothing is ready. The cook has lost the menu. The foreign traders can't understand anyone. The entertainers haven't been booked. And the nobles are feuding over stall positions. Again.", "pause_after_ms": 1200 },
-      { "voice": "aldric", "text": "I'm appointing you Steward of Errands. You'll command knights of increasing rank to handle each task. And visit the Bedrock Bazaar — the marketplace in the town square — to recruit the right allies.", "pause_after_ms": 1000 },
-      { "voice": "pip", "text": "A young apprentice stumbles through the door, scrolls tumbling from their arms. I'm Pip! Your apprentice! I'll help you learn the ropes!", "pause_after_ms": 800 },
-      { "voice": "narrator", "text": "The clock tower chimes. Sundown is sixty minutes away.", "pause_after_ms": 600 },
-      { "voice": "narrator", "text": "Welcome to Cloudmere. Your sixty minutes start now." }
+      { "voice": "narrator", "text": "The Kingdom of Cloudmere. Tomorrow is the Grand Harvest Festival, and nothing is ready.", "pause_after_ms": 700 },
+      { "voice": "narrator", "text": "The last Steward of Errands quit — he tried to do everything himself instead of delegating to knights.", "pause_after_ms": 700 },
+      { "voice": "aldric", "text": "You're here! Splendid. You're my new Steward of Errands. Command knights to handle each task, and visit the Bedrock Bazaar to recruit allies.", "pause_after_ms": 700 },
+      { "voice": "pip", "text": "I'm Pip, your apprentice! I'll help you learn the ropes.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "The clock tower chimes. Sundown is sixty minutes away. Go." }
     ],
     "audio": null
   },
