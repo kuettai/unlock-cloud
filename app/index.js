@@ -1035,6 +1035,12 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     const input = document.createElement('input');
     input.type = 'text';
     input.autocomplete = 'off';
+    // Mobile keyboards otherwise capitalise and autocorrect while the player types,
+    // which turns a typed-command puzzle into a fight with the keyboard.
+    input.setAttribute('autocapitalize', 'none');
+    input.setAttribute('autocorrect', 'off');
+    input.setAttribute('spellcheck', 'false');
+    input.setAttribute('enterkeyhint', 'go');
     input.style.cssText = 'width:100%;padding:10px;background:#0c0c0c;border:1px solid var(--border);border-radius:6px;color:var(--green);font-family:monospace;font-size:14px;margin-bottom:12px';
     input.placeholder = 'Type your answer...';
     wrap.appendChild(input);
@@ -1045,11 +1051,29 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     btn.className = 'btn btn-primary';
     btn.style.cssText = 'width:100%';
     btn.textContent = 'Submit';
+    // Typed answers are compared with punctuation and repeated spaces removed, so
+    // a trailing full stop or a double space from a phone keyboard is not a wrong
+    // answer. Strictly more forgiving than an exact compare, so existing answers
+    // and accept_variations keep matching.
+    const norm = s => (s || '').toLowerCase()
+      .replace(/[.,!?;:'"`’“”()\[\]]/g, '')
+      .replace(/[-_/]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    // Optional `accept_keywords`: [[...alternatives], [...]] — every group must be
+    // matched somewhere in the answer, in any order and any phrasing. Lets a
+    // sentence-length command be marked right for naming the right things rather
+    // than for reproducing an exact string, which is punishing on a phone.
+    const keywordsMatch = (typed) => {
+      const groups = cfg.accept_keywords;
+      if (!Array.isArray(groups) || !groups.length) return false;
+      return groups.every(g => (Array.isArray(g) ? g : [g]).some(k => typed.includes(norm(k))));
+    };
     const doSubmit = () => {
-      const val = input.value.trim().toLowerCase();
-      const answer = (cfg.answer || '').toLowerCase();
-      const variations = (cfg.accept_variations || []).map(v => v.toLowerCase());
-      if (val === answer || variations.includes(val)) {
+      const val = norm(input.value);
+      const answer = norm(cfg.answer);
+      const variations = (cfg.accept_variations || []).map(norm);
+      if (val === answer || variations.includes(val) || keywordsMatch(val)) {
         if (cfg.follow_up && !wrap.dataset.step2) {
           wrap.dataset.step2 = 'true';
           prompt.textContent = cfg.follow_up.prompt;
