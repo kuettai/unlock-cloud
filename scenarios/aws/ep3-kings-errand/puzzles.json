@@ -94,8 +94,16 @@
         "prompt": "steward@cloudmere:~$ dispatch soldier:",
         "answer": "fetch schedule from notice board",
         "accept_keywords": [
-          ["schedule"],
-          ["notice board", "noticeboard", "notice-board", "board", "notice"]
+          [
+            "schedule"
+          ],
+          [
+            "notice board",
+            "noticeboard",
+            "notice-board",
+            "board",
+            "notice"
+          ]
         ],
         "accept_variations": [
           "fetch the schedule from the notice board",
@@ -1574,6 +1582,19 @@
             "quest": "bazaar-recruit"
           },
           {
+            "id": "shortcut",
+            "base": {
+              "name": "🧨 Untested Shortcut",
+              "effect": 6,
+              "type": "neg"
+            },
+            "upgraded": {
+              "name": "🧨 Untested Shortcut",
+              "effect": 6,
+              "type": "neg"
+            }
+          },
+          {
             "id": "gateway",
             "base": {
               "name": "🛡️ Severed Conduit",
@@ -1600,6 +1621,19 @@
               "type": "flat"
             },
             "quest": "negotiation"
+          },
+          {
+            "id": "unlogged",
+            "base": {
+              "name": "🕳️ Unlogged Action",
+              "effect": 2,
+              "type": "div"
+            },
+            "upgraded": {
+              "name": "🕳️ Unlogged Action",
+              "effect": 2,
+              "type": "div"
+            }
           },
           {
             "id": "policy",
@@ -1642,6 +1676,19 @@
               "type": "mult"
             },
             "quest": "code-of-honor"
+          },
+          {
+            "id": "borrowed",
+            "base": {
+              "name": "🪶 Borrowed Confidence",
+              "effect": 0.5,
+              "type": "mult"
+            },
+            "upgraded": {
+              "name": "🪶 Borrowed Confidence",
+              "effect": 0.5,
+              "type": "mult"
+            }
           },
           {
             "id": "memory",
@@ -1695,9 +1742,9 @@
         ]
       },
       "hints": [
-        "Every errand you finished has already upgraded its slot. Anything still named severed, unsigned, broken or vague belongs to an errand you skipped — switch it OFF instead of carrying it.",
-        "The rack applies slots top to bottom, so order changes the result. Plain bonuses (+N) must sit above anything that multiplies (×N).",
-        "Drag the four + slots up (MCP Gateway Link, Negotiation Protocol, Instruction Schema, Memory Crystal), then the three × slots below (Foundation Model Core, Cedar Seal, Guardrail Mantle). Deploy — Strides or better passes."
+        "Three items on the rack never came from an errand — the rack says gear like that is severed, unsigned or vague. Read the names.",
+        "Untested Shortcut, Unlogged Action and Borrowed Confidence belong to no errand you ran. Switch all three OFF, not just one.",
+        "Switch OFF Untested Shortcut, Unlogged Action and Borrowed Confidence, leave the other seven ON, then Deploy."
       ],
       "mandatory": true
     },
@@ -1722,6 +1769,19 @@
               "type": "mult"
             },
             "quest": "bazaar-recruit"
+          },
+          {
+            "id": "shortcut",
+            "base": {
+              "name": "🧨 Untested Shortcut",
+              "effect": 6,
+              "type": "neg"
+            },
+            "upgraded": {
+              "name": "🧨 Untested Shortcut",
+              "effect": 6,
+              "type": "neg"
+            }
           },
           {
             "id": "gateway",
@@ -1750,6 +1810,19 @@
               "type": "flat"
             },
             "quest": "negotiation"
+          },
+          {
+            "id": "unlogged",
+            "base": {
+              "name": "🕳️ Unlogged Action",
+              "effect": 2,
+              "type": "div"
+            },
+            "upgraded": {
+              "name": "🕳️ Unlogged Action",
+              "effect": 2,
+              "type": "div"
+            }
           },
           {
             "id": "policy",
@@ -1792,6 +1865,19 @@
               "type": "mult"
             },
             "quest": "code-of-honor"
+          },
+          {
+            "id": "borrowed",
+            "base": {
+              "name": "🪶 Borrowed Confidence",
+              "effect": 0.5,
+              "type": "mult"
+            },
+            "upgraded": {
+              "name": "🪶 Borrowed Confidence",
+              "effect": 0.5,
+              "type": "mult"
+            }
           },
           {
             "id": "memory",
@@ -1845,9 +1931,9 @@
         ]
       },
       "hints": [
-        "Soars needs 100. Every slot must be ON and upgraded — a single disabled slot costs you the tier.",
-        "Observability is live now, so the score is on screen. Watch it change as you reorder: put flat bonuses (+N) before multipliers (×N).",
-        "Optimal order: +N first (Gateway, Protocol, Instruction Schema, Memory Crystal), then ×N (Model Core, Cedar Seal, Guardrail Mantle). Score: 128."
+        "Soars needs 100. Switching off the three items that came from no errand is not enough on its own this time.",
+        "Observability is live, so the score is on screen. Watch it move as you reorder: plain bonuses (+N) must sit above anything that multiplies (×N).",
+        "OFF: Untested Shortcut, Unlogged Action, Borrowed Confidence. Then order +N first (Gateway, Protocol, Instruction Schema, Memory Crystal) and ×N last (Model Core, Cedar Seal, Guardrail Mantle). Score: 128."
       ],
       "mandatory": true,
       "isFinal": true

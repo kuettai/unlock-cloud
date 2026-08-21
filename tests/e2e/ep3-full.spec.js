@@ -214,6 +214,15 @@ async function solveImagePrompt(page, commissions) {
   }
 }
 
+/** equipment-rack-lock: switch a slot OFF by the name shown on its row. */
+async function disableRackRow(page, name) {
+  const names = await page.locator('.eqrk-name').allTextContents();
+  const at = names.findIndex(n => n.includes(name));
+  if (at === -1) throw new Error(`rack row "${name}" not found in ${JSON.stringify(names)}`);
+  await page.locator('.eqrk-row').nth(at).locator('.eqrk-toggle').click();
+  await page.waitForTimeout(100);
+}
+
 /** equipment-rack-lock: tap row A then row B to move A into B's slot. */
 async function moveRackRow(page, name, toPos) {
   const names = await page.locator('.eqrk-name').allTextContents();
@@ -384,18 +393,26 @@ test.describe('EP3 — The King\'s Errand (full playthrough, real puzzle UIs)', 
     await look(page, 'Examine the Champion Assembly Rack');
     await look(page, 'Examine the Herald\'s Ledger');   // gates the assembly
 
-    // Assembly: the config order already clears Strides, so one deploy passes.
+    // Assembly: three slots belong to no errand and drag the score to 21.
+    // Numbers are hidden here, so the only way through is reading the names.
     await act(page, 'Assemble the Champion');
-    await expect(page.locator('.eqrk-row')).toHaveCount(7);
+    await expect(page.locator('.eqrk-row')).toHaveCount(10);
+    for (const junk of ['Untested Shortcut', 'Unlogged Action', 'Borrowed Confidence']) {
+      await disableRackRow(page, junk);
+    }
     await page.locator('.eqrk-btn', { hasText: 'Deploy' }).click();
     await settle(page, 1009);
 
-    // Rehearsal: needs Soars (>=100), so flat bonuses must precede multipliers.
+    // Rehearsal: disabling the junk gets 73, which is not Soars — the flats must
+    // also come before the multipliers. Numbers are visible to verify it.
     await act(page, 'Run the rehearsal');
-    await expect(page.locator('.eqrk-row')).toHaveCount(7);
-    await moveRackRow(page, 'Foundation Model Core', 6);
-    await moveRackRow(page, 'Cedar Seal', 6);
-    await moveRackRow(page, 'Guardrail Mantle', 6);
+    await expect(page.locator('.eqrk-row')).toHaveCount(10);
+    for (const junk of ['Untested Shortcut', 'Unlogged Action', 'Borrowed Confidence']) {
+      await disableRackRow(page, junk);
+    }
+    await moveRackRow(page, 'Foundation Model Core', 9);
+    await moveRackRow(page, 'Cedar Seal', 9);
+    await moveRackRow(page, 'Guardrail Mantle', 9);
     await page.locator('.eqrk-btn', { hasText: 'Deploy' }).click();
     await expect(page.locator('.eqrk-score')).toContainText('128');
 
