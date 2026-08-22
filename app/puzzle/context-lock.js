@@ -22,6 +22,11 @@ class ContextLock {
     // Themeable agent label — defaults to the original "golem" theme so existing
     // episodes are unaffected; ep8 (Macet) overrides it via config.
     this.agentName = opts.agentName || 'golem';
+    // Optional framing line shown above the puzzle before the player interacts.
+    // Backward compatible: no intro provided → nothing rendered.
+    this.intro = opts.intro || null;
+    // Configurable shelf label
+    this.shelfLabel = opts.shelfLabel || null;
     // Start with everything loaded
     this.loaded = new Set(this.documents.map(d => d.id));
     this._streamInterval = null;
@@ -82,6 +87,14 @@ class ContextLock {
     const wrap = document.createElement('div');
     wrap.className = 'ctxlk';
 
+    // Optional framing intro — explains the task before the player interacts.
+    if (this.intro) {
+      const intro = document.createElement('div');
+      intro.className = 'ctxlk-intro';
+      intro.textContent = this.intro;
+      wrap.appendChild(intro);
+    }
+
     const isClean = this._isClean();
     const used = this._getUsed();
     const pct = Math.min(110, (used / this.capacity) * 100);
@@ -112,16 +125,16 @@ class ContextLock {
     // Document list — tap to remove/re-add
     const shelf = document.createElement('div');
     shelf.className = 'ctxlk-shelf';
-    shelf.innerHTML = '<div class="ctxlk-shelf-label">Loaded documents — tap to remove suspicious ones</div>';
+    shelf.innerHTML = `<div class="ctxlk-shelf-label">${this.shelfLabel || 'Loaded documents — tap to remove incorrect ones'}</div>`;
     this.documents.forEach(doc => {
       const isLoaded = this.loaded.has(doc.id);
       const card = document.createElement('button');
       card.className = 'ctxlk-doc' + (isLoaded ? ' ctxlk-doc-loaded' : ' ctxlk-doc-removed');
       card.innerHTML = `
-        <div class="ctxlk-doc-icon">${doc.icon}</div>
+        <div class="ctxlk-doc-icon">${doc.icon || '📄'}</div>
         <div class="ctxlk-doc-info">
           <div class="ctxlk-doc-name">${doc.label}</div>
-          <div class="ctxlk-doc-desc">${doc.desc}</div>
+          ${doc.desc ? `<div class="ctxlk-doc-desc">${doc.desc}</div>` : ''}
         </div>
         <div class="ctxlk-doc-cost">~${doc.tokens}</div>
         <div class="ctxlk-doc-toggle">${isLoaded ? '🔵' : '⭕'}</div>
@@ -184,6 +197,7 @@ class ContextLock {
     s.id = 'ctxlk-css';
     s.textContent = `
 .ctxlk{display:flex;flex-direction:column;gap:12px;padding:12px 0}
+.ctxlk-intro{font-size:12px;line-height:1.5;color:var(--text,#e0e6f0);background:rgba(59,130,246,.08);border:1px solid var(--accent,#3b82f6);border-radius:8px;padding:10px 12px}
 .ctxlk-monitor{background:#0d1117;border:2px solid #e94560;border-radius:10px;overflow:hidden;transition:border-color .5s}
 .ctxlk-monitor-clean{border-color:var(--green,#22c55e)}
 .ctxlk-mon-header{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#161b22;border-bottom:1px solid #30363d}
@@ -202,19 +216,19 @@ class ContextLock {
 .ctxlk-gauge{display:flex;flex-direction:column;gap:3px}
 .ctxlk-gauge-bar{height:8px;background:#141b2d;border:1px solid #1e2a45;border-radius:4px;overflow:hidden}
 .ctxlk-gauge-fill{height:100%;border-radius:4px;transition:width .3s}
-.ctxlk-gauge-ok{background:var(--accent,#3b82f6)}
+.ctxlk-gauge-ok{background:#3b82f6}
 .ctxlk-gauge-warn{background:#eab308}
 .ctxlk-gauge-over{background:#e94560}
 .ctxlk-gauge-label{font-size:11px;color:var(--muted,#7a8ba8);text-align:right}
 .ctxlk-shelf{display:flex;flex-direction:column;gap:5px}
 .ctxlk-shelf-label{font-size:11px;color:var(--muted,#7a8ba8);margin-bottom:2px}
-.ctxlk-doc{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);border-radius:6px;cursor:pointer;transition:all .15s;text-align:left;width:100%;font-family:inherit;color:inherit;font-size:inherit}
+.ctxlk-doc{display:flex;align-items:center;gap:10px;padding:14px 14px;background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);border-radius:8px;cursor:pointer;transition:all .15s;text-align:left;width:100%;font-family:inherit;color:inherit;font-size:inherit}
 .ctxlk-doc:active{transform:scale(.98)}
 .ctxlk-doc-loaded{border-color:var(--accent,#3b82f6);background:rgba(59,130,246,.04)}
 .ctxlk-doc-removed{opacity:.45;border-style:dashed}
 .ctxlk-doc-icon{font-size:1.1rem;width:24px;text-align:center}
 .ctxlk-doc-info{flex:1}
-.ctxlk-doc-name{font-size:12px;font-weight:600;color:var(--text,#e0e6f0)}
+.ctxlk-doc-name{font-size:13px;font-weight:600;color:var(--text,#e0e6f0);line-height:1.4}
 .ctxlk-doc-desc{font-size:10px;color:var(--muted,#7a8ba8);margin-top:1px}
 .ctxlk-doc-cost{font-size:10px;color:var(--muted,#7a8ba8)}
 .ctxlk-doc-toggle{font-size:12px;width:18px;text-align:center}

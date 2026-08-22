@@ -111,20 +111,20 @@ class WafLock {
     const s = document.createElement('style'); s.id = 'waflk-css';
     s.textContent = `
 .waflk{display:flex;flex-direction:column;gap:10px;padding:16px 0;max-width:400px;margin:0 auto}
-.waflk-section{font-size:11px;color:var(--muted,#7a8ba8);text-transform:uppercase;letter-spacing:1px}
-.waflk-log{background:#0c0c0c;border:1px solid var(--border,#1e2a45);border-radius:8px;padding:10px;max-height:120px;overflow-y:auto;font-family:monospace;font-size:11px}
+.waflk-section{font-size:11px;color:#7a8ba8;text-transform:uppercase;letter-spacing:1px}
+.waflk-log{background:#0c0c0c;border:1px solid #1e2a45;border-radius:8px;padding:10px;max-height:120px;overflow-y:auto;font-family:monospace;font-size:11px}
 .waflk-req{padding:3px 0}
 .waflk-mal{color:#ef4444}
-.waflk-ok{color:var(--muted,#7a8ba8)}
-.waflk-rule{display:flex;align-items:center;gap:8px;padding:10px;background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);border-radius:8px;transition:all .2s}
-.waflk-rule.waflk-correct{border-color:var(--green,#22c55e)}
+.waflk-ok{color:#7a8ba8}
+.waflk-rule{display:flex;align-items:center;gap:8px;padding:10px;background:#141b2d;border:2px solid #1e2a45;border-radius:8px;transition:all .2s}
+.waflk-rule.waflk-correct{border-color:#22c55e}
 .waflk-rule.waflk-wrong{animation:waflk-sh .4s;border-color:#ef4444}
 @keyframes waflk-sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.waflk-sel{padding:6px;background:var(--bg,#0a0e17);border:1px solid var(--border,#1e2a45);border-radius:4px;color:var(--text,#e0e6f0);font-size:11px}
-.waflk-match{font-size:12px;color:var(--muted,#7a8ba8);white-space:nowrap}
-.waflk-btn{padding:12px 28px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:14px;font-weight:600;cursor:pointer;align-self:center}
+.waflk-sel{padding:6px;background:#0a0e17;border:1px solid #1e2a45;border-radius:4px;color:#e0e6f0;font-size:11px}
+.waflk-match{font-size:12px;color:#7a8ba8;white-space:nowrap}
+.waflk-btn{padding:12px 28px;border:none;border-radius:8px;background:#3b82f6;color:#fff;font-size:14px;font-weight:600;cursor:pointer;align-self:center}
 .waflk-btn:active{opacity:.7}
-.waflk-status{font-size:13px;color:var(--muted,#7a8ba8);text-align:center;min-height:18px}
+.waflk-status{font-size:13px;color:#7a8ba8;text-align:center;min-height:18px}
 `;
     document.head.appendChild(s);
   }

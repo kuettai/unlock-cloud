@@ -1,0 +1,127 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Malacca, 1400",
+      "description": "A prince rests by the river under a Melaka tree. A mouse-deer kicks his hunting dog into the water — an omen, the prince decides. He'll build a kingdom here.",
+      "image": "assets/room-malacca.png",
+      "image_prompt": "Peaceful 15th-century Malacca riverbank scene, a young prince in traditional robes resting under a fruit tree, a mouse-deer kicking a hunting dog into shallow water, jungle canopy, warm golden hour lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 105, "label": "Name this land", "puzzle": "word-melaka" },
+        { "card_id": 106, "label": "Connect the facts", "puzzle": "digits-founding" }
+      ],
+      "visible_to": "all",
+      "room": "malacca"
+    },
+    {
+      "id": 105,
+      "type": "event",
+      "color": "yellow",
+      "title": "The Land is Named.",
+      "description": "The prince points to the tree and speaks the name aloud. It sticks. The kingdom will be called Melaka — after the fruit that shaded him at the moment his mind was made up.",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "malacca"
+    },
+    {
+      "id": 106,
+      "type": "event",
+      "color": "yellow",
+      "title": "The Kingdom is Founded.",
+      "description": "Trade routes secured. Alliances forged. The kingdom thrives. The riverbank blurs. The portal to 1957 opens — the next pivotal moment in Malaysia's story awaits.",
+      "reveals": [200],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "malacca"
+    },
+
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "Merdeka Square, 1957",
+      "description": "A sea of white songkok and headscarves. A wooden podium. Above it, a flag pole waits. Rumors fly through the crowd — some right, most wrong. Verify the facts, then set the date.",
+      "image": "assets/room-merdeka-square.png",
+      "image_prompt": "1957 Merdeka Square Kuala Lumpur, huge crowd in traditional Malay attire, wooden podium with microphone, Malaysian flag rising against clear sky, celebratory but historic atmosphere, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 205, "label": "Verify the facts", "puzzle": "spec-merdeka" },
+        { "card_id": 206, "label": "Set the event date", "puzzle": "defuse-merdeka" }
+      ],
+      "visible_to": "all",
+      "room": "merdeka-square"
+    },
+    {
+      "id": 205,
+      "type": "event",
+      "color": "yellow",
+      "title": "Facts Verified.",
+      "description": "The false claims are stripped off the podium. Only truth remains. The crowd steadies. Now — set the date.",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "merdeka-square"
+    },
+    {
+      "id": 206,
+      "type": "event",
+      "color": "yellow",
+      "title": "Merdeka! Merdeka! Merdeka!",
+      "description": "Every dial clicks into place. Tunku Abdul Rahman raises his hand. 'MERDEKA!' — seven times, the crowd roars back. The flag rises. The portal ripples forward — 67 years later, in a land the prince could never have imagined, the cloud arrives.",
+      "reveals": [300],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "merdeka-square"
+    },
+
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "AWS Malaysia, 2024",
+      "description": "A crisp data center in Cyberjaya. Fans hum. Blue LEDs pulse. Somewhere on a shelf sits a piñata scrap, still glittering. Two consoles wait: one asks about the newest region, one asks where the cloud began.",
+      "image": "assets/room-aws-malaysia.png",
+      "image_prompt": "Modern AWS data center interior in Cyberjaya Malaysia, sleek server racks with blue LED strips, ceremonial pinata scraps on a table, two glowing consoles in the foreground, celebratory but professional atmosphere, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 305, "label": "Answer the AWS quiz", "puzzle": "wager-aws" },
+        { "card_id": 399, "label": "Enter the origin year", "puzzle": "keypad-firstregion" }
+      ],
+      "visible_to": "all",
+      "room": "aws-malaysia"
+    },
+    {
+      "id": 305,
+      "type": "event",
+      "color": "yellow",
+      "title": "Malaysia Region: Live.",
+      "description": "Four answers, four green ticks. ap-southeast-5 lights up on the wall map. A cheer goes up somewhere in Cyberjaya. Now — where did this all begin?",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "aws-malaysia"
+    },
+    {
+      "id": 399,
+      "type": "event",
+      "color": "yellow",
+      "title": "Welcome to the Cloud.",
+      "description": "2006. The terminal glows green. From a tree in 1400 to a shout in 1957 to a region in 2024 — you've traveled from a kingdom under a tree to a region in the cloud. Malaysia Boleh! 🇲🇾",
+      "is_ending": true,
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "aws-malaysia"
+    }
+  ]
+}

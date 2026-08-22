@@ -1,0 +1,9 @@
+{
+  "style_prefix": "Digital illustration, cinematic time-travel Malaysian history scene, warm and reverent, three-era palette blending gold-hour tropical, patriotic red-yellow-blue, and cloud-blue tech, isometric game card art.",
+  "style_prefix_location": "Digital illustration, wide-angle isometric location card, layered atmosphere, warm tropical light for 1400, ceremonial midday for 1957, cool blue LED for 2024, cinematic historical Malaysia palette, game environment art.",
+  "style_prefix_item": "Digital illustration, single historical or tech prop on dark gradient background, warm gold or cool blue accent, clean icon style, centered, game inventory art.",
+  "style_prefix_object": "Digital illustration, ceremonial or historical interactive prop, soft moody background, warm gold accents for era items, cool blue for cloud-era items, close-up detail, game card art.",
+  "style_prefix_character": "Digital illustration, single character portrait, historical Malaysian figure or modern engineer, respectful realistic style, dark gradient background, expressive pose, game NPC art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, disrespectful, anachronistic, hostile, gore",
+  "aspect_ratio": "16:9"
+}

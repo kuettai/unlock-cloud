@@ -39,6 +39,7 @@ class WagerLock {
       { label: 'Confident', wager: 2, penalty: -1, color: '#eab308', showOptions: 4 },
       { label: 'All In', wager: 4, penalty: -3, color: '#ef4444', showOptions: 6 },
     ];
+    this.maxRounds = opts.maxRounds || null;
     this.onSubmit = opts.onSubmit || (() => {});
 
     this._init();
@@ -102,6 +103,15 @@ class WagerLock {
       delta: this.correct ? `+${stake.wager}` : `${stake.penalty}`,
     });
 
+    if (this.maxRounds && this.round + 1 >= this.maxRounds) {
+      // End the puzzle after maxRounds questions, regardless of score
+      this.won = true;
+      this.phase = 'result';
+      this._render();
+      setTimeout(() => this.onSubmit(true), 500);
+      return;
+    }
+
     if (this.score >= this.target) {
       this.won = true;
       this.phase = 'result';
@@ -157,6 +167,13 @@ class WagerLock {
     }
 
     const q = this._shuffled[this.round];
+
+    // Auto-skip stake selection when only one stake is configured — no meaningful choice.
+    if (this.phase === 'wager' && this.stakes.length === 1) {
+      this.chosenStake = 0;
+      this.phase = 'answer';
+      // fall through to render the answer phase
+    }
 
     // Question (always visible)
     const qEl = document.createElement('div');

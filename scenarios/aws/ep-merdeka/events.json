@@ -1,0 +1,86 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 240,
+      "message": "The Melaka tree rustles. Time flows differently in each portal.",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 180,
+      "message": "Halfway through the journey. Three moments. One story.",
+      "type": "narrative",
+      "triggers_narrative": "mid_event"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 60,
+      "message": "One minute left. The final portal is waiting.",
+      "type": "alarm"
+    },
+    {
+      "id": "TE-04",
+      "time_remaining": 30,
+      "message": "Thirty seconds. History doesn't wait.",
+      "type": "alarm"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "hint-tooltip",
+      "trigger": "first_hint_request",
+      "message": "Hints cost a few points but never block you. Use them if you're stuck.",
+      "type": "tooltip",
+      "once": true
+    },
+    {
+      "id": "land-named",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "word-melaka",
+      "result_card": 105,
+      "message": "The land is named. MELAKA it is.",
+      "type": "reveal"
+    },
+    {
+      "id": "kingdom-founded",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "digits-founding",
+      "result_card": 106,
+      "message": "Facts connected. Portal to 1957 opens.",
+      "type": "reveal"
+    },
+    {
+      "id": "facts-verified",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "spec-merdeka",
+      "result_card": 205,
+      "message": "Facts verified. The crowd steadies.",
+      "type": "reveal"
+    },
+    {
+      "id": "merdeka-declared",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "defuse-merdeka",
+      "result_card": 206,
+      "message": "MERDEKA! Portal to 2024 opens.",
+      "type": "reveal"
+    },
+    {
+      "id": "region-live",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "wager-aws",
+      "result_card": 305,
+      "message": "ap-southeast-5 is live.",
+      "type": "reveal"
+    },
+    {
+      "id": "cloud-arrives",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "keypad-firstregion",
+      "result_card": 399,
+      "message": "The cloud arrives. Malaysia Boleh!",
+      "type": "ending"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Malacca, 1400",
+      "description": "A prince rests by the river. A mouse-deer kicks a hunting dog.",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "Starting room — the story begins here.",
+      "map_pos": [0, 80]
+    },
+    {
+      "card_id": 200,
+      "name": "Merdeka Square, 1957",
+      "description": "A voice echoes seven times. The crowd roars. A flag rises.",
+      "connects_to": [300],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "digits-founding" },
+      "unlock_text": "The kingdom was founded. The portal jumps forward 557 years.",
+      "map_pos": [80, 80]
+    },
+    {
+      "card_id": 300,
+      "name": "AWS Malaysia, 2024",
+      "description": "Servers spin up. A new region goes live. The cloud arrives.",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "defuse-merdeka" },
+      "unlock_text": "Independence declared. Sixty-seven years later, the cloud lands.",
+      "map_pos": [160, 80]
+    }
+  ]
+}

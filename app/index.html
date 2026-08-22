@@ -5,22 +5,50 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
 <title>re:Solve</title>
-<link rel="stylesheet" href="index.css?v=3">
+<link rel="stylesheet" href="index.css?v=7">
 </head>
 <body>
+<!--
+THESIS: The booth session is the team's own case file, not a sci-fi dashboard — refusing the neon-HUD default this category always ships.
+OWN-WORLD: Kraft-folder ground, cream typed-page surfaces, typewriter/stamp type (Courier Prime, Special Elite), carbon-blue for Objects, redaction-red for Items/danger, approval-green for unlocked, mimeograph-violet for hints, torn-perforation reveals, halftone photocopy grain on room photography.
+STORY: A team opens a case file per room, reads the typed brief, tapes in evidence (items+objects), loses time on wrong moves, and closes the case before the Purge stamps it CLOSED.
+FIRST VIEWPORT: A stapled masthead (episode = case no.), a clipped duotone room photo under a typed brief, an evidence-tag item/object strip, a redaction-style timer, folder-tab bottom nav.
+FORM: Mission Dossier — IMPECCABLE'S PICK, chosen over the assigned roll "Riso Zine Program". Seed key 555053ef.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+-->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="icon-replay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4h4"/>
+    </symbol>
+    <symbol id="icon-story" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5.5C6 4.5 9 4.5 11 5.5v13c-2-1-5-1-7 0z"/><path d="M20 5.5c-2-1-5-1-7 0v13c2-1 5-1 7 0z" transform="translate(-9 0)"/>
+      <path d="M11 5.5c2-1 5-1 7 0v13c-2-1-5-1-7 0z"/>
+    </symbol>
+    <symbol id="icon-history" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/>
+    </symbol>
+    <symbol id="icon-reset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4h-4"/>
+    </symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </symbol>
+  </defs>
+</svg>
 <div id="app">
   <header>
     <h1>re:Solve</h1>
-    <span id="guest-badge" style="display:none;font-size:11px;background:var(--yellow);color:var(--bg);padding:2px 8px;border-radius:4px;font-weight:700">GUEST</span>
+    <span id="guest-badge" style="display:none;font-family:var(--font-stamp);font-size:10px;letter-spacing:1px;text-transform:uppercase;background:transparent;color:var(--red);border:2px solid var(--red);padding:2px 8px;border-radius:3px;font-weight:400;transform:rotate(-3deg)">Guest</span>
     <div id="timer" style="visibility:hidden">10:00</div>
   </header>
 
   <div id="narrative-bar">
-    <button class="nar-btn" id="nar-play-btn" onclick="replayNarrative()">&#9654; Replay</button>
-    <button class="nar-btn" id="nar-text-btn" onclick="toggleNarrativeText()">&#9776; Story</button>
+    <button class="nar-btn" id="nar-play-btn" onclick="replayNarrative()"><svg><use href="#icon-replay"/></svg> Replay</button>
+    <button class="nar-btn" id="nar-text-btn" onclick="toggleNarrativeText()"><svg><use href="#icon-story"/></svg> Story</button>
     <span style="flex:1"></span>
-    <button class="nar-btn" onclick="toggleHistory()">📋 History</button>
-    <button class="nar-btn" style="color:var(--red);border-color:var(--red)" onclick="resetGame()">↺ Reset</button>
+    <button class="nar-btn" onclick="toggleHistory()"><svg><use href="#icon-history"/></svg> History</button>
+    <button class="nar-btn" style="color:var(--red);border-color:var(--red)" onclick="resetGame()"><svg><use href="#icon-reset"/></svg> Reset</button>
   </div>
   <div id="history-panel" style="display:none;max-height:300px;overflow-y:auto;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin:0 12px 12px;font-size:12px"></div>
   <div id="narrative-panel" id="narrative-panel"></div>
@@ -33,17 +61,19 @@
         <h2>Episode 0: Boot Sequence</h2>
         <div id="lang-toggle-container" style="display:none;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap"></div>
         <div id="intro-text"></div>
-        <input id="player-name-input" type="text" placeholder="Enter your name..." maxlength="24" autocomplete="off" style="width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;margin-bottom:12px;text-align:center">
+        <div id="intro-role-chooser"></div>
+        <input id="player-name-input" type="text" placeholder="Enter your name..." maxlength="24" autocomplete="off" style="width:100%;padding:12px;background:var(--surface);border:2px solid var(--border);border-radius:2px;color:var(--text);font-family:var(--font-body);font-size:16px;margin-bottom:12px;text-align:center">
         <button id="start-btn" class="btn btn-primary btn-full" onclick="startGame()">Start</button>
         <div id="waiting-state" style="display:none;text-align:center;padding:16px 0">
           <div style="font-size:14px;color:var(--green);margin-bottom:8px">✓ You're all set!</div>
           <div style="font-size:13px;color:var(--muted);line-height:1.6">The game will begin once the host starts the event.</div>
-          <div style="margin-top:12px;font-size:20px" id="waiting-spinner">⏳</div>
+          <div style="margin-top:12px" id="waiting-spinner"><svg style="width:22px;height:22px;color:var(--green);animation:pulse 1.4s ease infinite"><use href="#icon-history"/></svg></div>
         </div>
-        <button class="btn btn-full" style="margin-top:12px;background:rgba(20,27,45,.8);border:1px solid var(--border);color:var(--muted)" onclick="location.href='home.html'">← Back to Episodes</button>
+        <button class="btn btn-full" style="margin-top:12px;background:rgba(36,31,23,.55);border:2px solid var(--border);color:var(--surface)" onclick="location.href='home.html'">← Back to Episodes</button>
       </div>
     </div>
     <div id="game-screen" class="screen">
+      <div class="case-frame-head"><span>Case File</span><span class="case-no">Room Log</span></div>
       <div id="room-container"></div>
     </div>
     <div id="end-screen" class="screen">
@@ -58,7 +88,7 @@
       <p id="end-message" style="color:var(--muted);font-size:14px;line-height:1.6"></p>
       <div id="end-lore" style="text-align:left"></div>
       <div id="end-map" style="text-align:left"></div>
-      <div style="margin:20px 0 12px;font-size:11px;color:var(--muted);opacity:.7">👻 Crafted with <a href="https://kiro.dev" target="_blank" style="color:var(--muted);text-decoration:underline">Kiro</a></div>
+      <div style="margin:20px 0 12px"><span class="credit-stamp">Crafted with <a href="https://kiro.dev" target="_blank" style="color:inherit;text-decoration:underline">Kiro</a></span></div>
       <div><button class="btn btn-primary" style="width:100%" onclick="resetGame()">Play Again</button></div>
       </div>
     </div>
@@ -91,6 +121,11 @@
       <button class="btn btn-sm btn-cancel" onclick="closeMap()">Close</button>
     </div>
     <div id="map-list"></div>
+    <!-- Room detail bottom sheet (mobile-first 2D map) -->
+    <div id="room-sheet-overlay" onclick="closeRoomSheet()"></div>
+    <div id="room-sheet">
+      <div id="room-sheet-content"></div>
+    </div>
   </div>
 
   <!-- Tools screen -->
@@ -107,14 +142,14 @@
   <div id="bottom-bar">
     <button class="tab-btn" id="btn-map" onclick="openMap()">🗺️ Map</button>
     <button class="tab-btn" id="btn-combine-mode" onclick="enterCombineMode()">🎒 Interact <span class="badge" id="badge-interact" style="display:none">0</span></button>
-    <button class="tab-btn" id="btn-tools" onclick="openTools()">🔧 Tools <span class="badge" id="badge-cafe" style="display:none;background:#f39c12">0</span></button>
+    <button class="tab-btn" id="btn-tools" onclick="openTools()">🔧 Tools <span class="badge" id="badge-cafe" style="display:none;background:var(--yellow)">0</span></button>
     <button class="tab-btn" onclick="useHint()">💡 Hints</button>
   </div>
 </div>
 
 <div id="puzzle-popup" onclick="closePuzzlePopup()">
   <div class="puzzle-popup-card" onclick="event.stopPropagation()">
-    <button class="panel-close" style="float:right;margin:-8px -8px 0 0" onclick="closePuzzlePopup()">✕</button>
+    <button class="panel-close" style="float:right;margin:-8px -8px 0 0" onclick="closePuzzlePopup()"><svg style="width:16px;height:16px"><use href="#icon-close"/></svg></button>
     <h3 id="puzzle-popup-title"></h3>
     <div id="puzzle-mount"></div>
     <div id="puzzle-hint-box" class="hint-box" style="display:none"></div>
@@ -141,67 +176,68 @@
 
 <div id="toast"></div>
 
-<script src="engine.js?v=3"></script>
-<script src="puzzle/base64-decoder.js?v=3"></script>
-<script src="puzzle/word-lock.js?v=3"></script>
-<script src="puzzle/sequence-lock.js?v=3"></script>
-<script src="puzzle/jigsaw-lock.js?v=3"></script>
-<script src="puzzle/wire-lock.js?v=3"></script>
-<script src="puzzle/morse-lock.js?v=3"></script>
-<script src="puzzle/4digits-lock.js?v=3"></script>
-<script src="puzzle/slider-lock.js?v=3"></script>
-<script src="puzzle/rotation-lock.js?v=3"></script>
-<script src="puzzle/log-lock.js?v=3"></script>
-<script src="puzzle/keypad-lock.js?v=3"></script>
-<script src="puzzle/sg-lock.js?v=3"></script>
-<script src="puzzle/policy-lock.js?v=3"></script>
-<script src="puzzle/npc-dialog.js?v=3"></script>
-<script src="puzzle/sort-lock.js?v=3"></script>
-<script src="puzzle/maze-lock.js?v=3"></script>
-<script src="puzzle/jar-fill-lock.js?v=3"></script>
-<script src="puzzle/crowd-counter-lock.js?v=3"></script>
-<script src="puzzle/crowd-seating-lock.js?v=3"></script>
-<script src="puzzle/offering-table-lock.js?v=3"></script>
-<script src="puzzle/bread-break-lock.js?v=3"></script>
-<script src="puzzle/match-lock.js?v=3"></script>
-<script src="puzzle/timeline-lock.js?v=3"></script>
-<script src="puzzle/path-lock.js?v=3"></script>
-<script src="puzzle/chain-lock.js?v=3"></script>
-<script src="puzzle/key-lock.js?v=3"></script>
-<script src="puzzle/pillar-lock.js?v=3"></script>
-<script src="puzzle/rank-lock.js?v=3"></script>
-<script src="puzzle/scroll-lock.js?v=3"></script>
-<script src="puzzle/bazaar-lock.js?v=3"></script>
-<script src="puzzle/deck-battle-lock.js?v=3"></script>
-<script src="puzzle/equipment-rack-lock.js?v=3"></script>
-<script src="puzzle/arch-lock.js?v=3"></script>
-<script src="puzzle/prompt-lock.js?v=3"></script>
-<script src="puzzle/booking-run-lock.js?v=3"></script>
-<script src="puzzle/image-prompt-lock.js?v=3"></script>
-<script src="puzzle/witness-lock.js?v=3"></script>
-<script src="puzzle/evidence-board-lock.js?v=3"></script>
-<script src="puzzle/grinder-lock.js?v=3"></script>
-<script src="puzzle/stock-memory-lock.js?v=3"></script>
-<script src="puzzle/spelling-lock.js?v=3"></script>
-<script src="puzzle/evidence-lock.js?v=3"></script>
-<script src="puzzle/milk-jug-lock.js?v=3"></script>
-<script src="puzzle/cascade-lock.js?v=3"></script>
-<script src="puzzle/cafe-order-lock.js?v=3"></script>
-<script src="puzzle/spec-lock.js?v=3"></script>
-<script src="puzzle/context-lock.js?v=3"></script>
-<script src="puzzle/blueprint-lock.js?v=3"></script>
-<script src="puzzle/pipe-lock.js?v=3"></script>
-<script src="puzzle/defuse-lock.js?v=3"></script>
-<script src="puzzle/dial-lock.js?v=3"></script>
-<script src="puzzle/craft-lock.js?v=3"></script>
-<script src="puzzle/trap-disarm-lock.js?v=3"></script>
-<script src="puzzle/push-luck-lock.js?v=3"></script>
-<script src="puzzle/wager-lock.js?v=3"></script>
-<script src="puzzle/auction-lock.js?v=3"></script>
-<script src="puzzle/decay-lock.js?v=3"></script>
-<script src="puzzle/fog-map-lock.js?v=3"></script>
-<script src="puzzle/deduction-grid-lock.js?v=3"></script>
-<script src="puzzle/streak-lock.js?v=3"></script>
-<script src="index.js?v=3" charset="utf-8"></script>
+<script src="engine.js?v=7"></script>
+<script src="puzzle/base64-decoder.js?v=7"></script>
+<script src="puzzle/word-lock.js?v=7"></script>
+<script src="puzzle/sequence-lock.js?v=7"></script>
+<script src="puzzle/jigsaw-lock.js?v=7"></script>
+<script src="puzzle/wire-lock.js?v=7"></script>
+<script src="puzzle/morse-lock.js?v=7"></script>
+<script src="puzzle/4digits-lock.js?v=7"></script>
+<script src="puzzle/slider-lock.js?v=7"></script>
+<script src="puzzle/rotation-lock.js?v=7"></script>
+<script src="puzzle/log-lock.js?v=7"></script>
+<script src="puzzle/keypad-lock.js?v=7"></script>
+<script src="puzzle/sg-lock.js?v=7"></script>
+<script src="puzzle/policy-lock.js?v=7"></script>
+<script src="puzzle/npc-dialog.js?v=7"></script>
+<script src="puzzle/sort-lock.js?v=7"></script>
+<script src="puzzle/maze-lock.js?v=7"></script>
+<script src="puzzle/jar-fill-lock.js?v=7"></script>
+<script src="puzzle/crowd-counter-lock.js?v=7"></script>
+<script src="puzzle/crowd-seating-lock.js?v=7"></script>
+<script src="puzzle/offering-table-lock.js?v=7"></script>
+<script src="puzzle/bread-break-lock.js?v=7"></script>
+<script src="puzzle/match-lock.js?v=7"></script>
+<script src="puzzle/timeline-lock.js?v=7"></script>
+<script src="puzzle/path-lock.js?v=7"></script>
+<script src="puzzle/chain-lock.js?v=7"></script>
+<script src="puzzle/key-lock.js?v=7"></script>
+<script src="puzzle/pillar-lock.js?v=7"></script>
+<script src="puzzle/rank-lock.js?v=7"></script>
+<script src="puzzle/scroll-lock.js?v=7"></script>
+<script src="puzzle/bazaar-lock.js?v=7"></script>
+<script src="puzzle/deck-battle-lock.js?v=7"></script>
+<script src="puzzle/equipment-rack-lock.js?v=7"></script>
+<script src="puzzle/arch-lock.js?v=7"></script>
+<script src="puzzle/prompt-lock.js?v=7"></script>
+<script src="puzzle/booking-run-lock.js?v=7"></script>
+<script src="puzzle/image-prompt-lock.js?v=7"></script>
+<script src="puzzle/witness-lock.js?v=7"></script>
+<script src="puzzle/evidence-board-lock.js?v=7"></script>
+<script src="puzzle/grinder-lock.js?v=7"></script>
+<script src="puzzle/stock-memory-lock.js?v=7"></script>
+<script src="puzzle/spelling-lock.js?v=7"></script>
+<script src="puzzle/evidence-lock.js?v=7"></script>
+<script src="puzzle/milk-jug-lock.js?v=7"></script>
+<script src="puzzle/cascade-lock.js?v=7"></script>
+<script src="puzzle/cafe-order-lock.js?v=7"></script>
+<script src="puzzle/spec-lock.js?v=7"></script>
+<script src="puzzle/context-lock.js?v=7"></script>
+<script src="puzzle/blueprint-lock.js?v=7"></script>
+<script src="puzzle/pipe-lock.js?v=7"></script>
+<script src="puzzle/defuse-lock.js?v=7"></script>
+<script src="puzzle/dial-lock.js?v=7"></script>
+<script src="puzzle/craft-lock.js?v=7"></script>
+<script src="puzzle/trap-disarm-lock.js?v=7"></script>
+<script src="puzzle/push-luck-lock.js?v=7"></script>
+<script src="puzzle/wager-lock.js?v=7"></script>
+<script src="puzzle/auction-lock.js?v=7"></script>
+<script src="puzzle/decay-lock.js?v=7"></script>
+<script src="puzzle/fog-map-lock.js?v=7"></script>
+<script src="puzzle/deduction-grid-lock.js?v=7"></script>
+<script src="puzzle/streak-lock.js?v=7"></script>
+<script src="puzzle/traffic-lane-lock.js?v=7"></script>
+<script src="index.js?v=7" charset="utf-8"></script>
 </body>
 </html>

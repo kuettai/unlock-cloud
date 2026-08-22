@@ -1,0 +1,16 @@
+{
+  "base_points": 100,
+  "time_bonus": {
+    "enabled": true,
+    "max_bonus": 50,
+    "decay_start_minutes": 5,
+    "decay_end_minutes": 12
+  },
+  "hint_penalty": 10,
+  "wrong_attempt_penalty": 5,
+  "stars": {
+    "3_star": 120,
+    "2_star": 90,
+    "1_star": 50
+  }
+}

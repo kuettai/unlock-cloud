@@ -186,11 +186,11 @@ class DigitLock {
 .dlock-reel{position:relative;width:52px;height:144px;overflow:hidden;border-radius:10px;background:#0d1220;border:1px solid var(--border,#1e2a45);cursor:grab;user-select:none;-webkit-user-select:none}
 .dlock-reel.dlock-dragging{cursor:grabbing}
 .dlock-strip{display:flex;flex-direction:column;will-change:transform}
-.dlock-cell{height:48px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted,#7a8ba8);transition:color .15s}
-.dlock-window{position:absolute;top:48px;left:0;right:0;height:48px;border-top:2px solid var(--accent,#3b82f6);border-bottom:2px solid var(--accent,#3b82f6);pointer-events:none;z-index:2}
+.dlock-cell{height:48px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;color:#7a8ba8;transition:color .15s}
+.dlock-window{position:absolute;top:48px;left:0;right:0;height:48px;border-top:2px solid #3b82f6;border-bottom:2px solid #3b82f6;pointer-events:none;z-index:2}
 .dlock-fade{position:absolute;left:0;right:0;height:48px;pointer-events:none;z-index:1}
-.dlock-fade-top{top:0;background:linear-gradient(to bottom,var(--bg,#0a0e17) 30%,transparent)}
-.dlock-fade-bot{bottom:0;background:linear-gradient(to top,var(--bg,#0a0e17) 30%,transparent)}
+.dlock-fade-top{top:0;background:linear-gradient(to bottom,#0d1220 30%,transparent)}
+.dlock-fade-bot{bottom:0;background:linear-gradient(to top,#0d1220 30%,transparent)}
 .dlock-submit{padding:12px 32px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .2s;letter-spacing:.5px}
 .dlock-submit:active{opacity:.7}
 `;

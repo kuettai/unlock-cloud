@@ -148,21 +148,21 @@ class KeyLock {
     s.id = 'keylk-css';
     s.textContent = `
 .keylk{display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px 0;max-width:340px;margin:0 auto}
-.keylk-title{font-size:14px;font-weight:700;color:var(--text,#e0e6f0)}
-.keylk-hint{font-size:12px;color:var(--muted,#7a8ba8)}
+.keylk-title{font-size:14px;font-weight:700;color:#e0e6f0}
+.keylk-hint{font-size:12px;color:#7a8ba8}
 .keylk-frags{display:flex;gap:8px}
-.keylk-frag{padding:12px 16px;background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);border-radius:8px;font-size:16px;font-weight:700;color:var(--accent,#3b82f6);cursor:pointer;font-family:monospace;transition:all .15s;user-select:none}
-.keylk-frag.keylk-sel{border-color:var(--accent,#3b82f6);box-shadow:0 0 10px rgba(59,130,246,.3)}
+.keylk-frag{padding:12px 16px;background:#141b2d;border:2px solid #1e2a45;border-radius:8px;font-size:16px;font-weight:700;color:#3b82f6;cursor:pointer;font-family:monospace;transition:all .15s;user-select:none}
+.keylk-frag.keylk-sel{border-color:#3b82f6;box-shadow:0 0 10px rgba(59,130,246,.3)}
 .keylk-shake{animation:keylk-sh .4s}
 @keyframes keylk-sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.keylk-key{font-size:16px;font-weight:700;color:var(--green,#22c55e);font-family:monospace}
-.keylk-cipher{padding:10px 16px;background:#0c0c0c;border:1px solid var(--border,#1e2a45);border-radius:6px;font-family:monospace;font-size:14px;color:var(--muted,#7a8ba8);letter-spacing:1px}
+.keylk-key{font-size:16px;font-weight:700;color:#22c55e;font-family:monospace}
+.keylk-cipher{padding:10px 16px;background:#0c0c0c;border:1px solid #1e2a45;border-radius:6px;font-family:monospace;font-size:14px;color:#7a8ba8;letter-spacing:1px}
 .keylk-input-row{display:flex;gap:8px;width:100%}
-.keylk-input{flex:1;padding:10px;background:var(--bg,#0a0e17);border:1px solid var(--border,#1e2a45);border-radius:6px;color:var(--text,#e0e6f0);font-size:14px;font-family:monospace}
-.keylk-input:focus{outline:none;border-color:var(--accent,#3b82f6)}
-.keylk-btn{padding:10px 20px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.keylk-input{flex:1;padding:10px;background:#0a0e17;border:1px solid #1e2a45;border-radius:6px;color:#e0e6f0;font-size:14px;font-family:monospace}
+.keylk-input:focus{outline:none;border-color:#3b82f6}
+.keylk-btn{padding:10px 20px;border:none;border-radius:8px;background:#3b82f6;color:#fff;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
 .keylk-btn:active{opacity:.7}
-.keylk-status{font-size:13px;color:var(--muted,#7a8ba8);min-height:18px}
+.keylk-status{font-size:13px;color:#7a8ba8;min-height:18px}
 `;
     document.head.appendChild(s);
   }

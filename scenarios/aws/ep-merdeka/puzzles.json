@@ -1,0 +1,163 @@
+{
+  "puzzles": [
+    {
+      "id": "word-melaka",
+      "type": "word_lock",
+      "ui": "word-lock",
+      "card_ref": 105,
+      "success_card": 105,
+      "description": "What did the prince name this land?",
+      "config": {
+        "answer": "MELAKA",
+        "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      },
+      "hints": [
+        "The prince named it after the tree he rested under.",
+        "Starts with M, 6 letters — a state in Malaysia today.",
+        "MELAKA"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "digits-founding",
+      "type": "puzzle",
+      "ui": "wire-lock",
+      "card_ref": 106,
+      "success_card": 106,
+      "description": "Connect the facts.",
+      "config": {
+        "wires": [
+          { "id": "deer",    "color": "#22c55e", "label": "Mouse deer" },
+          { "id": "tree",    "color": "#3b82f6", "label": "Melaka tree" },
+          { "id": "china",   "color": "#f97316", "label": "Ming China" },
+          { "id": "zhenghe", "color": "#7c5cfc", "label": "Zheng He" }
+        ],
+        "sockets": [
+          { "id": "omen",    "label": "Good omen" },
+          { "id": "name",    "label": "City name" },
+          { "id": "protect", "label": "Protection" },
+          { "id": "trade",   "label": "Trade hub" }
+        ],
+        "solution": {
+          "deer": "omen",
+          "tree": "name",
+          "china": "protect",
+          "zhenghe": "trade"
+        },
+        "submitLabel": "Confirm",
+        "falseOutputs": [
+          "That connection doesn't match the history.",
+          "Try again — think about what each element contributed."
+        ]
+      },
+      "hints": [
+        "The mouse deer kicking the dog was taken as a good omen.",
+        "The city was named after the Melaka tree. Ming China provided protection. Zheng He brought trade.",
+        "Mouse deer→Good omen, Melaka tree→City name, Ming China→Protection, Zheng He→Trade hub."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "spec-merdeka",
+      "type": "puzzle",
+      "ui": "pillar-lock",
+      "card_ref": 205,
+      "success_card": 205,
+      "description": "Tap TRUE or FALSE for each claim.",
+      "config": {
+        "pillars": ["TRUE", "FALSE"],
+        "statements": [
+          { "text": "Merdeka was shouted 7 times", "answer": "TRUE" },
+          { "text": "Merdeka was declared on 16 September 1963", "answer": "FALSE" },
+          { "text": "Merdeka was shouted by Tunku Abdul Rahman", "answer": "TRUE" },
+          { "text": "\"Negaraku\" was originally the state anthem of Penang", "answer": "FALSE" }
+        ]
+      },
+      "hints": [
+        "Merdeka was shouted 7 times by Tunku Abdul Rahman.",
+        "16 Sep 1963 is Malaysia Day, not Merdeka. Negaraku was originally the state anthem of Perak, not Penang.",
+        "TRUE: 7 times, Tunku Abdul Rahman. FALSE: 16 Sep 1963, Penang (it was Perak)."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "defuse-merdeka",
+      "type": "code_entry",
+      "ui": "4digits-lock",
+      "card_ref": 206,
+      "success_card": 206,
+      "description": "Set the event MMDD",
+      "config": {
+        "answer": "0831"
+      },
+      "hints": [
+        "Month and day of Merdeka — August 31st.",
+        "MM = 08, DD = 31.",
+        "0831"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "wager-aws",
+      "type": "wager_lock",
+      "ui": "wager-lock",
+      "card_ref": 305,
+      "success_card": 305,
+      "description": "Test your AWS knowledge.",
+      "config": {
+        "target": 4,
+        "maxRounds": 4,
+        "stakes": [
+          { "label": "Answer", "wager": 1, "penalty": 0, "color": "#3b82f6", "showOptions": 4 }
+        ],
+        "questions": [
+          {
+            "question": "What is Malaysia's AWS region code?",
+            "options": ["ap-southeast-5", "ap-east-1", "ap-south-2", "ap-southeast-3"],
+            "answer": "ap-southeast-5"
+          },
+          {
+            "question": "Which is the latest Kiro feature?",
+            "options": ["Kiro Crew", "Kiro Autonomous Agent", "Kiro Powers", "Kiro GPT-5.6 model"],
+            "answer": "Kiro Crew"
+          },
+          {
+            "question": "What did the team smash to celebrate the Malaysia region launch?",
+            "options": ["Piñata", "Cake", "Laptop", "Gong"],
+            "answer": "Piñata"
+          },
+          {
+            "question": "Which city holds region code ap-southeast-4?",
+            "options": ["Melbourne", "New Zealand", "Thailand", "Jakarta"],
+            "answer": "Melbourne"
+          }
+        ]
+      },
+      "hints": [
+        "Malaysia = ap-southeast-5. Melbourne = ap-southeast-4.",
+        "Kiro Crew is the newest. They smashed a piñata.",
+        "Answers: ap-southeast-5, Kiro Crew, Piñata, Melbourne"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "keypad-firstregion",
+      "type": "code_entry",
+      "ui": "keypad-lock",
+      "card_ref": 399,
+      "success_card": 399,
+      "description": "Year of the 1st AWS region launch.",
+      "config": {
+        "answer": "2006",
+        "case_sensitive": false
+      },
+      "hints": [
+        "Think globally, not Malaysia. When did AWS first launch ANY region?",
+        "Same year S3 launched.",
+        "2006"
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}

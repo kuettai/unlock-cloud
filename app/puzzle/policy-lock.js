@@ -95,14 +95,14 @@ class PolicyLock {
     s.id = 'pollk-css';
     s.textContent = `
 .pollk{display:flex;flex-direction:column;gap:12px;padding:16px 0;max-width:400px;margin:0 auto}
-.pollk-code{background:#0c0c0c;border:1px solid var(--border,#1e2a45);border-radius:8px;padding:14px;font-family:'Courier New',monospace;font-size:12px;color:var(--muted,#7a8ba8);white-space:pre-wrap;line-height:2}
-.pollk-select{background:var(--surface,#141b2d);border:1px solid var(--accent,#3b82f6);border-radius:4px;color:var(--accent,#3b82f6);font-family:inherit;font-size:11px;padding:2px 4px;cursor:pointer;transition:all .2s}
-.pollk-select.pollk-correct{border-color:var(--green,#22c55e);color:var(--green,#22c55e)}
+.pollk-code{background:#0c0c0c;border:1px solid #1e2a45;border-radius:8px;padding:14px;font-family:'Courier New',monospace;font-size:12px;color:#7a8ba8;white-space:pre-wrap;line-height:2}
+.pollk-select{background:#141b2d;border:1px solid #3b82f6;border-radius:4px;color:#3b82f6;font-family:inherit;font-size:11px;padding:2px 4px;cursor:pointer;transition:all .2s}
+.pollk-select.pollk-correct{border-color:#22c55e;color:#22c55e}
 .pollk-select.pollk-wrong{border-color:#ef4444;color:#ef4444;animation:pollk-sh .4s}
 @keyframes pollk-sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.pollk-btn{padding:12px 28px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:14px;font-weight:600;cursor:pointer;align-self:center}
+.pollk-btn{padding:12px 28px;border:none;border-radius:8px;background:#3b82f6;color:#fff;font-size:14px;font-weight:600;cursor:pointer;align-self:center}
 .pollk-btn:active{opacity:.7}
-.pollk-status{font-size:13px;color:var(--muted,#7a8ba8);text-align:center;min-height:18px}
+.pollk-status{font-size:13px;color:#7a8ba8;text-align:center;min-height:18px}
 `;
     document.head.appendChild(s);
   }

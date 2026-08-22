@@ -99,22 +99,22 @@ class LogLock {
     s.id = 'loglk-css';
     s.textContent = `
 .loglk{display:flex;flex-direction:column;gap:12px;padding:16px 0;max-width:400px;margin:0 auto}
-.loglk-prompt{font-size:13px;color:var(--muted,#7a8ba8);font-weight:600}
-.loglk-box{background:#0c0c0c;border:1px solid var(--border,#1e2a45);border-radius:8px;padding:8px;max-height:200px;overflow-y:auto;font-family:'Courier New',monospace;font-size:11px}
+.loglk-prompt{font-size:13px;color:#7a8ba8;font-weight:600}
+.loglk-box{background:#0c0c0c;border:1px solid #1e2a45;border-radius:8px;padding:8px;max-height:200px;overflow-y:auto;font-family:'Courier New',monospace;font-size:11px}
 .loglk-line{display:flex;gap:8px;padding:4px 6px;border-radius:4px;cursor:pointer;transition:background .15s;border:1px solid transparent}
 .loglk-line:hover{background:rgba(59,130,246,.05)}
-.loglk-line.loglk-selected{background:rgba(59,130,246,.1);border-color:var(--accent,#3b82f6)}
-.loglk-line.loglk-correct{background:rgba(34,197,94,.1);border-color:var(--green,#22c55e)}
-.loglk-num{color:var(--border,#1e2a45);min-width:20px;text-align:right;flex-shrink:0}
-.loglk-text{color:var(--muted,#7a8ba8);word-break:break-all}
+.loglk-line.loglk-selected{background:rgba(59,130,246,.1);border-color:#3b82f6}
+.loglk-line.loglk-correct{background:rgba(34,197,94,.1);border-color:#22c55e}
+.loglk-num{color:#1e2a45;min-width:20px;text-align:right;flex-shrink:0}
+.loglk-text{color:#7a8ba8;word-break:break-all}
 .loglk-err{color:#ef4444}
 .loglk-warn{color:#eab308}
-.loglk-info{color:var(--muted,#7a8ba8)}
+.loglk-info{color:#7a8ba8}
 .loglk-shake{animation:loglk-sh .4s}
 @keyframes loglk-sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.loglk-btn{padding:12px 28px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:14px;font-weight:600;cursor:pointer;align-self:center}
+.loglk-btn{padding:12px 28px;border:none;border-radius:8px;background:#3b82f6;color:#fff;font-size:14px;font-weight:600;cursor:pointer;align-self:center}
 .loglk-btn:active{opacity:.7}
-.loglk-status{font-size:13px;color:var(--muted,#7a8ba8);text-align:center;min-height:18px}
+.loglk-status{font-size:13px;color:#7a8ba8;text-align:center;min-height:18px}
 `;
     document.head.appendChild(s);
   }

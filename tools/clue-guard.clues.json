@@ -1,0 +1,310 @@
+{
+  "scenarios/aws/ep3-kings-errand": {
+    "first-command": [
+      "schedule",
+      "notice board",
+      "specific"
+    ],
+    "gate-wiring": [
+      "translation",
+      "nova sonic",
+      "trade ledger",
+      "merchant inventory",
+      "currency exchange",
+      "treasury"
+    ],
+    "bazaar-recruit": [
+      "reason",
+      "anthropic",
+      "40"
+    ],
+    "recipe-sort": [
+      "feast menu",
+      "recipe archive",
+      [
+        "course order",
+        "appetizer"
+      ],
+      "soup",
+      "dessert"
+    ],
+    "negotiation": [
+      [
+        "guard",
+        "block"
+      ],
+      [
+        "composure",
+        "purse"
+      ],
+      "two cards"
+    ],
+    "kings-seal": [
+      "book",
+      "50 gold",
+      "forbidden",
+      "sir reginald",
+      "all"
+    ],
+    "stage-assign": [
+      "fire-breathers",
+      "main stage",
+      "bard",
+      "tavern",
+      "juggl",
+      "children",
+      "royal choir",
+      "grand finale"
+    ],
+    "memory-timeline": [
+      [
+        "chronological",
+        "oldest"
+      ],
+      "spring fair",
+      "winter solstice"
+    ],
+    "code-of-honor": [
+      "favoritism",
+      [
+        "private financial",
+        "private budget",
+        "private accounts"
+      ],
+      [
+        "budget promises",
+        "promises coin",
+        "promises exceeding"
+      ],
+      [
+        "factual historical",
+        "chronicle hall"
+      ],
+      "deny",
+      "allow"
+    ],
+    "stall-design": [
+      "crimson",
+      "oak",
+      "bold",
+      "emerald",
+      "willow",
+      "elegant",
+      "gold",
+      "iron",
+      "neutral"
+    ],
+    "equipment-rack": [
+      [
+        "switch it off",
+        "disabl",
+        "off rather than"
+      ],
+      [
+        "before anything that multiplies",
+        "before multipliers",
+        "plain bonuses"
+      ],
+      "herald's ledger"
+    ],
+    "rehearsal-run": [
+      "soars",
+      [
+        "100",
+        "every slot"
+      ]
+    ]
+  },
+  "scenarios/aws/ep6-the-bolt": {
+    "spec-lock": [
+      "submit",
+      "confirmation",
+      "admin",
+      "crypto",
+      [
+        "social",
+        "auto-post"
+      ],
+      [
+        "location",
+        "track"
+      ]
+    ],
+    "context-lock": [
+      "2000",
+      "requirements",
+      "architecture",
+      [
+        "api contract",
+        "openapi"
+      ],
+      [
+        "marcus",
+        "mongodb"
+      ],
+      "brainstorm",
+      [
+        "v1 draft",
+        "cut features"
+      ]
+    ],
+    "blueprint-lock": [
+      "presentation",
+      "application",
+      "data",
+      "infrastructure",
+      "react",
+      "cloudfront",
+      "api gateway",
+      "lambda",
+      "dynamodb",
+      "s3",
+      "cdk",
+      "iam"
+    ],
+    "cascade-lock": [
+      "spec",
+      "context",
+      "arch",
+      "code",
+      "deploy",
+      "verify",
+      [
+        "outcome",
+        "outcomes"
+      ]
+    ],
+    "defuse-lock": [
+      "cors",
+      "redeploy",
+      [
+        "skip integration tests",
+        "skip tests"
+      ],
+      "prod"
+    ],
+    "anti-pattern": [
+      [
+        "do not wire these directly",
+        "api layer between"
+      ]
+    ]
+  },
+  "scenarios/aws/ep5-quick-bites": {
+    "reception-sort": [
+      "find",
+      "organize",
+      [
+        "connected to the vendor systems",
+        "vendor systems"
+      ],
+      "competitors",
+      [
+        "investor deck",
+        "build the deck"
+      ],
+      [
+        "automate last",
+        "automation is always the last"
+      ]
+    ],
+    "craft-kitchen": [
+      "prep stations",
+      "whiteboard",
+      "supplier invoices"
+    ],
+    "wire-diana": [
+      "profit margin",
+      "overstaffed",
+      "cheapest supplier",
+      [
+        "customers happy",
+        "customer"
+      ],
+      [
+        "delivery too slow",
+        "delivery"
+      ]
+    ],
+    "trap-raj": [
+      "payment gateway",
+      [
+        "supplier portal",
+        "supplier"
+      ],
+      [
+        "staff scheduler",
+        "scheduler"
+      ],
+      [
+        "delivery tracker",
+        "delivery"
+      ],
+      "sequence"
+    ],
+    "keypad-wifi": [
+      "amazon q",
+      "kiro",
+      [
+        "store's number",
+        "store number"
+      ]
+    ],
+    "defuse-store10": [
+      [
+        "quick flows",
+        "flows"
+      ],
+      [
+        "quick index",
+        "pos"
+      ],
+      [
+        "health inspection",
+        "health"
+      ],
+      [
+        "quick automate",
+        "automate"
+      ]
+    ],
+    "decay-cooker": [
+      [
+        "chef reeves",
+        "head chef"
+      ],
+      [
+        "exploring opportunities",
+        "explore opportunities"
+      ]
+    ],
+    "auction-tabouleh": [
+      [
+        "catering",
+        "two hundred meals"
+      ],
+      [
+        "another truck",
+        "bulk"
+      ]
+    ],
+    "wager-gemelli": [
+      "fifth street",
+      [
+        "location number four",
+        "five spots"
+      ],
+      "one ipad"
+    ],
+    "pushluck-chocolot": [
+      [
+        "anchor item",
+        "bestseller"
+      ],
+      [
+        "nine-fifty",
+        "fourteen-twenty"
+      ]
+    ]
+  }
+}

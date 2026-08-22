@@ -246,11 +246,11 @@ class WordLock {
 .wlock-reel{position:relative;width:48px;overflow:hidden;border-radius:10px;background:#0d1220;border:1px solid var(--border,#1e2a45);cursor:grab;user-select:none;-webkit-user-select:none}
 .wlock-reel.wlock-dragging{cursor:grabbing}
 .wlock-strip{display:flex;flex-direction:column;will-change:transform}
-.wlock-cell{display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--muted,#7a8ba8);letter-spacing:1px}
-.wlock-window{position:absolute;left:0;right:0;border-top:2px solid var(--accent,#3b82f6);border-bottom:2px solid var(--accent,#3b82f6);pointer-events:none;z-index:2}
+.wlock-cell{display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#7a8ba8;letter-spacing:1px}
+.wlock-window{position:absolute;left:0;right:0;border-top:2px solid #3b82f6;border-bottom:2px solid #3b82f6;pointer-events:none;z-index:2}
 .wlock-fade{position:absolute;left:0;right:0;pointer-events:none;z-index:1}
-.wlock-fade-top{top:0;background:linear-gradient(to bottom,var(--bg,#0a0e17) 30%,transparent)}
-.wlock-fade-bot{bottom:0;background:linear-gradient(to top,var(--bg,#0a0e17) 30%,transparent)}
+.wlock-fade-top{top:0;background:linear-gradient(to bottom,#0d1220 30%,transparent)}
+.wlock-fade-bot{bottom:0;background:linear-gradient(to top,#0d1220 30%,transparent)}
 .wlock-submit{padding:12px 32px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .2s;letter-spacing:.5px}
 .wlock-submit:active{opacity:.7}
 .wlock-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,9,17,.72);border-radius:10px;z-index:5;transition:opacity .5s;padding:16px;text-align:center;pointer-events:none}

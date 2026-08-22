@@ -1,0 +1,254 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Lobby — Citizen Triage",
+      "description": "The ground floor lobby is pandemonium. Chairs overflowing. A ticket machine spits numbers endlessly. Three phone lines ring simultaneously. A whiteboard on the wall shows queue categories — but someone's scrambled the labels. On the reception desk: a sticky note from Mei: \"Sort the queues first or nothing routes. — M\"",
+      "image": "assets/lobby.png",
+      "image_prompt": "Busy government services lobby, overflowing chairs, ticket machine, ringing phones, scrambled whiteboard with queue categories, Monday morning chaos, warm fluorescent lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 110, "label": "Read Mei's sticky note" },
+        { "card_id": 105, "label": "Sort the queue priority board", "puzzle": "sort-queues" }
+      ],
+      "visible_to": "all",
+      "room": "lobby"
+    },
+    {
+      "id": 101,
+      "type": "object",
+      "color": "blue",
+      "title": "Queue Priority Board",
+      "description": "A large whiteboard showing queue categories. Someone has shuffled all the magnetic labels into random order. A header reads: \"PRIORITY ROUTING — highest urgency at top.\" The categories need to be dragged back into the right order.",
+      "image": "assets/card-queue-board.png",
+      "image_prompt": "Office whiteboard with scattered magnetic labels showing queue categories, priority header, dry-erase markers, single object on dark background",
+      "visible_to": "all",
+      "room": "lobby"
+    },
+    {
+      "id": 105,
+      "type": "event",
+      "color": "yellow",
+      "title": "Queues Sorted",
+      "description": "The labels snap into place. The ticket machine stops its frantic printing and resets. Calls begin routing to the correct queues. Mei's voice over the intercom: \"Good. Now get to the server room — the contact flow is dead and needs rebuilding.\" A door behind reception clicks open.",
+      "reveals": [200],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "lobby"
+    },
+    {
+      "id": 110,
+      "type": "lore",
+      "color": "purple",
+      "title": "Mei's Monday Survival Guide",
+      "description": "A crumpled sticky note in aggressive handwriting:\n\n\"Monday Survival Rules:\n1. Sort queues FIRST. Nothing works without routing.\n2. Don't touch the old PBX. It's dead. Let it rest.\n3. If Director Tan asks, everything is 'under control.'\n4. The good parking spot is mine. Don't even think about it.\n— Mei\"\n\nLore: Mei has survived 847 Mondays at this ministry. She is the ministry.",
+      "image": "assets/card-mei-note.png",
+      "image_prompt": "Crumpled yellow sticky note with aggressive handwriting, coffee stain in corner, numbered survival rules, single object on dark background",
+      "visible_to": "all",
+      "room": "lobby"
+    },
+
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "Server Room — Contact Flow Builder",
+      "description": "Cold air. Amber blinking lights. The old PBX sits in the corner, unplugged and covered in a black cloth like a funeral shroud. A large touchscreen shows a blank contact flow canvas — five empty slots connected by arrows. Spray-painted on the wall by some frustrated engineer: \"CALLS DON'T ROUTE THEMSELVES.\" Mei left another note: \"Build it in order: greet, identify, route, queue, connect.\"",
+      "image": "assets/server-room.png",
+      "image_prompt": "Government IT server room, blinking amber lights, dead PBX covered in cloth, large touchscreen with blank flowchart canvas, cold lighting, spray paint on wall, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 210, "label": "Pay respects to the old PBX" },
+        { "card_id": 205, "label": "Build the contact flow", "puzzle": "build-flow" }
+      ],
+      "visible_to": "all",
+      "room": "server-room"
+    },
+    {
+      "id": 201,
+      "type": "object",
+      "color": "blue",
+      "title": "Contact Flow Canvas",
+      "description": "A blank canvas with five empty slots connected by arrows. Each slot accepts one flow block. The screen header reads: \"AMAZON CONNECT — CONTACT FLOW DESIGNER.\" Below: \"Chain the blocks. Order matters. One wrong step and calls drop.\"",
+      "image": "assets/card-flow-canvas.png",
+      "image_prompt": "Touchscreen interface showing blank flowchart with five connected empty slots and arrows, dark UI with orange accents, single object on dark background",
+      "visible_to": "all",
+      "room": "server-room"
+    },
+    {
+      "id": 205,
+      "type": "event",
+      "color": "yellow",
+      "title": "Contact Flow Live",
+      "description": "The five blocks light up in sequence — Greeting → Input → Route → Queue → Connect. The canvas turns green. A status banner reads: \"CONTACT FLOW: ACTIVE.\" Calls begin flowing through the system. The door to the Operations floor slides open.",
+      "reveals": [300],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "server-room"
+    },
+    {
+      "id": 210,
+      "type": "lore",
+      "color": "purple",
+      "title": "The PBX Graveyard",
+      "description": "A brass plaque on the dead PBX reads:\n\n\"HERE LIES PBX-7200\nFaithful service: 2003–2024\nCause of death: Expired SSL certificate\nLast words: 'Please hold…'\"\n\nSomeone has left a single wilted flower on top. Next to it, a post-it: \"We should have migrated to Connect years ago. — IT dept, probably.\"\n\nLore: The PBX outlived three Directors. It will not outlive a fourth.",
+      "image": "assets/card-pbx.png",
+      "image_prompt": "Old dusty PBX server covered in black cloth with brass memorial plaque, single wilted flower on top, dramatic lighting, single object on dark background",
+      "visible_to": "all",
+      "room": "server-room"
+    },
+
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "Ops Dashboard — Metrics Wall",
+      "description": "A wall of screens showing real-time contact centre metrics. Numbers scroll. Graphs spike. Three queues are displayed: Work Permits (flashing red), Salary (amber), General (green). A scrolling log feed shows agent activities, handle times, and queue depths. Somewhere in this data is the bottleneck causing the 47-minute wait time. Mei's voice crackles over the intercom: \"Find the broken queue. The numbers don't lie.\"",
+      "image": "assets/ops-dashboard.png",
+      "image_prompt": "Operations control room with wall of monitoring screens showing real-time graphs and metrics, three queue status panels in red amber green, scrolling data feeds, dramatic blue lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 310, "label": "Read the metrics guide poster" },
+        { "card_id": 305, "label": "Analyse the dashboard logs", "puzzle": "find-bottleneck" }
+      ],
+      "visible_to": "all",
+      "room": "ops-dashboard"
+    },
+    {
+      "id": 301,
+      "type": "object",
+      "color": "blue",
+      "title": "Real-Time Metrics Display",
+      "description": "A scrolling log feed showing agent status, queue depths, and handle times. The Work Permits queue is flashing red — 34 callers waiting, average wait: 47 minutes. Something is very wrong.",
+      "image": "assets/card-metrics.png",
+      "image_prompt": "Dark monitoring screen with scrolling log text, red alert indicator, queue depth numbers, real-time data feed aesthetic, single object on dark background",
+      "visible_to": "all",
+      "room": "ops-dashboard"
+    },
+    {
+      "id": 305,
+      "type": "event",
+      "color": "yellow",
+      "title": "Bottleneck Found",
+      "description": "You've identified it: the Work Permits queue has zero available agents — one stuck in extended ACW, another offline on break. 34 callers with nobody to answer. The system flags the issue and auto-alerts the Training Room to reassign agents. A door marked \"TRAINING\" unlocks.",
+      "reveals": [400],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "ops-dashboard"
+    },
+    {
+      "id": 310,
+      "type": "lore",
+      "color": "purple",
+      "title": "Metrics That Matter",
+      "description": "A laminated poster on the wall:\n\n\"CONTACT CENTRE METRICS — Quick Reference\n• Queue Depth: callers waiting. High = bad.\n• Avg Wait Time: how long callers wait. Over 5 min = investigate.\n• Agent Status: Available / On Call / ACW / Offline\n• ACW Time: After Contact Work. Over 10 min = something's wrong.\n• Service Level: % answered within target. Below 80% = escalate.\"\n\nLore: This poster was made by an intern in 2019. It remains the most useful document in the building.",
+      "image": "assets/card-metrics-poster.png",
+      "image_prompt": "Laminated quick-reference poster with contact centre metrics definitions, bullet points, slightly worn edges, office aesthetic, single object on dark background",
+      "visible_to": "all",
+      "room": "ops-dashboard"
+    },
+
+    {
+      "id": 400,
+      "type": "location",
+      "color": "green",
+      "title": "Training Room — Agent Assignment",
+      "description": "A bright training room with four workstation pods. Each pod displays an agent profile — language skills, specialisations, certifications. A routing configuration panel on the main screen shows empty queue slots. The task: match the right agents to the right routing profiles. A sign above the screen: \"SKILLS-BASED ROUTING. THE RIGHT AGENT FOR THE RIGHT CALLER.\"",
+      "image": "assets/training-room.png",
+      "image_prompt": "Bright government training room with four workstation pods showing agent profiles, large central screen with empty routing slots, motivational sign about skills-based routing, warm lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 410, "label": "Read the routing profiles guide" },
+        { "card_id": 405, "label": "Assign agents to routing profiles", "puzzle": "assign-agents" }
+      ],
+      "visible_to": "all",
+      "room": "training-room"
+    },
+    {
+      "id": 401,
+      "type": "object",
+      "color": "blue",
+      "title": "Routing Configuration Panel",
+      "description": "A touchscreen showing four empty queue slots and four agent profiles. Each agent has different language skills and certifications. Match them to the correct queues based on capability.",
+      "image": "assets/card-routing-panel.png",
+      "image_prompt": "Touchscreen routing interface with four empty slots on left and four agent profile cards on right, connection lines, dark UI with orange accents, single object on dark background",
+      "visible_to": "all",
+      "room": "training-room"
+    },
+    {
+      "id": 405,
+      "type": "event",
+      "color": "yellow",
+      "title": "Agents Routed",
+      "description": "All four agents lock into their queues. The routing panel turns green. Status: \"ALL QUEUES STAFFED — SKILLS MATCHED.\" Wait times begin dropping across the board. Director Tan's voice: \"Good. One more test. The warroom. Show me you can handle a live call.\" A heavy door slides open.",
+      "reveals": [500],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "training-room"
+    },
+    {
+      "id": 410,
+      "type": "lore",
+      "color": "purple",
+      "title": "Skills-Based Routing 101",
+      "description": "A training handout pinned to the wall:\n\n\"WHY SKILLS-BASED ROUTING?\n\nOld way: Round-robin. Any agent gets any call. Citizen with a Mandarin enquiry gets an agent who speaks only English. Everyone's unhappy.\n\nNew way: Skills-based. Each agent has a routing profile — languages, certifications, specialisations. Calls match to the best-fit agent.\n\nResult: Faster resolution. Happier citizens. Fewer transfers. Mei stops sighing.\"\n\nLore: Mei wrote this handout. The last line was not originally approved by HR.",
+      "image": "assets/card-routing-guide.png",
+      "image_prompt": "Printed training handout pinned to corkboard, comparison table of old vs new routing, highlighted key points, office aesthetic, single object on dark background",
+      "visible_to": "all",
+      "room": "training-room"
+    },
+
+    {
+      "id": 500,
+      "type": "location",
+      "color": "green",
+      "title": "Contact Center Warroom",
+      "description": "The warroom. Big screens show all queues running green. Director Tan stands at the door, arms crossed. \"One more thing. Show me your team can handle a real call. Pick it up, resolve it, log it properly.\"\n\nA phone rings. On the main screen, a text transcript appears:\n\n\"Hello, I submitted my work permit renewal three weeks ago — reference WP-20240815. I was told it would take 10 working days but I haven't received any update. My current permit expires next week and I'm worried I'll be out of compliance. Can someone check the status?\"\n\nThe ACW form loads on the terminal. Fill it in correctly.",
+      "image": "assets/warroom.png",
+      "image_prompt": "Government operations warroom with large green status screens, stern director at door with arms crossed, phone ringing indicator, ACW terminal in foreground, dramatic lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 510, "label": "Read the ACW best practices poster" },
+        { "card_id": 599, "label": "Complete the After Contact Work form", "puzzle": "complete-acw" }
+      ],
+      "visible_to": "all",
+      "room": "warroom"
+    },
+    {
+      "id": 501,
+      "type": "object",
+      "color": "blue",
+      "title": "ACW Terminal",
+      "description": "A terminal showing the After Contact Work form. Fields to fill: Category, Reference Number, Summary, and Follow-up Action. The call transcript is displayed above for reference. Get it right and the case is properly logged. Get it wrong and the citizen falls through the cracks.",
+      "image": "assets/card-acw-terminal.png",
+      "image_prompt": "Computer terminal showing form fields for After Contact Work, call transcript displayed above, cursor blinking, dark UI with green accents, single object on dark background",
+      "visible_to": "all",
+      "room": "warroom"
+    },
+    {
+      "id": 510,
+      "type": "lore",
+      "color": "purple",
+      "title": "Why ACW Matters",
+      "description": "A poster next to the ACW terminal:\n\n\"AFTER CONTACT WORK — NOT JUST PAPERWORK\n\n• Correct category → case routes to the right follow-up team\n• Correct reference → case is traceable end-to-end\n• Accurate summary → next agent knows the context without asking again\n• Right follow-up action → citizen doesn't have to call back\n\nSkip ACW and the citizen calls back. They explain everything again. They're angrier. Everyone loses.\n\nAvg ACW target: 2 minutes. Not zero. Not twenty-two.\"\n\nLore: The '22 minutes' reference is about Agent Chan. We don't talk about it.",
+      "image": "assets/card-acw-poster.png",
+      "image_prompt": "Office poster explaining After Contact Work importance, bullet points, target time highlighted, slightly coffee-stained, single object on dark background",
+      "visible_to": "all",
+      "room": "warroom"
+    },
+    {
+      "id": 599,
+      "type": "event",
+      "color": "yellow",
+      "title": "Call Handled — Welcome to the Team",
+      "description": "The ACW form validates. Category: correct. Reference: matched. Summary: accurate. Follow-up: appropriate. The terminal displays: \"CASE LOGGED SUCCESSFULLY.\"\n\nDirector Tan uncrosses his arms. Almost smiles. \"Impressive. The dashboards are green, the agents are routing correctly, and you logged the case properly. Welcome to the team.\"\n\nMei appears with two cups of coffee. \"Not bad for a first day. Most people skip the case notes and wonder why follow-ups never happen. You might actually survive here.\"",
+      "is_ending": true,
+      "reveals": [],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "warroom"
+    }
+  ]
+}

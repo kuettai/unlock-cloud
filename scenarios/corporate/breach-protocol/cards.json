@@ -10,12 +10,13 @@
       "image_prompt": "A corporate email inbox on a monitor, single unread email highlighted in red marked URGENT, dark office, Monday morning light through blinds, tense atmosphere.",
       "reveals": [],
       "discoveries": [
-        { "card_id": 11, "label": "Read the anonymous tip", "puzzle": "tip-extraction" },
+        { "card_id": 11, "label": "Read the anonymous tip" },
+        { "card_id": 19, "label": "Enter case reference", "requires_item": [11], "puzzle": "tip-extraction" },
         { "card_id": 16, "label": "Mark as spam and delete" },
         { "card_id": 17, "label": "Report as phishing" },
-        { "card_id": 15, "label": "Forward tip to Legal", "requires_item": [11] },
-        { "card_id": 18, "label": "Escalate to CEO", "requires_item": [11] },
-        { "card_id": 30, "label": "Access Transaction Records", "requires_item": [11] }
+        { "card_id": 15, "label": "Forward tip to Legal", "requires_item": [19] },
+        { "card_id": 18, "label": "Escalate to senior management", "requires_item": [19] },
+        { "card_id": 30, "label": "Access Transaction Records", "requires_item": [19] }
       ],
       "visible_to": "all",
       "room": "inbox"
@@ -25,7 +26,16 @@
       "type": "object",
       "color": "blue",
       "title": "Urgent Escalation",
-      "description": "From: company.secretary@firm.hk | Subject: Urgent — Review Required: CR-2026-0312. A connected transaction executed last week may not have followed the prescribed disclosure process. Please conduct an immediate review and confirm whether a Chapter 14A notification is required. HKEX filing window is active.",
+      "description": "Subject: Urgent — Review Required: CR-2026-0312\n\nA connected transaction executed last week may not have followed the prescribed disclosure process. Please conduct an immediate review and confirm whether a Chapter 14A notification is required. Exchange filing window is active.",
+      "visible_to": "all",
+      "room": "inbox"
+    },
+    {
+      "id": 19,
+      "type": "object",
+      "color": "blue",
+      "title": "Case Opened",
+      "description": "Case CR-2026-0312 confirmed. Transaction records unlocked for review.",
       "visible_to": "all",
       "room": "inbox"
     },
@@ -34,7 +44,7 @@
       "type": "penalty",
       "color": "black",
       "title": "Legal Hold",
-      "description": "Legal puts a 48-hour hold on all communications. Time wasted.",
+      "description": "Legal puts a 48-hour hold on all communications. Time wasted.\n\n⏱️ −30 seconds",
       "penalty_seconds": 30,
       "visible_to": "all",
       "room": "inbox"
@@ -44,7 +54,7 @@
       "type": "penalty",
       "color": "black",
       "title": "Deleted Evidence",
-      "description": "You deleted the email. Records Management restored it within 30 seconds — the item is subject to a regulatory retention obligation. 'Deletion of flagged correspondence is not permitted under the firm's document retention policy.'",
+      "description": "You deleted the email. Records Management restored it within 30 seconds — the item is subject to a regulatory retention obligation. 'Deletion of flagged correspondence is not permitted under the firm's document retention policy.'\n\n⏱️ −30 seconds",
       "penalty_seconds": 30,
       "visible_to": "all",
       "room": "inbox"
@@ -54,7 +64,7 @@
       "type": "penalty",
       "color": "black",
       "title": "Not Phishing",
-      "description": "Information Security reviewed the flagged item and confirmed: 'This is not a phishing attempt. The correspondence has been verified as legitimate. Please action accordingly.'",
+      "description": "Information Security reviewed the flagged item and confirmed: 'This is not a phishing attempt. The correspondence has been verified as legitimate. Please action accordingly.'\n\n⏱️ −30 seconds",
       "penalty_seconds": 30,
       "visible_to": "all",
       "room": "inbox"
@@ -63,8 +73,8 @@
       "id": 18,
       "type": "penalty",
       "color": "black",
-      "title": "CEO Unavailable",
-      "description": "The CEO is on a golf trip in Phuket. His PA replies: 'He'll circle back next quarter.'",
+      "title": "Management Unavailable",
+      "description": "Senior management is unreachable. The PA replies: 'They'll circle back next quarter.'\n\n⏱️ −30 seconds",
       "penalty_seconds": 30,
       "visible_to": "all",
       "room": "inbox"
@@ -139,7 +149,7 @@
       "type": "penalty",
       "color": "black",
       "title": "False Alarm",
-      "description": "Transaction B is 4.36% — within threshold. HKEX responds: 'Not a breach.' Credibility lost.",
+      "description": "Transaction B is 4.36% — within threshold. The Exchange responds: 'Not a breach.' Credibility lost.\n\n⚠️ Penalty",
       "visible_to": "all",
       "room": "transaction-records"
     },
@@ -148,7 +158,7 @@
       "type": "penalty",
       "color": "black",
       "title": "Wrong Transaction",
-      "description": "Transaction C is 3.75% — well within threshold. You flagged the wrong one. Back to the calculator.",
+      "description": "Transaction C is 3.75% — well within threshold. You flagged the wrong one. Back to the calculator.\n\n⏱️ −30 seconds",
       "penalty_seconds": 30,
       "visible_to": "all",
       "room": "transaction-records"
@@ -158,7 +168,7 @@
       "type": "penalty",
       "color": "black",
       "title": "Reference Mismatch",
-      "description": "Transaction D's reference is NT-0891, not NT-0847. Close reading matters.",
+      "description": "Transaction D's reference is NT-0891, not NT-0847. Close reading matters.\n\n⏱️ −30 seconds",
       "penalty_seconds": 30,
       "visible_to": "all",
       "room": "transaction-records"
@@ -223,7 +233,7 @@
       "type": "penalty",
       "color": "black",
       "title": "Wrong Timeline",
-      "description": "You cited Finance's timeline. HKEX cross-checks — the notification gap proves concealment, not compliance.",
+      "description": "You cited Finance's timeline. The Exchange cross-checks — the notification gap proves concealment, not compliance.\n\n⚠️ Penalty",
       "visible_to": "all",
       "room": "interview-room"
     },
@@ -267,7 +277,7 @@
       "type": "penalty",
       "color": "black",
       "title": "Wrong Classification",
-      "description": "Negligence? The evidence shows deliberate concealment. SFC wants a word.",
+      "description": "Negligence? The evidence shows deliberate concealment. SFC wants a word.\n\n⚠️ Penalty",
       "visible_to": "all",
       "room": "classification-terminal"
     },
@@ -276,7 +286,7 @@
       "type": "event",
       "color": "yellow",
       "title": "Congratulations",
-      "description": "Filing confirmed. The breach notification has been accepted by HKEX. Your team correctly identified the undisclosed transaction, established the approval chain, and submitted within the mandatory disclosure window.",
+      "description": "Filing confirmed. The breach notification has been accepted by the Exchange. Your team correctly identified the undisclosed transaction, established the approval chain, and submitted within the mandatory disclosure window.",
       "visible_to": "all",
       "room": "classification-terminal",
       "is_ending": true

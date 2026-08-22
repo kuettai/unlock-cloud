@@ -71,7 +71,7 @@ class SpecLock {
     }
 
     if (this.currentRound >= this.rounds.length) {
-      const doneText = this.cfg.doneText || 'All specs validated! The golem knows exactly what to build.';
+      const doneText = this._txt.done;
       wrap.innerHTML += `<div class="speclk-done"><div class="speclk-done-icon">🤖✨</div><div class="speclk-done-text">${doneText}</div></div>`;
       this.container.appendChild(wrap);
       this._injectStyles();
@@ -93,7 +93,7 @@ class SpecLock {
 
     const intro = document.createElement('div');
     intro.className = 'speclk-intro';
-    const introText = this.cfg.introText || 'The golem awaits your command. What do you want it to build?';
+    const introText = this._txt.awaiting;
     intro.innerHTML = `<div class="speclk-intro-icon">🤖</div><div class="speclk-intro-text">${introText}</div>`;
     wrap.appendChild(intro);
 
@@ -116,7 +116,7 @@ class SpecLock {
 
     const btn = document.createElement('button');
     btn.className = 'speclk-btn speclk-btn-send';
-    btn.textContent = this.cfg.sendButton || '⏎ Send to Golem';
+    btn.textContent = this._txt.send;
     btn.addEventListener('click', () => { this.phase = 'chaos'; this._render(); });
     wrap.appendChild(btn);
   }
@@ -285,7 +285,7 @@ class SpecLock {
 .speclk-scene-build{flex:1;min-width:130px;align-items:stretch}
 .speclk-golem{font-size:2.5rem;animation:speclk-bob 1.5s infinite}
 .speclk-golem-mini{font-size:1.2rem}
-.speclk-golem-says{font-size:12px;color:var(--muted,#7a8ba8);text-align:center}
+.speclk-golem-says{font-size:12px;color:#7a8ba8;text-align:center}
 .speclk-chaos-output{min-height:36px;display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:8px}
 .speclk-chaos-item{font-size:13px;color:#e94560;font-weight:600;padding:6px 14px;background:rgba(233,69,96,.1);border:1px solid rgba(233,69,96,.3);border-radius:6px}
 .speclk-chaos-cost{font-size:10px;color:#7a8ba8;font-weight:400;margin-left:6px;font-style:italic}

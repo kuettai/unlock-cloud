@@ -174,8 +174,8 @@ class TagLock {
 .taglk-chips{display:flex;flex-wrap:wrap;gap:6px;min-height:32px}
 .taglk-chip{padding:6px 10px;background:var(--surface,#141b2d);border:1px solid var(--border,#1e2a45);border-radius:6px;font-size:12px;font-weight:600;color:var(--accent,#3b82f6);cursor:grab;user-select:none;-webkit-user-select:none;white-space:nowrap}
 .taglk-chip.taglk-dragging{opacity:.4}
-.taglk-chip-placed{cursor:pointer;border-color:var(--accent,#3b82f6);background:#0c1a2e}
-.taglk-chip-placed::after{content:' ✕';color:var(--muted,#7a8ba8);font-size:10px}
+.taglk-chip-placed{cursor:pointer;border-color:var(--accent,#3b82f6);background:#0c1a2e;color:#3b82f6}
+.taglk-chip-placed::after{content:' ✕';color:#7a8ba8;font-size:10px}
 .taglk-res{padding:12px;background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);border-radius:8px;transition:all .2s;min-height:70px}
 .taglk-res.taglk-over{border-color:var(--accent,#3b82f6);box-shadow:0 0 10px rgba(59,130,246,.2)}
 .taglk-res.taglk-correct{border-color:var(--green,#22c55e)}

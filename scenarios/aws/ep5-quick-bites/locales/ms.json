@@ -1,0 +1,823 @@
+{
+  "locale": "ms",
+  "label": "Melayu",
+  "flag": "🇲🇾",
+
+  "meta": {
+    "start_button": "Mula",
+    "end_title": "Quick Bites Selesai",
+    "lore_label": "Ciri Quick Ditemui"
+  },
+
+  "ui": {
+    "map": "Peta",
+    "interact": "Interaksi",
+    "tools": "Alat",
+    "hints": "Petunjuk",
+    "hint": "Petunjuk"
+  },
+
+  "narrative": {
+    "intro": {
+      "segments": [
+        { "index": 0, "text": "Ibu pejabat QuickBite. Sebuah ruang kerja bersama yang sempit, berbau minyak dapur ujian dan cita-cita. Whiteboard di mana-mana. Post-it di siling." },
+        { "index": 1, "text": "Anda Pembantu Eksekutif baharu. Hari pertama anda. Anda pun belum ada login lagi." },
+        { "index": 2, "text": "AWAK! Orang baharu! Saya perlukan nisbah kos makanan untuk Volcano Burger SEBELUM TENGAH HARI atau Diana akan bunuh pelancaran ini!" },
+        { "index": 3, "text": "Jangan layan dia. Saya perlukan slaid analisis persaingan untuk panggilan pelabur. Yang bermula dalam — lima puluh lima minit. Dengan rujukan." },
+        { "index": 4, "text": "Hai! Maaf! Sistem POS pun down di Store #4. Dan penggoreng Store #7 memang terbakar. Bukan kiasan. Selamat menyertai kami!" },
+        { "index": 5, "text": "Tiga pengasas. Sepuluh kedai. Satu panggilan pelabur dalam lima puluh lima minit. Dan tak seorang pun boleh jawab soalan sebab data bertaburan di lima belas tempat berlainan." },
+        { "index": 6, "text": "Enam puluh minit anda bermula sekarang." }
+      ]
+    },
+    "ending": {
+      "success": {
+        "segments": [
+          { "index": 0, "text": "Panggilan pelabur tamat. Wajah Diana bergerak sedikit — adakah itu senyuman? Mungkin itu senyuman." },
+          { "index": 1, "text": "PELABURAN DISAHKAN. Series C berjaya diperoleh." },
+          { "index": 2, "text": "SAYA DAH CAKAP! Volcano Burger! Mereka suka nombor-nombor itu! Mereka kata 'margin yang mengagumkan!' Itulah sosnya!" },
+          { "index": 3, "text": "Mereka suka penyelidikan itu. Analisis persaingan. Fakta bahawa kita ada RUJUKAN. Pada hari pertama anda." },
+          { "index": 4, "text": "Urutan pembukaan Store #10 baru berjalan secara automatik. Setiap langkah. Tiada tiket. Tiada kelam-kabut. Saya tak terima satu pun panggilan telefon." },
+          { "index": 5, "text": "Itu... itu tak pernah berlaku sebelum ini." },
+          { "index": 6, "text": "Tiga pengasas memandang anda. Pekerja baharu. Yang menyusun kekecohan, menyelidik pasaran, mengautomasikan pembukaan, dan memenangi wang. Pada hari pertama." },
+          { "index": 7, "text": "Jadi. Ketua Pegawai Operasi. Berminat?" },
+          { "index": 8, "text": "Anda mengambil sesuap Volcano Burger. Sempurna." }
+        ]
+      },
+      "failure": {
+        "segments": [
+          { "index": 0, "text": "Masa tamat. Panggilan pelabur: tidak selesai." },
+          { "index": 1, "text": "Para pelabur tersenyum sopan. 'Hantar slaid tu bila dah siap.' Jenis sopan yang bermaksud tidak." },
+          { "index": 2, "text": "Kita cuba lagi lain kali. Data tu ada — kita cuma perlu lebih pantas menyambungkannya." },
+          { "index": 3, "text": "Store #10 tetap dibuka. Ada... beberapa masalah. Tapi tak ada sesiapa cedera. Kebanyakannya." },
+          { "index": 4, "text": "Volcano Burger tetap sempurna. Bahagian itu berjalan lancar." },
+          { "index": 5, "text": "Esok anda akan tahu di mana untuk cari semua benda. Cara menyelidik lebih pantas. Cara automasi berbanding kelam-kabut. Quick belajar, dan anda pun sama." }
+        ]
+      }
+    }
+  },
+
+  "cards": {
+    "100": {
+      "title": "Resepsyen / Meja Anda",
+      "description": "Meja yang sempit berhampiran pintu masuk. Papan tugasan whiteboard sudah melimpah dengan sticky notes daripada tiga gaya tulisan tangan berbeza. Post-it di setiap permukaan. Komputer riba anda pun belum disediakan."
+    },
+    "200": {
+      "title": "Kitchen Lab Marco",
+      "description": "Dapur ujian yang juga berfungsi sebagai pejabat. Fail resipi berlumur minyak tersandar pada monitor yang memaparkan gambar makanan. Dinding sos ada 47 botol berlabel. Entah di mana bawah serbuk cili ada helaian kos yang tersembunyi."
+    },
+    "300": {
+      "title": "Pejabat Sudut Diana",
+      "description": "Dua monitor, kedua-duanya memaparkan hamparan. Whiteboard dipenuhi nombor dengan bulatan merah pada yang membimbangkan. Pemasa detik di mejanya menunjukkan minit berbaki sehingga panggilan pelabur. Timbunan laporan bercetak bertanda 'DRAF — JANGAN KONGSI.'"
+    },
+    "400": {
+      "title": "Bilik Server Raj",
+      "description": "Meja berdiri yang disesakkan antara dua rak server. Monitor memaparkan papan pemuka dalam berbagai keadaan hijau dan merah. Sticky notes berisi kata laluan di mana-mana. Manual berkesan kopi diselotep pada dinding dengan beberapa bahagian tidak boleh dibaca."
+    },
+    "500": {
+      "title": "Bilik Rehat",
+      "description": "Dapur kecil. Papan buletin melimpah dengan nota, kad perniagaan dan potongan artikel. Menu pesaing dilekat pada peti sejuk di bawah sticky note: 'KENALI MUSUHMU'."
+    },
+    "600": {
+      "title": "Chocolot",
+      "description": "Bar pencuci mulut coklat yang gelap dan bergaya. Booth kulit, menu berlampu. 'AI-Powered Flavor Matching' mereka nampak macam enjin cadangan QuickBite. Barista menggilap gelas sambil memerhati. Kamera berkelip merah."
+    },
+    "700": {
+      "title": "Panini Gemelli",
+      "description": "Kedai Itali fast-casual yang cerah, menu papan hitam. Dua lelaki serupa berapron sama — seorang melambai ramah, seorang lagi menyorot bilik. Papan tanda 'NOW HIRING — 2ND LOCATION' baru dibalikkan."
+    },
+    "800": {
+      "title": "Tabouleh Express",
+      "description": "Loading dock di belakang restoran Mediterranean, 6 pagi. Van menunggu. Krat berlabel tiga bahasa. Tujuh orang berlegar — pemandu, tukang masak, pembekal, seorang wanita berfail dekat pejabat. Ada yang tahu sesuatu. Ada yang cuma nak balik."
+    },
+    "900": {
+      "title": "The Cooker",
+      "description": "Gastropub bata terdedah dan lampu Edison. Di atas bar, skrin memaparkan kiriman pelanggan — 'The Cooker Social Wall'. Di booth penjuru, seorang wanita menaip laju, mengerang dan menekan delete. Kiriman hilang separuh jalan."
+    },
+    "1000": {
+      "title": "War Room",
+      "description": "Bilik mesyuarat berdinding kaca. Speakerphone berbunyi, slaid dah siap. Tiga wajah pelabur muncul, senyuman sopan yang boleh jadi skeptikal bila-bila. Marco berlegar di pintu dengan sampel Volcano Burger 'untuk simpanan'."
+    },
+    "1100": {
+      "title": "Store #10",
+      "description": "Restoran kosong. Pita menanda tempat gerai, wayar bergantung dari siling, meja flat-pack bertimbun di penjuru. Peti sejuk walk-in berdengung dengan pintu terbuka. Ia BOLEH siap esok — kalau ada orang cari apa yang kurang dan automasikan selebihnya.\n\nPelekat pada router: \"SSID QuickBite-S10 · password = dua pembantu AI kita, Amazon Q dan Kiro, dicantum + nombor kedai ini.\""
+    },
+    "101": {
+      "title": "Papan Tugasan Whiteboard",
+      "description": "Tiga jenis tulisan tangan. Marco: 'VOLCANO BURGER LAUNCH!!!' Diana, dakwat merah: 'Deck pelabur — 55 min.' Raj, tulisan halus: 'Fix POS sync, sorry.'\n\nDi penjuru, sticky note daripada pembantu yang dah berhenti:\n\n\"Panduan hidup Hari 1, ikut susunan ini: (1) Cari di mana semuanya BERADA. (2) Susun kekacauan itu. (3) Sambung ke sistem vendor. (4) BARU pergi kumpul maklumat pesaing. (5) Bina deck hanya bila dah ada data betul. (6) Automasi paling akhir — kekacauan tak boleh diautomasikan.\n\nSaya tahan 3 minggu. — Alex\""
+    },
+    "201": {
+      "title": "Serpihan Data Resipi",
+      "description": "Kad resipi berlumur minyak, buku nota rahsia Marco, invois pembekal, dan eksport POS yang tersembunyi bawah serbuk cili. Bahan mentah untuk mengira kos makanan sebenar."
+    },
+    "203": {
+      "title": "Terminal Eksport POS",
+      "description": "Monitor berminyak memaparkan papan pemuka POS SquareBite. Data jualan, log transaksi, dan kos unit — semua boleh dieksport. Papan kekunci ada sos pedas pada bar ruang."
+    },
+    "210": {
+      "title": "Analisis Kos Makanan",
+      "description": "Pecahan kos makanan penuh untuk menu QuickBite. Volcano Burger: nisbah kos makanan 32% pada skala. Tabiat wagyu Marco terdedah — tapi nombornya berjaya."
+    },
+    "301": {
+      "title": "Whiteboard Sumber Data",
+      "description": "Whiteboard Diana menyenaraikan lima sumber data: Hasil POS, Jam Kakitangan, Invois Pembekal, Penilaian Pelanggan, Masa Penghantaran. Anak panah menuju tanda soal. Dia perlukan semuanya DISAMBUNG kepada soalan pelabur."
+    },
+    "303": {
+      "title": "Senarai Soalan Pelabur",
+      "description": "Helaian persiapan Diana: 'Margin keuntungan?' 'Terlebih pekerja?' 'Pembekal termurah?' 'Pelanggan gembira?' 'Penghantaran terlalu lambat?' Dua umpan dipotong: 'Warna kegemaran Marco?' dan 'Hari jadi Raj?'"
+    },
+    "310": {
+      "title": "Kad Data Kewangan",
+      "description": "Sumber data disambungkan kepada soalan yang betul. POS menjawab margin keuntungan. Jam Kakitangan menjawab terlebih kakitangan. Invois Pembekal mendedahkan pembekal paling murah. Diana mengangguk: 'Akhirnya. Seseorang yang faham.'"
+    },
+    "401": {
+      "title": "Manual Berkesan Kopi",
+      "description": "Manual sambungan Quick Automate. Kebanyakannya boleh dibaca, tetapi bahagian penting tersembunyi oleh kesan kopi. Peraturan yang kelihatan memberi petunjuk urutan pengaktifan yang betul. 'Payment Gateway mesti diaktifkan sebelum Portal [KESAN].'"
+    },
+    "403": {
+      "title": "Panel Automasi",
+      "description": "Lima wayar berwarna berlabel: Sistem POS (merah), Portal Pembekal (biru), Penjadual Kakitangan (kuning), Penjejak Penghantaran (hijau), Payment Gateway (putih). Ia perlu diaktifkan dalam urutan yang betul."
+    },
+    "410": {
+      "title": "Kad Data Sistem",
+      "description": "Panel automasi disambung dalam urutan yang betul: Payment, POS, Penjadual, Pembekal, Penghantaran. Semua sistem online. Raj hampir menangis. 'Ia berfungsi. Ia betul-betul berfungsi.'"
+    },
+    "501": {
+      "title": "Serpihan Papan Buletin",
+      "description": "Serpihan kertas, post-it, dan cetakan koyak daripada ketiga-tiga pengasas. Petikan tentang kos makanan, sistem yang rosak, aduan pelanggan, dan operasi dapur — semuanya bercampur aduk. Perlu disusun mengikut kategori."
+    },
+    "502": {
+      "title": "Menu Pesaing",
+      "description": "Empat menu pesaing melekat pada peti sejuk: Chocolot (pencuci mulut, harga premium), Panini Gemelli (Itali, menu ringkas), Tabouleh Express (penghantaran sahaja, Mediterranean), The Cooker (gastropub, mahal). Seseorang membulatkan harga mereka dengan merah."
+    },
+    "510": {
+      "title": "Taklimat Penyelidikan",
+      "description": "Semua data disusun ke dalam Quick Spaces: Operasi Dapur, Kewangan, Sistem, Risikan Pelanggan. Pandangan gabungan mendedahkan empat lokasi pesaing yang berbaloi disiasat. Diana: 'Sekarang pergi cari saya rujukan.'"
+    },
+    "511": {
+      "title": "Data Gabungan (Separa)",
+      "description": "Data resipi dan data kewangan digabungkan — kos makanan bertemu metrik hasil. Masih hilang data sistem daripada Raj untuk lengkapkan gambaran."
+    },
+    "601": {
+      "title": "Barista Yang Mengesyaki",
+      "description": "Barista Chocolot — mengelap gelas sambil memerhati bilik. Perasan semua benda."
+    },
+    "602": {
+      "title": "Papan Menu Chocolot",
+      "description": "Menu bercahaya belakang: 'Padanan Perisa Berkuasa AI' (mengesyakkan). Dark Truffle Mocha $9.50. Ganache Croissant Melt $14.20 (item pengukuh). Co-Pilot Truffle: 'Algoritma kami pilih perisa ini untuk anda.' Harga premium di seluruh menu."
+    },
+    "610": {
+      "title": "Risikan Harga (Chocolot)",
+      "description": "Struktur harga penuh dipotret: margin item pengukuh, tahap kesetiaan, kalendar promosi bermusim. Penjenamaan AI mereka cuma gimik pemasaran — pencuci mulut sama, nama lebih hebat. Struktur kos lebih tinggi berbanding QuickBite per unit."
+    },
+    "701": {
+      "title": "Gemelli Kembar (Mesra)",
+      "description": "Kembar Gemelli yang mesra — melambai kepada setiap pelanggan, cakap terlalu banyak tentang rancangan perniagaan."
+    },
+    "702": {
+      "title": "Gemelli Kembar (Mengesyaki)",
+      "description": "Kembar Gemelli yang mengesyaki — memerhati anda dengan mata sempit, tangkap ketidakkonsistenan."
+    },
+    "703": {
+      "title": "Menu Istimewa Chalkboard",
+      "description": "Lukisan pasta tulisan tangan dan menu istimewa harian. Tiga panini, dua sup, satu salad — itu saja seluruh menu. Tanda 'MEREKRUT' baru sahaja ditutup terbalik. Operasi ringkas, jelas boleh diskalakan."
+    },
+    "710": {
+      "title": "Risikan Pengembangan (Gemelli)",
+      "description": "Disahkan: lokasi #4 di Fifth Street ditandatangani, sasaran 5 menjelang Oktober. Semuanya dijalankan dari satu iPad. Menu ringkas = mudah diduplikasi. Ancaman persaingan terbesar untuk kelajuan pengembangan."
+    },
+    "801": {
+      "title": "Tony Pemandu",
+      "description": "Tony — pemandu penghantaran yang suka berbual. Suka bersembang semasa memuat peti. Tahu bisnes setiap restoran."
+    },
+    "802": {
+      "title": "Papan Jadual Penghantaran",
+      "description": "Whiteboard yang memaparkan laluan penghantaran, slot masa, dan lajur baharu 'KATERING KORPORAT' dengan pesanan 200 hidangan dua kali seminggu. Radius penghantaran dua belas blok dipetakan. Jaminan penghantaran bawah 18 minit dibulatkan."
+    },
+    "810": {
+      "title": "Risikan Rantaian Bekalan (Tabouleh)",
+      "description": "Tujuh orang di dok pemuatan. Bajet: $100. Hanya sebilangan tahu tentang rancangan pengembangan Tabouleh — selebihnya jalan mati. Baca bahasa badan: siapa bawa risikan sebenar, dan siapa cuma nak balik kerja?"
+    },
+    "901": {
+      "title": "Pengurus Media Sosial",
+      "description": "Pengurus media sosial The Cooker — tertekan, memadam ulasan buruk secara masa nyata, secara tidak sengaja mendedahkan masalah kakitangan."
+    },
+    "902": {
+      "title": "Dinding Sosial",
+      "description": "Skrin memaparkan ulasan, kiriman dan sebutan blog — dan pengurus pemasaran sedang menghapus yang negatif secara langsung. Ulasan buruk, rungutan pekerja, perbandingan blogger dan nota pemeriksaan kesihatan melintas pantas."
+    },
+    "910": {
+      "title": "Risikan Kelemahan (Cooker)",
+      "description": "Penemuan kritikal: ketua tukang masak The Cooker sedang temuduga di tempat lain. Kakitangan tertekan, kualiti menurun, aduan kesihatan meningkat. Satu-satunya kelebihan mereka (pencuci mulut) tak akan bertahan tanpa kepimpinan. Kelemahan terbesar dalam landskap persaingan."
+    },
+    "950": {
+      "title": "Penyelidikan Selesai",
+      "description": "Semua empat laporan risikan pesaing dihimpunkan. Diana sedang menelefon — War Room sudah sedia."
+    },
+    "1001": {
+      "title": "Slaid Pitch",
+      "description": "Slaid Diana di skrin besar, tujuh belas sel dipenuhi hasil penyelidikan anda. Kos makanan 32%. Ancaman terbesar: Panini Gemelli. Kepuasan 4.6/5. Sekarang pertahankan nombor itu."
+    },
+    "1002": {
+      "title": "Nota Penyelidikan",
+      "description": "Penyelidikan terhimpun anda daripada semua empat lokasi pesaing. Kos tinggi Chocolot, rancangan pengembangan Gemelli, monopoli penghantaran Tabouleh, krisis kakitangan The Cooker. Segala yang mungkin ditanya pelabur."
+    },
+    "1010": {
+      "title": "Pelabur Berjaya Didapatkan",
+      "description": "Series C disahkan. Pelabur terkesan dengan data, rujukan, dan kedudukan persaingan. Diana hampir senyum. Marco sudah merancang menu perayaan."
+    },
+    "1101": {
+      "title": "Peta Susun Atur Kedai",
+      "description": "Kedai kosong yang diterokai: lokasi router WiFi dipetakan, sijil kesihatan dijumpai, kunci loker kakitangan diambil, terminal POS dijumpai. Anda tahu apa yang ada di sini dan apa yang hilang."
+    },
+    "1102": {
+      "title": "Senarai Semak Pembukaan",
+      "description": "Senarai semak yang berkedut daripada pembukaan Store #9, dipadam dan dinota: 'JANGAN SEKALI-KALI buat ini secara manual lagi.' Lapan langkah kritikal, tanpa urutan jelas. Kedai sebelum ini terlupa peti sejuk, terlupa napkin. Kali ini, automasikan dengan betul."
+    },
+    "1106": {
+      "title": "WiFi Disambung",
+      "description": "Rangkaian Store #10 sudah hidup. Semua tablet, terminal POS, dan sistem automasi sekarang ada sambungan. Label router berbunyi: SSID: QuickBite-S10 / Password=[KATA_LALUAN_DISENSOR]"
+    },
+    "110": {
+      "title": "Papan Tugasan Disusun Keutamaan",
+      "description": "Tugasan disusun mengikut urutan perjalanan Amazon Quick: Index (cari), Spaces (susun), Automate (sambung), Research (siasat), Sight (paparkan), Flows (orkestrasi). Sekarang anda tahu jalannya."
+    },
+    "999": {
+      "title": "Store #10 Diautomasikan (PENAMAT)",
+      "description": "Quick melaksanakan seluruh rangkaian. Store #10 dibuka. Pelabur masuk. Marco, Diana, dan Raj bina sesuatu yang berjalan tanpa mereka."
+    },
+    "1103": {
+      "title": "Konsol Pelancaran Kedai",
+      "description": "Panel kawalan dengan togol automasi. Quick Flows, Quick Index, Quick Automate — semua sedia disambungkan. Satu suis yang salah dan pembukaan gagal."
+    },
+    "1104": {
+      "title": "Papan Pemuka Pelaksanaan Quick",
+      "description": "Semua enam ciri Quick sedia dilancarkan mengikut urutan. Setiap satu perlukan pengesahan anda. Satu kelulusan yang salah memecahkan rangkaian."
+    },
+    "102": {
+      "title": "Chef Marco (Resepsyen)",
+      "description": "Chef Marco — meluru masuk melalui pintu dapur dengan apron berkesan sos pedas, menuntut data kos makanan."
+    },
+    "103": {
+      "title": "Diana (Resepsyen)",
+      "description": "Diana — muncul dari pejabatnya dengan telefon di setiap tangan, perlukan analisis persaingan dengan rujukan."
+    },
+    "104": {
+      "title": "Raj (Resepsyen)",
+      "description": "Raj — menjenguk keluar dari bilik server, memohon maaf atas kekecohan, sebut semuanya sedang terbakar."
+    },
+    "202": {
+      "title": "Chef Marco",
+      "description": "Chef Marco — genius kreatif, lemah dalam nombor. Bersemangat tentang Volcano Burger."
+    },
+    "302": {
+      "title": "Diana",
+      "description": "Diana — CFO yang taasub data. Perlukan segala-galanya dengan rujukan. Detik panggilan pelabur sedang berdetik."
+    },
+    "402": {
+      "title": "Raj",
+      "description": "Raj — CIO yang cemas yang bina semuanya di garaj sendiri. Sistem disatukan dengan pita pelekat."
+    },
+    "1200": {
+      "title": "Pantri Yang Boleh Dicari (Quick Index)",
+      "description": "\"Kau tahu tak macam mana saya tak pernah jumpa resipi sendiri? Diana nak kos makanan tapi resipi dalam fail saya, portion dalam buku nota saya, dan harga dalam hamparan dia. Quick Index macam ada satu pantri gergasi yang boleh dicari — awak beritahu ia di mana semua bahan awak berada, dan ia jumpakan bila awak perlukan. Tak payah gali laci lagi.\" — Marco"
+    },
+    "1201": {
+      "title": "Nombor Jadi Jawapan (Quick Sight)",
+      "description": "\"Nombor tanpa konteks cuma bunyi bising. Quick Sight ambil data mentah anda — jualan, kos, penilaian — dan jadikan ia jawapan. Bukan sekadar carta. Jawapan. Saya tanya 'kedai mana ada margin terbaik?' dan ia beritahu saya. Dalam bahasa Inggeris. Dengan carta yang boleh saya tunjuk kepada pelabur yang fikir Excel teknologi canggih.\" — Diana"
+    },
+    "1202": {
+      "title": "Sistem Yang Pesan Bun Sendiri (Quick Automate)",
+      "description": "\"Setiap satu sistem ini — POS, pembekal, penjadualan, penghantaran — dulu semuanya panggilan telefon. Atau tiket. Atau sticky note yang jatuh di belakang rak. Quick Automate sambungkan semuanya supaya tindakan berlaku secara automatik. Bukan 'saya buat Khamis' automatik. Betul-betul automatik. Sistem yang pesan bun bila stok capai 20%? Itu Automate.\" — Raj"
+    },
+    "1203": {
+      "title": "Label Makan Tengah Hari Anda (Spaces)",
+      "description": "\"Papan buletin ni? Ini versi analog Spaces. Benda dapur, benda duit, benda teknikal, benda pelanggan — semua bercampur aduk. Quick Spaces bagi anda cipta kawasan khusus: Space Operasi Dapur, Space Kewangan, Space Sistem. Semua orang letak barang di tempat betul, dan sesiapa boleh jumpa. Revolusioner? Tidak. Tapi melabel makan tengah hari pun bukan, dan tak sesiapa buat pun.\" — Raj"
+    },
+    "1204": {
+      "title": "Rujukan, Rujukan, Rujukan (Quick Research)",
+      "description": "\"Apa yang anda baru buat tadi — memerhati, kumpul data, catat corak — itu Quick Research. Cuma Quick Research buat dengan dokumen, pangkalan data, dan sumber awam berbanding kamera telefon. Ia sintesiskan semuanya jadi laporan dengan rujukan. Perkataan kegemaran Diana: rujukan.\" — Narator"
+    },
+    "1205": {
+      "title": "Menjual Masa Depan (Quick Sight Scenarios)",
+      "description": "\"Analisis 'apa-kalau'. Itu bahagian yang menang duit. Bukan 'ini yang berlaku' — pelabur dah tahu masa lalu. 'Ini yang berlaku JIKA kita buka 6 kedai, JIKA harga ayam naik 15%, JIKA Volcano Burger buat macam yang kita jangka.' Quick Sight Scenarios bagi anda laraskan pembolehubah dan tunjuk masa depan kepada mereka. Masa depan di mana mereka untung.\" — Diana"
+    },
+    "1206": {
+      "title": "Senarai Semak Yang Berjalan Sendiri (Quick Flows)",
+      "description": "\"Setiap pembukaan kedai dulu memang kelam-kabut. Store #6 buka tanpa peti sejuk. Store #8 terlupa napkin SELAMA SEMINGGU. Quick Flows adalah senarai semak yang berjalan sendiri. Langkah 1 picu langkah 2. Langkah 2 tak jalan sehingga langkah 1 betul-betul selesai. Syarat, kebergantungan, pencetus automatik. Anda reka sekali — setiap kedai masa depan buka macam yang sama. Tiada kelam-kabut. Tiada napkin terlupa.\" — Raj"
+    }
+  },
+
+  "rooms": {
+    "100": { "unlock_text": "Anda tiba di ibu pejabat QuickBite. Tiga pengasas sudah menjerit." },
+    "200": { "unlock_text": "Anda menolak pintu dapur masuk ke domain Marco." },
+    "300": { "unlock_text": "Diana melambai anda masuk tanpa mengangkat pandangan dari skrinnya." },
+    "400": { "unlock_text": "Anda menyelit masuk ke bilik server. Raj memohon maaf atas kabel-kabel itu." },
+    "500": { "unlock_text": "Anda ada data daripada ketiga-tiga pengasas. Masa untuk susunkannya." },
+    "600": { "unlock_text": "Taklimat Penyelidikan di tangan, anda menuju ke pesaing pertama." },
+    "700": { "unlock_text": "Kedai adik-beradik Gemelli. Seorang kembar melambai. Seorang lagi merenung tajam." },
+    "800": { "unlock_text": "Dok penghantaran sedang riuh. Masa untuk beli sedikit risikan." },
+    "900": { "unlock_text": "Dinding sosial The Cooker berkelip. Hantaran hilang secara masa nyata." },
+    "1000": { "unlock_text": "Diana perlukan anda. Panggilan pelabur sedang berlaku SEKARANG." },
+    "1100": { "unlock_text": "Pelaburan berjaya. Sekarang automasikan pembukaan kedai sebelum pagi." }
+  },
+
+  "puzzles": {
+    "npc-marco": {
+      "description": "Chef Marco — genius kreatif, lemah dalam nombor, bersemangat tentang Volcano Burger",
+      "config_overrides": {
+        "greeting": "REKRUT BAHARU! Rasa ni — eh jangan yang tu, tu batch tujuh. SELAMAT DATANG! Awak dah dengar tentang Volcano Burger? Mustahil. Tak sesiapa pun dengar. Itulah MATLAMATNYA.",
+        "lines": [
+          {
+            "label": "Di mana fail resipi tu?",
+            "response": "Binder tu bukan binder lagi. Sebahagian atas sticky note dalam walk-in, sebahagian dalam kepala saya. Cek prep stations, whiteboard, invois pembekal. BAHAN yang penting, bukan sistem fail!"
+          },
+          {
+            "label": "Cerita saya pasal Volcano Burger.",
+            "response": "Ia bukan burger, ia satu PERNYATAAN. Tiga lapis brisket bersalai, chipotle crumble, dan sos yang saya fermentasi sebelas hari. Bukan sepuluh. Sebelas. Empat ratus tiga puluh tujuh kali cubaan. Arkitektur boleh makan."
+          },
+          {
+            "label": "Panggilan pelabur akan datang tak lama lagi...",
+            "response": "Diana uruskan benda bosan. Saya dah suruh dia — letak Volcano Burger atas skrin, biar mereka RASA deck pitch tu. Dia kata 'bukan macam tu panggilan pelabur jalan.' Pergi jumpa dia. Dia suka benda tu."
+          },
+          {
+            "label": "Apa pandangan awak tentang pesaing?",
+            "response": "PESAING?! Chocolot tu KEDAI COKLAT yang tersalah arah. Panini Gemelli tak tukar menu sejak 2019. Tabouleh Express penghantaran je. Mana CRAFT? Mana seninya?"
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 210,
+            "label": "Saya jumpa data kewangan. Kos makanan awak...",
+            "response": "Baiklah. Ya. Mungkin saya order wagyu A5 dan bukan A3, dan minyak truffle tu bukan hiasan, ia STRUKTUR. Nisbah kos makanan empat puluh tiga peratus. Mungkin jangan mula dengan nombor tu."
+          },
+          {
+            "requires_card": 510,
+            "label": "Saya dah siap penyelidikan pesaing.",
+            "response": "HA! SAYA DAH CAKAP! Bestseller Chocolot kos mereka LEBIH per unit daripada kita. Throughput Gemelli separuh je. Volcano Burger ni SENJATA persaingan. Beritahu Diana."
+          },
+          {
+            "requires_card": 1010,
+            "label": "Panggilan pelabur berjalan hebat!",
+            "response": "MEREKA KATA YA? Ambilkan spatula baik saya — Volcano Burger untuk semua orang! Mula QuickBite, lepas tu Store #10, LEPAS TU dunia. AWAK FAHAM!"
+          }
+        ]
+      }
+    },
+
+    "npc-diana": {
+      "description": "Diana — CFO yang taasub data, perlukan segala-galanya dengan rujukan",
+      "config_overrides": {
+        "greeting": "Mm-hm. Sekejap. ...Awak orang baharu tu. Ada nombor? Sebab saya ada deck pitch dengan tujuh belas sel kosong dan panggilan pelabur yang masanya tak cukup. Tiada nombor, pergi dapatkan nombor.",
+        "lines": [
+          {
+            "label": "Data apa yang awak perlukan?",
+            "response": "Tiga perkara. Satu, nisbah kos makanan sebenar — Marco bersungguh kata tiga puluh peratus tapi saya boleh bau wagyu atas invois. Dua, metrik perolehan pelanggan dari POS. Tiga, projeksi pertumbuhan yang bukan Marco tulis 'VOLCANO' dengan font lagi besar."
+          },
+          {
+            "label": "Apa yang pelabur akan tanya?",
+            "response": "Unit economics dulu, selalu. Lepas tu skalabiliti — boleh Store #10 tiru Store #1 tanpa Marco perap setiap patty? Lepas tu landskap persaingan. Nombor keras, bukan rasa hati."
+          },
+          {
+            "label": "Apa hal dengan Marco?",
+            "response": "*hampir tak dapat sembunyikan riak mata* Marco memang genius. Tapi dia fikir semangat tu metrik bisnes. Laporan perbelanjaan minggu lepas cuma tulis 'R&D - percaya saya' dengan kesan sos pedas."
+          },
+          {
+            "label": "Bagaimana dengan pesaing?",
+            "response": "BUKTI, bukan pendapat. Saya perlukan harga mereka, anggaran throughput, jejak pengembangan. Data awam — ulasan, papan menu, radius penghantaran. Sesuatu yang boleh saya masukkan dalam carta."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 310,
+            "label": "Saya dah tarik data kos resipi daripada sistem.",
+            "response": "Tunggu. Kalau data prep station tepat, saya boleh kira balik kos makanan per unit. Marco sembunyikan gred wagyu tu, kan. ...Empat puluh tiga peratus. Bila skala, turun ke tiga puluh satu. ITU nombor pitch."
+          },
+          {
+            "requires_card": 510,
+            "label": "Ini penyelidikan pesaing, dengan rujukan.",
+            "response": "Awak petik sumber. Betul-betul petik sumber. *tanggalkan cermin mata* Struktur kos Chocolot, jadual Gemelli, margin penghantaran Tabouleh — semua disahkan. Terima kasih. Betul-betul."
+          },
+          {
+            "requires_card": 1010,
+            "label": "Kita berjaya. Pelabur sudah setuju.",
+            "response": "Term sheet sampai Selasa. Bila saya masuk dulu, Marco pitch dengan masak burger dalam bilik saya sampai alarm asap berbunyi. *senyum kecil* Hari ini memang hebat. Kerja bagus."
+          }
+        ]
+      }
+    },
+
+    "npc-raj": {
+      "description": "Raj — CIO yang cemas, sistem disatukan dengan pita pelekat",
+      "config_overrides": {
+        "greeting": "GAH! Maaf, awak kejutkan saya. Maaf pasal kabel. Dan monitor. Semua okay kecuali POS sync lambat tujuh belas minit dan scheduler keluarkan shift hantu. Tapi selain tu — okay!",
+        "lines": [
+          {
+            "label": "Boleh awak bagi saya gambaran keseluruhan sistem?",
+            "response": "POS tu SquareBite — order dan bayaran. SupplyTrack untuk bahan dan vendor, login lain. Penjadualan pada ShiftWorks, pun lain. Akaun tu spreadsheet Diana. Dan middleware yang saya bina untuk sambungkan semua. Tak cantik. Jalan. Selalunya."
+          },
+          {
+            "label": "Apa hal dengan panel automasi tu?",
+            "response": "Panel Quick Automate! Saya bina untuk kerja rutin — order semula, tukar shift, laporan harian. Ada manual tapi halamannya melekat lepas Insiden tu. Yang hitam tu kopi, bukan sengaja disorok. Dapat urutan betul, panel tu buat benda hebat."
+          },
+          {
+            "label": "Macam mana keadaan Store #10?",
+            "response": "Store #10? *makin tertekan* Setiap kedai lain, saya ada di sana masa buka. Kalau #10 kena jalan tanpa saya, Quick Automate kena BETUL-BETUL berfungsi. Bukan 'berfungsi dengan Raj on speed-dial.' Ada orang kena betulkan panel tu. Awak ke? Tolong cakap ya."
+          },
+          {
+            "label": "Cerita saya pasal Quick Automate.",
+            "response": "*mata bersinar* Quick Automate ni anak saya. Orkestrasi silang sistem — order masuk POS, inventori SupplyTrack update, senarai prep esok berubah, stok rendah ditanda. Sekarang saya buat dalam tujuh belas tab browser. Dapat urutan betul, ia selamatkan saya — *suara pecah* — banyak jaga malam pukul 3."
+          }
+        ],
+        "state_lines": [
+          {
+            "requires_card": 410,
+            "label": "Saya dah berjayakan panel automasi tu!",
+            "response": "Awak dapat? Urutan penuh? Pada HARI PERTAMA? Saya dah nak betulkan tu tujuh bulan. Saya dokumenkan MASA insiden kopi tu. Awak memang hebat. Boleh awak tinggal? Kekal?"
+          },
+          {
+            "requires_card": 510,
+            "label": "Saya dah selidik setup teknologi pesaing.",
+            "response": "Chocolot guna POS monolit tanpa integrasi? Dan Gemelli jalankan semua dari SATU iPad? Saya rasa lega pasal spaghetti kita. Sistem penghantaran Tabouleh memang mengagumkan. Untuk pitch: kita lebih maju pada infrastruktur. Maju yang berselerak."
+          },
+          {
+            "requires_card": 1010,
+            "label": "Store #10 baru dibuka. Macam mana keadaannya?",
+            "response": "*pandang dashboard* Ia berfungsi. POS sync kali pertama boot. Order bekalan keluar sendiri. Tak sesiapa telefon saya. Tak sesiapa. *suara pecah* Dah dua jam saya tunggu sesuatu rosak. Saya tak menangis, bilik server ni berhabuk."
+          }
+        ]
+      }
+    },
+
+    "npc-barista": {
+      "description": "Barista Yang Mengesyaki — perasan awak ambil gambar, lapor aktiviti mengesyaki",
+      "config_overrides": {
+        "greeting": "Selamat datang ke Chocolot. Apa saya boleh bawakan untuk awak? ...Awak nak order sesuatu kan? Kami ada minimum order.",
+        "lines": [
+          {
+            "label": "Apa yang awak cadangkan?",
+            "response": "Dark Truffle Mocha, sembilan lima puluh, bestseller kami. Tapi Ganache Croissant Melt empat belas dua puluh tu tempat margin — maksud saya PERISA — sebenarnya. Dua ratus sehari waktu puncak. Manager kata ia 'anchor item' kami."
+          },
+          {
+            "label": "Tempat ni ada setup yang bagus...",
+            "response": "*berhenti mengelap* ...Awak ambil gambar dekat papan menu tadi? Korporat suruh laporkan apa-apa yang mencurigakan. Awak bukan dari kedai burger tu, kan? ...Lupakan. Nak mocha tak?"
+          }
+        ],
+        "state_lines": []
+      }
+    },
+
+    "npc-gemelli-friendly": {
+      "description": "Kembar Gemelli yang mesra — cakap terlalu banyak tentang rancangan pengembangan",
+      "config_overrides": {
+        "greeting": "Ciao! Selamat datang, selamat datang! Kali pertama sini? Awak MESTI cuba gemelli special — dipress segar, mozzarella masih berasap! Duduk, duduk!",
+        "lines": [
+          {
+            "label": "Cerita saya pasal perniagaan awak!",
+            "response": "CANTIK! Kami baru tandatangan lease untuk lokasi keempat, di Fifth Street. Lima cawangan menjelang Oktober, menu sama semua tempat. Rahsianya? Tiga panini, dua sup, satu salad. Tiada volcano burger atau apa pun yang pesaing buat."
+          },
+          {
+            "label": "Boleh saya tengok dapur?",
+            "response": "Dapur? Adik saya akan bunuh saya — dia jaga rahsia proses. Tapi press sama, timing sama, bahan sama di setiap lokasi. Kami jalankan semua dari satu iPad. Dia yang pandai, saya yang handsome. *kenyit mata*"
+          }
+        ],
+        "state_lines": []
+      }
+    },
+
+    "npc-gemelli-suspicious": {
+      "description": "Kembar Gemelli yang mengesyaki — memerhati awak, tangkap ketidakkonsistenan",
+      "config_overrides": {
+        "greeting": "... *renung* Boleh saya bantu apa-apa?",
+        "lines": [
+          {
+            "label": "Cuma tengok-tengok menu je!",
+            "response": "Awak 'tengok menu' semalam pun. Dan Selasa. Banyak soalan untuk orang yang tak pernah order lebih daripada air. Apa sebenarnya awak selidik?"
+          },
+          {
+            "label": "Abang awak sebut pasal pengembangan tu...",
+            "response": "*rahang mengetap* Abang saya banyak cakap. Fifth Street belum confirm. Lease tu belum — *tahan diri* ...Order sesuatu atau keluar. Panini kami ASLI. Kami tak perlu tiru."
+          }
+        ],
+        "state_lines": []
+      }
+    },
+
+    "npc-tony": {
+      "description": "Tony Pemandu — suka berbual, tahu bisnes setiap restoran",
+      "config_overrides": {
+        "greeting": "Hei buddy, awak driver penghantaran baharu ke? Tak? Habis kenapa awak berlegar-legar kat dok saya? Saya ada dua belas pesanan yang makin sejuk dan laluan yang tak masuk akal.",
+        "lines": [
+          {
+            "label": "Perlukan bantuan angkat kotak-kotak tu?",
+            "response": "Ambil timbunan tu? Terima kasih. Kami memang sibuk — ada order katering besar masuk, benda korporat, dua ratus hidangan dua kali seminggu mula bulan depan. Boss dah cakap pasal tambah trak. Margin penghantaran je memang gila. Tiada sewa, tiada meja."
+          },
+          {
+            "label": "Macam mana bisnes penghantaran layan awak?",
+            "response": "Bisnes memang emas. Radius dua belas blok, kami je yang hantar panas bawah lapan belas minit. QuickBite tak hantar pun. Chocolot ambil empat puluh minit sampai coklat cair. Kami kuasai kawasan ni untuk kelajuan. Buat masa ni."
+          }
+        ],
+        "state_lines": []
+      }
+    },
+
+    "npc-socialmedia": {
+      "description": "Pengurus Media Sosial — tertekan, memadam ulasan, mendedahkan masalah kakitangan",
+      "config_overrides": {
+        "greeting": "*tak angkat pandangan dari laptop* Dapur sebelah sana. Kalau awak orang DoorDash, pesanan ada atas kaunter. Kalau awak bloger makanan, tolong — TOLONGLAH — jangan post apa-apa dari hari ni.",
+        "lines": [
+          {
+            "label": "Hari yang susah?",
+            "response": "Tiga ulasan satu bintang minggu ni. TIGA. Ada orang kata mac and cheese rasa 'algorithmically optimized.' Engagement turun empat puluh peratus sejak — *berhenti* — sejak beberapa perubahan staf. Semua OKAY."
+          },
+          {
+            "label": "Perubahan kakitangan apa?",
+            "response": "*pandang atas* Ada dalam LinkedIn pun. Chef Reeves sedang 'explore opportunities.' Kata-kata kami 'tolong jangan pergi sebelum menu musim sejuk.' Ada orang — kata orang startup burger — pos jawatan sous chef dengan 'tiga kali kebebasan kreatif.' Jadi. Ya."
+          }
+        ],
+        "state_lines": []
+      }
+    },
+
+    "reception-sort": {
+      "description": "Susun keutamaan papan tugasan yang kecoh mengikut urutan perjalanan Amazon Quick"
+    },
+
+    "craft-kitchen": {
+      "description": "Gabungkan data Marco yang bertaburan mengikut tag untuk hasilkan Analisis Kos Makanan",
+      "config_overrides": {
+        "materials": [
+          { "label": "Kad Resipi" },
+          { "label": "Helaian Kos" },
+          { "label": "Senarai Pembekal" },
+          { "label": "Kalkulator" },
+          { "label": "Buku Nota Marco" },
+          { "label": "Eksport POS" }
+        ],
+        "rules": [
+          { "output": { "label": "📖 Resipi Lengkap" } },
+          { "output": { "label": "🏷️ Matriks Harga Vendor" } },
+          { "output": { "label": "📊 Kos per Item Menu" } },
+          { "output": { "label": "📊 Kos per Item Menu" } },
+          { "output": { "label": "✅ Analisis Kos Makanan" } }
+        ]
+      }
+    },
+
+    "wire-diana": {
+      "description": "Sambungkan sumber data Diana kepada soalan pelabur yang dijawabnya",
+      "config_overrides": {
+        "wires": [
+          { "label": "Hasil POS" },
+          { "label": "Jam Kakitangan" },
+          { "label": "Invois Pembekal" },
+          { "label": "Penilaian Pelanggan" },
+          { "label": "Masa Penghantaran" }
+        ],
+        "sockets": [
+          { "label": "Apa margin keuntungan kita?" },
+          { "label": "Adakah kita terlebih kakitangan?" },
+          { "label": "Siapa pembekal paling murah kita?" },
+          { "label": "Adakah pelanggan gembira?" },
+          { "label": "Adakah penghantaran terlalu perlahan?" },
+          { "label": "Apa warna kegemaran Marco?" },
+          { "label": "Bila hari lahir Raj?" }
+        ],
+        "falseOutputs": [
+          "Data tu tak jawab soalan tu. Fikir apa yang setiap nombor tu ukur.",
+          "Diana mengeluh: 'Padankan DATA dengan SOALAN yang dijawabnya.'",
+          "Itu macam guna termometer untuk ukur jarak."
+        ]
+      }
+    },
+
+    "trap-raj": {
+      "description": "Teka urutan pengaktifan sistem yang betul daripada manual yang separuh disensor",
+      "config_overrides": {
+        "wires": [
+          { "label": "Sistem POS" },
+          { "label": "Portal Pembekal" },
+          { "label": "Penjadual Kakitangan" },
+          { "label": "Penjejak Penghantaran" },
+          { "label": "Payment Gateway" }
+        ],
+        "rules": [
+          { "text": "Payment Gateway mesti diaktifkan sebelum Portal [STAIN].", "hint": "Pembekal" },
+          { "text": "Sistem POS mesti online sebelum Penjejak [STAIN].", "hint": "Penghantaran" },
+          { "text": "Jangan sekali-kali aktifkan Penjadual Kakitangan dahulu — ia bergantung pada data [STAIN].", "hint": "POS" },
+          { "text": "Wayar di kedudukan 1 sentiasa diaktifkan ke[STAIN]a.", "hint": "du" },
+          { "text": "Penjejak Penghantaran adalah sistem terakhir yang akan pergi [STAIN].", "hint": "live" },
+          { "text": "Penjadual Kakitangan mesti sync [STAIN] POS selesai.", "hint": "selepas" }
+        ]
+      }
+    },
+
+    "match-breakroom": {
+      "description": "Kategorikan serpihan data yang dikumpul ke dalam Quick Spaces",
+      "config_overrides": {
+        "pairs": [
+          ["Volcano Burger perlukan patty 340g — Marco", "🍳 Resipi & Bahagian"],
+          ["Tukar minyak penggoreng setiap 3 hari maksimum — Marco", "🍳 Keselamatan Dapur"],
+          ["Kita rugi $200/hari sebab bahan rosak — Diana", "💰 Kawalan Kos"],
+          ["Mesyuarat pelabur Jumaat, perlukan P&L — Diana", "💰 Laporan Pelabur"],
+          ["POS putus WiFi lepas 11 malam — Raj", "🖥️ Infrastruktur"],
+          ["Auto-order tercetus pada 20% stok — Raj", "🖥️ Peraturan Automasi"],
+          ["Yelp kata masa menunggu lebih 8 minit — Diana", "👥 Maklum Balas Perkhidmatan"],
+          ["Pelanggan tetap nak pilihan pedas, 12 permintaan minggu ni — Marco", "👥 Permintaan Pelanggan"]
+        ]
+      }
+    },
+
+    "pushluck-chocolot": {
+      "description": "Ambil gambar risikan harga di Chocolot tanpa ditangkap oleh keselamatan",
+      "config_overrides": {
+        "bag": [
+          { "label": "Gambar menu +2" },
+          { "label": "Papan jualan +3" },
+          { "label": "Dokumen harga +5" },
+          { "label": "\"Hei! Jangan ambil gambar!\"" }
+        ]
+      }
+    },
+
+    "wager-gemelli": {
+      "description": "Kejuruteraan sosial perbualan dengan kembar Gemelli untuk kumpul risikan pengembangan",
+      "config_overrides": {
+        "stakes": [
+          { "label": "Bergumam" },
+          { "label": "Bercakap Manis" },
+          { "label": "Bohong Berani" }
+        ],
+        "questions": [
+          { "question": "Kembar yang mesra tanya apa yang bawa awak ke sini hari ni. Apa awak nak cakap?" },
+          { "question": "Seorang pelanggan tetap sebut dia datang setiap hari. Macam mana awak nak tahu waktu puncak?" },
+          { "question": "Kembar yang mengesyaki sedang isi semula napkin berhampiran. Macam mana awak nak tahu kos pembekal?" },
+          { "question": "Awak terdengar kakitangan sebut lokasi kedua. Macam mana awak nak sahkan rancangan pengembangan?" },
+          { "question": "Kembar yang mesra tawarkan kad kesetiaan. Macam mana awak nak tahu strategi pengekalan mereka?" },
+          { "question": "Kembar yang mengesyaki nampak awak renung papan menu istimewa. Apa awak nak cakap?" },
+          { "question": "Papan menu tunjukkan bahagian bermusim baharu. Macam mana awak nak tanya?" },
+          { "question": "Awak perasan tanda 'Memerlukan Pekerja'. Macam mana awak nak siasat?" },
+          { "question": "Kembar yang mesra sebut pembekal kopi baharu. Macam mana awak nak siasat lebih lanjut?" },
+          { "question": "Awak nampak kotak penghantaran daripada vendor yang tak dikenali. Apa awak nak buat?" }
+        ]
+      }
+    },
+
+    "auction-tabouleh": {
+      "description": "Bajet: $100. Bukan semua orang ada risikan — baca bahasa badan sebelum belanja. Pilih 3 kontak utama daripada 7 orang.",
+      "config_overrides": {
+        "lots": [
+          { "label": "Tony Pemandu", "hint": "Bersandar pada van sambil semak clipboard. Bergumam tentang \"tiga penghantaran katering baharu minggu ni.\"" },
+          { "label": "Tukang Masak Waktu Rehat", "hint": "Duduk atas peti susu sambil scroll telefon. Menguap pasal dah kat sini sejak 4 pagi." },
+          { "label": "Lelaki Penghantaran Sayur", "hint": "Menurunkan dua kali ganda bilangan peti biasa. Bersiul sambil susun kotak berlabel pukal." },
+          { "label": "Pembantu Pemilik", "hint": "Bertelefon berhampiran pejabat, menyelak perjanjian sewa dan sebut harga renovasi." },
+          { "label": "Tukang Cuci Malam", "hint": "Menuju balik dengan earbuds terpasang, hampir tertidur. Mengangguk tapi terus jalan ke hentian bas." },
+          { "label": "Pemeriksa Kesihatan", "hint": "Baju polo kemas, badge lanyard, menulis pada borang. Pancarkan aura 'jangan cakap dengan saya'." },
+          { "label": "Pembekal Pastri", "hint": "Memuatkan dulang kosong ke dalam van. Semak telefon — spreadsheet pesanan tetap daripada lima restoran." }
+        ]
+      }
+    },
+
+    "decay-cooker": {
+      "description": "Baca hantaran media sosial yang hilang untuk kenal pasti kelemahan terbesar The Cooker",
+      "config_overrides": {
+        "question": "Berdasarkan apa yang anda lihat, apa kelemahan operasi terbesar The Cooker?",
+        "fragments": [
+          { "text": "@hangry_hannah: Tunggu 40 minit untuk burger kat The Cooker. Keluar sejuk. Kakitangan nampak tertekan. Tak akan lagi." },
+          { "text": "Tanpa nama (Glassdoor): Ketua tukang masak dah pergi temuduga di bandar. Semangat dalam dapur betul-betul rendah. Pengurusan tak peduli." },
+          { "text": "ForkAndKnifeBlog: Cuba The Cooker lawan QuickBite side by side. QuickBite menang dalam kelajuan, konsistensi, dan nilai. Kelebihan mereka cuma pencuci mulut." },
+          { "text": "@local_eats_watchdog: Tip bahawa The Cooker gagal semakan suhu dapur baru-baru ni. Walk-in pada 48F. Jabatan kesihatan dah tandakan, belum ditutup lagi." },
+          { "text": "@dessert_queen_99: Molten lava cake The Cooker MEMANG HEBAT tapi $18 untuk pencuci mulut?? Itu je sebab saya masih pergi sebenarnya." }
+        ]
+      }
+    },
+
+    "wager-warroom": {
+      "description": "Bina papan pemuka pelabur — letak metrik yang betul pada bahagian yang betul sebelum panggilan.",
+      "config_overrides": {
+        "layers": [
+          { "label": "Metrik Hasil" },
+          { "label": "Pandangan Pelanggan" },
+          { "label": "Analisis Pesaing" },
+          { "label": "Kesihatan Operasi" }
+        ],
+        "components": [
+          { "label": "Nisbah kos makanan (32%)", "hint": "Apa metrik ni beritahu pelabur tentang margin perniagaan awak?" },
+          { "label": "Hasil bulanan ($240K)", "hint": "Ukuran paling asas berapa banyak wang masuk." },
+          { "label": "Purata bil ($11.20)", "hint": "Purata berapa banyak setiap pelanggan belanja setiap lawatan." },
+          { "label": "Kepuasan pelanggan (4.6/5)", "hint": "Maklum balas terus daripada orang yang makan makanan awak." },
+          { "label": "Peratusan pesanan mobile (62%)", "hint": "Beritahu awak MACAM MANA pelanggan pilih untuk order." },
+          { "label": "Rancangan pengembangan Panini Gemelli", "hint": "Risikan yang dikumpul tentang apa yang pesaing rancang." },
+          { "label": "Risiko pusing ganti kakitangan Cooker", "hint": "Kelemahan dalam operasi harian pesaing." },
+          { "label": "Kesediaan Store #10", "hint": "Jejak sama ada pengembangan awak sendiri mengikut jadual." }
+        ],
+        "falseOutputs": {
+          "foodcost->ops": "Kos makanan beritahu pelabur tentang margin, bukan operasi. Ia sepatutnya dengan Metrik Hasil.",
+          "foodcost->insights": "Kos makanan bukan pandangan pelanggan — ia nombor keuntungan.",
+          "foodcost->competitor": "Ini nisbah kos AWAK, bukan data pesaing.",
+          "revenue->ops": "Hasil bulanan tu metrik kewangan, bukan operasi.",
+          "revenue->insights": "Hasil bukan pandangan pelanggan — ia metrik wang.",
+          "revenue->competitor": "Ini hasil AWAK, bukan pesaing.",
+          "ticket->ops": "Purata bil tu metrik hasil, bukan kesihatan operasi.",
+          "ticket->insights": "Saiz bil tu kewangan, bukan sentimen pelanggan.",
+          "csat->revenue": "Kepuasan pelanggan bukan hasil — ia pandangan tentang perasaan pelanggan.",
+          "csat->ops": "CSAT ukur persepsi pelanggan, bukan operasi.",
+          "mobile->revenue": "Pesanan mobile tu pandangan tingkah laku pelanggan, bukan hasil.",
+          "mobile->ops": "Pilihan saluran tu pandangan pelanggan, bukan ops.",
+          "gemelli->revenue": "Itu risikan pesaing, bukan hasil awak.",
+          "gemelli->ops": "Rancangan Gemelli tu risikan persaingan.",
+          "gemelli->insights": "Ini pasal pesaing, bukan pelanggan awak.",
+          "turnover->revenue": "Pusing ganti kakitangan tu operasi, bukan metrik hasil.",
+          "turnover->insights": "Ini pasal ops, bukan persepsi pelanggan.",
+          "store10->revenue": "Kesediaan kedai tu status operasi, bukan hasil.",
+          "store10->insights": "Kesediaan kedai tu pasal operasi awak.",
+          "store10->competitor": "Ini kedai AWAK, bukan pesaing."
+        },
+        "successMessage": "Papan pemuka pelabur siap! Metrik disusun dan sedia untuk panggilan."
+      }
+    },
+
+    "fogmap-store10": {
+      "description": "Terokai Store #10 yang belum siap untuk cari apa yang diperlukan bagi pembukaan",
+      "config_overrides": {
+        "tiles": [
+          {},
+          { "label": "Lokasi router WiFi dipetakan" },
+          { "label": "Sijil kesihatan dijumpai" },
+          { "label": "Kunci loker kakitangan diambil" },
+          { "label": "Terminal POS dijumpai" },
+          { "label": "Peti sejuk rosak — masa terbuang" },
+          { "label": "Bilik air dibanjiri — perlu pusing" },
+          { "label": "Litar pintas elektrik — bahaya" },
+          { "label": "Meja sudah disusun" },
+          { "label": "Papan tanda dihantar awal" },
+          {}
+        ]
+      }
+    },
+
+    "keypad-wifi": {
+      "description": "Sambung ke WiFi kedai untuk aktifkan sistem"
+    },
+
+    "defuse-store10": {
+      "description": "Konfigurasikan panel automasi dan lancarkan Store #10. Aktifkan sistem yang betul, matikan yang tidak selamat, dan sahkan nombor kedai.",
+      "config_overrides": {
+        "tasks": [
+          { "label": "Aktifkan automasi Quick Flows" },
+          { "label": "Sambungkan POS ke Quick Index" },
+          { "label": "Langkau pengesahan pemeriksaan kesihatan" },
+          { "label": "Aktifkan penjadualan Quick Automate" },
+          { "label": "Masukkan nombor kedai" }
+        ]
+      }
+    },
+
+    "cascade-finale": {
+      "description": "Perhatikan Quick laksanakan semua yang anda bina. Sahkan setiap langkah — satu kelulusan yang salah pecahkan rangkaian.",
+      "config_overrides": {
+        "steps": [
+          {
+            "question": "Quick Index jumpa semua data resipi Marco yang bertaburan — fail, buku nota, eksport POS, invois pembekal. Kos makanan dikira: 32%.",
+            "options": ["Percaya gerak hati Marco — dia tahu nombor dia", "Ketiga-tiga sumber disemak silang. Teruskan.", "Tarik masuk harga pembekal tahun lepas juga"],
+            "wrong": { "0": "Anggaran Marco selalu meleset — data tunjukkan 32%, bukan agakan dia 'dalam tiga puluhan'. Percaya semakan silang tu.", "2": "Harga tahun lepas dah lapuk — ia akan racuni pengiraan. Kekal dengan sumber semasa yang disahkan." },
+            "after": "Quick Index ✓ — data resipi diindeks, kos makanan disahkan."
+          },
+          {
+            "question": "Quick Sight himpunkan papan pemuka pelabur Diana — hasil, margin, analisis pesaing, kesediaan kedai. Semua metrik divisualisasikan.",
+            "options": ["Tunjuk semua metrik yang kita ada — pelabur suka data", "Petunjuk utama sahaja. Kemas. Hantar.", "Biar Marco tambah slaid Volcano Burger"],
+            "wrong": { "0": "Diana khusus cakap dia benci kekusutan. Tujuh belas sel kosong tu masalahnya — bukan carta terlalu sikit, tapi terlalu banyak. Kekalkan ia kemas.", "2": "Volcano Burger tu projek passion Marco, bukan keutamaan pelabur. Diana akan veto ni dalam sekelip mata." },
+            "after": "Quick Sight ✓ — papan pemuka dihimpunkan, metrik utama sahaja."
+          },
+          {
+            "question": "Quick Automate sambungkan sistem Raj — POS sync setiap 30 saat, penjadual cetuskan kakitangan, portal pembekal auto-order.",
+            "options": ["Semua sistem diuji dan sync. Go live.", "Jalankan secara manual sekali lagi untuk selamat", "Dah cukup dekat — POS cuma lambat 17 saat"],
+            "wrong": { "1": "Jalankan secara manual musnahkan seluruh tujuan automasi. Raj bina ni supaya dia tak perlu buat secara manual lagi.", "2": "Lambat 17 saat tu senario nightmare Raj — ingat panik dia dalam bilik server tu? Hijau bermaksud hijau. Jangan berpuas hati dengan 'dah cukup dekat'." },
+            "after": "Quick Automate ✓ — semua sistem sync, automasi live."
+          },
+          {
+            "question": "Quick Research himpunkan risikan pesaing — harga Chocolot, pengembangan Gemelli, rantaian bekalan Tabouleh, kelemahan Cooker. Semua dirujuk.",
+            "options": ["Sertakan brainstorm Q3 — lebih ammo untuk pitch", "Empat sumber, semua dirujuk. Taklimat sedia.", "Buang penemuan Cooker — rasa terlalu agresif"],
+            "wrong": { "0": "PO secara jelas bunuh idea brainstorm Q3 (crypto rewards, mod AR). Memasukkannya akan bercanggah dengan arahan terus dia.", "2": "Ketua tukang masak Cooker akan berhenti — itu kelebihan persaingan terbesar awak sekarang. Membuang ia lemahkan taklimat tu." },
+            "after": "Quick Research ✓ — taklimat pesaing dihimpunkan dengan rujukan."
+          },
+          {
+            "question": "Quick Flows cetuskan urutan pembukaan Store #10 — semakan kesihatan → WiFi → POS → menu → inventori → pengumuman. Semua diautomasikan.",
+            "options": ["Biar Marco buka pintu dulu — dia layak", "Urutan automasi disahkan. Kebergantungan disahkan. Laksanakan.", "Fast-track je — langkau langkah pemeriksaan kesihatan"],
+            "wrong": { "0": "Semangat Marco memang bagus, tapi urutan automasi perlu jalan mengikut urutan kebergantungan. Langkau ke depan pecahkan rangkaian.", "2": "Store #6 buka tanpa peti sejuk. Store #8 terlupa napkin. Langkau pemeriksaan kesihatan tu memang menyalahi undang-undang. Percaya flow tu." },
+            "after": "Quick Flows ✓ — urutan pembukaan kedai dilaksanakan mengikut urutan."
+          },
+          {
+            "question": "Quick Chat Agent menyertai panggilan pelabur. Konteks dimuatkan: ringkasan kewangan, penyelidikan pesaing, rancangan pengembangan. Sedia untuk membentangkan.",
+            "options": ["Konteks dimuatkan. Penyelidikan disahkan. Mulakan panggilan.", "Biar agent improvise — bunyi lebih natural", "Tambah slaid pitch lama untuk backup"],
+            "wrong": { "1": "Improvise tanpa konteks itulah macam mana Marcus bina laman pengambilan kucing. Agent perlukan konteks yang disahkan — itulah intipati AI-DLC.", "2": "Slaid pitch lama tu legasi Marcus — ia janji platform sosial tapi hantar app taco. Menambahnya akan racuni konteks agent." },
+            "after": "Quick Chat Agent ✓ — dalam panggilan dengan konteks penuh."
+          }
+        ],
+        "onComplete": {
+          "text": "Pelabur bersandar. Senyum. \"Tak seorang pun daripada mereka ada tahap... kesediaan macam ni.\"",
+          "subtext": "Marco tumbuk udara. Diana senyum. Raj memang tak menangis. Store #10 buka esok. Quick jalankan semuanya."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Orientation Room",
+      "description": "A bright meeting room with a welcome banner and your rotation schedule pinned to a corkboard",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "Welcome to the Ministry! Your one-month rotation starts today.",
+      "map_pos": [140, 380]
+    },
+    {
+      "card_id": 200,
+      "name": "Work Pass Processing Unit",
+      "description": "Rows of workstations with dual monitors, stacks of application folders, and a wall of policy binders",
+      "connects_to": [300],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "orientation-sort" },
+      "unlock_text": "Week 1: You report to the Work Pass Processing Unit. Time to handle real cases.",
+      "map_pos": [140, 290]
+    },
+    {
+      "card_id": 300,
+      "name": "Dispute Resolution Centre",
+      "description": "A calm mediation room with a round table, case files neatly stacked, and a whiteboard of active cases",
+      "connects_to": [400],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "pass-review" },
+      "unlock_text": "Week 2: The Dispute Resolution Centre. Things get more nuanced here.",
+      "map_pos": [140, 200]
+    },
+    {
+      "card_id": 400,
+      "name": "Workplace Safety Desk",
+      "description": "An open-plan area with incident dashboards on wall screens and a 'Days Since Last Papercut: 3' sign",
+      "connects_to": [500],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "dispute-mediation" },
+      "unlock_text": "Week 3: Workplace Safety. The team takes compliance very seriously (and papercuts personally).",
+      "map_pos": [140, 110]
+    },
+    {
+      "card_id": 500,
+      "name": "Director's Office",
+      "description": "A corner office with a view, a standing desk, and exactly one framed motivational poster: 'Data-Driven Empathy'",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "safety-review" },
+      "unlock_text": "Week 4: The Director wants your rotation report. Last stop.",
+      "map_pos": [140, 20]
+    }
+  ]
+}

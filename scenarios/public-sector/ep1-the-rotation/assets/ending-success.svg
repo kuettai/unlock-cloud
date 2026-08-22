@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a237e"/>
+      <stop offset="100%" style="stop-color:#0a0e17"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <!-- Stars -->
+  <circle cx="50" cy="60" r="2" fill="#fff" opacity="0.5"/>
+  <circle cx="120" cy="30" r="1.5" fill="#fff" opacity="0.4"/>
+  <circle cx="300" cy="50" r="2" fill="#fff" opacity="0.6"/>
+  <circle cx="350" cy="80" r="1.5" fill="#fff" opacity="0.3"/>
+  <circle cx="80" cy="120" r="1" fill="#fff" opacity="0.5"/>
+  <circle cx="320" cy="130" r="1.5" fill="#fff" opacity="0.4"/>
+  <!-- Trophy/Badge -->
+  <circle cx="200" cy="180" r="60" fill="none" stroke="url(#gold)" stroke-width="3" opacity="0.8"/>
+  <circle cx="200" cy="180" r="50" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.5"/>
+  <!-- Checkmark -->
+  <path d="M175 180 L192 197 L225 163" fill="none" stroke="#22c55e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Text -->
+  <text x="200" y="270" text-anchor="middle" fill="#f59e0b" font-family="Georgia, serif" font-size="22" font-weight="bold">Rotation Complete</text>
+  <text x="200" y="300" text-anchor="middle" fill="#7a8ba8" font-family="sans-serif" font-size="13">Ministry of Manpower</text>
+  <!-- Decorative lines -->
+  <line x1="120" y1="320" x2="280" y2="320" stroke="#1e2a45" stroke-width="1"/>
+  <!-- Quote -->
+  <text x="200" y="360" text-anchor="middle" fill="#c4b5fd" font-family="Georgia, serif" font-size="12" font-style="italic">"AI assistants don't replace judgment —</text>
+  <text x="200" y="380" text-anchor="middle" fill="#c4b5fd" font-family="Georgia, serif" font-size="12" font-style="italic">they give you more time to use it."</text>
+</svg>
