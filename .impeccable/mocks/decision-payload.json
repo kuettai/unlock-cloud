@@ -1,0 +1,163 @@
+{
+  "title": "Choose the visual world for app/index.html",
+  "question": "The roll assigned the Riso Zine Program. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Riso Zine Program",
+      "kicker": "THE ROLL",
+      "lineage": "staple-bound riso-printed event/conference programs",
+      "thesis": "The whole session as the event's own zine, held in one hand at the booth.",
+      "palette": ["#F4EDE1", "#1A1A1A", "#E8542E"],
+      "materials": ["riso spot-color print", "staple-bound zine", "halftone dot screen"],
+      "viewport": "A stapled program spread: duotone room art bleeds full-width, item/object cards ride as punch-hole insert tabs down the right edge, tab nav reads like schedule tracks.",
+      "risk": "Reads twee craft-fair if the ink goes pastel instead of riso-flat and saturated.",
+      "raised": [
+        { "from": "editorial-sequence-montage-botanical-folio-season", "raise": "Every room spread locks to one shared masthead baseline and scale, category skin or not — borrowed registration discipline." },
+        { "from": "operate-c-cracktro-scroller-queue", "raise": "Only the current room's ink runs full-saturation; every other card sits in the two base tones until it's live — borrowed signal economy." },
+        { "from": "textiles-weave-drape-fashion-drawcord-transforming-cape", "raise": "Unlocking a room tears a perforated edge rather than fading — one committed gesture, not a generic transition." }
+      ],
+      "wireframe": {
+        "cols": 12, "rows": 10,
+        "regions": [
+          { "label": "masthead strip (issue no. = episode)", "x": 0, "y": 0, "w": 12, "h": 1 },
+          { "label": "staple/perforation edge", "x": 0, "y": 1, "w": 1, "h": 9, "accent": true },
+          { "label": "room spread (duotone art)", "x": 1, "y": 1, "w": 8, "h": 6 },
+          { "label": "insert tabs (items/objects)", "x": 9, "y": 1, "w": 3, "h": 6 },
+          { "label": "schedule-strip timer", "x": 1, "y": 7, "w": 11, "h": 1 },
+          { "label": "tab-strip nav", "x": 0, "y": 9, "w": 12, "h": 1, "accent": true }
+        ]
+      }
+    },
+    {
+      "id": "model-pick",
+      "label": "Mission Dossier",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "analog spycraft case files, redacted evidence folders",
+      "thesis": "Every room a case file the team cracks open, the Purge closing in like a redacted deadline.",
+      "palette": ["#EDE6D3", "#2B2B26", "#B23A2E"],
+      "materials": ["manila case folder", "carbon-copy typewriter type", "rubber-stamp ink"],
+      "viewport": "A case file: a clipped, slightly crooked room photo under a typed brief, evidence-tag cards strung along the bottom, a redaction bar standing in for the countdown.",
+      "risk": "Also the direction most escape-room skins already land on — familiar, but proven for exactly this genre.",
+      "wireframe": {
+        "cols": 12, "rows": 10,
+        "regions": [
+          { "label": "case-file header, stamped classification", "x": 0, "y": 0, "w": 12, "h": 1 },
+          { "label": "redaction bar (timer/purge)", "x": 0, "y": 1, "w": 12, "h": 1, "accent": true },
+          { "label": "clipped photo + typed brief", "x": 0, "y": 2, "w": 12, "h": 5 },
+          { "label": "evidence-tag row (items/objects)", "x": 0, "y": 7, "w": 12, "h": 2 },
+          { "label": "folder-tab nav", "x": 0, "y": 9, "w": 12, "h": 1, "accent": true }
+        ]
+      }
+    },
+    {
+      "id": "challenger-teletext",
+      "label": "Teletext Service",
+      "verdict": "competitive",
+      "lineage": "broadcast teletext magazines (Ceefax/ORACLE-style)",
+      "thesis": "A keyed page: three-digit room address top-left, block-mosaic art filling the cell grid, hidden hint tiers waiting behind a REVEAL flag.",
+      "palette": ["#000000", "#00C000", "#FFFF00", "#0000C0"],
+      "materials": ["block-mosaic cells", "phosphor CRT glow"],
+      "viewport": "P<room id> index page: numbered rows for items/objects, a HOLD flag on gated rooms.",
+      "case": "Fuses cleanly — rooms already carry numeric card_ids and hints already tier progressively, both map straight onto page-keying and REVEAL; loses narrowly on identification outside broadcast-nostalgic markets.",
+      "risk": "Reads as a UK/Europe-specific broadcast reference this event's Southeast-Asia-leaning audience may not have grown up with.",
+      "wireframe": {
+        "cols": 12, "rows": 10,
+        "regions": [
+          { "label": "page-address header (room code)", "x": 0, "y": 0, "w": 12, "h": 1 },
+          { "label": "block-mosaic room art", "x": 0, "y": 1, "w": 12, "h": 5 },
+          { "label": "REVEAL hint band", "x": 0, "y": 6, "w": 12, "h": 1, "accent": true },
+          { "label": "numbered keys (items/objects)", "x": 0, "y": 7, "w": 12, "h": 2 },
+          { "label": "carousel nav strip", "x": 0, "y": 9, "w": 12, "h": 1 }
+        ]
+      }
+    },
+    {
+      "id": "challenger-elbow-panel",
+      "label": "Starship Elbow Panel",
+      "verdict": "competitive",
+      "lineage": "pop-culture starship wall consoles",
+      "thesis": "A wall panel: a thick lilac elbow frames the room art, pill-shaped buttons are the item/object grid, the active pill flashes gold.",
+      "palette": ["#0A0A0A", "#D9A6E0", "#F6C453", "#F3B8A0"],
+      "materials": ["flat vector pastel blocks", "injection-molded panel seams"],
+      "viewport": "Full-bleed elbow frame with a pill-button grid; numeric code cluster stands in for the progress readout.",
+      "case": "Fuses cleanly for tap-target clarity — every pill is an unambiguous button; loses on carrying HKEX-compliance or religious-education episodes, which this dashboard skin reads too sci-fi-specific for.",
+      "risk": "Charming for AWS content, but the same panel dressing a regulatory-filing or scripture episode reads as a costume, not a fit.",
+      "wireframe": {
+        "cols": 12, "rows": 10,
+        "regions": [
+          { "label": "black-glass header", "x": 0, "y": 0, "w": 12, "h": 1 },
+          { "label": "sweeping elbow frame (room art)", "x": 0, "y": 1, "w": 12, "h": 2, "accent": true },
+          { "label": "pill-button grid (items/objects)", "x": 0, "y": 3, "w": 12, "h": 5 },
+          { "label": "numeric code cluster (timer)", "x": 0, "y": 8, "w": 12, "h": 1 },
+          { "label": "pill nav strip", "x": 0, "y": 9, "w": 12, "h": 1, "accent": true }
+        ]
+      }
+    },
+    {
+      "id": "challenger-botanical-folio",
+      "label": "Botanical Folio",
+      "verdict": "declined",
+      "lineage": "engraved seasonal botanical plates",
+      "thesis": "Each room a fixed-scale botanical plate tracking one plant's season.",
+      "palette": ["#F5EFE0", "#3B6E4E", "#7A1E1E"],
+      "materials": ["copperplate engraving", "cream plate stock"],
+      "case": "Fuses poorly — quiet, contemplative comparison-viewing has no path to branching choice or a countdown antagonist.",
+      "kept": "Registration discipline: every plate locked to the same baseline and scale."
+    },
+    {
+      "id": "challenger-cracktro",
+      "label": "Cracktro Scroller",
+      "verdict": "declined",
+      "lineage": "demoscene cracktro title screens",
+      "thesis": "Depth-as-rank on an emissive void, one bitmap line at a time.",
+      "palette": ["#050505", "#C9C9C9", "#F0A93B"],
+      "materials": ["bitmap type", "dust-field parallax"],
+      "case": "Fuses poorly — 'nothing ever enclosed by a rule or box' fights the tap-target boundaries a noisy booth needs, and it lands too close to the sci-fi-HUD rut this round was rolled to escape.",
+      "kept": "Signal economy: exactly one accent color reserved for the live/active state."
+    },
+    {
+      "id": "challenger-cloud-edge",
+      "label": "Iridescent Cloud Edge",
+      "verdict": "declined",
+      "lineage": "atmospheric-optics diagrams",
+      "thesis": "A spectral fringe of color at a cloud's edge, everything else achromatic.",
+      "palette": ["#FCFBF8", "#5B6670", "#C9A6D8"],
+      "materials": ["thin hairline spectra", "achromatic photo field"],
+      "case": "Fuses poorly — droplet-comparison topology has no branching-room or combine equivalent, and a literal cloud/weather look is the single most obvious reading of an AWS product, exactly the rut this round was rolled to avoid.",
+      "kept": "Color confined to state-transition edges, never filling whole regions."
+    },
+    {
+      "id": "challenger-drawcord-cape",
+      "label": "Drawcord Cape",
+      "verdict": "declined",
+      "lineage": "transforming drawcord textiles",
+      "thesis": "One cord-pull turns a flat plane into a gathered, protective volume.",
+      "palette": ["#111111", "#C9A227", "#3A3A3A"],
+      "materials": ["matte silk", "gold drawcord"],
+      "case": "Fuses poorly — one signature transformation gesture doesn't extend to a shell with rooms, inventory, combine, map, tools, and an admin panel; fashion/textile has no natural foothold with a tech-booth audience.",
+      "kept": "One decisive gesture reveals structure — carried into the assigned direction as the room-unlock tear."
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "code" },
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "The dark ops-console HUD this app already ships, executed impeccably instead of replaced.",
+    "palette": ["#0a0e17", "#141b2d", "#3b82f6"],
+    "materials": ["glass panels", "neon accent borders"],
+    "viewport": "Near-black ground, glassy surface cards, one accent blue running through timer, buttons, and active states.",
+    "risk": "Indistinguishable from every other sci-fi-ops dashboard by design.",
+    "wireframe": {
+      "cols": 12, "rows": 10,
+      "regions": [
+        { "label": "dark header + timer pill", "x": 0, "y": 0, "w": 12, "h": 1 },
+        { "label": "glass room card", "x": 0, "y": 1, "w": 12, "h": 6, "accent": true },
+        { "label": "item/object chips", "x": 0, "y": 7, "w": 12, "h": 2 },
+        { "label": "bottom tab bar", "x": 0, "y": 9, "w": 12, "h": 1 }
+      ]
+    }
+  },
+  "steer": true
+}

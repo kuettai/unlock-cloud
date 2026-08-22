@@ -1,0 +1,14 @@
+{
+  "base_score": 50,
+  "time_bonus_per_minute": 5,
+  "hint_penalty": -3,
+  "wrong_combination_penalty": -2,
+  "stars": [
+    { "min": 65, "stars": 5 },
+    { "min": 55, "stars": 4 },
+    { "min": 45, "stars": 3 },
+    { "min": 30, "stars": 2 },
+    { "min":  0, "stars": 1 }
+  ],
+  "notes": "Booth-friendly tuning for a 5-minute time-travel run. A no-hint clean playthrough with 2+ minutes remaining lands 5 stars."
+}

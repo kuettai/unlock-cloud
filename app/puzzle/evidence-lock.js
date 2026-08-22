@@ -19,7 +19,7 @@ class EvidenceLock {
 .evlk-bar{flex:1;height:4px;border-radius:2px;background:#333}
 .evlk-bar.done{background:#2ecc71}
 .evlk-bar.active{background:#f39c12}
-.evlk-narrative{background:var(--surface,#2a2a4e);border-left:3px solid #f39c12;border-radius:0 6px 6px 0;padding:12px;margin-bottom:12px;font-size:13px;color:#ccc;line-height:1.5;font-style:italic}
+.evlk-narrative{background:#2a2a4e;border-left:3px solid #f39c12;border-radius:0 6px 6px 0;padding:12px;margin-bottom:12px;font-size:13px;color:#ccc;line-height:1.5;font-style:italic}
 .evlk-detail{color:#f39c12;font-weight:bold;margin-top:8px;font-style:normal;text-align:center;font-size:14px}
 .evlk-input{background:var(--bg,#1a1a2e);border:1px solid var(--border,#444);border-radius:8px;padding:12px;text-align:center}
 .evlk-prompt{font-size:13px;color:var(--text,#eee);margin-bottom:10px}

@@ -119,8 +119,9 @@ class PillarLock {
 .pillk{display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px 0;max-width:380px;margin:0 auto}
 .pillk-progress{font-size:12px;color:var(--muted,#7a8ba8);font-weight:600}
 .pillk-card{width:100%;padding:20px;background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);border-radius:10px;font-size:15px;color:var(--text,#e0e6f0);text-align:center;min-height:70px;display:flex;align-items:center;justify-content:center;transition:all .3s}
-.pillk-card.pillk-right{border-color:var(--green,#22c55e);background:#0c1a0c}
+.pillk-card.pillk-right{border-color:#22c55e;background:#0c1a0c}
 .pillk-card.pillk-wrong{border-color:#ef4444;background:#1a0a0a}
+.pillk-card.pillk-right,.pillk-card.pillk-wrong{color:#e0e6f0}
 .pillk-pillars{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
 .pillk-pillar{padding:8px 14px;border:1px solid var(--border,#1e2a45);border-radius:8px;background:var(--surface,#141b2d);color:var(--muted,#7a8ba8);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
 .pillk-pillar:active{background:var(--accent,#3b82f6);color:#fff;transform:scale(.95)}

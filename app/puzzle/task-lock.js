@@ -155,7 +155,8 @@ class TaskLock {
 .tsklk-bar-fill.tsklk-over{background:#ef4444}
 .tsklk-pool{display:flex;flex-wrap:wrap;gap:6px}
 .tsklk-chip{padding:8px 12px;background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);border-radius:8px;font-size:12px;color:var(--text,#e0e6f0);cursor:pointer;transition:all .15s;user-select:none}
-.tsklk-chip.tsklk-active{border-color:var(--accent,#3b82f6);background:#0c1a2e}
+.tsklk-chip.tsklk-active{border-color:var(--accent,#3b82f6);background:#0c1a2e;color:#e0e6f0}
+.tsklk-chip.tsklk-active .tsklk-spec{color:#7a8ba8}
 .tsklk-spec{color:var(--muted,#7a8ba8);font-size:10px}
 .tsklk-task{padding:12px;background:var(--surface,#141b2d);border:2px dashed var(--border,#1e2a45);border-radius:8px;min-height:60px;transition:all .2s}
 .tsklk-task-hdr{font-size:10px;color:var(--muted,#7a8ba8);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}

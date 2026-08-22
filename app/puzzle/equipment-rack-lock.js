@@ -258,6 +258,8 @@ class EquipmentRackLock {
 .eqrk-row:active{cursor:grabbing;transform:scale(.98)}
 .eqrk-row.eqrk-disabled{opacity:.4;border-style:dashed}
 .eqrk-row.eqrk-selected{border-color:var(--accent,#3b82f6);background:#1a2a4e;box-shadow:0 0 8px rgba(59,130,246,.3)}
+.eqrk-row.eqrk-selected .eqrk-name{color:#e0e6f0}
+.eqrk-row.eqrk-selected .eqrk-pos,.eqrk-row.eqrk-selected .eqrk-effect{color:#7a8ba8}
 .eqrk-pos{font-size:11px;color:var(--muted,#7a8ba8);min-width:16px}
 .eqrk-name{flex:1;font-size:13px;font-weight:500;color:var(--text,#e0e6f0)}
 .eqrk-effect{font-size:12px;font-weight:700;color:var(--muted,#7a8ba8);min-width:36px;text-align:center}

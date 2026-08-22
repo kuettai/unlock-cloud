@@ -199,8 +199,8 @@ class TrafficLaneLock {
 .tll-lane-hover{background:rgba(255,255,255,.05);box-shadow:0 0 0 2px var(--lane,#3b82f6) inset}
 .tll-lane-head{display:flex;align-items:center;gap:4px;justify-content:center;flex-wrap:wrap}
 .tll-lane-icon{font-size:15px}
-.tll-lane-label{font-size:11px;font-weight:700;color:var(--text,#e0e6f0)}
-.tll-lane-sub{font-size:9px;color:var(--muted,#7a8ba8);text-align:center;margin:2px 0 6px;text-transform:uppercase;letter-spacing:.5px}
+.tll-lane-label{font-size:11px;font-weight:700;color:#e0e6f0}
+.tll-lane-sub{font-size:9px;color:#7a8ba8;text-align:center;margin:2px 0 6px;text-transform:uppercase;letter-spacing:.5px}
 .tll-lane-drop{flex:1;display:flex;flex-direction:column;gap:4px;min-height:40px}
 .tll-chip{background:var(--surface,#141b2d);border:1px solid var(--lane,#3b82f6);border-radius:6px;padding:6px 6px;font-size:10px;line-height:1.25;color:var(--text,#e0e6f0);cursor:pointer;text-align:center;word-break:break-word}
 .tll-chip-ok{border-color:var(--green,#22c55e);animation:tll-pop .35s}

@@ -95,7 +95,7 @@ class CafeOrderLock {
 .colk-empty{text-align:center;padding:1rem;color:#666;font-style:italic}
 .colk-cups{display:flex;gap:8px;margin-bottom:10px}
 .colk-cup-btn{padding:6px 12px;border:2px solid var(--border,#444);background:var(--bg,#1a1a2e);color:var(--text,#eee);border-radius:6px;cursor:pointer;font-size:13px}
-.colk-cup-btn.sel{border-color:#f39c12;background:#3d2a1f}
+.colk-cup-btn.sel{border-color:#f39c12;background:#3d2a1f;color:#eee}
 .colk-workspace{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
 .colk-glass{width:70px;height:120px;border:3px solid #555;border-top:none;border-radius:0 0 10px 10px;background:#0a0e17;display:flex;flex-direction:column-reverse;overflow:hidden}
 .colk-glass.hot{border-color:#e74c3c}

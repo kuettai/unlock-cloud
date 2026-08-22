@@ -1,0 +1,29 @@
+{
+  "id": "ep-merdeka",
+  "title": "Merdeka!",
+  "episode": "M",
+  "arc": "special-malaysia-day",
+  "category": "aws",
+  "description": "Travel through three pivotal moments in Malaysian history — from ancient kingdoms to the cloud.",
+  "difficulty": { "tier": 1, "label": "Easy" },
+  "duration_minutes": 5,
+  "players": { "min": 1, "max": 6, "recommended": 2 },
+  "aws_topics": ["Regions"],
+  "mechanics_used": [
+    "word-lock",
+    "4digits-lock",
+    "spec-lock",
+    "defuse-lock",
+    "wager-lock",
+    "keypad-lock"
+  ],
+  "mechanics_taught": [
+    "navigation",
+    "puzzle_solving",
+    "hints"
+  ],
+  "version": "0.1",
+  "start_button": "Begin Time Travel",
+  "lore_label": "Historical Note",
+  "end_title": "Merdeka!"
+}

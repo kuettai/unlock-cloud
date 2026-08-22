@@ -115,9 +115,9 @@ class SgLock {
 .sglk-hdr{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted,#7a8ba8)}
 .sglk-cell{background:var(--surface,#141b2d);padding:8px;font-size:12px;color:var(--muted,#7a8ba8);display:flex;align-items:center}
 .sglk-toggle{padding:4px 10px;border:none;border-radius:4px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:all .15s}
-.sglk-allow{background:#0c2d1a;color:var(--green,#22c55e)}
+.sglk-allow{background:#0c2d1a;color:#22c55e}
 .sglk-deny{background:#2a0a0a;color:#ef4444}
-.sglk-row.sglk-correct .sglk-cell{background:#0c1a0c}
+.sglk-row.sglk-correct .sglk-cell{background:#0c1a0c;color:#7a8ba8}
 .sglk-row.sglk-wrong{animation:sglk-sh .4s}
 @keyframes sglk-sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 .sglk-btn{padding:12px 28px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:14px;font-weight:600;cursor:pointer;align-self:center}

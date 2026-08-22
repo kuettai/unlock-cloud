@@ -15,7 +15,7 @@ class GrinderLock {
     const s = document.createElement('style'); s.id = 'grlk-style';
     s.textContent = `
 .grlk-wrap{max-width:400px;margin:0 auto;padding:8px 0}
-.grlk-machine{position:relative;background:var(--bg,#1a1a2e);border:1px solid var(--border,#444);border-radius:12px;padding:1.5rem 1rem;text-align:center;overflow:hidden;margin-bottom:12px}
+.grlk-machine{position:relative;background:#1a1a2e;border:1px solid var(--border,#444);border-radius:12px;padding:1.5rem 1rem;text-align:center;overflow:hidden;margin-bottom:12px}
 .grlk-body{background:#333;border-radius:8px;padding:8px;margin:0 auto;width:160px}
 .grlk-body-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px}
 .grlk-pf{margin-top:8px;position:relative;height:40px}
@@ -29,10 +29,10 @@ class GrinderLock {
 .grlk-timer-unit{font-size:0.8rem;color:#666}
 .grlk-target{font-size:11px;color:#555}
 .grlk-quality{margin-top:8px;font-size:13px;color:#888;min-height:20px}
-.grlk-slider{margin-bottom:10px;background:var(--surface,#2a2a4e);border-radius:6px;padding:10px}
+.grlk-slider{margin-bottom:10px;background:#2a2a4e;border-radius:6px;padding:10px}
 .grlk-slider-head{display:flex;justify-content:space-between;font-size:12px}
 .grlk-slider-sub{font-size:10px;color:#666;margin-bottom:4px}
-.grlk-slider input{width:100%;accent-color:var(--accent,#e94560)}
+.grlk-slider input{width:100%;accent-color:#e94560}
 .grlk-note{background:#f5e6a3;border-radius:4px;padding:8px 10px;margin-top:10px;transform:rotate(-1deg);box-shadow:2px 2px 6px rgba(0,0,0,0.3)}
 .grlk-note-title{font-size:10px;color:#5a4a00;font-family:'Comic Sans MS',cursive}
 .grlk-note-body{font-size:12px;color:#3a2a00;font-family:'Comic Sans MS',cursive;margin-top:3px}
@@ -68,7 +68,7 @@ class GrinderLock {
   _renderSliders() {
     const el = this.el.querySelector('#grlk-sliders');
     el.innerHTML = this.sliders.map((s, i) => `<div class="grlk-slider">
-      <div class="grlk-slider-head"><span>${s.label}</span><span style="color:var(--accent,#f39c12)">${this.vals[i]}</span></div>
+      <div class="grlk-slider-head"><span>${s.label}</span><span style="color:#f39c12">${this.vals[i]}</span></div>
       <div class="grlk-slider-sub">${s.sub || ''}</div>
       <input type="range" min="${s.min}" max="${s.max}" value="${this.vals[i]}" data-idx="${i}">
     </div>`).join('');

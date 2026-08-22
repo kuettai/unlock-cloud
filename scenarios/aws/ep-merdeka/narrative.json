@@ -1,0 +1,39 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Time-travel narrator — measured, curious, warm" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "narrator", "text": "You are a time traveler.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "Three portals. Three moments that shaped Malaysia.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "Step through.", "emphasis": "moderate" }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 180,
+    "segments": [
+      { "voice": "narrator", "text": "Halfway through the journey. Three minutes remain.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "One kingdom. One shout. One region left to go." }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "You've traveled from 1400 to 2024.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "From a kingdom under a tree to a region in the cloud.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "Malaysia Boleh!", "emphasis": "strong" }
+      ],
+      "audio": null,
+      "next_episode": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "narrator", "text": "Time's up. The portal closes.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "History waits. Try again — the story is patient." }
+      ],
+      "audio": null
+    }
+  }
+}

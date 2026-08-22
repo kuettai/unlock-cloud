@@ -19,7 +19,7 @@ class MilkJugLock {
     const s = document.createElement('style'); s.id = 'mjlk-style';
     s.textContent = `
 .mjlk-wrap{max-width:420px;margin:0 auto;padding:8px 0}
-.mjlk-jugs{display:flex;justify-content:center;gap:1rem;margin-bottom:12px;padding:10px;background:var(--bg,#1a1a2e);border:1px solid var(--border,#333);border-radius:10px}
+.mjlk-jugs{display:flex;justify-content:center;gap:1rem;margin-bottom:12px;padding:10px;background:#1a1a2e;border:1px solid var(--border,#333);border-radius:10px}
 .mjlk-jug{text-align:center;transition:all 0.4s}
 .mjlk-jug.unknown{opacity:0.3}
 .mjlk-jug-icon{font-size:2.2rem}
@@ -31,22 +31,23 @@ class MilkJugLock {
 .mjlk-bar{flex:1;height:4px;border-radius:2px;background:#333}
 .mjlk-bar.done{background:#2ecc71}
 .mjlk-bar.active{background:#f39c12}
-.mjlk-narrative{background:var(--surface,#2a2a4e);border-left:3px solid #f39c12;border-radius:0 6px 6px 0;padding:12px;margin-bottom:12px;font-size:13px;color:#ccc;line-height:1.5;font-style:italic}
-.mjlk-input{background:var(--bg,#1a1a2e);border:1px solid var(--border,#444);border-radius:8px;padding:12px}
-.mjlk-prompt{font-size:13px;color:var(--text,#eee);margin-bottom:10px}
+.mjlk-narrative{background:#2a2a4e;border-left:3px solid #f39c12;border-radius:0 6px 6px 0;padding:12px;margin-bottom:12px;font-size:13px;color:#ccc;line-height:1.5;font-style:italic}
+.mjlk-input{background:#1a1a2e;border:1px solid var(--border,#444);border-radius:8px;padding:12px}
+.mjlk-prompt{font-size:13px;color:#eee;margin-bottom:10px}
 .mjlk-shelf{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.mjlk-shelf-btn{width:60px;height:75px;background:var(--surface,#2a2a4e);border:2px solid #555;border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.2s}
+.mjlk-shelf-btn{width:60px;height:75px;background:#2a2a4e;border:2px solid #555;border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.2s}
+.mjlk-shelf-btn .emoji{color:#eee}
 .mjlk-shelf-btn.picked{background:#1e4d2b;border-color:#2ecc71;transform:scale(0.9)}
 .mjlk-shelf-btn .emoji{font-size:1.8rem}
 .mjlk-shelf-btn .lbl{font-size:9px;color:#888}
 .mjlk-shelf-count{text-align:center;margin-top:10px;font-size:12px}
 .mjlk-choice{display:block;width:100%;text-align:left;padding:10px;margin-bottom:6px;background:var(--surface,#2a2a4e);border:1px solid var(--border,#444);border-radius:6px;color:var(--text,#eee);cursor:pointer;font-size:13px}
 .mjlk-suspects{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mjlk-suspect{padding:10px;background:var(--surface,#2a2a4e);border:2px solid #555;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s}
+.mjlk-suspect{padding:10px;background:#2a2a4e;border:2px solid #555;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s}
 .mjlk-suspect.eliminated{background:#1a1a1a;border-color:#333;opacity:0.4;cursor:default}
 .mjlk-suspect.correct{background:#1e4d2b;border-color:#2ecc71}
 .mjlk-suspect-icon{font-size:1.5rem}
-.mjlk-suspect-name{font-size:12px;color:var(--text,#eee);margin-top:4px}
+.mjlk-suspect-name{font-size:12px;color:#eee;margin-top:4px}
 .mjlk-suspect-reason{font-size:10px;color:#e74c3c;margin-top:3px}
 .mjlk-suspect.correct .mjlk-suspect-reason{color:#2ecc71}
 .mjlk-hint{font-size:11px;color:#e74c3c;margin-top:8px;min-height:16px}

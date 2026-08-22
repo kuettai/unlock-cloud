@@ -157,13 +157,13 @@ class BinaryLock {
 .binlk-col{display:flex;flex-direction:column;align-items:center;gap:6px}
 .binlk-label{font-size:10px;color:var(--muted,#7a8ba8);font-weight:600}
 .binlk-sw{width:36px;height:56px;background:var(--surface,#141b2d);border:2px solid var(--border,#1e2a45);border-radius:18px;position:relative;cursor:pointer;transition:background .2s,border-color .2s}
-.binlk-sw.binlk-on{background:#0c2d1a;border-color:var(--green,#22c55e)}
-.binlk-sw.binlk-on .binlk-knob{top:4px;background:var(--green,#22c55e);box-shadow:0 0 8px rgba(34,197,94,.5)}
+.binlk-sw.binlk-on{background:#0c2d1a;border-color:#22c55e}
+.binlk-sw.binlk-on .binlk-knob{top:4px;background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.5)}
 .binlk-knob{position:absolute;bottom:4px;left:50%;width:24px;height:24px;margin-left:-12px;background:var(--muted,#7a8ba8);border-radius:50%;transition:top .15s,bottom .15s,background .2s,box-shadow .2s}
 .binlk-sw:not(.binlk-on) .binlk-knob{top:auto;bottom:4px}
 .binlk-sw.binlk-on .binlk-knob{top:4px;bottom:auto}
 .binlk-val{font-size:13px;font-weight:700;color:var(--muted,#7a8ba8);font-variant-numeric:tabular-nums}
-.binlk-sw.binlk-correct{border-color:var(--green,#22c55e);opacity:.6;pointer-events:none}
+.binlk-sw.binlk-correct{border-color:#22c55e;opacity:.6;pointer-events:none}
 .binlk-sw.binlk-wrong{animation:binlk-shake .4s}
 @keyframes binlk-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 .binlk-btn{padding:12px 28px;border:none;border-radius:8px;background:var(--accent,#3b82f6);color:#fff;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:opacity .2s}

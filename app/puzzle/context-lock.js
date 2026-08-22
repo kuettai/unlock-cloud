@@ -216,7 +216,7 @@ class ContextLock {
 .ctxlk-gauge{display:flex;flex-direction:column;gap:3px}
 .ctxlk-gauge-bar{height:8px;background:#141b2d;border:1px solid #1e2a45;border-radius:4px;overflow:hidden}
 .ctxlk-gauge-fill{height:100%;border-radius:4px;transition:width .3s}
-.ctxlk-gauge-ok{background:var(--accent,#3b82f6)}
+.ctxlk-gauge-ok{background:#3b82f6}
 .ctxlk-gauge-warn{background:#eab308}
 .ctxlk-gauge-over{background:#e94560}
 .ctxlk-gauge-label{font-size:11px;color:var(--muted,#7a8ba8);text-align:right}

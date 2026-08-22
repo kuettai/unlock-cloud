@@ -103,16 +103,16 @@ class TerminalLock {
     const s = document.createElement('style');
     s.id = 'trmlk-css';
     s.textContent = `
-.trmlk{background:#0c0c0c;border:1px solid var(--border,#1e2a45);border-radius:10px;padding:14px;font-family:'Courier New',monospace;font-size:13px;max-width:360px;margin:0 auto}
+.trmlk{background:#0c0c0c;border:1px solid #1e2a45;border-radius:10px;padding:14px;font-family:'Courier New',monospace;font-size:13px;max-width:360px;margin:0 auto}
 .trmlk-output{max-height:160px;overflow-y:auto;margin-bottom:10px}
 .trmlk-line{padding:2px 0;word-break:break-all}
-.trmlk-sys{color:var(--muted,#7a8ba8)}
-.trmlk-cmd{color:var(--text,#e0e6f0)}
-.trmlk-ok{color:var(--green,#22c55e);font-weight:700}
+.trmlk-sys{color:#7a8ba8}
+.trmlk-cmd{color:#e0e6f0}
+.trmlk-ok{color:#22c55e;font-weight:700}
 .trmlk-err{color:#ef4444}
 .trmlk-row{display:flex;align-items:center}
-.trmlk-prompt{color:var(--green,#22c55e);white-space:pre;flex-shrink:0}
-.trmlk-input{flex:1;background:transparent;border:none;color:var(--text,#e0e6f0);font-family:inherit;font-size:inherit;outline:none;caret-color:var(--green,#22c55e)}
+.trmlk-prompt{color:#22c55e;white-space:pre;flex-shrink:0}
+.trmlk-input{flex:1;background:transparent;border:none;color:#e0e6f0;font-family:inherit;font-size:inherit;outline:none;caret-color:#22c55e}
 `;
     document.head.appendChild(s);
   }
