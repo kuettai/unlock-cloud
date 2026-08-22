@@ -1035,6 +1035,12 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     const input = document.createElement('input');
     input.type = 'text';
     input.autocomplete = 'off';
+    // Mobile keyboards otherwise capitalise and autocorrect while the player types,
+    // which turns a typed-command puzzle into a fight with the keyboard.
+    input.setAttribute('autocapitalize', 'none');
+    input.setAttribute('autocorrect', 'off');
+    input.setAttribute('spellcheck', 'false');
+    input.setAttribute('enterkeyhint', 'go');
     input.style.cssText = 'width:100%;padding:10px;background:#0c0c0c;border:1px solid var(--border);border-radius:6px;color:var(--green);font-family:monospace;font-size:14px;margin-bottom:12px';
     input.placeholder = 'Type your answer...';
     wrap.appendChild(input);
@@ -1045,11 +1051,29 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     btn.className = 'btn btn-primary';
     btn.style.cssText = 'width:100%';
     btn.textContent = 'Submit';
+    // Typed answers are compared with punctuation and repeated spaces removed, so
+    // a trailing full stop or a double space from a phone keyboard is not a wrong
+    // answer. Strictly more forgiving than an exact compare, so existing answers
+    // and accept_variations keep matching.
+    const norm = s => (s || '').toLowerCase()
+      .replace(/[.,!?;:'"`’“”()\[\]]/g, '')
+      .replace(/[-_/]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    // Optional `accept_keywords`: [[...alternatives], [...]] — every group must be
+    // matched somewhere in the answer, in any order and any phrasing. Lets a
+    // sentence-length command be marked right for naming the right things rather
+    // than for reproducing an exact string, which is punishing on a phone.
+    const keywordsMatch = (typed) => {
+      const groups = cfg.accept_keywords;
+      if (!Array.isArray(groups) || !groups.length) return false;
+      return groups.every(g => (Array.isArray(g) ? g : [g]).some(k => typed.includes(norm(k))));
+    };
     const doSubmit = () => {
-      const val = input.value.trim().toLowerCase();
-      const answer = (cfg.answer || '').toLowerCase();
-      const variations = (cfg.accept_variations || []).map(v => v.toLowerCase());
-      if (val === answer || variations.includes(val)) {
+      const val = norm(input.value);
+      const answer = norm(cfg.answer);
+      const variations = (cfg.accept_variations || []).map(norm);
+      if (val === answer || variations.includes(val) || keywordsMatch(val)) {
         if (cfg.follow_up && !wrap.dataset.step2) {
           wrap.dataset.step2 = 'true';
           prompt.textContent = cfg.follow_up.prompt;
@@ -1066,15 +1090,28 @@ function showPuzzlePopup(puzzleId, awardCardId) {
         }
       } else {
         const fo = cfg.falseOutputs;
-        if (fo && fo.no_prerequisite && cfg.prerequisite) {
+        // `falseOutputs` accepts two shapes. Object form (ep1) keys messages by
+        // failure kind. Array form (ep2, ep3, ep4) is a progressive ladder: each
+        // wrong answer shows the next entry, so authors can escalate from flavour
+        // to hint. Both are read here; neither shape changes the other's output.
+        const foList = Array.isArray(fo) ? fo : null;
+        if (fo && !foList && fo.no_prerequisite && cfg.prerequisite) {
           const req = cfg.prerequisite.requires_card;
           if (req && !engine.visibleCards.has(req)) {
             status.textContent = fo.no_prerequisite;
             return;
           }
         }
-        status.textContent = (fo && fo.wrong_answer) || 'Incorrect. Try again.';
-        onFail((fo && fo.wrong_answer) || 'Incorrect.');
+        let failMsg;
+        if (foList && foList.length) {
+          const step = Number(wrap.dataset.foStep || 0);
+          failMsg = foList[Math.min(step, foList.length - 1)];
+          wrap.dataset.foStep = String(step + 1);
+        } else {
+          failMsg = (fo && fo.wrong_answer) || 'Incorrect. Try again.';
+        }
+        status.textContent = failMsg;
+        onFail(failMsg);
       }
     };
     btn.addEventListener('click', doSubmit);
@@ -1133,6 +1170,16 @@ function showPuzzlePopup(puzzleId, awardCardId) {
         onSubmit(correct) { correct ? onSolve() : onFail('Wrong code. Try again.'); }
       });
     }
+  } else if (puzzle.ui === '4digits-lock') {
+    new DigitLock(mount, {
+      onSubmit(code) {
+        if (code === cfg.answer) {
+          onSolve();
+        } else {
+          onFail('Wrong combination. Try again.');
+        }
+      }
+    });
   } else if (puzzle.ui === 'hex-decoder') {
     const wrap = document.createElement('div');
     wrap.style.cssText = 'padding:16px 0;max-width:400px;margin:0 auto';
@@ -1558,6 +1605,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       target: cfg.target || 10,
       questions: cfg.questions || [],
       stakes: cfg.stakes || [],
+      maxRounds: cfg.maxRounds || null,
       onSubmit() { onSolve(); }
     });
   } else if (puzzle.ui === 'auction-lock') {
