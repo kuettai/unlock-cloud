@@ -1,0 +1,15 @@
+{
+  "base_score": 50,
+  "time_bonus_per_minute": 6,
+  "hint_penalty": -4,
+  "wrong_combination_penalty": -3,
+  "no_penalty_bonus": 8,
+  "stars": [
+    { "min": 70, "stars": 5 },
+    { "min": 60, "stars": 4 },
+    { "min": 50, "stars": 3 },
+    { "min": 35, "stars": 2 },
+    { "min": 0,  "stars": 1 }
+  ],
+  "notes": "Event-tuned for individual ranking. Fast, hint-free clean runs score highest; time_bonus and no_penalty_bonus act as tie-breakers for prizes. A no-hint, no-mistake finish with several minutes to spare lands a clear 5 stars."
+}

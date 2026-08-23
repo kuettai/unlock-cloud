@@ -1,0 +1,9 @@
+{
+  "style_prefix": "Digital illustration, festive Malaysia Day office celebration, warm and joyful, red-yellow-blue-and-white festive color palette with gold string-light accents, isometric game card art.",
+  "style_prefix_location": "Digital illustration, wide-angle isometric location card, festive office decorated for Malaysia Day with string lights and colorful paper bunting, warm evening celebration glow, clean game environment art.",
+  "style_prefix_item": "Digital illustration, single celebratory award trophy on dark gradient background, gold and warm patriotic-toned accent, clean icon style, centered, game inventory art.",
+  "style_prefix_object": "Digital illustration, festive interactive prop or award pedestal, soft warm background, gold and red-yellow-blue festive accents, close-up detail, game card art.",
+  "style_prefix_character": "Digital illustration, single friendly character portrait, modern Malaysian office colleague celebrating, respectful realistic style, dark gradient background, warm expression, game NPC art.",
+  "negative_prompt": "flag, flags, national flag, banner with emblem, text, words, letters, numbers, watermark, blurry, low quality, ugly, disrespectful, anachronistic, hostile, gore",
+  "aspect_ratio": "16:9"
+}

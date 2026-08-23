@@ -1,0 +1,49 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "The Office",
+      "description": "The office is half-decorated for tomorrow's celebration. Three award stations wait down the hall, each earned in turn. A note reads: \"Earn all three trophies to light the rooftop.\"",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "Starting room — the celebration begins here.",
+      "map_pos": [140, 380]
+    },
+    {
+      "card_id": 200,
+      "name": "Peer Unicorn Station",
+      "description": "The teamwork station. Wires dangle, waiting to connect Malaysia's states to their capitals. Peer Unicorn is all about connection.",
+      "connects_to": [100, 300],
+      "unlocked_by": { "type": "discovery", "from_room": 100 },
+      "unlock_text": "The Peer Unicorn station lights up.",
+      "map_pos": [140, 290]
+    },
+    {
+      "card_id": 300,
+      "name": "Super Achiever Station",
+      "description": "The station for those who reach the top. A keypad glows beneath a poster of Malaysia's most famous towers.",
+      "connects_to": [200, 400],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "jigsaw-peer" },
+      "unlock_text": "Peer Unicorn earned — the Super Achiever station opens.",
+      "map_pos": [140, 200]
+    },
+    {
+      "card_id": 400,
+      "name": "Beyond Boundaries Station",
+      "description": "The station for those who go further than anyone thought possible — even beyond Earth itself.",
+      "connects_to": [300, 500],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "quiz-achiever" },
+      "unlock_text": "Super Achiever earned — the Beyond Boundaries station opens.",
+      "map_pos": [140, 130]
+    },
+    {
+      "card_id": 500,
+      "name": "Rooftop Finale",
+      "description": "The rooftop, strung with lights and a Jalur Gemilang snapping in the night breeze. Three trophies in hand. One last question stands between you and the fireworks.",
+      "connects_to": [400],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "sequence-boundaries" },
+      "unlock_text": "All three trophies earned. The rooftop door swings open.",
+      "map_pos": [140, 50]
+    }
+  ]
+}

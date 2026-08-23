@@ -1,0 +1,177 @@
+{
+  "puzzles": [
+    {
+      "id": "match-peer",
+      "type": "puzzle",
+      "ui": "wire-lock",
+      "card_ref": 205,
+      "success_card": 205,
+      "description": "Peer Unicorn is all about connection. Match each Malaysian state to its capital.",
+      "config": {
+        "wires": [
+          { "id": "perak",     "color": "#22c55e", "label": "Perak" },
+          { "id": "pahang",    "color": "#3b82f6", "label": "Pahang" },
+          { "id": "nsembilan", "color": "#f97316", "label": "Negeri Sembilan" },
+          { "id": "terengganu","color": "#7c5cfc", "label": "Terengganu" }
+        ],
+        "sockets": [
+          { "id": "ipoh",       "label": "Ipoh" },
+          { "id": "kuantan",    "label": "Kuantan" },
+          { "id": "seremban",   "label": "Seremban" },
+          { "id": "kterengganu","label": "Kuala Terengganu" }
+        ],
+        "solution": {
+          "perak": "ipoh",
+          "pahang": "kuantan",
+          "nsembilan": "seremban",
+          "terengganu": "kterengganu"
+        },
+        "submitLabel": "Connect",
+        "falseOutputs": [
+          "Not quite — check which capital belongs to which state.",
+          "Try again. These aren't the obvious ones!"
+        ]
+      },
+      "hints": [
+        "Peer Unicorn is about connections — match each state to its capital.",
+        "Perak's is a former tin town. Pahang's sits at a river mouth. Negeri Sembilan's rhymes with 'ceramban'. Terengganu keeps the 'Kuala'.",
+        "Perak→Ipoh, Pahang→Kuantan, Negeri Sembilan→Seremban, Terengganu→Kuala Terengganu."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "jigsaw-peer",
+      "type": "puzzle",
+      "ui": "jigsaw-lock",
+      "card_ref": 215,
+      "success_card": 215,
+      "description": "One team, one name. Tap two tiles to swap them and spell the nation.",
+      "config": {
+        "cols": 8,
+        "rows": 1,
+        "tiles": ["M", "A", "L", "A", "Y", "S", "I", "A"],
+        "revealCorrect": true
+      },
+      "hints": [
+        "It's the name everyone's celebrating tomorrow.",
+        "Eight letters, starts with M, ends with A.",
+        "M-A-L-A-Y-S-I-A."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "height-achiever",
+      "type": "code_entry",
+      "ui": "keypad-lock",
+      "card_ref": 305,
+      "success_card": 305,
+      "description": "Super Achiever reaches the top. How tall are the Petronas Twin Towers, in metres (rounded)?",
+      "config": {
+        "answer": "452",
+        "case_sensitive": false
+      },
+      "hints": [
+        "Super Achiever reaches the top — think of Malaysia's most famous towers.",
+        "The Petronas Twin Towers, rounded to the nearest metre. It's just over 451.",
+        "452."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "quiz-achiever",
+      "type": "puzzle",
+      "ui": "wager-lock",
+      "card_ref": 315,
+      "success_card": 315,
+      "description": "Super Achiever is about record-breakers. Answer three about Malaysia's proudest feats.",
+      "config": {
+        "target": 3,
+        "maxRounds": 3,
+        "stakes": [
+          { "label": "Answer", "wager": 1, "penalty": 0, "color": "#3b82f6", "showOptions": 4 }
+        ],
+        "questions": [
+          {
+            "question": "The Petronas Twin Towers held which world record?",
+            "options": ["Tallest buildings in the world (1998–2004)", "Longest bridge", "Largest stadium", "Fastest lift only"],
+            "answer": "Tallest buildings in the world (1998–2004)"
+          },
+          {
+            "question": "Where does Merdeka 118 rank among the world's buildings today?",
+            "options": ["2nd tallest in the world", "Tallest in the world", "10th tallest", "Tallest in Asia only"],
+            "answer": "2nd tallest in the world"
+          },
+          {
+            "question": "What was Malaysia's first national car?",
+            "options": ["Proton Saga", "Perodua Myvi", "Proton Wira", "Perodua Kancil"],
+            "answer": "Proton Saga"
+          }
+        ]
+      },
+      "hints": [
+        "Think records and firsts — the towers once topped the whole world.",
+        "Petronas was #1 from 1998–2004; Merdeka 118 is #2 today; the first Proton shares a Scrabble-worthy name.",
+        "Tallest 1998–2004, 2nd tallest today, Proton Saga."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "word-boundaries",
+      "type": "word_lock",
+      "ui": "word-lock",
+      "card_ref": 405,
+      "success_card": 405,
+      "description": "Beyond Boundaries — Malaysian flavour that travels the world. Name the national dish (one word: coconut rice).",
+      "config": {
+        "answer": "NASILEMAK",
+        "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      },
+      "hints": [
+        "Malaysia's national dish — fragrant rice cooked in coconut milk, served with sambal.",
+        "Two Malay words joined: 'rice' + 'rich/fatty'. Nine letters.",
+        "NASILEMAK."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "sequence-boundaries",
+      "type": "puzzle",
+      "ui": "pillar-lock",
+      "card_ref": 415,
+      "success_card": 415,
+      "description": "Mission control needs the facts straight — Malaysian food edition. Tap TRUE or FALSE for each claim.",
+      "config": {
+        "pillars": ["TRUE", "FALSE"],
+        "statements": [
+          { "text": "Nasi lemak is Malaysia's national dish", "answer": "TRUE" },
+          { "text": "Nasi lemak rice is cooked in coconut milk", "answer": "TRUE" },
+          { "text": "Durian is known as the King of Fruits", "answer": "TRUE" }
+        ]
+      },
+      "hints": [
+        "Think back to the dish you just spelled — these all describe Malaysian food.",
+        "Nasi lemak is the national dish, cooked in coconut milk; durian wears the fruity crown.",
+        "All three are TRUE."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "final-malaysiaday",
+      "type": "code_entry",
+      "ui": "4digits-lock",
+      "card_ref": 599,
+      "success_card": 599,
+      "description": "Set the date we celebrate tomorrow — the day Malaysia became Malaysia (DDMM).",
+      "config": {
+        "answer": "1609"
+      },
+      "hints": [
+        "Careful — this is NOT Merdeka Day (31 August). That's when Malaya became independent.",
+        "Malaysia Day is in September — the 16th. Format is DDMM.",
+        "1609."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}
