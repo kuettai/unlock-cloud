@@ -325,7 +325,7 @@
       "type": "object",
       "color": "blue",
       "title": "Foreign Trade Ledger",
-      "description": "Saffron 50g. Silk Bolts 30g. Festival Fireworks 40g. On bargaining: \"Each merchant shows their next mood — the coin they'll press for (⚔️) and the argument they'll shrug off (🛡️). Press your case when their guard is low. Hold composure when they push for coin, or your purse pays. Two cards per exchange.\"",
+      "description": "Saffron, silk bolts, festival fireworks — all asking high. You carry 30 gold of the King's coin into each negotiation. The first five conceded are expected; past that, every coin costs the Steward a quarter-minute of daylight. Empty the purse and the merchants keep it all.\n\nOn bargaining: \"Each merchant shows their next mood — the coin they'll press for (⚔️) and the argument they'll shrug off (🛡️). Press your case when their guard is low. Hold composure when they push for coin, or your purse pays. Two cards per exchange.\"",
       "image": "assets/card-trade-ledger.png",
       "image_prompt": "An open leather-bound trade ledger with columns of handwritten entries in ink. Small illustrations of goods in the margins — spices, silk, fireworks. A quill pen rests in the spine. Aged parchment pages, warm candlelight, merchant's desk atmosphere.",
       "visible_to": "all",

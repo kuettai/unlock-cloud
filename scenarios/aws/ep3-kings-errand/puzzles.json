@@ -648,7 +648,7 @@
         "lines": [
           {
             "label": "What do we need from them?",
-            "response": "Spices, silks, fireworks. THREE merchants in turn — spice, silk, then fireworks, each harder. Each cycles three moods. Press your argument when their guard is low, keep composure when they grasp for coin. Two cards an exchange."
+            "response": "Spices, silks, fireworks. THREE merchants in turn — spice, silk, then fireworks, each harder. Thirty gold per negotiation. Concede five and nobody minds; concede more and the Steward pays in daylight. Press your argument when their guard is low, keep composure when they grasp for coin. Two cards an exchange."
           },
           {
             "label": "Why can't you translate?",
@@ -771,12 +771,15 @@
             "value": 3
           }
         ],
-        "gold": 80
+        "gold": 30,
+        "free_gold": 5,
+        "time_penalty_per_gold": 15,
+        "bankrupt_penalty_seconds": 60
       },
       "hints": [
         "Read the merchant's face before you play — it shows this turn's ⚔️ (gold they take) and 🛡️ (argument they shrug off). The Spice Trader opens with 🛡️0.",
         "Two cards per turn. Persuasion above their 🛡️ fills the conviction bar; Composure at or above their ⚔️ keeps your gold. Your deck reshuffles, so a long haggle is fine.",
-        "Turn 1 (🛡️0): play both Persuasion. Turn 2 (⚔️5) : lead with Composure. Turn 3 (🛡️3): only your 3-value Persuasion gets through. Repeat — 80g is far more than this trader can drain."
+        "Turn 1 (🛡️0): both Persuasion. Turn 2 (⚔️5): lead with Composure or the purse pays. Turn 3 (🛡️3): only your 3-value Persuasion gets through. Block what you can — the first 5 gold are free, the rest cost daylight."
       ],
       "mandatory": true
     },
@@ -852,10 +855,13 @@
             "value": 6
           }
         ],
-        "gold": 80
+        "gold": 30,
+        "free_gold": 5,
+        "time_penalty_per_gold": 15,
+        "bankrupt_penalty_seconds": 60
       },
       "hints": [
-        "The Silk Merchant alternates defensive and aggressive. Save Composure for the ⚔️7 turn.",
+        "The Silk Merchant alternates defensive and aggressive. Save Composure for the ⚔️7 turn — unblocked, that single hit eats a quarter of your purse.",
         "When 🛡️ is only 1, go all-in Persuasion. When 🛡️ is 3, play Composure and ride it out.",
         "The Tongue of Babel card (🗣️6) is the only one that clears the 🛡️3 turns on its own — hold it for those, and spend the small greetings on the 🛡️1 turn."
       ],
@@ -945,10 +951,13 @@
             "value": 5
           }
         ],
-        "gold": 80
+        "gold": 30,
+        "free_gold": 5,
+        "time_penalty_per_gold": 15,
+        "bankrupt_penalty_seconds": 60
       },
       "hints": [
-        "The Fireworks Master has extreme swings. Turn 1 hits for 8g but has 0 block — go all-in persuasion!",
+        "The Fireworks Master opens with ⚔️8 against a 30g purse and 🛡️0. Block it or spend it: going all-in on turn 1 wins trust fast but costs you minutes.",
         "Turn 2 barely hurts (2g) but walls you with 5 block. Play composure and wait for the next opening.",
         "Only Royal Authority (🗣️5) and Tongue of Babel (🗣️6) beat the 🛡️5 wall — save them for turn 2 and spend greetings on turn 1's open guard."
       ],
