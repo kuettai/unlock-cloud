@@ -192,7 +192,7 @@
         { "card_id": 1001, "label": "Talk to Sir Cedric", "puzzle": "npc-cedric" },
         { "card_id": 1002, "label": "Examine the Champion Assembly Rack" },
         { "card_id": 1005, "label": "Examine the Herald's Ledger" },
-        { "card_id": 1009, "label": "Assemble the Champion", "requires_item": [1005], "puzzle": "equipment-rack" },
+        { "card_id": 1009, "label": "Assemble the Champion", "puzzle": "equipment-rack" },
         { "card_id": 1010, "label": "Run the rehearsal", "requires_item": [1009], "puzzle": "rehearsal-run" }
       ],
       "visible_to": "all",
@@ -602,7 +602,7 @@
       "type": "item",
       "color": "red",
       "title": "Herald's Ledger",
-      "description": "A blank ledger for every action the Champion takes — who it talked to, what tools it used, what it decided. Cedric won't open the rack until you hold it. Observability first, or you're guessing.",
+      "description": "A blank ledger for every action the Champion takes — who it talked to, what tools it used, what it decided. Carry it to the rack and every slot shows its worth. Leave it here and you assemble blind.",
       "image": "assets/card-heralds-ledger.png",
       "image_prompt": "A large blank leather-bound ledger with a herald's trumpet emblem on the cover. The pages are crisp and empty, ready for entries. A quill and inkwell sit beside it. Official, pristine, record-keeping aesthetic.",
       "visible_to": "all",

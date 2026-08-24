@@ -1536,7 +1536,7 @@
           },
           {
             "label": "What's the Herald's Ledger?",
-            "response": "Every action recorded — who it talked to, what tools it used, what it decided. Take it from the platform before you touch the rack, or you assemble blind. No Ledger, no accountability."
+            "response": "Every action recorded — who it talked to, what tools it used, what it decided. Carry it to the rack and you'll see what each slot is worth. Leave it and you're guessing. No Ledger, no accountability."
           },
           {
             "label": "What happens after assembly?",
@@ -1739,10 +1739,11 @@
             "label": "Collapses",
             "text": "The Champion takes one step and crumbles to dust."
           }
-        ]
+        ],
+        "observability_card": 1005
       },
       "hints": [
-        "Three items on the rack never came from an errand — the rack says gear like that is severed, unsigned or vague. Read the names.",
+        "Three items on the rack came from no errand — the rack says gear like that is severed, unsigned or vague. Read the names. And if the numbers are hidden, you left the Herald's Ledger on the platform.",
         "Untested Shortcut, Unlogged Action and Borrowed Confidence belong to no errand you ran. Switch all three OFF, not just one.",
         "Switch OFF Untested Shortcut, Unlogged Action and Borrowed Confidence, leave the other seven ON, then Deploy."
       ],
@@ -1894,7 +1895,7 @@
             "quest": "memory-timeline"
           }
         ],
-        "observability": true,
+        "observability": false,
         "cooldown": 30,
         "target": "soars",
         "tiers": [
@@ -1928,11 +1929,12 @@
             "label": "Collapses",
             "text": "The Champion takes one step and crumbles to dust."
           }
-        ]
+        ],
+        "observability_card": 1005
       },
       "hints": [
-        "Soars needs 100. Switching off the three items that came from no errand is not enough on its own this time.",
-        "Observability is live, so the score is on screen. Watch it move as you reorder: plain bonuses (+N) must sit above anything that multiplies (×N).",
+        "Soars needs 100, and switching off the three errandless items is not enough on its own. Take the Herald's Ledger if you want to see what each slot is worth.",
+        "With the Ledger in hand the score is on screen. Watch it move as you reorder: plain bonuses (+N) must sit above anything that multiplies (×N).",
         "OFF: Untested Shortcut, Unlogged Action, Borrowed Confidence. Then order +N first (Gateway, Protocol, Instruction Schema, Memory Crystal) and ×N last (Model Core, Cedar Seal, Guardrail Mantle). Score: 128."
       ],
       "mandatory": true,
