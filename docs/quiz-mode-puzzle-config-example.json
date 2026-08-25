@@ -52,22 +52,17 @@
       "mandatory": true
     },
     {
-      "id": "q4-streak",
+      "id": "q4-spelling",
       "type": "quiz_lock",
       "category": "agentic-ai",
-      "source_question_ids": ["agentic-mcq-001", "agentic-mcq-018", "agentic-mcq-019", "agentic-mcq-020", "agentic-mcq-021"],
-      "ui": "streak-lock",
+      "source_question_ids": ["agentic-spell-002", "agentic-spell-006", "agentic-spell-009"],
+      "ui": "spelling-lock",
       "config": {
-        "_note": "streak-lock DOES shuffle order + reshuffle-on-loop internally. Server only needs to supply the pool; order randomization is handled client-side per component instance.",
-        "target": 10,
-        "timePerQuestion": 8,
-        "questions": [
-          { "question": "What is Kiro CLI 3.0 built on, which is shared with Kiro IDE and Kiro Web?", "answer": "A unified agent harness", "decoys": ["A distributed microkernel", "A shared plugin marketplace", "A universal container runtime"] },
-          { "question": "Which Nova 2 model is described as the most intelligent, capable of complex reasoning and serving as a 'teacher' model?", "answer": "Nova 2 Pro", "decoys": ["Nova 2 Lite", "Nova 2 Sonic", "Nova 2 Omni"] },
-          { "question": "Which Nova 2 model is built for real-time voice conversations?", "answer": "Nova 2 Sonic", "decoys": ["Nova 2 Lite", "Nova 2 Pro", "Nova 2 Omni"] },
-          { "question": "Which Nova 2 model is the first reasoning model to both understand multimodal input AND generate text and images?", "answer": "Nova 2 Omni", "decoys": ["Nova 2 Lite", "Nova 2 Pro", "Nova 2 Sonic"] },
-          { "question": "Which Nova 2 model is positioned as fast and cost-effective for everyday tasks?", "answer": "Nova 2 Lite", "decoys": ["Nova 2 Pro", "Nova 2 Sonic", "Nova 2 Omni"] }
-        ]
+        "_note": "spelling-lock takes a pool of answer words/phrases and randomly draws `pickCount` of them per instance, presenting each as its own shuffled-letter anagram (no unrelated decoy letters — every letter shown belongs in the answer). No internal reshuffle-on-loop since it's a fixed pick, not an infinite pool cycle. onSubmit() fires with no arguments once all pickCount words are solved in sequence; onWrong(msg) fires per wrong spelling attempt and should be wired to the engine's onFail penalty helper, same as keypad/word/pillar. Multi-word answers (e.g. 'Kiro Power' below) ARE supported — spelling-lock renders a visible gap in the slot layout at each space, so word boundaries stay visible even though the letter pool itself has spaces stripped. Pull from the bank's dedicated `spelling` array (NOT `word`) — every entry there is pre-filtered to letters+spaces only, 5-16 letters excluding spaces.",
+        "pool": ["TANGENT", "MEMORY", "KIRO POWER"],
+        "pickCount": 3,
+        "sequential": true,
+        "scrambleLetters": true
       },
       "mandatory": true
     },
@@ -78,7 +73,7 @@
       "source_question_ids": ["security-mcq-001", "security-mcq-002"],
       "ui": "wager-lock",
       "config": {
-        "_note": "wager-lock also shuffles order + reshuffles internally, and randomizes which decoys are visible per stake tier. Server only supplies the pool. Stakes array below uses the SINGLE-ENTRY form (see quiz-mode-handoff.md 'Wager-lock stake default' section) — this auto-skips the Safe/Confident/All-In picker and always shows 4 choices.",
+        "_note": "wager-lock also shuffles order + reshuffles internally, and randomizes which decoys are visible per stake tier. Server only supplies the pool. Stakes array below uses the SINGLE-ENTRY form (see quiz-mode-instructions-engine.md 'Wager-lock stake default' section) — this auto-skips the Safe/Confident/All-In picker and always shows 4 choices.",
         "target": 6,
         "questions": [
           { "question": "Which attack floods a server with traffic to take it offline?", "options": ["DDoS", "SQLi", "XSS", "CSRF"], "answer": "DDoS" },

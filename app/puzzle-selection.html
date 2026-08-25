@@ -47,7 +47,7 @@ h2 { color: #e94560; font-size: 1.05rem; margin-bottom: 0.6rem; }
 </header>
 <div class="legend">
 <b>Constraint driving this shortlist:</b> the puzzle must carry a plain question+answer payload the server can push (no card artwork / scenario-specific state). <b>Green rows</b> = puzzle natively models a question bank. <b>Yellow row</b> = best used as a group-consensus finale, not a question carrier itself.<br>
-<b>Update:</b> evidence-lock was dropped from the shortlist. pillar-lock was corrected twice — first to True/False sorting within a single category, then to a templated format: one authored fact per statement with an embedded '{correct|wrong}' slot, resolved randomly client-side (no separate true/false authoring needed, and no component fork required — pillar-lock.js is reused unmodified via a thin resolver function). Final shortlist: keypad-lock, word-lock, pillar-lock (templated True/False), streak-lock, wager-lock.
+<b>Update:</b> evidence-lock was dropped from the shortlist. pillar-lock was corrected twice — first to True/False sorting within a single category, then to a templated format: one authored fact per statement with an embedded '{correct|wrong}' slot, resolved randomly client-side (no separate true/false authoring needed, and no component fork required — pillar-lock.js is reused unmodified via a thin resolver function). <b>streak-lock was dropped and replaced with spelling-lock</b> — streak-lock and wager-lock felt too similar (both are MCQ-runner-with-scoring), and wire-lock/match-lock were considered but rejected since the trivia bank's questions/answers are mostly too long for their tight label layouts (only 62% of mcq answers are ≤20 chars, and 99% of questions exceed 25 chars). spelling-lock is a genuinely distinct mechanic from word-lock: word-lock uses per-position reels with random unrelated decoy letters (recall-and-select), while spelling-lock gives you the exact letters of the answer already shuffled and asks you to rearrange them (recall-and-order) — no typo risk, no decoy ambiguity, good fit for competitive scoring. Final shortlist: keypad-lock, word-lock, pillar-lock (templated True/False), spelling-lock, wager-lock.
 </div>
 
 <main>
@@ -57,18 +57,19 @@ h2 { color: #e94560; font-size: 1.05rem; margin-bottom: 0.6rem; }
 <li><b>keypad-lock</b> <span class="meta">(COMMON · complexity 1 · fun 1 · tap · quick)</span> — opener, numeric-answer warmup</li>
 <li><b>word-lock</b> <span class="meta">(COMMON · complexity 1 · fun 2 · drag · quick)</span> — short word/acronym answer, different interaction type</li>
 <li><b>pillar-lock</b> <span class="meta">(COMMON · complexity 2 · fun 2 · tap · medium)</span> — categorization drill, breaks up the tap streak with a different rhythm</li>
-<li><b>streak-lock</b> <span class="meta">(MAGIC · complexity 3 · fun 4 · tap · medium)</span> — rapid-fire MCQ, mid-episode peak energy</li>
+<li><b>spelling-lock</b> <span class="meta">(COMMON · complexity 2 · fun 2 · tap · medium)</span> — rearrange shuffled letters (own answer's letters, no random decoys) — recall-and-order, distinct from word-lock's recall-and-select</li>
 <li><b>wager-lock</b> <span class="meta">(RARE · complexity 3 · fun 4 · tap · medium)</span> — confidence-stake MCQ finale, satisfies "1+ RARE" guidance and ends on complexity/fun peak</li>
 </ol>
-<div class="meta">Interaction spread: tap / drag / tap / tap / tap. Complexity arc: 1 → 1 → 2 → 3 → 3 — rises steadily, ends medium-high per taxonomy guidance.</div>
+<div class="meta">Interaction spread: tap / drag / tap / tap / tap. Complexity arc: 1 → 1 → 2 → 2 → 3 — rises steadily, ends medium-high per taxonomy guidance.</div>
 </div>
 
 <div class="guidance">
 <b>Design guidance from the taxonomy applied:</b><br>
 ✅ Includes 1 RARE (wager-lock) as the finale — satisfies "1+ RARE/LEGENDARY" rule.<br>
-✅ fun:4+ present twice (streak-lock, wager-lock).<br>
-✅ Complexity arc now rises cleanly (1→1→2→3→3) and ends medium-high, per guidance.<br>
-⚠️ Still 4 of 5 puzzles are <code>tap</code> interaction (only word-lock is <code>drag</code>) — with evidence-lock dropped, there's no <code>type</code> interaction left in the lineup. If interaction variety matters more than content-fit purity, consider swapping word-lock's position or accepting the tap-heavy skew since all 5 remaining puzzles are genuinely the best content fits for trivia.
+✅ fun:4+ present once (wager-lock) — satisfies "1 fun:4+ per 3 rooms" easily since this is a single room.<br>
+✅ Complexity arc now rises cleanly (1→1→2→2→3) and ends medium-high, per guidance.<br>
+✅ No two puzzles share the same core scoring mechanic — dropped streak-lock specifically because it and wager-lock were both "MCQ pool + accumulate score to target," which felt redundant across two of five slots.<br>
+⚠️ Still 4 of 5 puzzles are <code>tap</code> interaction (only word-lock is <code>drag</code>) — considered wire-lock and match-lock for interaction variety, but rejected since the trivia bank's content (mostly full-sentence questions/answers) doesn't fit their tight label layouts without a separate short-label authoring pass.
 </div>
 
 <h2>Full candidate comparison (from puzzle-taxonomy.json)</h2>
@@ -95,9 +96,9 @@ h2 { color: #e94560; font-size: 1.05rem; margin-bottom: 0.6rem; }
 </div>
 
 <div class="sample-block">
-<h3>3. streak-lock <span class="fit-tag good">good</span></h3>
-<p class="sample-note">Rapid-fire MCQ pool, mixed categories, 8s per question, reach 10 pts</p>
-<div id="mount-streak"></div>
+<h3>3. spelling-lock <span class="fit-tag good">good</span></h3>
+<p class="sample-note">Rearrange the answer's own shuffled letters (no unrelated decoys) — e.g. spell "DynamoDB" and "CloudFront" from a scrambled letter pool. Distinct from word-lock: this is recall-and-order, not recall-and-select. Supports multi-word answers too (e.g. "Kiro Power") — the slot layout shows a visible gap at each word boundary even though the shuffled letter pool has spaces stripped.<br>⚠️ <b>Known issue:</b> the header below still reads "TODAY'S SPECIALS" — that's a hardcoded string left over from the component's original café/menu-board use case. Needs a <code>title</code> config option added before this ships in quiz mode; see <code>docs/quiz-mode-instructions-engine.md</code>.</p>
+<div id="mount-spelling"></div>
 </div>
 
 <div class="sample-block">
@@ -122,7 +123,7 @@ h2 { color: #e94560; font-size: 1.05rem; margin-bottom: 0.6rem; }
 
 <script src="puzzle/keypad-lock.js"></script>
 <script src="puzzle/word-lock.js"></script>
-<script src="puzzle/streak-lock.js"></script>
+<script src="puzzle/spelling-lock.js"></script>
 <script src="puzzle/wager-lock.js"></script>
 <script src="puzzle/pillar-lock.js"></script>
 
@@ -139,17 +140,15 @@ new WordLock(document.getElementById('mount-word'), {
   onSubmit(word, correct) { console.log('word solved', word, correct); }
 });
 
-new StreakLock(document.getElementById('mount-streak'), {
-  target: 10,
-  timePerQuestion: 8,
-  questions: [
-    { question: 'AWS service for object storage?', answer: 'S3', decoys: ['EBS', 'EFS', 'Glacier'] },
-    { question: 'Common phishing red flag?', answer: 'Urgent request', decoys: ['Company logo', 'Signature', 'Short email'] },
-    { question: 'Who painted the Mona Lisa?', answer: 'Da Vinci', decoys: ['Michelangelo', 'Raphael', 'Donatello'] },
-    { question: 'AI term for model "hallucination"?', answer: 'Fabricated output', decoys: ['Overfitting', 'Bias', 'Latency'] },
-    { question: "Hanoi's iconic lake?", answer: 'Hoan Kiem', decoys: ['West Lake', 'Truc Bach', 'Bay Mau'] },
-  ],
-  onSubmit(correct) { console.log('streak solved', correct); }
+new SpellingLock(document.getElementById('mount-spelling'), {
+  config: {
+    pool: ['DYNAMODB', 'CLOUDFRONT', 'KIRO POWER'],
+    pickCount: 3,
+    sequential: true,
+    scrambleLetters: true
+  },
+  onSubmit() { console.log('spelling solved all words'); },
+  onWrong(msg) { console.log('spelling wrong', msg); }
 });
 
 new WagerLock(document.getElementById('mount-wager'), {
@@ -202,16 +201,17 @@ new PillarLock(document.getElementById('mount-pillar'), {
 <script>
 const data = {
   "keypad-lock":   { rarity:"COMMON", complexity:1, fun:1, interaction:"tap",  duration:"quick",  replay:"static",  fit:"good",   note:"Numeric-only answers. Best opener." },
-  "word-lock":     { rarity:"COMMON", complexity:1, fun:2, interaction:"drag", duration:"quick",  replay:"static",  fit:"good",   note:"3–6 letter word/acronym answers only." },
-  "streak-lock":   { rarity:"MAGIC",  complexity:3, fun:4, interaction:"tap",  duration:"medium", replay:"shuffled",fit:"good",   note:"Native question pool + timer + streak scoring." },
+  "word-lock":     { rarity:"COMMON", complexity:1, fun:2, interaction:"drag", duration:"quick",  replay:"static",  fit:"good",   note:"3–6 letter word/acronym answers only. Recall-and-select (random decoy letters per position)." },
+  "spelling-lock": { rarity:"COMMON", complexity:2, fun:2, interaction:"tap",  duration:"medium", replay:"shuffled",fit:"good",   note:"Rearrange the answer's own shuffled letters — recall-and-order, no random decoys, no typo risk. Supports multi-word answers (visible slot gap per word boundary). Distinct mechanic from word-lock." },
   "wager-lock":    { rarity:"RARE",   complexity:3, fun:4, interaction:"tap",  duration:"medium", replay:"shuffled",fit:"good",   note:"Native question pool with confidence-stake mechanic." },
   "pillar-lock":   { rarity:"COMMON", complexity:2, fun:2, interaction:"tap",  duration:"medium", replay:"shuffled",fit:"good",   note:"Good for 'which category' style questions (categorization drills)." },
+  "streak-lock":   { rarity:"MAGIC",  complexity:3, fun:4, interaction:"tap",  duration:"medium", replay:"shuffled",fit:"caution",note:"Native fit, but dropped from final lineup — mechanically too similar to wager-lock (both are MCQ-pool-toward-a-score-target)." },
   "sequence-lock": { rarity:"COMMON", complexity:2, fun:3, interaction:"tap",  duration:"quick",  replay:"static",  fit:"finale", note:"Not a question carrier — use for group-consensus finale from derived pattern." },
   "morse-lock":    { rarity:"MAGIC",  complexity:3, fun:3, interaction:"timing",duration:"medium",replay:"static",  fit:"caution",note:"Niche; answer must be morse-encodable, slower to solve." },
   "deduction-grid-lock": { rarity:"RARE", complexity:5, fun:3, interaction:"tap", duration:"long", replay:"static", fit:"caution",note:"Needs a full authored logic puzzle per category — high authoring cost." },
   "sort-lock":     { rarity:"COMMON", complexity:2, fun:2, interaction:"drag", duration:"quick",  replay:"shuffled",fit:"caution",note:"Only fits inherently-ordered answers (chronology, ranking)." },
-  "match-lock":    { rarity:"MAGIC",  complexity:2, fun:3, interaction:"tap",  duration:"medium", replay:"shuffled",fit:"caution",note:"Needs term/definition pairs, not single Q&A." },
-  "wire-lock":     { rarity:"COMMON", complexity:2, fun:2, interaction:"drag", duration:"quick",  replay:"static",  fit:"caution",note:"Needs mapping-style answers (pairs), not free trivia." },
+  "match-lock":    { rarity:"MAGIC",  complexity:2, fun:3, interaction:"tap",  duration:"medium", replay:"shuffled",fit:"caution",note:"Needs term/definition pairs, not single Q&A. Also has tight card-flip label space — current bank content mostly too long (99% of questions >25 chars)." },
+  "wire-lock":     { rarity:"COMMON", complexity:2, fun:2, interaction:"drag", duration:"quick",  replay:"static",  fit:"caution",note:"Needs mapping-style answers (pairs), not free trivia. Column width capped at 40% with no truncation — checked against real bank: only 62% of mcq answers fit under 20 chars, and 99% of questions exceed 25 chars. Would need a separate short-label content set." },
 };
 
 const tbody = document.querySelector('#tbl tbody');

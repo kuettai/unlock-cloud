@@ -1,10 +1,11 @@
 {
-  "_comment": "Server-side question bank for Group Quiz Mode, built for AWS Cloud and AI Day Hanoi (Sept 29, 2026, JW Marriott Hotel Hanoi). Server picks question IDs per category based on player vote, then assembles the puzzle config for each lock type (see quiz-mode-puzzle-config-example.json). This file is NOT loaded directly by the client.\n\nCATEGORIES (6 total, confirmed 2026-08-24): aws-core-services, agentic-ai, security, vietnam-aws, startups-innovation, cloud-fundamentals. Each category has 81 entries (13 numeric, 13 word, 30 mcq, 25 statement) = 486 total entries. This is HALF the original 160-per-category (960 total) target, per explicit scope reduction agreed with the requester due to fact-exhaustion and verification-cost constraints on categories with limited fresh 2026 source material.\n\nSOURCING: entries with a source field were verified via live web search/fetch on 2026-08-24 against official pages (kiro.dev, aws.amazon.com, press.aboutamazon.com, nist.gov, theneuron.ai re:Invent 2025 recap). Entries with _verified:false are well-established general knowledge (AWS service purposes, port numbers, startup/security/cloud terminology) that were not individually re-verified against a live source in this pass but are standard, safe facts. Spot-check recommended before production use, especially for _verified:false entries.",
+  "_comment": "Server-side question bank for Group Quiz Mode, built for AWS Cloud and AI Day Hanoi (Sept 29, 2026, JW Marriott Hotel Hanoi). Server picks question IDs per category based on player vote, then assembles the puzzle config for each lock type (see quiz-mode-puzzle-config-example.json). This file is NOT loaded directly by the client.\n\nCATEGORIES (6 total, confirmed 2026-08-24): aws-core-services, agentic-ai, security, vietnam-aws, startups-innovation, cloud-fundamentals. Each category originally had 81 entries (13 numeric, 13 word, 30 mcq, 25 statement) = 486 total. A 5th type, `spelling` (for spelling-lock, added 2026-08-25 when streak-lock was replaced with spelling-lock in the puzzle lineup), was added per category: 6-12 entries each, 54 total, bringing the grand total to 540. spelling entries were sourced by reusing existing `word` entries that pass a safety filter (letters+spaces only, 5-16 letters excluding spaces) — except aws-core-services, which had ZERO usable `word` entries (all are bare acronyms or contain digits/symbols) and needed 10 newly-authored entries using real AWS service names already referenced elsewhere in that category. This is HALF the original 160-per-category (960 total) target for the original 4 types, per explicit scope reduction agreed with the requester due to fact-exhaustion and verification-cost constraints on categories with limited fresh 2026 source material.\n\nSOURCING: entries with a source field were verified via live web search/fetch on 2026-08-24 against official pages (kiro.dev, aws.amazon.com, press.aboutamazon.com, nist.gov, theneuron.ai re:Invent 2025 recap). Entries with _verified:false are well-established general knowledge (AWS service purposes, port numbers, startup/security/cloud terminology) that were not individually re-verified against a live source in this pass but are standard, safe facts. Spot-check recommended before production use, especially for _verified:false entries.",
   "_type_to_lock_mapping": {
     "numeric": "keypad-lock only.",
-    "word": "word-lock only.",
-    "mcq": "streak-lock AND wager-lock (shared pool, reshape decoys<->options as needed).",
-    "statement": "pillar-lock ONLY, repurposed as True/False sorter within a single category. TEMPLATE FORMAT: {correctValue|wrongValue} slot, client or server resolves by picking index 0 (True) or 1 (False) before mounting pillar-lock. See quiz-mode-handoff.md for the server-side-resolution requirement (do not resolve client-side in production to avoid answer leaks)."
+    "word": "word-lock only. Answers here are 3-6 letters, matched against word-lock's per-position reel constraint — NOT the same pool as 'spelling'.",
+    "mcq": "wager-lock only (streak-lock was dropped from the lineup — see docs/quiz-mode-instructions-engine.md for why).",
+    "statement": "pillar-lock ONLY, repurposed as True/False sorter within a single category. TEMPLATE FORMAT: {correctValue|wrongValue} slot — the backend, NOT the client, must resolve this by picking index 0 (True) or 1 (False) before sending anything over the wire. See quiz-mode-instructions-backend.md section 3.",
+    "spelling": "spelling-lock only. Each entry's `answer` is the exact string passed into spelling-lock's `pool` config. Answers CAN be multi-word (e.g. 'Kiro Power', 'Direct Connect') — spelling-lock renders a visible gap between words in the slot layout and strips spaces only from the internal shuffled letter pool, so multi-word answers work fine and are not confusing. Rule applied when curating this array: letters and spaces only (no digits/symbols), 5-16 total letters excluding spaces. See docs/quiz-mode-instructions-engine.md for the length-range rationale."
   },
   "categories": {
     "aws-core-services": {
@@ -624,6 +625,58 @@
         {
           "id": "awscore-stmt-025",
           "template": "AWS Direct Connect establishes a {dedicated private network connection|public internet VPN tunnel} from on-premises to AWS.",
+          "_verified": false
+        }
+      ],
+      "spelling": [
+        {
+          "id": "awscore-spell-001",
+          "answer": "DynamoDB",
+          "_verified": false
+        },
+        {
+          "id": "awscore-spell-002",
+          "answer": "CloudFront",
+          "_verified": false
+        },
+        {
+          "id": "awscore-spell-003",
+          "answer": "CloudWatch",
+          "_verified": false
+        },
+        {
+          "id": "awscore-spell-004",
+          "answer": "CloudTrail",
+          "_verified": false
+        },
+        {
+          "id": "awscore-spell-005",
+          "answer": "Redshift",
+          "_verified": false
+        },
+        {
+          "id": "awscore-spell-006",
+          "answer": "Lambda",
+          "_verified": false
+        },
+        {
+          "id": "awscore-spell-007",
+          "answer": "Aurora",
+          "_verified": false
+        },
+        {
+          "id": "awscore-spell-008",
+          "answer": "Glacier",
+          "_verified": false
+        },
+        {
+          "id": "awscore-spell-009",
+          "answer": "Athena",
+          "_verified": false
+        },
+        {
+          "id": "awscore-spell-010",
+          "answer": "Direct Connect",
           "_verified": false
         }
       ]
@@ -1246,6 +1299,38 @@
           "id": "agentic-stmt-025",
           "template": "Amazon Quick's Free plan requires {no AWS account or credit card|a valid AWS account with billing configured} to sign up.",
           "source": "https://aws.amazon.com/quick/faqs/"
+        }
+      ],
+      "spelling": [
+        {
+          "id": "agentic-spell-002",
+          "answer": "Tangent",
+          "source": "https://kiro.dev/docs/cli/v3/"
+        },
+        {
+          "id": "agentic-spell-005",
+          "answer": "Spec agent",
+          "source": "https://kiro.dev/docs/cli/v3/"
+        },
+        {
+          "id": "agentic-spell-006",
+          "answer": "Memory",
+          "source": "https://www.theneuron.ai/explainer-articles/aws-re-invent-2025-everything-amazon-announced-at-re-invent-2025-in-one-place/"
+        },
+        {
+          "id": "agentic-spell-007",
+          "answer": "Cedar",
+          "source": "https://www.theneuron.ai/explainer-articles/aws-re-invent-2025-everything-amazon-announced-at-re-invent-2025-in-one-place/"
+        },
+        {
+          "id": "agentic-spell-009",
+          "answer": "Kiro Power",
+          "source": "https://aws.amazon.com/about-aws/whats-new/2026/06/aws-kiro-power-claude-code/"
+        },
+        {
+          "id": "agentic-spell-012",
+          "answer": "Frontier Agents",
+          "source": "https://www.theneuron.ai/explainer-articles/aws-re-invent-2025-everything-amazon-announced-at-re-invent-2025-in-one-place/"
         }
       ]
     },
@@ -1973,6 +2058,68 @@
           "template": "Multi-Factor Authentication (MFA) requires {two or more|exactly one} independent forms of verification, rather than just one.",
           "_verified": false
         }
+      ],
+      "spelling": [
+        {
+          "id": "security-spell-001",
+          "answer": "agent",
+          "source": "https://aws.amazon.com/security-agent/faqs/"
+        },
+        {
+          "id": "security-spell-002",
+          "answer": "Project",
+          "source": "https://aws.amazon.com/security-agent/faqs/"
+        },
+        {
+          "id": "security-spell-004",
+          "answer": "CloudWatch",
+          "source": "https://aws.amazon.com/security-agent/faqs/"
+        },
+        {
+          "id": "security-spell-005",
+          "answer": "DevOps",
+          "source": "https://aws.amazon.com/security-agent/faqs/"
+        },
+        {
+          "id": "security-spell-006",
+          "answer": "Claude",
+          "source": "https://aws.amazon.com/about-aws/whats-new/2026/06/aws-kiro-power-claude-code/"
+        },
+        {
+          "id": "security-spell-007",
+          "answer": "sandbox",
+          "source": "https://aws.amazon.com/about-aws/whats-new/2026/06/aws-kiro-power-claude-code/"
+        },
+        {
+          "id": "security-spell-008",
+          "answer": "speed",
+          "source": "https://aws.amazon.com/about-aws/whats-new/2026/06/aws-continuum/"
+        },
+        {
+          "id": "security-spell-009",
+          "answer": "verify",
+          "source": "https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/"
+        },
+        {
+          "id": "security-spell-010",
+          "answer": "provisioning",
+          "source": "https://www.cloudskope.com/insights/post/cybersecurity-acronyms-glossary"
+        },
+        {
+          "id": "security-spell-011",
+          "answer": "Authentication",
+          "_verified": false
+        },
+        {
+          "id": "security-spell-012",
+          "answer": "Injection",
+          "_verified": false
+        },
+        {
+          "id": "security-spell-013",
+          "answer": "Service",
+          "_verified": false
+        }
       ]
     },
     "vietnam-aws": {
@@ -2671,6 +2818,48 @@
           "source": "https://press.aboutamazon.com/aws/2025/9/new-aws-research-shows-strong-ai-adoption-momentum-in-vietnam",
           "_verified": true
         }
+      ],
+      "spelling": [
+        {
+          "id": "vnaws-spell-001",
+          "answer": "Hanoi",
+          "_verified": false
+        },
+        {
+          "id": "vnaws-spell-002",
+          "answer": "Hoan Kiem Lake",
+          "_verified": false
+        },
+        {
+          "id": "vnaws-spell-003",
+          "answer": "Red River",
+          "_verified": false
+        },
+        {
+          "id": "vnaws-spell-006",
+          "answer": "Local Zone",
+          "source": "https://aws.amazon.com/about-aws/whats-new/2026/06/aws-local-zones-hanoi-vietnam/"
+        },
+        {
+          "id": "vnaws-spell-008",
+          "answer": "Vogels",
+          "source": "https://aws.amazon.com/events/cloud-day-hanoi/"
+        },
+        {
+          "id": "vnaws-spell-010",
+          "answer": "AI Ready",
+          "source": "https://press.aboutamazon.com/aws/2025/9/new-aws-research-shows-strong-ai-adoption-momentum-in-vietnam"
+        },
+        {
+          "id": "vnaws-spell-012",
+          "answer": "Ha Long Bay",
+          "_verified": false
+        },
+        {
+          "id": "vnaws-spell-013",
+          "answer": "Ao Dai",
+          "_verified": false
+        }
       ]
     },
     "startups-innovation": {
@@ -3292,6 +3481,63 @@
           "template": "'Runway' refers to {how long a startup can operate before running out of cash|the physical office space a startup leases}.",
           "_verified": false
         }
+      ],
+      "spelling": [
+        {
+          "id": "startups-spell-002",
+          "answer": "Runway",
+          "_verified": false
+        },
+        {
+          "id": "startups-spell-003",
+          "answer": "Pitch Deck",
+          "_verified": false
+        },
+        {
+          "id": "startups-spell-004",
+          "answer": "Series A",
+          "_verified": false
+        },
+        {
+          "id": "startups-spell-005",
+          "answer": "Unicorn",
+          "_verified": false
+        },
+        {
+          "id": "startups-spell-007",
+          "answer": "Pivot",
+          "_verified": false
+        },
+        {
+          "id": "startups-spell-008",
+          "answer": "Org ID",
+          "source": "https://aws.amazon.com/startups/credits"
+        },
+        {
+          "id": "startups-spell-009",
+          "answer": "AWS Activate",
+          "source": "https://aws.amazon.com/startups/credits"
+        },
+        {
+          "id": "startups-spell-010",
+          "answer": "AWS Builder ID",
+          "source": "https://aws.amazon.com/startups/credits"
+        },
+        {
+          "id": "startups-spell-011",
+          "answer": "Amazon Bedrock",
+          "source": "https://aws.amazon.com/startups/lp/aws-activate-credits"
+        },
+        {
+          "id": "startups-spell-012",
+          "answer": "Angel Investor",
+          "_verified": false
+        },
+        {
+          "id": "startups-spell-013",
+          "answer": "Dilution",
+          "_verified": false
+        }
       ]
     },
     "cloud-fundamentals": {
@@ -3911,6 +4157,43 @@
         {
           "id": "cloudf-stmt-025",
           "template": "Business agility in the cloud context means the ability to {quickly adapt and deploy resources as needs change|follow a fixed multi-year hardware refresh cycle}.",
+          "_verified": false
+        }
+      ],
+      "spelling": [
+        {
+          "id": "cloudf-spell-001",
+          "answer": "Elasticity",
+          "_verified": false
+        },
+        {
+          "id": "cloudf-spell-003",
+          "answer": "Region",
+          "_verified": false
+        },
+        {
+          "id": "cloudf-spell-004",
+          "answer": "Availability Zone",
+          "_verified": false
+        },
+        {
+          "id": "cloudf-spell-009",
+          "answer": "Hybrid cloud",
+          "_verified": false
+        },
+        {
+          "id": "cloudf-spell-010",
+          "answer": "Public cloud",
+          "_verified": false
+        },
+        {
+          "id": "cloudf-spell-011",
+          "answer": "Scalability",
+          "_verified": false
+        },
+        {
+          "id": "cloudf-spell-012",
+          "answer": "Downtime",
           "_verified": false
         }
       ]
