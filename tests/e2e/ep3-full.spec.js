@@ -391,10 +391,10 @@ test.describe('EP3 — The King\'s Errand (full playthrough, real puzzle UIs)', 
     await closePopup(page);
     await talk(page, 'Talk to Sir Cedric');
     await look(page, 'Examine the Champion Assembly Rack');
-    await look(page, 'Examine the Herald\'s Ledger');   // gates the assembly
 
-    // Assembly: three slots belong to no errand and drag the score to 21.
-    // Numbers are hidden here, so the only way through is reading the names.
+    // Assembly: the Ledger is left on the platform, so numbers stay hidden.
+    // Three slots belong to no errand and drag the score to 21 — the only way
+    // through blind is reading the names, not the numbers.
     await act(page, 'Assemble the Champion');
     await expect(page.locator('.eqrk-row')).toHaveCount(10);
     for (const junk of ['Untested Shortcut', 'Unlogged Action', 'Borrowed Confidence']) {
@@ -403,8 +403,11 @@ test.describe('EP3 — The King\'s Errand (full playthrough, real puzzle UIs)', 
     await page.locator('.eqrk-btn', { hasText: 'Deploy' }).click();
     await settle(page, 1009);
 
-    // Rehearsal: disabling the junk gets 73, which is not Soars — the flats must
-    // also come before the multipliers. Numbers are visible to verify it.
+    // Rehearsal: take the Ledger now, so both racks read observability_card 1005
+    // as satisfied and the score renders for the rest of this run.
+    await look(page, 'Examine the Herald\'s Ledger');
+    // Disabling the junk gets 73, which is not Soars — the flats must also
+    // come before the multipliers. Numbers are visible now to verify it.
     await act(page, 'Run the rehearsal');
     await expect(page.locator('.eqrk-row')).toHaveCount(10);
     for (const junk of ['Untested Shortcut', 'Unlogged Action', 'Borrowed Confidence']) {
