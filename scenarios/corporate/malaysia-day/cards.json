@@ -1,0 +1,209 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "The Office",
+      "description": "The office is half-decorated for tomorrow's celebration, and you're the one pulling it together. Three award stations wait down the hall — the same awards we give each other on our big nights. A note on the whiteboard reads: \"Earn all three trophies to light the rooftop.\"",
+      "image": "assets/room-office.png",
+      "image_prompt": "Modern open-plan office at night, half-decorated for a Malaysia Day celebration with Jalur Gemilang bunting and string lights, three glowing award pedestals labelled with icons, festive but cozy, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 200, "label": "Head to the first award station" }
+      ],
+      "visible_to": "all",
+      "room": "office"
+    },
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "Peer Unicorn Station",
+      "description": "Peer Unicorn honours the colleague everyone leans on — the one who brings people together. So this station is all about connection: link Malaysia's states to their capitals.",
+      "image": "assets/room-peer-unicorn.png",
+      "image_prompt": "Playful office award station with a whimsical unicorn trophy motif, a wall panel of dangling colored wires connecting state names to city names, warm celebratory lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 205, "label": "Connect the states to their capitals", "puzzle": "match-peer" },
+        { "card_id": 215, "label": "Unscramble the nation", "puzzle": "jigsaw-peer", "requires_item": [205] }
+      ],
+      "visible_to": "all",
+      "room": "peer-unicorn"
+    },
+    {
+      "id": 205,
+      "type": "event",
+      "color": "yellow",
+      "title": "States Connected!",
+      "description": "Every wire clicks home — states matched to capitals. One more challenge to claim the Peer Unicorn: spell out what unites them all.",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "peer-unicorn"
+    },
+    {
+      "id": 215,
+      "type": "event",
+      "color": "yellow",
+      "title": "Peer Unicorn — Earned!",
+      "description": "M-A-L-A-Y-S-I-A. The letters lock into place and the unicorn trophy lights up. Peer Unicorn earned — on to the next station! 🦄",
+      "reveals": [300],
+      "consumes": [],
+      "awards": [201],
+      "visible_to": "all",
+      "room": "peer-unicorn"
+    },
+    {
+      "id": 201,
+      "type": "item",
+      "color": "red",
+      "title": "🦄 Peer Unicorn Trophy",
+      "description": "The Peer Unicorn trophy — proof you connect people like nobody else. One of three to collect tonight.",
+      "image": "assets/token-unicorn.png",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "peer-unicorn"
+    },
+
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "Super Achiever Station",
+      "description": "Super Achiever honours the colleague who smashes every target. To earn it, celebrate Malaysia's own record-breakers — starting with the towers that once topped the world.",
+      "image": "assets/room-super-achiever.png",
+      "image_prompt": "Office award station with a soaring trophy motif and a large poster of the Petronas Twin Towers at night, a glowing numeric keypad on a pedestal, aspirational mood, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 305, "label": "Enter the height of the towers", "puzzle": "height-achiever" },
+        { "card_id": 315, "label": "Malaysia's greatest hits quiz", "puzzle": "quiz-achiever", "requires_item": [305] }
+      ],
+      "visible_to": "all",
+      "room": "super-achiever"
+    },
+    {
+      "id": 305,
+      "type": "event",
+      "color": "yellow",
+      "title": "Towers Raised!",
+      "description": "452 metres — the keypad flashes green and the Petronas Twin Towers light up. One more challenge for the Super Achiever: prove you know Malaysia's greatest hits.",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "super-achiever"
+    },
+    {
+      "id": 315,
+      "type": "event",
+      "color": "yellow",
+      "title": "Super Achiever — Earned!",
+      "description": "Three for three! Tallest in the world, then second-tallest, and the first Proton — you know your record-breakers. The Super Achiever trophy is yours — one more to go! 🏆",
+      "reveals": [400],
+      "consumes": [],
+      "awards": [301],
+      "visible_to": "all",
+      "room": "super-achiever"
+    },
+    {
+      "id": 301,
+      "type": "item",
+      "color": "red",
+      "title": "🏆 Super Achiever Trophy",
+      "description": "The Super Achiever trophy — proof you always reach higher. One of three to collect tonight.",
+      "image": "assets/token-achiever.png",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "super-achiever"
+    },
+
+    {
+      "id": 400,
+      "type": "location",
+      "color": "green",
+      "title": "Beyond Boundaries Station",
+      "description": "Beyond Boundaries honours the colleague whose impact travels far and wide. To earn it, celebrate the Malaysian flavours that have crossed every border — the food the whole world loves.",
+      "image": "assets/room-beyond-boundaries.png",
+      "image_prompt": "Office award station with a Malaysian food motif — steaming nasi lemak on banana leaf, satay skewers, tropical fruit — a word-lock panel on a pedestal, warm inviting light, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 405, "label": "Name Malaysia's national dish", "puzzle": "word-boundaries" },
+        { "card_id": 415, "label": "Verify the food facts", "puzzle": "sequence-boundaries", "requires_item": [405] }
+      ],
+      "visible_to": "all",
+      "room": "beyond-boundaries"
+    },
+    {
+      "id": 405,
+      "type": "event",
+      "color": "yellow",
+      "title": "Dish Named!",
+      "description": "NASI LEMAK — Malaysia's national dish, fragrant coconut rice with sambal. One final challenge for Beyond Boundaries: get the food facts straight.",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "beyond-boundaries"
+    },
+    {
+      "id": 415,
+      "type": "event",
+      "color": "yellow",
+      "title": "Beyond Boundaries — Earned!",
+      "description": "All true — nasi lemak, coconut rice, and the King of Fruits! Malaysian flavour knows no borders, and neither do you. All three awards earned — to the rooftop! 🍽️",
+      "reveals": [500],
+      "consumes": [],
+      "awards": [401],
+      "visible_to": "all",
+      "room": "beyond-boundaries"
+    },
+    {
+      "id": 401,
+      "type": "item",
+      "color": "red",
+      "title": "🍽️ Beyond Boundaries Trophy",
+      "description": "The Beyond Boundaries trophy — proof your impact travels far and wide. One of three to collect tonight.",
+      "image": "assets/token-boundaries.png",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "beyond-boundaries"
+    },
+
+    {
+      "id": 500,
+      "type": "location",
+      "color": "green",
+      "title": "Rooftop Finale",
+      "description": "The rooftop, strung with lights and a Jalur Gemilang snapping in the night breeze. Three trophies in hand. One last question stands between you and the fireworks.",
+      "image": "assets/room-rooftop.png",
+      "image_prompt": "Festive office rooftop at night, string lights and a large Malaysian flag, three glowing trophies on a table, fireworks about to launch over the Kuala Lumpur skyline, celebratory mood, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 599, "label": "Set the date we celebrate tomorrow", "puzzle": "final-malaysiaday" }
+      ],
+      "visible_to": "all",
+      "room": "rooftop"
+    },
+    {
+      "id": 599,
+      "type": "event",
+      "color": "yellow",
+      "title": "Selamat Hari Malaysia!",
+      "description": "16 September! The fireworks erupt over the skyline. Tomorrow isn't Merdeka Day — it's Malaysia Day, the day Malaya, Sabah, Sarawak and Singapore became Malaysia in 1963. The celebration is lit. Happy Malaysia Day! 🇲🇾",
+      "is_ending": true,
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "rooftop"
+    }
+  ]
+}

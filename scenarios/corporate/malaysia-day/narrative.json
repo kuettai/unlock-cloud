@@ -1,0 +1,40 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Celebration host — warm, playful, upbeat" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "narrator", "text": "It's the eve of Malaysia Day, and you're on the office celebration committee — the whole team is counting on you.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "Earn our three awards — Peer Unicorn, Super Achiever, Beyond Boundaries — and light up the party. Ready?", "pause_after_ms": 400, "emphasis": "moderate" }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 300,
+    "segments": [
+      { "voice": "narrator", "text": "Halfway there! Five minutes on the clock.", "pause_after_ms": 600 },
+      { "voice": "narrator", "text": "Keep those trophies coming — the celebration is waiting." }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "Three trophies collected. The rooftop lights blaze on — you pulled it off for the whole team.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "And here's the secret: tomorrow isn't Merdeka Day. Merdeka was the 31st of August, 1957.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "Tomorrow — the 16th of September, 1963 — is the day Malaya, Sabah, Sarawak and Singapore became Malaysia.", "pause_after_ms": 800, "emphasis": "moderate" },
+        { "voice": "narrator", "text": "Well done, everyone! Happy Malaysia Day!", "emphasis": "strong" }
+      ],
+      "audio": null,
+      "next_episode": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "narrator", "text": "Time's up! The party fizzles — but only for now.", "pause_after_ms": 600 },
+        { "voice": "narrator", "text": "Take a breath and try again. The trophies are still waiting." }
+      ],
+      "audio": null
+    }
+  },
+  "_editable_note": "To personalize the ending for your event, edit the last success segment: replace 'everyone' with a winner's name or team (e.g. 'Well done, Team Nebula!'). Then regenerate voice audio with tools/narrative_to_voice.py."
+}

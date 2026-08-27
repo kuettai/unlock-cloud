@@ -1,0 +1,27 @@
+{
+  "id": "malaysia-day",
+  "title": "Selamat Hari Malaysia",
+  "episode": "MD",
+  "arc": "Celebration",
+  "category": "corporate",
+  "description": "It's the eve of Malaysia Day and the office Rewards & Recognition celebration isn't ready. Earn all three awards — Peer Unicorn, Super Achiever, and Beyond Boundaries — collect your trophies, and light up the party before the clock runs out. A playful 10-minute trivia dash through Malaysian pride.",
+  "difficulty": { "tier": 1, "label": "Playful" },
+  "duration_minutes": 10,
+  "players": { "min": 1, "max": 1, "recommended": 1 },
+  "topics": ["Malaysia Trivia", "Rewards & Recognition", "Malaysia Day"],
+  "mechanics_used": [
+    "wire-lock",
+    "keypad-lock",
+    "word-lock",
+    "4digits-lock"
+  ],
+  "mechanics_taught": [
+    "navigation",
+    "puzzle_solving",
+    "hints"
+  ],
+  "version": "0.1",
+  "start_button": "Light the Celebration",
+  "lore_label": "Did You Know?",
+  "end_title": "Selamat Hari Malaysia!"
+}

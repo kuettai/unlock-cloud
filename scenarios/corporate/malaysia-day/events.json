@@ -1,0 +1,70 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 420,
+      "message": "The decorations flutter. Three awards to earn — pick a station and go!",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 300,
+      "message": "Halfway there! Five minutes on the clock. Keep those trophies coming.",
+      "type": "narrative",
+      "triggers_narrative": "mid_event"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 60,
+      "message": "One minute left! The rooftop is waiting.",
+      "type": "alarm"
+    },
+    {
+      "id": "TE-04",
+      "time_remaining": 30,
+      "message": "Thirty seconds! Light the celebration — quick!",
+      "type": "alarm"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "hint-tooltip",
+      "trigger": "first_hint_request",
+      "message": "Hints cost a few points but never block you. Use them if you're stuck.",
+      "type": "tooltip",
+      "once": true
+    },
+    {
+      "id": "peer-unicorn-earned",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "jigsaw-peer",
+      "result_card": 215,
+      "message": "Peer Unicorn earned! Trophy collected. 🦄",
+      "type": "reveal"
+    },
+    {
+      "id": "super-achiever-earned",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "quiz-achiever",
+      "result_card": 315,
+      "message": "Super Achiever earned! Trophy collected. 🏆",
+      "type": "reveal"
+    },
+    {
+      "id": "beyond-boundaries-earned",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "sequence-boundaries",
+      "result_card": 415,
+      "message": "Beyond Boundaries earned! Trophy collected. 🍽️",
+      "type": "reveal"
+    },
+    {
+      "id": "celebration-lit",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "final-malaysiaday",
+      "result_card": 599,
+      "message": "16 September! Happy Malaysia Day — the fireworks fly!",
+      "type": "ending"
+    }
+  ]
+}
