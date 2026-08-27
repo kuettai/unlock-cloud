@@ -1,0 +1,22 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Signal Room",
+      "description": "One number. One check.",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "Starting room.",
+      "map_pos": [0, 80]
+    },
+    {
+      "card_id": 200,
+      "name": "Checkpoint",
+      "description": "Two more checks.",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "digit-quick" },
+      "unlock_text": "First check cleared.",
+      "map_pos": [80, 80]
+    }
+  ]
+}

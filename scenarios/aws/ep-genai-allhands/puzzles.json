@@ -1,0 +1,62 @@
+{
+  "puzzles": [
+    {
+      "id": "digit-quick",
+      "type": "code_entry",
+      "ui": "4digits-lock",
+      "card_ref": 106,
+      "success_card": 106,
+      "description": "Kiro turns 1 in which year?",
+      "config": {
+        "answer": "2026"
+      },
+      "hints": [
+        "It launched last year.",
+        "This year.",
+        "2026"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "word-kiro",
+      "type": "word_lock",
+      "ui": "word-lock",
+      "card_ref": 206,
+      "success_card": 206,
+      "description": "Kiro's newest trick: multi-agent ___.",
+      "config": {
+        "answer": "CREW",
+        "alphabet": "CREWBDGHLO"
+      },
+      "hints": [
+        "Launched Aug 2026.",
+        "4 letters.",
+        "CREW"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "pillar-agentcore",
+      "type": "puzzle",
+      "ui": "pillar-lock",
+      "card_ref": 207,
+      "success_card": 207,
+      "description": "Tap TRUE or FALSE for each claim.",
+      "config": {
+        "pillars": ["TRUE", "FALSE"],
+        "statements": [
+          { "text": "Amazon Quick answered over 2 billion queries since Oct 2025.", "answer": "TRUE" },
+          { "text": "AgentCore agents can run non-stop for 14 days.", "answer": "TRUE" },
+          { "text": "AgentCore only works with Anthropic Claude models.", "answer": "FALSE" }
+        ]
+      },
+      "hints": [
+        "Quick passed 2 billion a while back. AgentCore Runtime added long-lived sessions this year.",
+        "AgentCore also supports LangChain, OpenAI Agents SDK, Strands — not just Claude.",
+        "TRUE: Quick 2B+, 14 days. FALSE: not Claude-only."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}

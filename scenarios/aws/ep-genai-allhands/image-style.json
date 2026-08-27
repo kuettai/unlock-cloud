@@ -1,0 +1,9 @@
+{
+  "style_prefix": "Digital illustration, clean minimal tech quiz kiosk, cool blue AWS palette, isometric game card art.",
+  "style_prefix_location": "Digital illustration, minimal isometric room, single glowing console, cool blue accent lighting, clean game environment art.",
+  "style_prefix_item": "Digital illustration, single tech prop on dark gradient background, cool blue accent, clean icon style, centered, game inventory art.",
+  "style_prefix_object": "Digital illustration, interactive console prop, soft moody background, cool blue accents, close-up detail, game card art.",
+  "style_prefix_character": "Digital illustration, single character portrait, modern engineer, dark gradient background, expressive pose, game NPC art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly",
+  "aspect_ratio": "16:9"
+}

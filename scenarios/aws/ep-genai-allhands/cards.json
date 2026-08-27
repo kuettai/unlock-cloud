@@ -1,0 +1,73 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Signal Room",
+      "description": "A single console blinks, waiting for a number.",
+      "image": "assets/signal-room.png",
+      "image_prompt": "A single glowing terminal console in a small, minimal dark room. Cool blue LED accent lighting. Clean, uncluttered, modern tech aesthetic. No text, no readable screens.",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 106, "label": "Answer the console", "puzzle": "digit-quick" }
+      ],
+      "visible_to": "all",
+      "room": "signal"
+    },
+    {
+      "id": 106,
+      "type": "event",
+      "color": "yellow",
+      "title": "Cleared.",
+      "description": "Number confirmed. Next room open.",
+      "reveals": [200],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "signal"
+    },
+
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "Checkpoint",
+      "description": "Two panels left. Any order.",
+      "image": "assets/checkpoint.png",
+      "image_prompt": "A small room with two glowing kiosk panels side by side. Cool blue LED accent lighting. Clean, uncluttered, modern tech aesthetic. No text, no readable screens.",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 206, "label": "Spell it out", "puzzle": "word-kiro" },
+        { "card_id": 207, "label": "True or false", "puzzle": "pillar-agentcore" }
+      ],
+      "visible_to": "all",
+      "room": "checkpoint"
+    },
+    {
+      "id": 206,
+      "type": "event",
+      "color": "yellow",
+      "title": "Nice.",
+      "description": "Panel confirmed.",
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "checkpoint"
+    },
+    {
+      "id": 207,
+      "type": "event",
+      "color": "yellow",
+      "title": "Cleared.",
+      "description": "All checks done. Back to the stage.",
+      "is_ending": true,
+      "reveals": [],
+      "consumes": [],
+      "awards": [],
+      "visible_to": "all",
+      "room": "checkpoint"
+    }
+  ]
+}

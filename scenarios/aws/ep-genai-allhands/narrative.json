@@ -1,0 +1,29 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Quiz host — brisk, upbeat" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "narrator", "text": "Three facts. Two rooms.", "pause_after_ms": 500 },
+      { "voice": "narrator", "text": "Clear them before we go live.", "emphasis": "moderate" }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "Cleared.", "pause_after_ms": 400 },
+        { "voice": "narrator", "text": "Back to the stage.", "emphasis": "strong" }
+      ],
+      "audio": null,
+      "next_episode": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "narrator", "text": "Time's up.", "pause_after_ms": 400 },
+        { "voice": "narrator", "text": "Quick — try again." }
+      ],
+      "audio": null
+    }
+  }
+}

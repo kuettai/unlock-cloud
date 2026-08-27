@@ -1,0 +1,18 @@
+{
+  "id": "ep-genai-allhands",
+  "title": "GenAI Sprint",
+  "episode": "AH",
+  "arc": "special-allhands",
+  "category": "aws",
+  "description": "Three fast facts on AWS GenAI. Clear all three before ReSolve takes the stage.",
+  "difficulty": { "tier": 1, "label": "Easy" },
+  "duration_minutes": 5,
+  "players": { "min": 1, "max": 6, "recommended": 1 },
+  "aws_topics": ["Amazon Quick", "Kiro", "Amazon Bedrock AgentCore"],
+  "mechanics_used": ["4digits-lock", "word-lock", "pillar-lock"],
+  "mechanics_taught": ["puzzle_solving"],
+  "version": "0.1",
+  "start_button": "Start",
+  "lore_label": "Fast Fact",
+  "end_title": "Cleared"
+}

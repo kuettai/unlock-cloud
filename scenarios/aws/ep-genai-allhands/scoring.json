@@ -1,0 +1,14 @@
+{
+  "base_score": 30,
+  "time_bonus_per_minute": 10,
+  "hint_penalty": -3,
+  "wrong_combination_penalty": -2,
+  "stars": [
+    { "min": 65, "stars": 5 },
+    { "min": 55, "stars": 4 },
+    { "min": 45, "stars": 3 },
+    { "min": 25, "stars": 2 },
+    { "min": 0, "stars": 1 }
+  ],
+  "notes": "Solve content is ~3 minutes; duration budget is 5 minutes to absorb setup/idle lag before the countdown (startTime persists in localStorage across reloads). A no-hint clear lands 5 stars."
+}

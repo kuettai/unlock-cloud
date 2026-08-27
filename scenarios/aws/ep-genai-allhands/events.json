@@ -1,0 +1,43 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 60,
+      "message": "One minute left.",
+      "type": "alarm"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "hint-tooltip",
+      "trigger": "first_hint_request",
+      "message": "Hints cost a few points but never block you.",
+      "type": "tooltip",
+      "once": true
+    },
+    {
+      "id": "signal-cleared",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "digit-quick",
+      "result_card": 106,
+      "message": "Confirmed. Checkpoint open.",
+      "type": "reveal"
+    },
+    {
+      "id": "word-cleared",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "word-kiro",
+      "result_card": 206,
+      "message": "Confirmed.",
+      "type": "reveal"
+    },
+    {
+      "id": "all-cleared",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "pillar-agentcore",
+      "result_card": 207,
+      "message": "All checks done.",
+      "type": "ending"
+    }
+  ]
+}
