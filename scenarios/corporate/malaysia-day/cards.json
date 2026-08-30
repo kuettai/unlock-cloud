@@ -26,7 +26,7 @@
       "reveals": [],
       "discoveries": [
         { "card_id": 205, "label": "Connect the states to their capitals", "puzzle": "match-peer" },
-        { "card_id": 215, "label": "Unscramble the nation", "puzzle": "jigsaw-peer", "requires_item": [205] }
+        { "card_id": 215, "label": "Spell the word for unity", "puzzle": "jigsaw-peer", "requires_item": [205] }
       ],
       "visible_to": "all",
       "room": "peer-unicorn"
@@ -48,7 +48,7 @@
       "type": "event",
       "color": "yellow",
       "title": "Peer Unicorn — Earned!",
-      "description": "M-A-L-A-Y-S-I-A. The letters lock into place and the unicorn trophy lights up. Peer Unicorn earned — on to the next station! 🦄",
+      "description": "B-E-R-S-E-K-U-T-U — 'united'. The letters lock into place and the unicorn trophy lights up. Peer Unicorn earned — on to the next station! 🦄",
       "reveals": [300],
       "consumes": [],
       "awards": [201],
@@ -128,13 +128,13 @@
       "type": "location",
       "color": "green",
       "title": "Beyond Boundaries Station",
-      "description": "Beyond Boundaries honours the colleague whose impact travels far and wide. To earn it, celebrate the Malaysian flavours that have crossed every border — the food the whole world loves.",
+      "description": "Beyond Boundaries honours the colleague whose impact travels far and wide. To earn it, celebrate the Malaysian wonders the whole world knows — first its most famous dish, then its natural marvels.",
       "image": "assets/room-beyond-boundaries.png",
-      "image_prompt": "Office award station with a Malaysian food motif — steaming nasi lemak on banana leaf, satay skewers, tropical fruit — a word-lock panel on a pedestal, warm inviting light, isometric digital illustration",
+      "image_prompt": "Office award station with a Malaysian wonders motif — steaming nasi lemak on banana leaf beside a small display of natural marvels (a mountain photo, a Rafflesia bloom, a tapir figurine) — a word-lock panel and a fact-check panel on a pedestal, warm inviting light, isometric digital illustration",
       "reveals": [],
       "discoveries": [
-        { "card_id": 405, "label": "Name Malaysia's national dish", "puzzle": "word-boundaries" },
-        { "card_id": 415, "label": "Verify the food facts", "puzzle": "sequence-boundaries", "requires_item": [405] }
+        { "card_id": 405, "label": "Complete the dish: nasi ____", "puzzle": "word-boundaries" },
+        { "card_id": 415, "label": "Verify the nature facts", "puzzle": "sequence-boundaries", "requires_item": [405] }
       ],
       "visible_to": "all",
       "room": "beyond-boundaries"
@@ -144,7 +144,7 @@
       "type": "event",
       "color": "yellow",
       "title": "Dish Named!",
-      "description": "NASI LEMAK — Malaysia's national dish, fragrant coconut rice with sambal. One final challenge for Beyond Boundaries: get the food facts straight.",
+      "description": "NASI LEMAK — Malaysia's national dish, fragrant coconut rice with sambal. One final challenge for Beyond Boundaries: get the nature facts straight.",
       "reveals": [],
       "consumes": [],
       "awards": [],
@@ -156,7 +156,7 @@
       "type": "event",
       "color": "yellow",
       "title": "Beyond Boundaries — Earned!",
-      "description": "All true — nasi lemak, coconut rice, and the King of Fruits! Malaysian flavour knows no borders, and neither do you. All three awards earned — to the rooftop! 🍽️",
+      "description": "Facts straight — Kinabalu's in Sabah, the tapir's black-and-white, and the Rafflesia is no sweet-smelling bloom! Malaysia's wonders know no borders, and neither do you. All three awards earned — to the rooftop! 🌺",
       "reveals": [500],
       "consumes": [],
       "awards": [401],
@@ -167,7 +167,7 @@
       "id": 401,
       "type": "item",
       "color": "red",
-      "title": "🍽️ Beyond Boundaries Trophy",
+      "title": "🌺 Beyond Boundaries Trophy",
       "description": "The Beyond Boundaries trophy — proof your impact travels far and wide. One of three to collect tonight.",
       "image": "assets/token-boundaries.png",
       "reveals": [],

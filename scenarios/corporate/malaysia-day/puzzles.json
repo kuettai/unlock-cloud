@@ -45,17 +45,17 @@
       "ui": "jigsaw-lock",
       "card_ref": 215,
       "success_card": 215,
-      "description": "One team, one name. Tap two tiles to swap them and spell the nation.",
+      "description": "Peer Unicorn celebrates people who bring the team together. Malaysia's national motto means 'Unity Is Strength' — spell its first word, the Malay word for 'united'.",
       "config": {
-        "cols": 8,
+        "cols": 9,
         "rows": 1,
-        "tiles": ["M", "A", "L", "A", "Y", "S", "I", "A"],
+        "tiles": ["B", "E", "R", "S", "E", "K", "U", "T", "U"],
         "revealCorrect": true
       },
       "hints": [
-        "It's the name everyone's celebrating tomorrow.",
-        "Eight letters, starts with M, ends with A.",
-        "M-A-L-A-Y-S-I-A."
+        "It's the first word of Malaysia's national motto 'Bersekutu Bertambah Mutu'.",
+        "Nine letters, starts with B, ends with U. Its root is 'sekutu' (ally/associate).",
+        "B-E-R-S-E-K-U-T-U."
       ],
       "mandatory": true
     },
@@ -121,15 +121,15 @@
       "ui": "word-lock",
       "card_ref": 405,
       "success_card": 405,
-      "description": "Beyond Boundaries — Malaysian flavour that travels the world. Name the national dish (one word: coconut rice).",
+      "description": "Beyond Boundaries — Malaysian flavour that travels the world. Malaysia's national dish is 'nasi ____' — fragrant rice cooked in coconut milk. Spell the missing word (the Malay word for 'rich/fatty').",
       "config": {
-        "answer": "NASILEMAK",
+        "answer": "LEMAK",
         "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
       },
       "hints": [
-        "Malaysia's national dish — fragrant rice cooked in coconut milk, served with sambal.",
-        "Two Malay words joined: 'rice' + 'rich/fatty'. Nine letters.",
-        "NASILEMAK."
+        "The dish is 'nasi ____' — the missing word is the Malay word for 'rich' or 'fatty'.",
+        "Five letters, starts with L, ends with K.",
+        "LEMAK."
       ],
       "mandatory": true
     },
@@ -139,19 +139,19 @@
       "ui": "pillar-lock",
       "card_ref": 415,
       "success_card": 415,
-      "description": "Mission control needs the facts straight — Malaysian food edition. Tap TRUE or FALSE for each claim.",
+      "description": "Mission control needs the facts straight — Malaysian nature edition. Tap TRUE or FALSE for each claim.",
       "config": {
         "pillars": ["TRUE", "FALSE"],
         "statements": [
-          { "text": "Nasi lemak is Malaysia's national dish", "answer": "TRUE" },
-          { "text": "Nasi lemak rice is cooked in coconut milk", "answer": "TRUE" },
-          { "text": "Durian is known as the King of Fruits", "answer": "TRUE" }
+          { "text": "Mount Kinabalu, Malaysia's highest peak, is located in Sarawak", "answer": "FALSE" },
+          { "text": "The Malayan tapir is black and white in colour", "answer": "TRUE" },
+          { "text": "The Rafflesia is famous for its pleasant, sweet fragrance", "answer": "FALSE" }
         ]
       },
       "hints": [
-        "Think back to the dish you just spelled — these all describe Malaysian food.",
-        "Nasi lemak is the national dish, cooked in coconut milk; durian wears the fruity crown.",
-        "All three are TRUE."
+        "Not all of these are true — read each claim carefully. Think about WHERE Kinabalu is, what a tapir looks like, and how a Rafflesia actually smells.",
+        "Mount Kinabalu is in Sabah, not Sarawak. The Malayan tapir really is black-and-white. The Rafflesia is nicknamed the 'corpse flower'.",
+        "FALSE, TRUE, FALSE."
       ],
       "mandatory": true
     },
