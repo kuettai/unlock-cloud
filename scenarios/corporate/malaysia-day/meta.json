@@ -11,8 +11,11 @@
   "topics": ["Malaysia Trivia", "Rewards & Recognition", "Malaysia Day"],
   "mechanics_used": [
     "wire-lock",
+    "jigsaw-lock",
     "keypad-lock",
+    "wager-lock",
     "word-lock",
+    "pillar-lock",
     "4digits-lock"
   ],
   "mechanics_taught": [
