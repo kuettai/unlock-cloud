@@ -30,7 +30,7 @@
     {
       "card_id": 400,
       "name": "Beyond Boundaries Station",
-      "description": "The station for those who go further than anyone thought possible — even beyond Earth itself.",
+      "description": "The station for those whose impact travels far and wide. A word-lock and a fact-check panel celebrate the Malaysian wonders known around the world — from its food to its wild places.",
       "connects_to": [300, 500],
       "unlocked_by": { "type": "puzzle", "puzzle_id": "quiz-achiever" },
       "unlock_text": "Super Achiever earned — the Beyond Boundaries station opens.",
