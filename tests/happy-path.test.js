@@ -795,6 +795,62 @@ describe('EP7 — Macet', () => {
 
 
 // ============================================================
+// EP-ETP — Escape to Production (Kiro + AI-DLC booth episode)
+// ============================================================
+describe('EP-ETP — Escape to Production', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep-escape-to-production'); engine.start(); });
+
+  test('The Crash: read lore, solve log + sort + pillar → Codebase unlocks', () => {
+    assert.equal(engine.currentRoom, 100);
+    discover(engine, 101, 'Welcome to Kiro Labs');
+    solvePuzzle(engine, 'log-crash', 102, 'Error Source Found');
+    solvePuzzle(engine, 'sort-crash', 103, 'Timeline Reconstructed');
+    solvePuzzle(engine, 'pillar-crash', 104, 'Incident Triaged');
+    assert.ok(engine.unlockedRooms.includes(200), 'The Codebase should be unlocked');
+  });
+
+  test('The Codebase: read lore, wire features → Kiro Config Badge, wager → Design Room + Build Pipeline unlock', () => {
+    engine.navigateToRoom(200);
+    assert.equal(engine.currentRoom, 200);
+    discover(engine, 201, 'Tech Debt Report');
+    discover(engine, 202, 'Architecture Guide');
+    solvePuzzle(engine, 'wire-kiro-features', 210, 'Features Mapped');
+    assert.ok(engine.inventory.includes(215), 'Kiro Config Badge should be in inventory');
+    solvePuzzle(engine, 'wager-kiro', 211, 'Kiro Knowledge Verified');
+    assert.ok(engine.unlockedRooms.includes(300), 'The Design Room should be unlocked');
+    assert.ok(engine.unlockedRooms.includes(400), 'The Build Pipeline should be unlocked');
+  });
+
+  test('The Design Room: read lore, chain methodology → AI-DLC Blueprint, spec workflow → Deploy Gate unlocks', () => {
+    engine.navigateToRoom(300);
+    assert.equal(engine.currentRoom, 300);
+    discover(engine, 301, 'AI-DLC Primer');
+    solvePuzzle(engine, 'chain-aidlc', 310, 'Methodology Ordered');
+    assert.ok(engine.inventory.includes(315), 'AI-DLC Blueprint should be in inventory');
+    solvePuzzle(engine, 'spec-aidlc', 311, 'Spec Workflow Complete');
+    assert.ok(engine.unlockedRooms.includes(500), 'Deploy Gate should be unlocked');
+  });
+
+  test('The Build Pipeline: read lore, streak → Pipeline Token, cascade → Deploy Gate also unlocks', () => {
+    engine.navigateToRoom(400);
+    assert.equal(engine.currentRoom, 400);
+    discover(engine, 401, 'The Rebuild Plan');
+    solvePuzzle(engine, 'streak-build', 410, 'Build Knowledge Confirmed');
+    assert.ok(engine.inventory.includes(415), 'Pipeline Token should be in inventory');
+    solvePuzzle(engine, 'cascade-build', 411, 'Pipeline Restored');
+    // Deploy Gate already unlocked from Design Room, idempotent
+    assert.ok(engine.unlockedRooms.includes(500), 'Deploy Gate should still be unlocked');
+  });
+
+  test('Deploy Gate: read lore, terminal deploy (consumes badge), defuse ship (consumes blueprint + token) → Ending', () => {
+    engine.navigateToRoom(500);
+    assert.equal(engine.currentRoom, 500);
+    discover(engine, 501, 'Deploy Checklist');
+    // Terminal deploy requires and consumes Kiro Config Badge (215)
+    solvePuzzle(engine, 'terminal-deploy', 510, 'Deploy Command Accepted');
+    // Defuse deploy requires and consumes AI-DLC Blueprint (315) + Pipeline Token (415)
+    solvePuzzle(engine, 'defuse-deploy', 511, 'You\'re Hired!');
 // EP11 — War Room @ Tech Summit (booth walk-up, linear 100→600)
 // ============================================================
 describe('EP11 — War Room @ Tech Summit', () => {
