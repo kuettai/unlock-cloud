@@ -851,6 +851,157 @@ describe('EP-ETP — Escape to Production', () => {
     solvePuzzle(engine, 'terminal-deploy', 510, 'Deploy Command Accepted');
     // Defuse deploy requires and consumes AI-DLC Blueprint (315) + Pipeline Token (415)
     solvePuzzle(engine, 'defuse-deploy', 511, 'You\'re Hired!');
+// EP11 — War Room @ Tech Summit (booth walk-up, linear 100→600)
+// ============================================================
+describe('EP11 — War Room @ Tech Summit', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep11-war-room'); engine.start(); });
+
+  test('War Room: read intel, meet agents, proceed to DevOps console', () => {
+    assert.equal(engine.currentRoom, 100);
+    discover(engine, 101, 'The Call');            // lore
+    discover(engine, 106, 'Three Agents');        // lore
+    discover(engine, 102, 'VP role select');      // NPC card — now mandatory, gates room 200
+    solvePuzzle(engine, 'npc-vp', null, 'VP role select');   // NPC (mandatory)
+    discover(engine, 200, 'DevOps console');      // proceed (requires_item: [102])
+    assert.ok(engine.unlockedRooms.includes(200), 'DevOps console should be unlocked');
+  });
+
+  test('DevOps console: solve log-lock → confirm, advise VP go/no-go → DevOps Finding, proceed to Security', () => {
+    engine.navigateToRoom(200);
+    assert.equal(engine.currentRoom, 200);
+    discover(engine, 201, 'DevOps Agent Brief');
+    solvePuzzle(engine, 'log-devops', 202, 'Log Stream Confirmed');   // investigate puzzle → intermediate
+    // VP decision beat (npc-dialog, SOFT): pick the correct advisory option → awards the finding
+    discover(engine, 210, 'VP go/no-go (DevOps)');
+    solvePuzzle(engine, 'npc-decision-devops', 205, 'DevOps Finding');
+    assert.ok(engine.inventory.includes(205), 'DevOps Finding should be in inventory');
+    discover(engine, 300, 'Security console');
+    assert.ok(engine.unlockedRooms.includes(300), 'Security console should be unlocked');
+  });
+
+  test('Security console: solve timeline-lock → order, advise VP which fix → Security Finding, proceed to FinOps', () => {
+    engine.navigateToRoom(300);
+    assert.equal(engine.currentRoom, 300);
+    solvePuzzle(engine, 'timeline-security', 302, 'Intrusion Timeline Reconstructed');
+    // VP decision beat: advise the scoped fix → awards the finding
+    discover(engine, 310, 'VP which fix (Security)');
+    solvePuzzle(engine, 'npc-decision-security', 305, 'Security Finding');
+    assert.ok(engine.inventory.includes(305), 'Security Finding should be in inventory');
+    discover(engine, 400, 'FinOps console');
+    assert.ok(engine.unlockedRooms.includes(400), 'FinOps console should be unlocked');
+  });
+
+  test('FinOps console: solve evidence-lock → trace, advise VP owner → FinOps Finding, proceed to Synthesis', () => {
+    engine.navigateToRoom(400);
+    assert.equal(engine.currentRoom, 400);
+    discover(engine, 401, 'FinOps Agent Brief');
+    solvePuzzle(engine, 'evidence-finops', 402, 'Spend Traced to Source');
+    // VP decision beat: advise the leaked access key → awards the finding
+    discover(engine, 410, 'VP name the owner (FinOps)');
+    solvePuzzle(engine, 'npc-decision-finops', 405, 'FinOps Finding');
+    assert.ok(engine.inventory.includes(405), 'FinOps Finding should be in inventory');
+    discover(engine, 500, 'Synthesis');
+    assert.ok(engine.unlockedRooms.includes(500), 'Synthesis should be unlocked');
+  });
+
+  test('Synthesis: chain all three findings via cascade-lock → Incident Resolved (ending)', () => {
+    engine.navigateToRoom(500);
+    assert.equal(engine.currentRoom, 500);
+    discover(engine, 501, 'The Big Screen');
+    // Finale consumes all three findings (they are present in inventory)
+    solvePuzzle(engine, 'cascade-synthesis', 599, 'Incident Resolved');
+    assert.ok(engine.unlockedRooms.includes(600), 'Resolved room should be unlocked');
+    assertCompleted(engine);
+  });
+});
+
+
+
+// ============================================================
+// EP — Inbox Zero (Booth Qualifier, 3 rooms, 5 puzzles + 1 NPC)
+// ============================================================
+describe('EP — Inbox Zero', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep-inbox-zero'); engine.start(); });
+
+  test('The Avalanche: read sticky note, solve word-lock (HELP) → unlocks Meet Quick', () => {
+    assert.equal(engine.currentRoom, 100);
+    discover(engine, 110, 'Sticky note lore');
+    solvePuzzle(engine, 'puzzle-urgent', 105, 'URGENT decoded');
+    assert.ok(engine.unlockedRooms.includes(200), 'Meet Quick should be unlocked');
+  });
+
+  test('Meet Quick: talk to Sam, sort capabilities, draft prompt → both items awarded', () => {
+    engine.navigateToRoom(200);
+    assert.equal(engine.currentRoom, 200);
+    discover(engine, 201, 'Sam NPC');
+    solvePuzzle(engine, 'puzzle-sort', 205, 'Capabilities sorted');
+    assert.ok(engine.inventory.includes(211), 'Category Map should be in inventory');
+    solvePuzzle(engine, 'puzzle-prompt', 215, 'First prompt sent');
+    assert.ok(engine.inventory.includes(212), 'Well-Formed Prompt should be in inventory');
+  });
+
+  test('Head back to the board: consume both items → unlocks Clear the Board', () => {
+    discover(engine, 220, 'Head back');
+    assert.ok(engine.unlockedRooms.includes(300), 'Clear the Board should be unlocked');
+  });
+
+  test('Clear the Board: read board-call lore, trim context → Clean Context awarded', () => {
+    engine.navigateToRoom(300);
+    assert.equal(engine.currentRoom, 300);
+    discover(engine, 310, '4 PM board call lore');
+    solvePuzzle(engine, 'puzzle-context', 305, 'Context stabilized');
+    assert.ok(engine.inventory.includes(213), 'Clean Context should be in inventory');
+  });
+
+  test('Clear the Board: defuse-lock → INBOX ZERO (ending)', () => {
+    solvePuzzle(engine, 'puzzle-defuse', 399, 'Inbox Zero');
+    assertCompleted(engine);
+  });
+});
+
+
+
+// ============================================================
+// EP — Community Day (Booth Qualifier, 3 rooms, 5 puzzles + 1 NPC)
+// ============================================================
+describe('EP — Community Day (ep-acd-2026)', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep-acd-2026'); engine.start(); });
+
+  test('Doors Open: read lanyard lore, solve word-lock (LEARN) → unlocks The Floor', () => {
+    assert.equal(engine.currentRoom, 100);
+    discover(engine, 110, 'Lanyard Card lore');
+    solvePuzzle(engine, 'puzzle-badge', 105, 'Badge unlocked');
+    assert.ok(engine.unlockedRooms.includes(200), 'The Floor should be unlocked');
+  });
+
+  test('The Floor: talk to Kiro, walk fog map, ask for agenda → both items awarded', () => {
+    engine.navigateToRoom(200);
+    assert.equal(engine.currentRoom, 200);
+    discover(engine, 201, 'Kiro NPC');
+    solvePuzzle(engine, 'puzzle-floor', 205, 'Floor walked');
+    assert.ok(engine.inventory.includes(211), 'Session Intel should be in inventory');
+    solvePuzzle(engine, 'puzzle-agenda', 215, 'Agenda built');
+    assert.ok(engine.inventory.includes(212), 'Personalized Agenda should be in inventory');
+  });
+
+  test('Head to the auditorium: consume both items → unlocks Closing Quiz', () => {
+    discover(engine, 220, 'Head to auditorium');
+    assert.ok(engine.unlockedRooms.includes(300), 'Closing Quiz should be unlocked');
+  });
+
+  test('Closing Quiz: read swag-table lore, solve evidence-lock → Winning Answer awarded', () => {
+    engine.navigateToRoom(300);
+    assert.equal(engine.currentRoom, 300);
+    discover(engine, 310, 'Swag-table lore');
+    solvePuzzle(engine, 'puzzle-quiz', 305, 'Quiz cleared');
+    assert.ok(engine.inventory.includes(313), 'Winning Answer should be in inventory');
+  });
+
+  test('Closing Quiz: defuse-lock → BUZZER BEAT (ending)', () => {
+    solvePuzzle(engine, 'puzzle-buzzer', 399, 'Buzzer beat');
     assertCompleted(engine);
   });
 });

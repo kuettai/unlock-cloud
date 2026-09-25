@@ -1,4 +1,5 @@
 const _params = new URLSearchParams(location.search);
+const ADMIN = _params.get('admin') === 'true';
 let SCENARIO_BASE = _params.get('scenario') || null;
 const EVENT_ID = _params.get('game_id') || _params.get('event') || null;
 const _gmParam = _params.get('gameMode');
@@ -25,7 +26,10 @@ const ASSET_BASE = location.hostname === 'localhost' || location.hostname === '1
   ? SCENARIO_BASE
   : 'https://beta.re-solve.cloud/' + SCENARIO_BASE.replace(/^\.\.\//, '');
 const engine = new GameEngine(ASSET_BASE);
-window.engine = engine;
+// Only exposed for the admin debug panel — a public global handle to the engine
+// lets anyone call engine.onLeaderboardEvent('game_complete', {score:{...}}) from
+// devtools and post a fake score without ever touching the real API.
+if (ADMIN) window.engine = engine;
 const leaderboard = new LeaderboardClient();
 const GUEST_MODE = new URLSearchParams(location.search).get('mode') === 'guest';
 engine.onLeaderboardEvent = (event, payload) => {
@@ -113,6 +117,10 @@ let timerInterval = null;
 let currentPuzzleId = null;
 let activePuzzlePopupId = null;
 let activePuzzleAward = null;
+// Reel-drag locks (4digits-lock, word-lock) rebuild from scratch every time
+// the popup opens, so a mid-drag accidental close would otherwise lose
+// whatever the player already dialed in. Keyed by puzzleId.
+const puzzleLockState = {};
 let lastEvent = null;
 
 // ── Role system ("Choose Your Role") ──
@@ -310,6 +318,15 @@ function setNarrative(key) {
   currentNarrativeKey = key;
   document.getElementById('narrative-bar').classList.add('active');
   document.getElementById('narrative-panel').classList.remove('open');
+  // The "Replay" button replays narration AUDIO (assets/voice/*.wav). Episodes
+  // without narration audio should hide it (otherwise it looks broken — a click
+  // that does nothing). Opt-in: hide only when meta explicitly says no audio.
+  // Default (flag absent) keeps the button, so existing episodes are unchanged.
+  const playBtn = document.getElementById('nar-play-btn');
+  if (playBtn) {
+    const hasAudio = !(engine.meta && engine.meta.has_narration_audio === false);
+    playBtn.style.display = hasAudio ? '' : 'none';
+  }
   renderNarrativeText();
 }
 
@@ -364,8 +381,6 @@ function renderNarrativeText() {
     return `<p>${label}${s.text || (s.ssml || '').replace(/<[^>]+>/g, '')}</p>`;
   }).join('');
 }
-
-const ADMIN = new URLSearchParams(location.search).get('admin') === 'true';
 
 (async () => {
   await engine.load();
@@ -1023,6 +1038,7 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     new LogLock(mount, {
       lines,
       prompt: cfg.prompt || 'Select the lines containing critical data',
+      highContrast: !!cfg.high_contrast,
       onSubmit() { onSolve(); }
     });
   } else if (puzzle.ui === 'terminal-lock') {
@@ -1172,8 +1188,11 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     }
   } else if (puzzle.ui === '4digits-lock') {
     new DigitLock(mount, {
+      initial: puzzleLockState[puzzleId],
+      onChange(digits) { puzzleLockState[puzzleId] = digits; },
       onSubmit(code) {
         if (code === cfg.answer) {
+          delete puzzleLockState[puzzleId];
           onSolve();
         } else {
           onFail('Wrong combination. Try again.');
@@ -1249,14 +1268,22 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       onWrong(msg) { onFail(msg); }
     });
   } else if (puzzle.ui === 'word-lock') {
+    const saved = puzzleLockState[puzzleId];
     new WordLock(mount, {
       answer: cfg.answer || cfg.solution,
       alphabet: cfg.alphabet || null,
-      onSubmit(word, correct) { correct ? onSolve() : onFail('Wrong word. Try again.'); }
+      savedReels: saved?.reelChars,
+      initial: saved?.selected,
+      onChange(state) { puzzleLockState[puzzleId] = state; },
+      onSubmit(word, correct) {
+        if (correct) { delete puzzleLockState[puzzleId]; onSolve(); }
+        else onFail('Wrong word. Try again.');
+      }
     });
   } else if (puzzle.ui === 'timeline-lock') {
     new TimelineLock(mount, {
       events: cfg.events, answer: cfg.answer,
+      enhanced: !!cfg.enhanced,
       onSubmit(correct) { correct ? onSolve() : onFail('Wrong timeline. Check the sequence.'); }
     });
   } else if (puzzle.ui === 'path-lock') {
@@ -1342,20 +1369,37 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       onSubmit(correct) { correct ? onSolve() : onFail('Wrong pillar. Think about what each statement achieves.'); }
     });
   } else if (puzzle.ui === 'npc-dialog') {
+    const isDecision = !!cfg.decision;
+    // End Conversation button (created first so callbacks can toggle it)
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'btn btn-primary';
+    closeBtn.style.cssText = 'width:100%;margin-top:12px';
+    closeBtn.textContent = isDecision ? 'End Conversation' : 'End Conversation';
     new NpcDialog(mount, {
       name: cfg.name,
       portrait: cfg.portrait,
       greeting: cfg.greeting,
       lines: cfg.lines || [],
       state_lines: cfg.state_lines || [],
-      hasCard(id) { return engine.visibleCards.has(id) || engine.discoveredCards.has(id); }
+      decision: isDecision,
+      hasCard(id) { return engine.visibleCards.has(id) || engine.discoveredCards.has(id); },
+      // Decision mode only: wrong advice costs time (scoped to this puzzle,
+      // does NOT touch other episodes — they don't pass decision:true).
+      onWrong() {
+        SFX.wrong();
+        engine.penalties++;
+        engine.penaltySeconds += (cfg.wrong_penalty_seconds || 30);
+        if (engine.onLeaderboardEvent) engine.onLeaderboardEvent('penalty', { seconds: (cfg.wrong_penalty_seconds || 30), reason: 'wrong_advice', puzzleId });
+        showToast('⚠️ The VP pushes back — reconsider your advice.', true);
+      },
+      onCorrect() {
+        closeBtn.disabled = false;
+        closeBtn.style.opacity = '1';
+      }
     });
-    // Closing the NPC dialog marks the puzzle as solved
-    const closeBtn = document.createElement('button');
-    closeBtn.className = 'btn btn-primary';
-    closeBtn.style.cssText = 'width:100%;margin-top:12px';
-    closeBtn.textContent = 'End Conversation';
-    closeBtn.onclick = () => onSolve();
+    // In decision mode, lock "End Conversation" until the right call is made.
+    if (isDecision) { closeBtn.disabled = true; closeBtn.style.opacity = '0.5'; }
+    closeBtn.onclick = () => { if (!closeBtn.disabled) onSolve(); };
     mount.appendChild(closeBtn);
   } else if (puzzle.ui === 'audio-player') {
     const wrap = document.createElement('div');
@@ -1384,7 +1428,18 @@ function showPuzzlePopup(puzzleId, awardCardId) {
         failMsg: Object.entries(q.results || {}).filter(([,v]) => v.tier === 'fail').map(([,v]) => v.message)[0] || 'This merchant cannot handle this task.'
       })),
       onSubmit() { onSolve(); },
-      onWrong(msg) { onFail(msg); }
+      // Over budget is a real cost, not just a wrong pick — charge clock time,
+      // same weight as other "misjudged the resources" penalties in this episode.
+      onWrong(msg) {
+        if (msg === 'Over budget') {
+          engine.penaltySeconds += 30;
+          engine.penalties++;
+          showToast('⏱️ −30s — over budget, renegotiate your hires', true);
+          if (engine.onLeaderboardEvent) engine.onLeaderboardEvent('penalty', { seconds: 30, reason: 'bazaar_over_budget', puzzleId });
+        } else {
+          onFail(msg);
+        }
+      }
     });
   } else if (puzzle.ui === 'scroll-lock') {
     new ScrollLock(mount, {
@@ -1409,11 +1464,33 @@ function showPuzzlePopup(puzzleId, awardCardId) {
       onWrong(msg) { onFail(msg); }
     });
   } else if (puzzle.ui === 'deck-battle-lock') {
-    new DeckBattleLock(mount, {
+    // Gold only matters if spending it costs something. `time_penalty_per_gold`
+    // charges the clock for every coin spent past `free_gold`, and
+    // `bankrupt_penalty_seconds` prices the failure that Retry otherwise makes
+    // free. Episodes that set neither behave exactly as before.
+    const rate = cfg.time_penalty_per_gold || 0;
+    const freeGold = cfg.free_gold || 0;
+    const chargeTime = (seconds, reason) => {
+      if (!seconds) return;
+      engine.penaltySeconds += seconds;
+      showToast(`⏱️ −${seconds >= 60 ? `${Math.round(seconds / 60 * 10) / 10} min` : `${seconds}s`} — ${reason}`, true);
+      // Only worth flagging to the leaderboard when the player finished the
+      // negotiation nearly broke — comfortable haggling shouldn't page as a penalty.
+      if (deck.gold < 20 && engine.onLeaderboardEvent) engine.onLeaderboardEvent('penalty', { seconds, reason, puzzleId });
+    };
+    const deck = new DeckBattleLock(mount, {
       merchant: cfg.merchant,
       startingDeck: cfg.startingDeck || [],
       gold: cfg.gold || 80,
-      onSubmit() { onSolve(); },
+      onSubmit() {
+        const spent = Math.max(0, (deck.startGold || 0) - deck.gold);
+        const billable = Math.max(0, spent - freeGold);
+        chargeTime(billable * rate, `${spent}g spent haggling`);
+        onSolve();
+      },
+      onLose() {
+        chargeTime(cfg.bankrupt_penalty_seconds || 0, 'the merchants took everything');
+      },
       onWalkAway() { popup.classList.remove('open'); }
     });
   } else if (puzzle.ui === 'equipment-rack-lock') {
@@ -1423,15 +1500,20 @@ function showPuzzlePopup(puzzleId, awardCardId) {
     // so "no ledger, no numbers" can be the mechanic rather than just flavour.
     const hasObsCard = cfg.observability_card
       && (engine.discoveredCards.has(cfg.observability_card) || engine.inventory.includes(cfg.observability_card));
+    const targetLabel = cfg.target || 'strides';
+    const targetTier = (cfg.tiers || []).find(t => t.label.toLowerCase() === targetLabel.toLowerCase());
+    const targetMin = targetTier ? targetTier.min : 0;
     new EquipmentRackLock(mount, {
       slots: cfg.slots || [],
       upgradedQuests: upgradedQuests,
       observability: cfg.observability || !!hasObsCard,
       cooldown: cfg.cooldown || 30,
       tiers: cfg.tiers,
-      target: cfg.target || 'strides',
+      target: targetLabel,
       onSubmit() { onSolve(); },
-      onDeploy() {}
+      // Each deploy that lands below the target tier is a failed attempt,
+      // same as a wrong answer elsewhere — flag it to the leaderboard.
+      onDeploy(tier) { if (tier.min < targetMin) onFail(`${tier.icon} ${tier.label} — below target`); }
     });
   } else if (puzzle.ui === 'arch-lock') {
     new ArchLock(mount, {
@@ -1443,8 +1525,23 @@ function showPuzzlePopup(puzzleId, awardCardId) {
   } else if (puzzle.ui === 'prompt-lock') {
     new PromptLock(mount, {
       npc: cfg.npc,
+      // Row mode config — forwarded so row-mode puzzles actually render their slots.
+      // Falls through to fragment mode when `mode` isn't 'row' or `rows` is empty,
+      // per the PromptLock constructor's own guard.
+      mode: cfg.mode,
+      rows: cfg.rows || [],
+      // Fragment mode config — unchanged.
       fragments: cfg.fragments || [],
       answers: cfg.answers || [],
+      // Response strings for both modes (row mode uses these directly;
+      // fragment mode ignores them — matches are keyed off `answers[].response`).
+      success_response: cfg.success_response,
+      partial_response: cfg.partial_response,
+      fail_response: cfg.fail_response,
+      // Component only calls onSubmit on success (gold): row mode fires it once
+      // all slots are correct; fragment mode fires it on a gold-tier match. So
+      // wiring straight to onSolve is correct — partial/fail stay in the popup
+      // and let the player retry.
       onSubmit() { onSolve(); }
     });
   } else if (puzzle.ui === 'booking-run-lock') {
@@ -1718,6 +1815,16 @@ function closePopup() {
 
 function closePuzzlePopup() {
   document.getElementById('puzzle-popup').classList.remove('open');
+}
+
+// On touch devices, a click is synthesized at wherever the finger lifted —
+// not where it started. A reel-drag (4digits-lock, word-lock) that overshoots
+// the popup card ends on the backdrop, so the backdrop's dismiss-on-click
+// fires mid-drag. The lock components set this flag for one tick after any
+// drag that moved, so that single synthesized click gets swallowed here.
+function closePuzzlePopupBackdrop() {
+  if (window.__resolveSuppressBackdropClick) return;
+  closePuzzlePopup();
 }
 
 // --- Tools screen ---
