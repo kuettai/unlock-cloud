@@ -904,3 +904,48 @@ describe('EP — Inbox Zero', () => {
     assertCompleted(engine);
   });
 });
+
+
+
+// ============================================================
+// EP — Community Day (Booth Qualifier, 3 rooms, 5 puzzles + 1 NPC)
+// ============================================================
+describe('EP — Community Day (ep-acd-2026)', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep-acd-2026'); engine.start(); });
+
+  test('Doors Open: read lanyard lore, solve word-lock (LEARN) → unlocks The Floor', () => {
+    assert.equal(engine.currentRoom, 100);
+    discover(engine, 110, 'Lanyard Card lore');
+    solvePuzzle(engine, 'puzzle-badge', 105, 'Badge unlocked');
+    assert.ok(engine.unlockedRooms.includes(200), 'The Floor should be unlocked');
+  });
+
+  test('The Floor: talk to Kiro, walk fog map, ask for agenda → both items awarded', () => {
+    engine.navigateToRoom(200);
+    assert.equal(engine.currentRoom, 200);
+    discover(engine, 201, 'Kiro NPC');
+    solvePuzzle(engine, 'puzzle-floor', 205, 'Floor walked');
+    assert.ok(engine.inventory.includes(211), 'Session Intel should be in inventory');
+    solvePuzzle(engine, 'puzzle-agenda', 215, 'Agenda built');
+    assert.ok(engine.inventory.includes(212), 'Personalized Agenda should be in inventory');
+  });
+
+  test('Head to the auditorium: consume both items → unlocks Closing Quiz', () => {
+    discover(engine, 220, 'Head to auditorium');
+    assert.ok(engine.unlockedRooms.includes(300), 'Closing Quiz should be unlocked');
+  });
+
+  test('Closing Quiz: read swag-table lore, solve evidence-lock → Winning Answer awarded', () => {
+    engine.navigateToRoom(300);
+    assert.equal(engine.currentRoom, 300);
+    discover(engine, 310, 'Swag-table lore');
+    solvePuzzle(engine, 'puzzle-quiz', 305, 'Quiz cleared');
+    assert.ok(engine.inventory.includes(313), 'Winning Answer should be in inventory');
+  });
+
+  test('Closing Quiz: defuse-lock → BUZZER BEAT (ending)', () => {
+    solvePuzzle(engine, 'puzzle-buzzer', 399, 'Buzzer beat');
+    assertCompleted(engine);
+  });
+});
