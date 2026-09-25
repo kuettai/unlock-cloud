@@ -351,7 +351,14 @@
   const MOCK_SESSION_DELAY_MS = 1500; // /public withholds session_id this long
   const MOCK_SETUP_MS   = 6000;  // setup   window (lobby)
   const MOCK_VOTING_MS  = 6000;  // voting  window
-  const MOCK_PLAY_MS    = 9000;  // in_progress window
+  // in_progress window. 9s is right for a quick walkthrough but is too short to
+  // actually finish all 5 locks, which makes the finished-and-waiting spectator
+  // state unreachable in mock. &mockplay=<seconds> widens it for that test.
+  // Mock-only; ignored entirely against the live backend.
+  const MOCK_PLAY_MS = (() => {
+    const s = Number(params.get('mockplay'));
+    return Number.isFinite(s) && s > 0 ? Math.min(s, 600) * 1000 : 9000;
+  })();
   // completed thereafter.
 
   const MOCK_SESSION_ID = 'mock-session-0001';
@@ -545,6 +552,10 @@
     if (url.indexOf('/puzzles') !== -1) {
       const picks = JSON.parse(JSON.stringify(MOCK_PICKS));
       if (MOCK_FAIL === 'bankid') picks.numeric = ['agentic-num-DOES-NOT-EXIST'];
+      // &mockfail=badword models the backend serving a word id whose answer
+      // word-lock cannot render (agentic-word-001 = "/spec", not alpha-only).
+      // Exercises resolveBank's deterministic substitution instead of a dead race.
+      if (MOCK_FAIL === 'badword') picks.word = ['agentic-word-001'];
       return mockJson({ winning_category: 'agentic-ai', picks: picks });
     }
     // POST [S] /showdown/{session_id}/progress (P4). &mockfail=auth = superseded.
@@ -851,7 +862,12 @@
     const codeInput = $('join-code');
     if (codeInput) {
       codeInput.setAttribute('maxlength', String(PIN_LEN));
-      codeInput.setAttribute('placeholder', 'PIN');
+      /* No placeholder. The field is drawn as six character cells, so a centred
+       * "PIN" string straddles the cell dividers and reads as a rendering fault on
+       * the very first screen a walk-up participant sees. The "SEAT PIN" label
+       * directly above already names the field and the aria-label below covers
+       * assistive tech, so the placeholder carried no information. */
+      codeInput.removeAttribute('placeholder');
       codeInput.setAttribute('inputmode', 'latin');
       codeInput.setAttribute('autocapitalize', 'characters');
       codeInput.setAttribute('pattern', '[' + PIN_ALPHABET + ']{' + PIN_LEN + '}');
@@ -1730,6 +1746,8 @@
     // Retire the penalty stat (Showdown has no penalties now) — keep the node.
     const pen = $('play-penalties');
     if (pen) { const stat = pen.closest('.sd-stat'); if (stat) stat.style.display = 'none'; }
+    attachPressSfx();   // delegated press cue for whichever lock is mounted
+    mountMuteToggle();  // booth staff must be able to silence a machine in one tap
     const q = $('play-question');
     if (q) q.textContent = '';
     // Clear the HTML placeholder "Puzzle 1 of 5" so a non-5 puzzle_count round
@@ -1795,6 +1813,93 @@
   }
   const bad = (category, type, id, reason) => ({ category, type, id, reason });
 
+  /* ── word-lock playability + deterministic substitution ─────────────
+   * word-lock renders one A-Z reel per character, so its answer MUST be
+   * alpha-only and <= 8 characters. Several live bank entries are not
+   * (awscore-word-001 "EC2", awscore-word-002 "S3", agentic-word-001 "/spec",
+   * cloudf-word-002 "On-prem").
+   *
+   * Previously such a pick pushed an error, and loadPuzzles() replaces the WHOLE
+   * race with an error panel on any error — so one unusable word ID killed all
+   * five puzzles, and its Retry re-fetched the same IDs and failed identically.
+   * With 2 of 13 word entries unusable in aws-core-services that is roughly a
+   * 1-in-7 dead race, which at a booth is a visible failure with no recovery.
+   *
+   * So: substitute a playable word from the SAME category instead. The choice is
+   * seeded from session_id + the original id, exactly like resolveStatement's
+   * True/False side, so every device in the race substitutes identically and the
+   * race stays fair. Only if the category has no playable word at all do we fall
+   * back to erroring, which is then genuinely unplayable rather than a coin flip.
+   *
+   * The durable fix is still backend-side (constrain the word slot's eligible ids
+   * at resolve time); this keeps the event safe until that lands. */
+  const WORD_OK_RE = /^[A-Za-z]{1,8}$/;
+  const wordPlayable = (entry) => !!entry && WORD_OK_RE.test(String(entry.answer || ''));
+
+  /* Generic deterministic substitution for ANY type.
+   *
+   * A pick the engine cannot use — id missing from the bank (bank/backend drift),
+   * or content a lock cannot render — used to push an error, and loadPuzzles()
+   * replaces the WHOLE race with an error panel on any error whose Retry refetches
+   * the same ids. So a single bad pick of any type was an unrecoverable dead race.
+   *
+   * Substituting a usable entry of the same type from the same category keeps the
+   * race alive. Seeded from session_id + the original id, exactly like
+   * resolveStatement's True/False side, so every device in the race substitutes
+   * IDENTICALLY and the race stays fair. `usable` filters to entries the relevant
+   * lock can actually render. Returns null only when the category genuinely has no
+   * usable entry of that type, which is then a real error rather than a coin flip.
+   *
+   * `excludeId` avoids picking the very entry we rejected. */
+  function substituteEntry(type, origId, category, sessionId, usable, excludeId) {
+    const bucket = (BANK_INDEX && BANK_INDEX[category]) || {};
+    const m = bucket[type];
+    if (!m || typeof m.forEach !== 'function') return null;
+    const candidates = [];
+    m.forEach((entry, id) => {
+      if (id === excludeId) return;
+      if (!usable || usable(entry)) candidates.push({ id, entry });
+    });
+    if (!candidates.length) return null;
+    candidates.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)); // stable order
+    return candidates[fnv1a(String(sessionId) + String(origId)) % candidates.length];
+  }
+
+  const substituteWord = (origId, category, sessionId) =>
+    substituteEntry('word', origId, category, sessionId, wordPlayable, origId);
+
+  /* "Usable" per type — the minimum each lock needs to render. Mirrors the
+   * validation each branch already performs, so a substitute can never itself be
+   * rejected downstream. */
+  const nonEmpty = (v) => v !== undefined && v !== null && String(v).trim() !== '';
+  // Must match the numeric branch's own guard (1-6 digits) exactly. A looser
+  // predicate would let a substitute pass selection and then fail validation
+  // downstream, pushing the very error the substitution exists to avoid. No bank
+  // entry violates this today, so this is guarding against a future bank edit.
+  const numericUsable   = (e) => !!e && /^\d{1,6}$/.test(String(e.answer));
+  const spellingUsable  = (e) => !!e && nonEmpty(e.answer);
+  const statementUsable = (e) => !!e && /\{[^|}]*\|[^|}]*\}/.test(String(e.template || ''));
+  const mcqUsable = (e) => {
+    if (!e || e.answer == null) return false;
+    const opts = Array.isArray(e.options) ? e.options
+      : (Array.isArray(e.decoys) ? [e.answer].concat(e.decoys) : null);
+    return !!opts && opts.length >= 2 && opts.indexOf(e.answer) !== -1;
+  };
+
+  /* Try a deterministic substitution; push an error and return null only if the
+   * category has nothing usable. Keeps each call site to a few lines. */
+  function subOrNull(type, id, category, sessionId, usable, errors, errType) {
+    const sub = substituteEntry(type, id, category, sessionId, usable, id);
+    if (!sub) {
+      errors.push(bad(category, errType, id,
+        'not found in bank, and no usable substitute in category'));
+      return null;
+    }
+    console.warn('[showdown] ' + type + ' pick ' + id +
+      ' missing from bank — substituting ' + sub.id);
+    return sub.entry;
+  }
+
   function resolveBank(picks, winningCategory, sessionId) {
     const slots = [];
     const errors = [];
@@ -1812,8 +1917,12 @@
 
       if (type === 'numeric') {
         ids.forEach((id) => {
-          const e = lookup('numeric', id);
-          if (!e) { errors.push(bad(winningCategory, type, id, 'not found in bank')); return; }
+          let e = lookup('numeric', id);
+          if (!e) {
+            const sub = subOrNull('numeric', id, winningCategory, sessionId, numericUsable, errors, type);
+            if (!sub) return;
+            e = sub;
+          }
           if (!/^\d{1,6}$/.test(String(e.answer))) {
             errors.push(bad(winningCategory, type, id, 'answer not 1\u20136 digits')); return;
           }
@@ -1826,21 +1935,38 @@
       } else if (type === 'word') {
         ids.forEach((id) => {
           const e = lookup('word', id);
-          if (!e) { errors.push(bad(winningCategory, type, id, 'not found in bank')); return; }
-          const ans = String(e.answer || '');
-          // Backend now guarantees ≤8 alpha; keep the guard, never mangle.
-          if (!/^[A-Za-z]+$/.test(ans) || ans.length > 8) {
-            errors.push(bad(winningCategory, type, id, 'word not alpha \u22648: "' + ans + '"')); return;
+          let entry = e;
+          let useId = id;
+          // A missing id, or an answer word-lock physically cannot render, now swaps
+          // in a playable word from the same category instead of killing the race.
+          // Deterministic, so every device in the race gets the SAME substitute.
+          if (!entry || !wordPlayable(entry)) {
+            const sub = substituteWord(id, winningCategory, sessionId);
+            if (!sub) {
+              errors.push(bad(winningCategory, type, id, entry
+                ? 'word not alpha \u22648: "' + String(entry.answer || '') + '" and no playable substitute in category'
+                : 'not found in bank, and no playable substitute in category'));
+              return;
+            }
+            console.warn('[showdown] word pick ' + id + ' unplayable (' +
+              (entry ? JSON.stringify(entry.answer) : 'missing') + ') \u2014 substituting ' +
+              sub.id + ' (' + JSON.stringify(sub.entry.answer) + ')');
+            entry = sub.entry;
+            useId = sub.id;
           }
-          slots.push({ id, ui: 'word-lock', category: winningCategory, type,
-            question: e.question || '', config: { answer: ans } });
+          slots.push({ id: useId, ui: 'word-lock', category: winningCategory, type,
+            question: entry.question || '', config: { answer: String(entry.answer) } });
         });
 
       } else if (type === 'statement') {
         const statements = [];
         ids.forEach((id) => {
-          const e = lookup('statement', id);
-          if (!e) { errors.push(bad(winningCategory, type, id, 'not found in bank')); return; }
+          let e = lookup('statement', id);
+          if (!e) {
+            const sub = subOrNull('statement', id, winningCategory, sessionId, statementUsable, errors, type);
+            if (!sub) return;
+            e = sub;
+          }
           const r = resolveStatement(e, sessionId);
           if (r.error) { errors.push(bad(winningCategory, type, id, r.error)); return; }
           statements.push({ text: r.text, answer: r.answer });
@@ -1859,8 +1985,12 @@
       } else if (type === 'spelling') {
         const words = [];
         ids.forEach((id) => {
-          const e = lookup('spelling', id);
-          if (!e) { errors.push(bad(winningCategory, type, id, 'not found in bank')); return; }
+          let e = lookup('spelling', id);
+          if (!e) {
+            const sub = subOrNull('spelling', id, winningCategory, sessionId, spellingUsable, errors, type);
+            if (!sub) return;
+            e = sub;
+          }
           const w = String(e.answer || '');
           if (!w) { errors.push(bad(winningCategory, type, id, 'empty spelling answer')); return; }
           words.push(w); // explicit deterministic order (picks[] order), NOT pool+pickCount
@@ -1880,8 +2010,12 @@
       } else if (type === 'mcq') {
         const questions = [];
         ids.forEach((id) => {
-          const e = lookup('mcq', id);
-          if (!e) { errors.push(bad(winningCategory, type, id, 'not found in bank')); return; }
+          let e = lookup('mcq', id);
+          if (!e) {
+            const sub = subOrNull('mcq', id, winningCategory, sessionId, mcqUsable, errors, type);
+            if (!sub) return;
+            e = sub;
+          }
           const answer = e.answer;
           // Two bank shapes: options:[4] as-is, OR answer + decoys[3].
           const options = Array.isArray(e.options)
@@ -1897,7 +2031,11 @@
             question: 'Answer each question to reach the target.',
             config: {
               target: questions.length, questions,
-              stakes: [{ label: 'Confident', wager: 1, penalty: 0, color: '#eab308', showOptions: 4 }],
+              // Single tier: Showdown has no stake CHOICE and no penalties, so this is
+              // informational only. Colour moved off the episode-era #eab308 onto the
+              // VS Select warning hue; wager/penalty/showOptions untouched because they
+              // drive the component's target logic and how many options are revealed.
+              stakes: [{ label: 'Confident', wager: 1, penalty: 0, color: '#ffb020', showOptions: 4 }],
               revealAnswerOnWrong: false, repeatOnWrong: true,
             } });
         }
@@ -1948,6 +2086,24 @@
       onSolved: onPuzzleSolved,
       onWrong: onPuzzleWrong,
     });
+
+    /* Puzzle swaps were a hard cut: one lock vanished and the next appeared in the
+     * same frame, which is the clearest "unfinished" tell in a game's motion. A
+     * single short enter (VS Select's 160-180ms range) makes the sequence feel
+     * authored. Applied to the MOUNT, not the components, so it covers all five and
+     * touches nothing shared. Re-triggered by removing the class and forcing a
+     * reflow, because the class is already present from the previous puzzle.
+     * Reduced motion is handled in CSS — the class becomes a no-op. */
+    mount.classList.remove('sd-mount-enter');
+    void mount.offsetWidth;
+    mount.classList.add('sd-mount-enter');
+
+    // The question above it is part of the same beat, so it moves with the puzzle.
+    if (q) {
+      q.classList.remove('sd-q-enter');
+      void q.offsetWidth;
+      q.classList.add('sd-q-enter');
+    }
   }
 
   // Construct the right lock component (mirrors puzzle-test-showdown.html).
@@ -2091,7 +2247,7 @@
     wrongTimer = setInterval(() => {
       rem -= 1;
       if (rem <= 0) { clearWrongLockout(); }
-      else { paint(); }
+      else { paint(); playSfxLockTick(); } // make the pause audible, not just visible
     }, 1000);
   }
 
@@ -2120,7 +2276,15 @@
     if (last) {
       playSfxGameComplete();
       // Do NOT advance to RESULTS locally — the standings loop flips at completed.
-      enterFinishedWaiting(state._lastStandings);
+      // Let the full-screen SOLVED flash finish first: it sits at z-index 40 over
+      // the mount, so rendering the spectator card underneath it immediately means
+      // the player reads their finishing time through a giant word. Set the flag
+      // now so the per-poll refresh is armed, but reveal the card once the
+      // celebration clears (flash is 900ms; see onPuzzleSolved above).
+      state._finishedWaiting = true;
+      const q = $('play-question');
+      if (q) q.textContent = 'All five locks cracked. You’re in — watching the rest of the race…';
+      setTimeout(() => enterFinishedWaiting(state._lastStandings), 950);
     } else {
       setTimeout(() => { state.puzzleIndex += 1; renderPuzzle(); }, 700);
     }
@@ -2201,7 +2365,12 @@
     setPlayClockFromServer(myElapsedMs(standings)); // authoritative + smoothed clock
     updateClockHeat(standings);
     renderRace(standings);
-    if (state._finishedWaiting) renderFinishedWaiting(standings); // refresh spectator card
+    // Refresh the spectator card only once it EXISTS. The first render is deferred
+    // behind the SOLVED flash (see onPuzzleSolved), and a ~1s poll landing inside
+    // that window would otherwise render it early and undo the deferral.
+    if (state._finishedWaiting && document.querySelector('#play-mount .sd-spectate')) {
+      renderFinishedWaiting(standings);
+    }
   }
 
   /* ── Finished-and-waiting: spectate, don't stare at a dead string ──────
@@ -2222,8 +2391,13 @@
     const dup = dupNameIds(rows);
     const me = rows.find((r) => state.playerId && r.player_id === state.playerId);
     const myPos = me && me.rank != null ? Number(me.rank) : null;
-    const done = rows.filter((r) => (Number(r.completion_pct) || 0) >= 100).length;
-    const still = rows.length - done;
+    /* Count and list OTHERS only. We reach this state from local knowledge that all
+     * five locks are solved, but the server's completion_pct for our own row lags
+     * the final /progress POST by up to a poll — so filtering on pct alone showed
+     * the player who just finished as one of the racers still going, chasing
+     * themselves at 80%. Our own row is finished by definition here. */
+    const others = rows.filter((r) => !state.playerId || r.player_id !== state.playerId);
+    const still = others.filter((r) => (Number(r.completion_pct) || 0) < 100).length;
 
     const ord = (n) => {
       if (n == null) return null;
@@ -2235,7 +2409,7 @@
       ? fmtTime(me.elapsed_ms) : (state._clockShownMs != null ? fmtTime(state._clockShownMs) : null);
 
     // Opponents still racing, nearest-first, so the threat is at the top.
-    const chasers = rows
+    const chasers = others
       .filter((r) => (Number(r.completion_pct) || 0) < 100)
       .sort((a, b) => (Number(b.completion_pct) || 0) - (Number(a.completion_pct) || 0))
       .map((r) => '<li class="sd-spec-row"><span class="sd-spec-name">' + escapeHtml(sdName(r, dup)) +
@@ -2422,8 +2596,16 @@
         pulseOnce(lane, 'sd-pg-pass', 600);
         const meLane = panel.querySelector('.sd-pg-player--me');
         if (meLane) pulseOnce(meLane, 'sd-pg-passed', 600);
+        // Being overtaken is the sharpest moment in the race and the one a player
+        // is least likely to SEE — their eyes are on the puzzle, not the strip.
+        playSfxPassed();
       }
     });
+
+    // Taking 1st is the counterpart to being passed. Fired here rather than
+    // per-lane because it is about MY rank, and only on the transition so it
+    // cannot retrigger every poll while I stay in front.
+    if (!reduce && myRank === 1 && prevMyRank != null && prevMyRank > 1) playSfxLead();
 
     curr._myRank = myRank;
     panel._sdPrev = curr;
@@ -2694,9 +2876,198 @@
       });
     } catch { /* best-effort */ }
   }
-  const playSfxCorrect      = () => sfxTone([523, 659, 784]);
-  const playSfxWrong        = () => sfxTone([185, 195], { type: 'sawtooth', dur: 0.25, vol: 0.04 });
-  const playSfxGameComplete = () => sfxTone([523, 659, 784, 1047], { step: 0.12, dur: 0.3, vol: 0.06 });
+  /* ── Sound design ──────────────────────────────────────────────────
+   * Three raw oscillator beeps wired straight to destination is what a
+   * prototype sounds like. A competitive game needs feedback you feel, and it
+   * can be fully procedural — no assets, no download weight, no licensing.
+   *
+   * Constraints that shaped these, all from the booth:
+   *  - THREE LAPTOPS SIT SIDE BY SIDE. Every cue is under ~320ms and quiet, and
+   *    the voices occupy different pitch registers so simultaneous play from
+   *    neighbouring machines does not turn to mush.
+   *  - Players wear no headphones and the hall is loud, so cues are shaped for
+   *    transient clarity (a fast attack and a filtered body) rather than volume.
+   *  - Everything runs through ONE master bus with a limiter, so no combination
+   *    of cues can clip, and a single mute switch silences all of it.
+   *  - Muting persists: at a booth someone will want it off, once, for good. */
+  let sfxBus = null;      // master gain -> limiter -> destination
+  let sfxMuted = false;
+  try { sfxMuted = localStorage.getItem('sd_muted') === '1'; } catch { /* private mode */ }
+
+  function audioReady() {
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return null;
+      if (!sfxCtx) sfxCtx = new Ctx();
+      if (sfxCtx.state === 'suspended') sfxCtx.resume();
+      if (!sfxBus) {
+        const gain = sfxCtx.createGain();
+        gain.gain.value = 0.9;
+        // Fast-attack compressor acting as a safety limiter: with several cues
+        // overlapping (a solve landing while the race strip fires) raw gains sum
+        // and clip, which reads as cheap.
+        const comp = sfxCtx.createDynamicsCompressor();
+        comp.threshold.value = -14; comp.knee.value = 12;
+        comp.ratio.value = 12; comp.attack.value = 0.002; comp.release.value = 0.12;
+        gain.connect(comp).connect(sfxCtx.destination);
+        sfxBus = gain;
+      }
+      return sfxMuted ? null : sfxCtx;
+    } catch { return null; }
+  }
+
+  /* One shaped voice. `type` picks the oscillator, `cut` a lowpass corner so
+   * nothing is harsh on laptop speakers, and the gain envelope is explicit
+   * (attack/decay) rather than two exponential ramps that click. */
+  function voice(o) {
+    const ctx = audioReady();
+    if (!ctx) return;
+    const t0 = ctx.currentTime + (o.at || 0);
+    const dur = o.dur || 0.14;
+    const osc = ctx.createOscillator();
+    osc.type = o.type || 'sine';
+    osc.frequency.setValueAtTime(o.f, t0);
+    if (o.to) osc.frequency.exponentialRampToValueAtTime(o.to, t0 + dur);
+    const g = ctx.createGain();
+    const peak = Math.max(0.0001, o.vol == null ? 0.06 : o.vol);
+    const atk = o.atk == null ? 0.006 : o.atk;
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.linearRampToValueAtTime(peak, t0 + atk);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    let node = osc;
+    if (o.cut) {
+      const lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass'; lp.frequency.value = o.cut; lp.Q.value = o.q || 0.7;
+      node = osc.connect(lp);
+      lp.connect(g);
+    } else {
+      osc.connect(g);
+    }
+    void node;
+    g.connect(sfxBus);
+    osc.start(t0); osc.stop(t0 + dur + 0.02);
+  }
+  const chord = (notes) => notes.forEach(voice);
+
+  // Kept for compatibility with any existing caller.
+  function sfxTone(freqs, opts) {
+    opts = opts || {};
+    freqs.forEach((f, i) => voice({
+      f, at: i * (opts.step || 0.06), dur: opts.dur || 0.2,
+      vol: opts.vol || 0.07, type: opts.type || 'sine',
+    }));
+  }
+
+  /* The cue set. Each one is a distinct gesture, not a different pitch of the
+   * same beep — that distinctness is what lets a player parse what happened
+   * without looking away from the puzzle. */
+
+  // Key press / letter placed. Deliberately tiny: it fires up to ~14 times in a
+  // single spelling answer, so it has to disappear into the background.
+  const playSfxTick = () => voice({ f: 880, to: 620, dur: 0.035, vol: 0.022, type: 'triangle', cut: 2600, atk: 0.001 });
+
+  // Correct: a rising major third with a bright transient on top. Short enough
+  // to not delay the next puzzle.
+  const playSfxCorrect = () => chord([
+    { f: 587, to: 880, dur: 0.16, vol: 0.055, type: 'triangle', cut: 4200 },
+    { f: 1175, dur: 0.09, vol: 0.022, type: 'sine', at: 0.02 },
+  ]);
+
+  // Wrong: a low filtered thud. The old sawtooth buzz read as an error *beep*;
+  // a body-hit reads as "that cost you" without being shrill in a noisy room.
+  const playSfxWrong = () => chord([
+    { f: 196, to: 110, dur: 0.22, vol: 0.075, type: 'triangle', cut: 620, atk: 0.002 },
+    { f: 98,  to: 74,  dur: 0.26, vol: 0.05,  type: 'sine',     cut: 400 },
+  ]);
+
+  // Each second of the 5s lockout: a dry, quiet tick so the pause is felt.
+  const playSfxLockTick = () => voice({ f: 320, dur: 0.05, vol: 0.03, type: 'square', cut: 1200 });
+
+  // You took the lead — bright, confident, upward.
+  const playSfxLead = () => chord([
+    { f: 784, dur: 0.1, vol: 0.05, type: 'triangle', cut: 5000 },
+    { f: 1046, dur: 0.14, vol: 0.045, type: 'triangle', cut: 5000, at: 0.07 },
+  ]);
+
+  // Someone overtook you — the same interval inverted, so it is unmistakably
+  // the bad twin of the cue above.
+  const playSfxPassed = () => chord([
+    { f: 740, dur: 0.1, vol: 0.045, type: 'triangle', cut: 3000 },
+    { f: 494, dur: 0.16, vol: 0.05, type: 'triangle', cut: 2200, at: 0.07 },
+  ]);
+
+  // Final seconds of the vote window.
+  const playSfxUrgent = () => voice({ f: 440, dur: 0.07, vol: 0.04, type: 'square', cut: 1800 });
+
+  // All five locks cracked.
+  const playSfxGameComplete = () => chord([
+    { f: 523,  dur: 0.16, vol: 0.055, type: 'triangle', cut: 5200 },
+    { f: 659,  dur: 0.16, vol: 0.055, type: 'triangle', cut: 5200, at: 0.10 },
+    { f: 784,  dur: 0.18, vol: 0.055, type: 'triangle', cut: 5200, at: 0.20 },
+    { f: 1046, dur: 0.30, vol: 0.06,  type: 'triangle', cut: 6000, at: 0.30 },
+    { f: 1568, dur: 0.22, vol: 0.02,  type: 'sine',     at: 0.32 },
+  ]);
+
+  /* Press feedback for every lock, without touching a single component.
+   *
+   * A delegated listener on #play-mount catches any button press inside whichever
+   * lock is mounted — keypad digits, letter tiles, reels, pillars, options — and
+   * answers within a frame. Doing it here rather than in the five components keeps
+   * the 22 episodes silent and untouched, and survives the components replacing
+   * their own innerHTML (which is why per-element listeners would not work).
+   *
+   * Deliberately NOT fired for the Undo/Clear ghost buttons: those are corrections,
+   * and rewarding them with the same click as progress muddles the feedback. */
+  function attachPressSfx() {
+    const mount = document.getElementById('play-mount');
+    if (!mount || mount._sdPressSfx) return;
+    mount._sdPressSfx = true;
+    mount.addEventListener('pointerdown', (e) => {
+      const t = e.target && e.target.closest
+        ? e.target.closest('button, .wlock-reel, .splk-letter, .kpdlk-key, .wglk-option, .pillk-pillar')
+        : null;
+      if (!t) return;
+      if (t.classList.contains('splk-action')) return;  // Undo / Clear
+      if (t.disabled) return;
+      playSfxTick();
+    }, { passive: true });
+    // The reels are driven by wheel and keyboard too, so those get a tick as well.
+    mount.addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (/^([0-9a-zA-Z]|Enter|ArrowUp|ArrowDown)$/.test(e.key)) playSfxTick();
+    }, { passive: true });
+  }
+
+  /* Mute control, built at runtime (no showdown.html edits) and parked next to
+   * the existing theme toggle. Present on every screen from PLAY onward so a
+   * booth attendant can silence one machine without hunting through settings. */
+  function mountMuteToggle() {
+    if (document.getElementById('sd-mute')) { setMuted(sfxMuted); return; }
+    const btn = document.createElement('button');
+    btn.id = 'sd-mute';
+    btn.type = 'button';
+    btn.className = 'sd-mute';
+    btn.setAttribute('aria-pressed', sfxMuted ? 'true' : 'false');
+    btn.onclick = () => setMuted(!sfxMuted);
+    /* Parent to .sd-app, NOT next to the theme toggle. The theme toggle lives
+     * inside #screen-join, which is hidden the moment play starts — adopting its
+     * parent made the button zero-size and invisible exactly when it is needed.
+     * .sd-app spans every screen, and the CSS pins this `fixed`. */
+    const host = document.querySelector('.sd-app') || document.body || document.documentElement;
+    host.appendChild(btn);
+    setMuted(sfxMuted);
+  }
+
+  function setMuted(next) {
+    sfxMuted = !!next;
+    try { localStorage.setItem('sd_muted', sfxMuted ? '1' : '0'); } catch { /* ignore */ }
+    const btn = document.getElementById('sd-mute');
+    if (btn) {
+      btn.setAttribute('aria-pressed', sfxMuted ? 'true' : 'false');
+      btn.textContent = sfxMuted ? '🔇 Sound off' : '🔊 Sound on';
+      btn.title = sfxMuted ? 'Turn sound on' : 'Turn sound off';
+    }
+  }
   // Silence "unused" linters for symbols reserved for later phases / HTML FX.
   void SD_FLAG_SVG; void bankLookup;
 
