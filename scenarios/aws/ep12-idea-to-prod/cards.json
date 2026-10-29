@@ -1,0 +1,154 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Inception Room — The Idea",
+      "description": "You are in a room with a whiteboard, four chairs, and one sticky note. It reads: \"We want a citizen feedback portal. By Friday.\" You have a whole team with you, including a product manager, an engineer, a security analyst, a DevOps engineer, and your tech lead Jun. The coding agent has drafted a plan up on the big screen, but nobody has approved anything yet.\n\nJun leans in. \"The agent does the work, but we decide what moves forward. The steps are on the screen in the wrong order. Put them in the right sequence, so every step the agent takes is checked by a human before the next one begins.\"",
+      "image": "assets/inception-room.png",
+      "image_prompt": "Bright modern government tech meeting room, whiteboard with a single sticky note, big wall screen showing a drafted project plan, four diverse team members around a table, morning light, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 110, "label": "Read the note on the booth screen" },
+        { "card_id": 105, "label": "Fix the order on the whiteboard", "puzzle": "approval-loop" }
+      ],
+      "visible_to": "all",
+      "room": "inception"
+    },
+    {
+      "id": 101,
+      "type": "object",
+      "color": "blue",
+      "title": "The Approval Loop Board",
+      "description": "Four steps on the big screen, in the wrong order. Some are the agent's job, some are the team's. Put them in sequence so every step the agent takes is checked by a human before the next one begins.",
+      "image": "assets/card-loop-board.png",
+      "image_prompt": "Whiteboard with six connected magnetic tiles and arrows forming a loop, robot and human icons, single object on dark background",
+      "visible_to": "all",
+      "room": "inception"
+    },
+    {
+      "id": 105,
+      "type": "event",
+      "color": "yellow",
+      "title": "Plan Approved",
+      "description": "The plan is approved, and the loop is now live. The agent proposes, a human verifies, and only then does anything get built.\n\nJun nods. \"That's Inception. Requirements, user stories, and units of work, all reviewed by people before a single line of code exists. The Construction Bay is open.\"",
+      "reveals": [200],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "inception"
+    },
+    {
+      "id": 110,
+      "type": "lore",
+      "color": "purple",
+      "title": "Where Is Your Team on the Spectrum?",
+      "description": "Here is the AI-assisted development spectrum:\n\n1. Auto Complete: Code suggestions, no change to how you work.\n2. Vibe Coding: Conversational prompting, no specs.\n3. Guided Dev: Steering files and context engineering shape the agent's output.\n4. Spec Driven: The agent works from requirements, design, tasks, and code.\n5. AI-DLC: The full methodology, with mob elaboration and mob construction.\n\nThe goal isn't to jump to level 5 overnight. It's to move one level up from where you are today. And wherever you sit, the pattern is the same: the agent proposes, a human verifies, before anything moves forward. Keep that in mind as you order the steps.",
+      "image": "assets/card-spectrum.png",
+      "image_prompt": "Five ascending steps glowing from blue to orange, small figure climbing one step, minimal clean infographic style, single object on dark background",
+      "visible_to": "all",
+      "room": "inception"
+    },
+
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "Construction Bay — The Build",
+      "description": "Looking at the big screen, the coding agent is working through the approved design one unit of work at a time, and its first pull request just landed.\n\nJun speaks up. \"The agent writes fast, and that's the easy part. Nothing merges until it clears the gates, and we make the call at each one.\"",
+      "image": "assets/construction-bay.png",
+      "image_prompt": "Open-plan tech workspace with multiple screens showing code and a pipeline of gates, security analyst pointing at a panel, cool blue lighting with orange accents, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 210, "label": "Read the squad charter on the wall" },
+        { "card_id": 205, "label": "Review the pull request", "puzzle": "construction-gates" }
+      ],
+      "visible_to": "all",
+      "room": "construction"
+    },
+    {
+      "id": 201,
+      "type": "object",
+      "color": "blue",
+      "title": "The Gate Panel",
+      "description": "Three gates between the agent's pull request and a merge: PR, Review, Merge. Each one needs a decision from you.",
+      "image": "assets/card-gate-panel.png",
+      "image_prompt": "Control panel with four sequential gate switches and a pull request icon, glowing status lights, single object on dark background",
+      "visible_to": "all",
+      "room": "construction"
+    },
+    {
+      "id": 205,
+      "type": "event",
+      "color": "yellow",
+      "title": "PR Merged",
+      "description": "The code was generated, the pull request was opened, and the AWS Security Agent caught the issue of logging PII. The agent fixed it, and the re-review came back clean. An engineer read the code, approved it, and merged.\n\nThe build goes green and the portal goes live. Citizens start submitting feedback.\n\nThen, on day one, every phone in the room buzzes at once.",
+      "reveals": [300],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "construction"
+    },
+    {
+      "id": 210,
+      "type": "lore",
+      "color": "purple",
+      "title": "The Squad Charter",
+      "description": "Every gate is a shared call, and each role owns a part of it:\n\n• Product Manager: checks the work still answers the user story\n• Engineer: reads the code and owns the merge decision\n• Security Analyst: runs the security and compliance checks on every pull request\n• DevOps Engineer: confirms it is safe and ready to ship",
+      "image": "assets/card-charter.png",
+      "image_prompt": "Printed team charter taped to a wall, four signatures, marker note at the bottom, office aesthetic, single object on dark background",
+      "visible_to": "all",
+      "room": "construction"
+    },
+
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "Production Floor — Day One",
+      "description": "It's day one in production. Citizens are using the portal, and it's timing out. Red lights everywhere. An alarm has fired, and the AWS DevOps Agent is already investigating.\n\nThe agent reports back: \"Hypotheses tested against metrics, logs, and traces. Root cause: the launch config set the database connection pool size to 1, so requests are queueing. I have prepared a fix: a pull request that sets the pool size back to 50.\"\n\nJun turns to you. \"The agent did the investigation. The decision is now yours. Go.\"",
+      "image": "assets/production-floor.png",
+      "image_prompt": "Operations floor with red alert lighting, wall screens showing a spiking latency graph and an investigation summary panel, tense but focused team, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 310, "label": "Read the on-call runbook" },
+        { "card_id": 399, "label": "Take the incident console", "puzzle": "prod-incident" }
+      ],
+      "visible_to": "all",
+      "room": "production"
+    },
+    {
+      "id": 301,
+      "type": "object",
+      "color": "blue",
+      "title": "Incident Console",
+      "description": "Five switches and a countdown. The agent's findings are on screen. Switch ON every call you approve. Every call is yours to make.",
+      "image": "assets/card-incident-console.png",
+      "image_prompt": "Incident response console with four toggle switches, a small input field and a red countdown timer, dramatic lighting, single object on dark background",
+      "visible_to": "all",
+      "room": "production"
+    },
+    {
+      "id": 310,
+      "type": "lore",
+      "color": "purple",
+      "title": "On-Call Runbook, Page 1",
+      "description": "When the alarm fires:\n\n1. Let the AWS DevOps Agent investigate. It correlates the incident and tests its hypotheses against metrics, logs, and traces.\n2. Read its root cause. Do not guess, and do not just restart things and hope.\n3. Fixes go through a pull request and the pipeline. Never edit production by hand.\n4. Every incident teaches something. Add a check in planning so it cannot happen again.",
+      "image": "assets/card-runbook.png",
+      "image_prompt": "Open ring-bound runbook page with numbered steps, coffee mug beside it, warm desk lamp light, single object on dark background",
+      "visible_to": "all",
+      "room": "production"
+    },
+    {
+      "id": 399,
+      "type": "event",
+      "color": "yellow",
+      "title": "Idea to Production",
+      "description": "Latency drops. The portal is back, still on day one. A new check (\"design review must verify database connection settings\") goes into planning for the next release, so this can't happen again.\n\nJun: \"That's the whole lifecycle in five minutes. The AI planned, built and investigated. You verified the plan, gated the code and made every production call. That's AI-DLC: the AI proposes, the humans decide.\"",
+      "is_ending": true,
+      "reveals": [],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "production"
+    }
+  ]
+}

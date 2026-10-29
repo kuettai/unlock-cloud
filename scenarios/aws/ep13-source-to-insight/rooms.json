@@ -1,0 +1,31 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "The Build Lab",
+      "description": "Step 1 — Build the pipeline",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "Starting room",
+      "map_pos": [180, 270]
+    },
+    {
+      "card_id": 200,
+      "name": "The Catalog Desk",
+      "description": "Step 2 — Catalog and publish",
+      "connects_to": [300],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "build-pipeline" },
+      "unlock_text": "Built the pipeline",
+      "map_pos": [180, 180]
+    },
+    {
+      "card_id": 300,
+      "name": "The Insight Room",
+      "description": "Step 3 — Ask for the answer",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "publish-listing" },
+      "unlock_text": "Published the dataset",
+      "map_pos": [180, 90]
+    }
+  ]
+}

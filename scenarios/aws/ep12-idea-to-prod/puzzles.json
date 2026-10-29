@@ -1,0 +1,145 @@
+{
+  "puzzles": [
+    {
+      "id": "approval-loop",
+      "type": "sort_lock",
+      "card_ref": 101,
+      "description": "The agent has a plan. Who signs off, and when? Drag the steps into order.",
+      "ui": "sort-lock",
+      "config": {
+        "answer": [
+          "🤖 Agent drafts the user stories",
+          "🧑 PM reviews and corrects them",
+          "🤖 Agent updates the plan with the PM's corrections and builds the first feature from the plan",
+          "🧑 Squad checks that it works"
+        ],
+        "distractors": []
+      },
+      "hints": [
+        "Plan first, build second. Every agent step is followed by a human check.",
+        "The agent drafts, the PM reviews, then the agent fixes the plan and builds. A human checks the result.",
+        "Agent drafts → PM reviews → Agent updates the plan and builds → Squad checks."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "construction-gates",
+      "type": "cascade_lock",
+      "card_ref": 201,
+      "description": "The coding agent's pull request has landed. Make the calls at each gate.",
+      "ui": "cascade-lock",
+      "config": {
+        "cupNames": ["PR", "Review", "Merge"],
+        "shuffle_options": true,
+        "pauseBetweenSteps": 1800,
+        "steps": [
+          {
+            "question": "The coding agent opened a pull request for the feedback form. What happens next?",
+            "options": [
+              "AWS Security Agent reviews it against the organization's compliance and standards",
+              "Deploy straight to production to save time",
+              "Merge it. The agent wrote it, so it's fine"
+            ],
+            "answer": 0,
+            "wrong": [
+              "",
+              "Nothing reaches production without passing the gates first.",
+              "Fast isn't the same as safe. Every PR gets reviewed, no matter who wrote it."
+            ],
+            "after": "Review started. Security shifts left: it's checked on the PR, not after launch."
+          },
+          {
+            "question": "The AWS Security Agent flags: \"Citizen email addresses are logged in plain text.\" What do you do?",
+            "options": [
+              "Ignore it. It's only an email address",
+              "Merge now and fix it next sprint",
+              "Return it to the agent to remediate, then re-run the gate"
+            ],
+            "answer": 2,
+            "wrong": [
+              "Citizen email addresses are personal data. Treat them seriously.",
+              "A flagged finding blocks the merge. 'Next sprint' is how leaks happen.",
+              ""
+            ],
+            "after": "Fixed and re-reviewed. Nothing blocking now."
+          },
+          {
+            "question": "The code no longer logs citizen email addresses in plain text. Who should merge this PR?",
+            "options": [
+              "An engineer, after reading it",
+              "Nobody. Clean reviews merge themselves",
+              "The coding agent, automatically"
+            ],
+            "answer": 0,
+            "wrong": [
+              "",
+              "A clean review is input to a decision, not the decision itself.",
+              "The agent proposes. A human approves at every gate."
+            ],
+            "after": "Approved by a human. Merging."
+          }
+        ],
+        "onComplete": {
+          "emojis": "🧑‍💻✅🚀",
+          "text": "PR merged.",
+          "subtext": "The agent wrote it. AWS Security Agent checked it. A human approved it."
+        }
+      },
+      "hints": [
+        "Every PR gets reviewed, flagged issues get fixed before merging, and a human makes the final call.",
+        "Review first. Return flagged issues to the agent to remediate. An engineer merges.",
+        "Answers: Security Agent review → return it to the agent to remediate → an engineer merges."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "prod-incident",
+      "type": "defuse_lock",
+      "card_ref": 301,
+      "description": "Day one in production and the alarm is firing. The AWS DevOps Agent found the cause. Select what you would approve, and leave the wrong moves off.",
+      "ui": "defuse-lock",
+      "config": {
+        "timeSeconds": 60,
+        "tasks": [
+          {
+            "type": "toggle",
+            "label": "Accept the agent's root cause: pool size set to 1",
+            "answer": true,
+            "wrong_text_off": "AWS DevOps Agent tested its hypotheses against the logs, metrics and traces. This one held up. Accept it."
+          },
+          {
+            "type": "toggle",
+            "label": "Approve the agent's fix PR (pool size → 50)",
+            "answer": true,
+            "wrong_text_off": "The fix is ready. It needs a human to approve it before it ships."
+          },
+          {
+            "type": "toggle",
+            "label": "Ship the fix through the pipeline",
+            "answer": true,
+            "wrong_text_off": "Even urgent fixes take the normal path: PR, review, pipeline. No hand edits in production."
+          },
+          {
+            "type": "toggle",
+            "label": "Restart the database and hope it goes away",
+            "answer": false,
+            "wrong_text_on": "A restart treats the symptom. The pool size is still 1, so it'll break again. Fix the root cause."
+          },
+          {
+            "type": "toggle",
+            "label": "Add a check so this can't happen again",
+            "answer": true,
+            "wrong_text_off": "Every incident teaches something. Feed it back into planning so the next release is safer. That's the loop in AI-DLC."
+          }
+        ]
+      },
+      "hints": [
+        "Read every switch. Most are good calls, but one is a shortcut that only hides the problem.",
+        "Accept the root cause, approve the fix, ship it properly and learn from it. Don't just restart and hope.",
+        "Switch ON 1, 2, 3, and 5. Leave 4 off. You never restart and hope, and you never edit production by hand."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}

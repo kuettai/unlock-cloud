@@ -1,0 +1,17 @@
+{
+  "base_score": 30,
+  "time_bonus_per_minute": 10,
+  "hint_penalty": -3,
+  "wrong_combination_penalty": -2,
+  "lore_bonus": 2,
+  "lore_ids": [110, 210, 310],
+  "all_lore_bonus": 4,
+  "stars": [
+    { "min": 65, "stars": 5 },
+    { "min": 55, "stars": 4 },
+    { "min": 40, "stars": 3 },
+    { "min": 25, "stars": 2 },
+    { "min": 0, "stars": 1 }
+  ],
+  "notes": "Booth tuning, same as ep12. About 3 minutes of solving in a 5-minute budget to absorb booth idle time. A clean run with all lore lands 4-5 stars; most finishers get 3+."
+}

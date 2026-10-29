@@ -1,0 +1,18 @@
+{
+  "id": "ep12-idea-to-prod",
+  "title": "Idea to Production",
+  "episode": 12,
+  "arc": "standalone",
+  "category": "aws",
+  "description": "A one-line idea lands on your squad's desk: a citizen feedback portal. Take it through all three AI-DLC phases in five minutes. The AI proposes, you verify. Approve the plan, gate the code, and save production when the alarm goes off.",
+  "difficulty": { "tier": 0, "label": "Booth Qualifier" },
+  "duration_minutes": 5,
+  "players": { "min": 1, "max": 6, "recommended": 1 },
+  "aws_topics": ["AI-DLC", "Human-in-the-Loop", "AWS Security Agent", "AWS DevOps Agent"],
+  "mechanics_used": ["sort-lock", "cascade-lock", "defuse-lock"],
+  "mechanics_taught": ["puzzle_solving", "navigation", "hints", "scoring"],
+  "version": "1.0",
+  "start_button": "Start Sprint",
+  "lore_label": "Field Note",
+  "end_title": "Shipped"
+}

@@ -1,0 +1,9 @@
+{
+  "style_prefix": "Digital illustration, modern Singapore government data team office, bright clean isometric style, cloud-blue and warm orange palette, friendly professional aesthetic, soft shadows, game card art.",
+  "style_prefix_location": "Digital illustration, modern government data team workspace, isometric wide-angle, cloud-blue and warm orange palette, screens showing data flows and dashboards, collaborative, soft natural lighting, game environment art.",
+  "style_prefix_item": "Digital illustration, single office or data prop on dark gradient background, warm orange highlights, clean icon style, slightly cartoonish, centered, game inventory art.",
+  "style_prefix_object": "Digital illustration, interactive data panel or console, soft moody background, cloud-blue and orange accents, close-up detail, game card art.",
+  "style_prefix_character": "Digital illustration, single character portrait, friendly tech team member, cartoon-realistic style, dark gradient background, expressive pose, game NPC art.",
+  "negative_prompt": "text, words, letters, numbers, watermark, blurry, low quality, ugly, dark dystopian, horror, gore, logos, brand names",
+  "aspect_ratio": "16:9"
+}

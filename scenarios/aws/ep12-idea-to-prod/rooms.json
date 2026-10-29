@@ -1,0 +1,31 @@
+{
+  "rooms": [
+    {
+      "card_id": 100,
+      "name": "Inception Room",
+      "description": "Phase 1 — Approve the plan",
+      "connects_to": [200],
+      "unlocked_by": null,
+      "unlock_text": "Starting room",
+      "map_pos": [180, 270]
+    },
+    {
+      "card_id": 200,
+      "name": "Construction Bay",
+      "description": "Phase 2 — Gate the code",
+      "connects_to": [300],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "approval-loop" },
+      "unlock_text": "Approved the plan",
+      "map_pos": [180, 180]
+    },
+    {
+      "card_id": 300,
+      "name": "Production Floor",
+      "description": "Phase 3 — Handle the incident",
+      "connects_to": [],
+      "unlocked_by": { "type": "puzzle", "puzzle_id": "construction-gates" },
+      "unlock_text": "Merged a reviewed PR",
+      "map_pos": [180, 90]
+    }
+  ]
+}

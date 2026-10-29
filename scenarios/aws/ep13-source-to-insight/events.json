@@ -1,0 +1,64 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 240,
+      "message": "Director: \"Any update? I'm presenting this afternoon.\"",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 150,
+      "message": "MID-EVENT: Halfway through the sprint.",
+      "type": "narrative",
+      "triggers_narrative": "mid_event"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 60,
+      "message": "One minute left in the sprint.",
+      "type": "alarm",
+      "voice": "narrator"
+    },
+    {
+      "id": "TE-04",
+      "time_remaining": 20,
+      "message": "Jun: \"Twenty seconds. Be specific.\"",
+      "type": "alarm",
+      "voice": "jun"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "hint-tooltip",
+      "trigger": "first_hint_request",
+      "message": "Hints cost a few points but never block you. Most players still get 3+ stars.",
+      "type": "tooltip",
+      "once": true
+    },
+    {
+      "id": "pipeline-built",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "build-pipeline",
+      "result_card": 105,
+      "message": "Pipeline built. Catalog Desk unlocked.",
+      "type": "reveal"
+    },
+    {
+      "id": "dataset-published",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "publish-listing",
+      "result_card": 205,
+      "message": "Dataset published. Insight Room unlocked.",
+      "type": "reveal"
+    },
+    {
+      "id": "insight-delivered",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "ask-quick",
+      "result_card": 399,
+      "message": "Insight delivered. Source to insights: done.",
+      "type": "ending"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "puzzles": [
+    {
+      "id": "build-pipeline",
+      "type": "chain_lock",
+      "card_ref": 101,
+      "description": "Tap the steps in order to build the complaints pipeline for files.",
+      "ui": "chain-lock",
+      "config": {
+        "items": [
+          { "id": "sources", "label": "Raw source files", "icon": "📥" },
+          { "id": "glue", "label": "AWS Glue for ingestion", "icon": "🔧" },
+          { "id": "iceberg", "label": "Iceberg table on S3 for storage", "icon": "🧊" },
+          { "id": "athena", "label": "Amazon Athena for querying", "icon": "🔎" }
+        ],
+        "answer": ["sources", "glue", "iceberg", "athena"]
+      },
+      "hints": [
+        "Start with the files, ingest them, store them, then query them.",
+        "AWS Glue ingests the raw files and stores them as an open Iceberg table on S3. Athena queries that table.",
+        "Raw source files → AWS Glue for ingestion → Iceberg table on S3 for storage → Amazon Athena for querying."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "publish-listing",
+      "type": "arch_lock",
+      "card_ref": 201,
+      "description": "Drag each item into the right section of the dataset listing, then publish it.",
+      "ui": "arch-lock",
+      "config": {
+        "zones": [
+          { "id": "desc", "label": "📝 Description", "x": 25, "y": 27 },
+          { "id": "glossary", "label": "🏷️ Glossary term", "x": 75, "y": 27 },
+          { "id": "lineage", "label": "🧬 Lineage", "x": 25, "y": 73 },
+          { "id": "access", "label": "🔐 Access", "x": 75, "y": 73 }
+        ],
+        "services": [
+          { "id": "desc-good", "label": "Monthly totals", "icon": "📝" },
+          { "id": "pii", "label": "PII", "icon": "🏷️" },
+          { "id": "lineage-good", "label": "From case DB", "icon": "🧬" },
+          { "id": "access-good", "label": "Analysts, masked", "icon": "🔐" }
+        ],
+        "solution": {
+          "desc": "desc-good",
+          "glossary": "pii",
+          "lineage": "lineage-good",
+          "access": "access-good"
+        }
+      },
+      "hints": [
+        "Each section answers a question for whoever finds this dataset: what is it, is it sensitive, where did it come from, who can see it?",
+        "PII is the sensitive-data label. Lineage shows where the data came from. Access says who can see it, with citizen details masked.",
+        "Description: Monthly totals. Glossary term: PII. Lineage: From case DB. Access: Analysts, masked."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "ask-quick",
+      "type": "prompt_lock",
+      "card_ref": 301,
+      "description": "Ask Amazon Quick the director's question in plain language. Tap fragments to build it, then send.",
+      "ui": "prompt-lock",
+      "config": {
+        "npc": { "name": "Amazon Quick", "portrait": "💬" },
+        "fragments": [
+          { "id": "show", "text": "Show", "type": "action" },
+          { "id": "what", "text": "complaints by service", "type": "what" },
+          { "id": "when", "text": "for last month", "type": "detail" },
+          { "id": "where", "text": "from the published Citizen Complaints dataset", "type": "where" },
+          { "id": "format", "text": "as a bar chart", "type": "format" },
+          { "id": "everything", "text": "everything", "type": "what" },
+          { "id": "sheet", "text": "from my old spreadsheet", "type": "where" }
+        ],
+        "answers": [
+          { "required": ["sheet"], "tier": "fail", "response": "That spreadsheet isn't in the catalog. I can't tell where it came from or whether it's current. Use the published dataset instead." },
+          { "required": ["everything"], "tier": "fail", "response": "'Everything' is too broad. What do you want to see, for when?" },
+          { "required": ["show", "what", "when", "where", "format"], "tier": "gold", "response": "📊 Bar chart ready, from the published Citizen Complaints dataset. Last month, Permit Renewals had the most complaints: 412, up 30% on the month before." },
+          { "required": ["show", "what", "where"], "tier": "silver", "response": "Here are complaints by service, but for all time. Which period? And how should I show it?" },
+          { "required": ["show", "what"], "tier": "bronze", "response": "I found three complaint datasets. Which one should I use?" }
+        ]
+      },
+      "hints": [
+        "Be specific: what you want, for which period, from which dataset, and in what format.",
+        "Use the published dataset, not the old spreadsheet. 'Everything' is too vague.",
+        "Show + complaints by service + for last month + from the published Citizen Complaints dataset + as a bar chart."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}

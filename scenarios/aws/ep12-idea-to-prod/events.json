@@ -1,0 +1,64 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 240,
+      "message": "Product manager: \"Friday is closer than it looks. Keep going.\"",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 150,
+      "message": "MID-EVENT: Halfway through the sprint.",
+      "type": "narrative",
+      "triggers_narrative": "mid_event"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 60,
+      "message": "One minute left in the sprint.",
+      "type": "alarm",
+      "voice": "narrator"
+    },
+    {
+      "id": "TE-04",
+      "time_remaining": 20,
+      "message": "Jun: \"Twenty seconds. Trust the gates.\"",
+      "type": "alarm",
+      "voice": "jun"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "hint-tooltip",
+      "trigger": "first_hint_request",
+      "message": "Hints cost a few points but never block you. Most players still get 3+ stars.",
+      "type": "tooltip",
+      "once": true
+    },
+    {
+      "id": "plan-approved",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "approval-loop",
+      "result_card": 105,
+      "message": "Inception complete. Construction Bay unlocked.",
+      "type": "reveal"
+    },
+    {
+      "id": "pr-merged",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "construction-gates",
+      "result_card": 205,
+      "message": "Construction complete. Production Floor unlocked.",
+      "type": "reveal"
+    },
+    {
+      "id": "incident-resolved",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "prod-incident",
+      "result_card": 399,
+      "message": "Incident resolved. Idea to production: done.",
+      "type": "ending"
+    }
+  ]
+}

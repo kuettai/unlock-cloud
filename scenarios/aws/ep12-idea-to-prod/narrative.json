@@ -1,0 +1,39 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Sprint system — calm, brisk" },
+    "jun": { "voice_id": "Matthew", "role": "Jun, tech lead — friendly, fast, trusts the process" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "jun", "text": "Hey, I'm Jun, your tech lead. Welcome to the team. We've got a new build coming our way, a citizen feedback portal, and the goal is to take it from idea to production fast. You won't be doing this alone. The rest of the team and a coding agent are on it with us, and the agent handles the heavy lifting on implementation.", "pause_after_ms": 1000 },
+      { "voice": "jun", "text": "Your role is the one that matters most. You make the calls. The agent proposes and you verify, at every phase. We'll move through three phases: Inception, Construction, and Operation.", "pause_after_ms": 800 },
+      { "voice": "jun", "text": "Let's go.", "emphasis": "moderate" }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 150,
+    "segments": [
+      { "voice": "narrator", "text": "Halfway. Keep moving.", "pause_after_ms": 600 },
+      { "voice": "jun", "text": "Nice pace. Don't skip a gate to go faster. That's how it breaks later.", "pause_after_ms": 600 }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "Portal restored on day one. And a new check is in the plan, so it can't happen again.", "pause_after_ms": 800 },
+        { "voice": "jun", "text": "Idea to production in five minutes. The AI planned, built and investigated. You made every call that mattered.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "That's AI-DLC. The AI proposes. The humans decide.", "emphasis": "strong" }
+      ],
+      "audio": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "narrator", "text": "Time's up. The sprint is over.", "pause_after_ms": 800, "emphasis": "strong" },
+        { "voice": "jun", "text": "No stress. Even good squads miss a sprint. Run it again. You'll be faster now that you know the gates.", "pause_after_ms": 600 }
+      ],
+      "audio": null
+    }
+  }
+}

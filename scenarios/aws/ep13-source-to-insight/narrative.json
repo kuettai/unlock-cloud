@@ -1,0 +1,39 @@
+{
+  "voices": {
+    "narrator": { "voice_id": "Joanna", "role": "Sprint system — calm, brisk" },
+    "jun": { "voice_id": "Matthew", "role": "Jun, tech lead — friendly, fast, trusts the process" }
+  },
+  "intro": {
+    "segments": [
+      { "voice": "jun", "text": "Hey, I'm Jun, your tech lead. The director has one question: which service got the most citizen complaints last month? And she needs it today.", "pause_after_ms": 900 },
+      { "voice": "jun", "text": "The data is scattered and nobody trusts it. So we won't just answer it once. We'll build it, catalog it, publish it, then ask.", "pause_after_ms": 800 },
+      { "voice": "narrator", "text": "Five minutes. Source to insights. Go.", "emphasis": "moderate" }
+    ],
+    "audio": null
+  },
+  "mid_event": {
+    "trigger_time_remaining": 150,
+    "segments": [
+      { "voice": "narrator", "text": "Halfway. Keep moving.", "pause_after_ms": 600 },
+      { "voice": "jun", "text": "Nice pace. Data nobody can find is data nobody uses. Keep going.", "pause_after_ms": 600 }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        { "voice": "narrator", "text": "Insight delivered. Source traced.", "pause_after_ms": 800 },
+        { "voice": "jun", "text": "We built it once, catalogued it and published it. Next month, anyone can ask, and get a trusted answer in seconds.", "pause_after_ms": 800 },
+        { "voice": "narrator", "text": "Good data in. Good answers out. That's a data foundation.", "emphasis": "strong" }
+      ],
+      "audio": null
+    },
+    "failure": {
+      "segments": [
+        { "voice": "narrator", "text": "Time's up. The director is still waiting.", "pause_after_ms": 800, "emphasis": "strong" },
+        { "voice": "jun", "text": "No stress. Run it again. Now you know the path: build, catalog, publish, ask.", "pause_after_ms": 600 }
+      ],
+      "audio": null
+    }
+  }
+}

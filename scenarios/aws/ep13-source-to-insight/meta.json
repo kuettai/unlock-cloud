@@ -1,0 +1,18 @@
+{
+  "id": "ep13-source-to-insight",
+  "title": "Source to Insights",
+  "episode": 13,
+  "arc": "standalone",
+  "category": "aws",
+  "description": "The director has one question: which service got the most citizen complaints last month? The data is scattered and nobody trusts it. In five minutes, build the pipeline, catalog and publish the dataset, then get the answer in plain language.",
+  "difficulty": { "tier": 0, "label": "Booth Qualifier" },
+  "duration_minutes": 5,
+  "players": { "min": 1, "max": 6, "recommended": 1 },
+  "aws_topics": ["Data Foundation", "AWS Glue", "Apache Iceberg", "Amazon S3", "Amazon Athena", "AWS Glue Data Catalog", "Amazon SageMaker Catalog", "Amazon Quick"],
+  "mechanics_used": ["chain-lock", "arch-lock", "prompt-lock"],
+  "mechanics_taught": ["puzzle_solving", "navigation", "hints", "scoring"],
+  "version": "1.0",
+  "start_button": "Start Sprint",
+  "lore_label": "Field Note",
+  "end_title": "Insight Delivered"
+}

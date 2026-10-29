@@ -1,0 +1,154 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "The Build Lab — Raw Data",
+      "description": "The director's message is on the big screen: \"Which service got the most citizen complaints last month? I need it today.\"\n\nThe data exists, but it's everywhere: feedback forms, call logs, case records. Someone has a spreadsheet on their laptop that \"should be about right.\"\n\nJun, your tech lead, shakes his head. \"We could answer this once by hand. Or we build it properly, so anyone can answer it, any month. Build the pipeline.\"",
+      "image": "assets/build-lab.png",
+      "image_prompt": "Modern government data team workspace, big wall screen showing scattered data sources flowing toward a pipeline, laptops and whiteboards, cool blue lighting with orange accents, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 110, "label": "Read the note on the booth screen" },
+        { "card_id": 105, "label": "Build the pipeline", "puzzle": "build-pipeline" }
+      ],
+      "visible_to": "all",
+      "room": "build"
+    },
+    {
+      "id": 101,
+      "type": "object",
+      "color": "blue",
+      "title": "Pipeline Builder",
+      "description": "Four tiles that make a pipeline for the complaint files: ingest, store, query. Tap them in the right order.",
+      "image": "assets/card-pipeline-builder.png",
+      "image_prompt": "Touchscreen pipeline builder with connected tiles and arrows, data flowing left to right, dark UI with orange accents, single object on dark background",
+      "visible_to": "all",
+      "room": "build"
+    },
+    {
+      "id": 105,
+      "type": "event",
+      "color": "yellow",
+      "title": "Pipeline Built",
+      "description": "AWS Glue ingests the raw source files and stores them as an open Iceberg table on Amazon S3. Amazon Athena can query it in seconds.\n\nJun: \"Good. But right now only we know what this table is. Nobody else can find it, trust it, or use it safely. To the Catalog Desk.\"",
+      "reveals": [200],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "build"
+    },
+    {
+      "id": 110,
+      "type": "lore",
+      "color": "purple",
+      "title": "The Data Foundation, Layer by Layer",
+      "description": "Psst. The booth screen shows the full stack:\n\n• Amazon S3 at the bottom, for every type of data: files, tables, vectors and metadata\n• Engines on top: analytics, databases, AI/ML and streams\n• A catalog with context and governance\n• Humans and AI agents consuming it all\n\nOpen formats like Apache Iceberg mean you can use more than one engine on the same data.",
+      "image": "assets/card-data-layers.png",
+      "image_prompt": "Clean layered stack infographic, storage at the base, engines in the middle, catalog layer, people and AI agents on top, glowing blue and orange, single object on dark background",
+      "visible_to": "all",
+      "room": "build"
+    },
+
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "The Catalog Desk — Make It Findable",
+      "description": "A blank listing for the new complaints dataset sits on screen, ready to publish to the catalog.\n\nJun: \"When someone finds this dataset, they need answers fast. What is it? Is it sensitive? Where did it come from? Who's allowed to see it? Fill in the listing, then publish.\"",
+      "image": "assets/catalog-desk.png",
+      "image_prompt": "Data catalog workstation showing a dataset listing form with labelled sections, tags and a publish button, warm desk lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 210, "label": "Read the context poster" },
+        { "card_id": 205, "label": "Fill in the listing and publish", "puzzle": "publish-listing" }
+      ],
+      "visible_to": "all",
+      "room": "catalog"
+    },
+    {
+      "id": 201,
+      "type": "object",
+      "color": "blue",
+      "title": "Dataset Listing",
+      "description": "Four empty sections: Description, Glossary term, Lineage, Access. Four items to place, one in each section, so anyone who finds the dataset knows what it is and whether they can use it.",
+      "image": "assets/card-listing.png",
+      "image_prompt": "Dataset listing card with four empty labelled sections and draggable tags beside it, dark UI with teal and orange accents, single object on dark background",
+      "visible_to": "all",
+      "room": "catalog"
+    },
+    {
+      "id": 205,
+      "type": "event",
+      "color": "yellow",
+      "title": "Dataset Published",
+      "description": "The listing goes live in the catalog: a clear description, a PII glossary term, lineage back to the case database, and access for analysts with citizen details masked.\n\nAnyone in the agency can now find it, understand it and trust it. So can AI agents.\n\nJun: \"Now let's answer the director.\"",
+      "reveals": [300],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "catalog"
+    },
+    {
+      "id": 210,
+      "type": "lore",
+      "color": "purple",
+      "title": "Context at Every Level",
+      "description": "A poster by the desk:\n\n1. Workflow: saved queries and code\n2. Business: descriptions, glossary terms like \"PII\"\n3. Technical: schemas, partitions, lineage\n4. Object: tags and labels on S3 files\n\nThe more context the catalog holds, the better people and AI agents can find the right data and use it correctly.",
+      "image": "assets/card-context-poster.png",
+      "image_prompt": "Office poster with four stacked context levels, icons for code, glossary, schema and tags, clean infographic style, single object on dark background",
+      "visible_to": "all",
+      "room": "catalog"
+    },
+
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "The Insight Room — Ask the Question",
+      "description": "A quiet room with one big screen. Amazon Quick is open, connected to the catalog you just published to.\n\nJun: \"You don't need to write SQL. Ask it in plain language. But be specific, and point it at the right data.\"",
+      "image": "assets/insight-room.png",
+      "image_prompt": "Calm modern meeting room with a large screen showing a chat assistant and an empty dashboard, soft lighting, isometric digital illustration",
+      "reveals": [],
+      "discoveries": [
+        { "card_id": 310, "label": "Read the tip on the screen" },
+        { "card_id": 399, "label": "Ask Amazon Quick", "puzzle": "ask-quick" }
+      ],
+      "visible_to": "all",
+      "room": "insight"
+    },
+    {
+      "id": 301,
+      "type": "object",
+      "color": "blue",
+      "title": "Amazon Quick",
+      "description": "A chat box and a blank dashboard. Build the director's question from the fragments, then send it.",
+      "image": "assets/card-quick.png",
+      "image_prompt": "Chat assistant interface beside a blank dashboard panel, glowing send button, dark UI with blue accents, single object on dark background",
+      "visible_to": "all",
+      "room": "insight"
+    },
+    {
+      "id": 310,
+      "type": "lore",
+      "color": "purple",
+      "title": "Good Questions, Good Answers",
+      "description": "A tip pinned to the screen:\n\n\"A good answer needs two things: good data and a good question.\n\n• Say what you want to see\n• Say for which period\n• Point at the published dataset\n• Say how to show it\n\nVague in, vague out.\"",
+      "image": "assets/card-quick-tip.png",
+      "image_prompt": "Sticky tip card pinned to a monitor bezel with four bullet points, friendly handwriting, single object on dark background",
+      "visible_to": "all",
+      "room": "insight"
+    },
+    {
+      "id": 399,
+      "type": "event",
+      "color": "yellow",
+      "title": "Source to Insights",
+      "description": "The bar chart lands on screen. Last month, Permit Renewals had the most complaints: 412, up 30% on the month before. The director has the answer, and knows exactly where it came from.\n\nJun: \"That's a data foundation. We built it once, catalogued it and published it. Next month, anyone can ask the same question, or a new one, and get a trusted answer in seconds.\"",
+      "is_ending": true,
+      "reveals": [],
+      "consumes": [],
+      "visible_to": "all",
+      "room": "insight"
+    }
+  ]
+}
