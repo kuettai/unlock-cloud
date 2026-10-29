@@ -851,6 +851,11 @@ describe('EP-ETP — Escape to Production', () => {
     solvePuzzle(engine, 'terminal-deploy', 510, 'Deploy Command Accepted');
     // Defuse deploy requires and consumes AI-DLC Blueprint (315) + Pipeline Token (415)
     solvePuzzle(engine, 'defuse-deploy', 511, 'You\'re Hired!');
+    assertCompleted(engine);
+  });
+});
+
+// ============================================================
 // EP11 — War Room @ Tech Summit (booth walk-up, linear 100→600)
 // ============================================================
 describe('EP11 — War Room @ Tech Summit', () => {
@@ -1002,6 +1007,55 @@ describe('EP — Community Day (ep-acd-2026)', () => {
 
   test('Closing Quiz: defuse-lock → BUZZER BEAT (ending)', () => {
     solvePuzzle(engine, 'puzzle-buzzer', 399, 'Buzzer beat');
+    assertCompleted(engine);
+  });
+});
+// ============================================================
+// EP12 — 11.11 Meltdown (Escape the War Room, AWS Cloud & AI Day KL)
+// ============================================================
+describe('EP12 — 11.11 Meltdown', () => {
+  let engine;
+  before(async () => { engine = await createEngine('ep12-1111-meltdown'); engine.start(); });
+
+  test('Act 1: find the culprit release, verify findings, approve rollback → Act 2', () => {
+    assert.equal(engine.currentRoom, 100);
+    discover(engine, 101, 'Meet the DevOps Agent');
+    solvePuzzle(engine, 'log-act1', 102, 'Culprit Found');
+    assert.ok(engine.inventory.includes(151), 'Culprit Release should be in inventory');
+    solvePuzzle(engine, 'pillar-act1', 103, 'Retry Storm Explained');
+    assert.ok(engine.inventory.includes(152), 'Agent Findings should be in inventory');
+    // terminal-lock answer (4.1.3) is checked in the UI; mark solved like EP-ETP's terminal-deploy
+    solvePuzzle(engine, 'rollback-act1', 104, 'Checkout Restored');
+    assert.deepEqual(engine.inventory, [151], 'Only the release-diff note should survive the rollback');
+    assert.ok(engine.unlockedRooms.includes(200), 'Act 2 should be unlocked');
+  });
+
+  test('Act 2: map defences, replay the threat model, find the waived finding → Act 3', () => {
+    engine.navigateToRoom(200);
+    discover(engine, 201, 'Meet the Security Agent');
+    discover(engine, 202, 'Pre-launch review');
+    solvePuzzle(engine, 'wire-act2', 210, 'Roles Mapped');
+    assert.ok(engine.inventory.includes(251), 'Security Roles should be in inventory');
+    solvePuzzle(engine, 'timeline-act2', 212, 'The Predicted Path');
+    assert.ok(engine.inventory.includes(252), 'Attack Path should be in inventory');
+    solvePuzzle(engine, 'cascade-act2', 211, 'Breach Contained');
+    assert.deepEqual(engine.inventory.sort(), [151, 253], 'Only the two notes (release diff, Finding 3) should remain');
+    assert.ok(engine.unlockedRooms.includes(300), 'Act 3 should be unlocked');
+  });
+
+  test('Act 3: trace each cost, find why nobody acted → Finale', () => {
+    engine.navigateToRoom(300);
+    discover(engine, 301, 'Meet the FinOps Agent');
+    solvePuzzle(engine, 'match-act3', 310, 'Costs Traced');
+    solvePuzzle(engine, 'chain-act3', 311, 'Bleeding Stopped');
+    assert.ok(engine.unlockedRooms.includes(400), 'Finale should be unlocked');
+  });
+
+  test('Finale: add the guardrails, answer the CEO → 11.11 is LIVE (ending)', () => {
+    engine.navigateToRoom(400);
+    discover(engine, 401, 'Datin Sarah');
+    solvePuzzle(engine, 'evidence-final', 410, 'One Rush, Three Alarms');
+    solvePuzzle(engine, 'defuse-final', 411, '11.11 is LIVE');
     assertCompleted(engine);
   });
 });

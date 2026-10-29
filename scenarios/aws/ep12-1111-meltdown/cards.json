@@ -1,0 +1,404 @@
+{
+  "cards": [
+    {
+      "id": 100,
+      "type": "location",
+      "color": "green",
+      "title": "Act 1: Why Are We Down?",
+      "description": "🚨 Checkout errors: 38%\n\nDatin Sarah: \"Why are we down?\"\nFind what changed, then roll it back.",
+      "image": "assets/act1-outage.png",
+      "image_prompt": "Red alert emergency in a modern e-commerce operations room at night: every monitor glowing red with crashing line graphs and red warning triangles, a red rotating alarm beacon on the ceiling, a stressed young engineer leaning toward the screens, a half-drunk glass of teh tarik beside the keyboard, generic night city lights through the window, isometric game art",
+      "discoveries": [
+        {
+          "card_id": 101,
+          "label": "Meet the DevOps Agent"
+        },
+        {
+          "card_id": 102,
+          "label": "Find what changed",
+          "puzzle": "log-act1"
+        },
+        {
+          "card_id": 103,
+          "label": "True or false?",
+          "puzzle": "pillar-act1",
+          "requires_item": [
+            151
+          ]
+        },
+        {
+          "card_id": 104,
+          "label": "Roll back",
+          "puzzle": "rollback-act1",
+          "requires_item": [
+            151,
+            152
+          ],
+          "consumes_item": [
+            152
+          ]
+        }
+      ],
+      "room": "why-are-we-down",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 101,
+      "type": "lore",
+      "color": "purple",
+      "title": "🤖 DevOps Agent: Live Investigation",
+      "description": "Your TAM recommended it last month. Enterprise Support includes monthly credits for it.\n\n21:50 ⚠️ Alarm. Investigation started automatically\n✓ Mapped: checkout → payment-service\n✗ CPU alarm: not on the payment path\n✓ Errors began 1 min after a deploy\n→ Your turn: find what that deploy changed",
+      "room": "why-are-we-down",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 102,
+      "type": "event",
+      "color": "yellow",
+      "title": "Culprit Found",
+      "description": "v4.2.0 cut the payment timeout from 3000 ms to 300 ms. Every payment now times out.\n\n🤖 \"Matches my finding. Minutes, not hours.\"",
+      "reveals": [
+        151
+      ],
+      "room": "why-are-we-down",
+      "visible_to": "all"
+    },
+    {
+      "id": 103,
+      "type": "event",
+      "color": "yellow",
+      "title": "What the Agent Can Do",
+      "description": "It investigates from the first alarm, maps your services, works across your tools and recommends the fix. You stay in control.\n\n🤖 \"I've written a spec for the retry fix. Hand it to your coding agent, like Kiro.\"",
+      "reveals": [
+        152
+      ],
+      "room": "why-are-we-down",
+      "visible_to": "all"
+    },
+    {
+      "id": 104,
+      "type": "event",
+      "color": "yellow",
+      "title": "Checkout Restored",
+      "description": "Errors: 38% → 0.2% ✅\n\n🤖 \"Next time, my release review (preview) checks a change before it ships. I'd have flagged v4.2.0 BLOCK.\n\nOne more thing: it was deployed with temp-hotfix-admin, a break-glass admin key that skips review. Who else has that key?\"",
+      "reveals": [
+        200
+      ],
+      "room": "why-are-we-down",
+      "visible_to": "all"
+    },
+    {
+      "id": 151,
+      "type": "item",
+      "color": "orange",
+      "title": "📝 Release diff",
+      "description": "4.1.3 (20:40) ✅ healthy\n4.2.0 (21:47) ❌ timeout 3000 → 300 ms",
+      "room": "why-are-we-down",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 152,
+      "type": "item",
+      "color": "orange",
+      "title": "✅ Agent Powers",
+      "description": "Investigates, maps, recommends. You approve.",
+      "room": "why-are-we-down",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 200,
+      "type": "location",
+      "color": "green",
+      "title": "Act 2: Were We Breached?",
+      "description": "🔐 Login: 40,000 requests a minute\n\nDatin Sarah: \"Were we breached?\"\nFind out who has that key.",
+      "image": "assets/act2-breach.png",
+      "image_prompt": "Security breach scene: a large glowing padlock cracked open in the centre, a hooded shadowy intruder silhouette on a screen behind it, a swarm of small red bot icons streaming toward a login screen, a golden key glowing red on the desk, cool blue room with red warning light, isometric game art",
+      "discoveries": [
+        {
+          "card_id": 201,
+          "label": "Meet the Security Agent"
+        },
+        {
+          "card_id": 202,
+          "label": "Read the review"
+        },
+        {
+          "card_id": 210,
+          "label": "Who does what?",
+          "puzzle": "wire-act2"
+        },
+        {
+          "card_id": 212,
+          "label": "Replay the attack",
+          "puzzle": "timeline-act2",
+          "requires_item": [
+            251
+          ]
+        },
+        {
+          "card_id": 211,
+          "label": "Were we breached?",
+          "puzzle": "cascade-act2",
+          "requires_item": [
+            251,
+            252
+          ],
+          "consumes_item": [
+            251,
+            252
+          ]
+        }
+      ],
+      "room": "were-we-breached",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 201,
+      "type": "lore",
+      "color": "purple",
+      "title": "💬 Security Agent",
+      "description": "AWS Security Agent (now part of AWS Continuum) finds risks in code and designs before launch: reviews, threat models, pen tests.\n\n🤖 \"I flagged that key three weeks ago, as Finding 3. Your team waived it as 'temporary'.\"",
+      "room": "were-we-breached",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 202,
+      "type": "lore",
+      "color": "purple",
+      "title": "📋 Pre-launch Review, 3 weeks ago",
+      "description": "Finding 1: SQL injection, fixed\nFinding 2: leaking error pages, fixed\nFinding 3: admin key hard-coded in the deploy script, no MFA. CRITICAL. WAIVED\n\nTonight's botnet on the login page is noise. WAF and GuardDuty are handling it.",
+      "room": "were-we-breached",
+      "reveals": [
+        253
+      ],
+      "visible_to": "all"
+    },
+    {
+      "id": 210,
+      "type": "event",
+      "color": "yellow",
+      "title": "Roles Mapped",
+      "description": "Security Agent works before launch. GuardDuty and WAF work at runtime.",
+      "reveals": [
+        251
+      ],
+      "room": "were-we-breached",
+      "visible_to": "all"
+    },
+    {
+      "id": 212,
+      "type": "event",
+      "color": "yellow",
+      "title": "The Predicted Path",
+      "description": "The agent mapped this path for Finding 3. CloudTrail shows it really happened.",
+      "reveals": [
+        252
+      ],
+      "room": "were-we-breached",
+      "visible_to": "all"
+    },
+    {
+      "id": 211,
+      "type": "event",
+      "color": "yellow",
+      "title": "Breach Contained",
+      "description": "Key revoked. Role deleted. Bots still blocked at the WAF.\n\n🛡️ No more waivers on CRITICAL findings.\n\n📱 Finance: \"WHY ARE WE AT RM 48,000 SINCE FRIDAY??\"",
+      "reveals": [
+        300
+      ],
+      "room": "were-we-breached",
+      "visible_to": "all"
+    },
+    {
+      "id": 251,
+      "type": "item",
+      "color": "orange",
+      "title": "✅ Security Roles",
+      "description": "Before launch: Security Agent. At runtime: GuardDuty, WAF.",
+      "room": "were-we-breached",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 252,
+      "type": "item",
+      "color": "orange",
+      "title": "✅ Attack Path",
+      "description": "Key in script → public repo → attacker → admin → instances",
+      "room": "were-we-breached",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 300,
+      "type": "location",
+      "color": "green",
+      "title": "Act 3: What Is It Costing Us?",
+      "description": "💸 Spend since Friday: RM 48,000\n\nDatin Sarah: \"What is this costing us?\"\nTrace every line of the bill.",
+      "image": "assets/act3-bill.png",
+      "image_prompt": "Cloud cost dashboard on a large curved monitor with one steep red cost line shooting upward, three highlighted cost bars, a world map with one unexpected region glowing red, stacks of gold coins on the desk, dark ops room with orange and teal light, isometric game art",
+      "discoveries": [
+        {
+          "card_id": 301,
+          "label": "Meet the FinOps Agent"
+        },
+        {
+          "card_id": 310,
+          "label": "Trace the bill",
+          "puzzle": "match-act3"
+        },
+        {
+          "card_id": 311,
+          "label": "Why nobody acted",
+          "puzzle": "chain-act3",
+          "requires_item": [
+            351
+          ],
+          "consumes_item": [
+            351
+          ]
+        }
+      ],
+      "room": "what-is-it-costing",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 301,
+      "type": "lore",
+      "color": "purple",
+      "title": "💬 FinOps Agent (Preview)",
+      "description": "Explains cost spikes by checking CloudTrail, and names the owner. It reports. It doesn't switch anything off.\n\n🤖 \"Since Friday, USD 10,800. The biggest line was launched with temp-hotfix-admin.\"",
+      "room": "what-is-it-costing",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 310,
+      "type": "event",
+      "color": "yellow",
+      "title": "Costs Traced",
+      "description": "The leaked key ran GPUs. Friday's load test was never switched off.",
+      "reveals": [
+        351
+      ],
+      "room": "what-is-it-costing",
+      "visible_to": "all"
+    },
+    {
+      "id": 311,
+      "type": "event",
+      "color": "yellow",
+      "title": "Bleeding Stopped",
+      "description": "The agent flagged it at 07:12 this morning, in a channel nobody owns. Now the owners have it and the spend is off.\n\n🛡️ Findings go straight to the owner.\n\n🤖 \"One key, three alarms. The CEO is back.\"",
+      "reveals": [
+        400
+      ],
+      "room": "what-is-it-costing",
+      "visible_to": "all"
+    },
+    {
+      "id": 351,
+      "type": "item",
+      "color": "orange",
+      "title": "✅ Cost Map",
+      "description": "GPUs → leaked key. Fleet + logs → Friday's test.",
+      "room": "what-is-it-costing",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 400,
+      "type": "location",
+      "color": "green",
+      "title": "Finale: Answer the CEO",
+      "description": "⏰ 11:52 PM. Eight minutes to the sale.\n\nAdd the guardrails, then answer the CEO.",
+      "image": "assets/finale-bridge.png",
+      "image_prompt": "Over-the-shoulder view from behind an engineer at a desk, looking at one large monitor that shows a video call with a composed Malaysian businesswoman in a blazer, framed head and shoulders like a webcam picture, three small round green indicator lamps glowing on the desk, dark ops room, calm teal light, isometric game art",
+      "discoveries": [
+        {
+          "card_id": 401,
+          "label": "Datin Sarah is back"
+        },
+        {
+          "card_id": 410,
+          "label": "Add the guardrails",
+          "puzzle": "evidence-final"
+        },
+        {
+          "card_id": 411,
+          "label": "Answer the CEO",
+          "puzzle": "defuse-final",
+          "requires_item": [
+            451
+          ],
+          "consumes_item": [
+            451
+          ]
+        }
+      ],
+      "room": "answer-the-ceo",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 401,
+      "type": "lore",
+      "color": "purple",
+      "title": "💬 Datin Sarah",
+      "description": "\"Tell me what we'll fix. Then tell me straight: were we breached?\"\n\nRemember: the bots were never the real story.",
+      "room": "answer-the-ceo",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 410,
+      "type": "event",
+      "color": "yellow",
+      "title": "One Shortcut, Three Alarms",
+      "description": "One break-glass key took down checkout, let an attacker in, and ran up the bill. The agents flagged every part. Now someone acts on what they find.",
+      "reveals": [
+        451
+      ],
+      "room": "answer-the-ceo",
+      "visible_to": "all"
+    },
+    {
+      "id": 451,
+      "type": "item",
+      "color": "orange",
+      "title": "✅ The Whole Story",
+      "description": "One key: outage, breach and bill.",
+      "room": "answer-the-ceo",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 411,
+      "type": "event",
+      "color": "yellow",
+      "title": "11.11 is LIVE 🎉",
+      "is_ending": true,
+      "description": "00:00. Checkout holding. You told the CEO the truth.\n\n🤖 DevOps Agent investigated from the first alarm and found the cause in minutes.\n🤖 Security Agent flagged the key weeks before.\n🤖 FinOps Agent traced the bill to its owner.\n\nReal world: Western Governors University went from about 2 hours to 28 minutes per incident with DevOps Agent.\n\n💡 On Enterprise Support? Every month you get DevOps Agent credits worth 75% of last month's support charge. They expire at month-end, so use them.\n\n👋 Talk to the Enterprise Support team at this booth about getting started.",
+      "room": "answer-the-ceo",
+      "reveals": [],
+      "visible_to": "all"
+    },
+    {
+      "id": 253,
+      "type": "item",
+      "color": "orange",
+      "title": "📝 Finding 3 (waived)",
+      "description": "Admin key in the deploy script, no MFA. CRITICAL. Waived.\nLeaked Fri 7 Nov.",
+      "room": "were-we-breached",
+      "reveals": [],
+      "visible_to": "all"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "timed_events": [
+    {
+      "id": "TE-01",
+      "time_remaining": 300,
+      "message": "11:55 PM. Five minutes to the sale.",
+      "type": "atmosphere"
+    },
+    {
+      "id": "TE-02",
+      "time_remaining": 120,
+      "message": "Two minutes! Datin Sarah is waiting.",
+      "type": "alarm"
+    },
+    {
+      "id": "TE-03",
+      "time_remaining": 30,
+      "message": "30 seconds to midnight!",
+      "type": "alarm"
+    }
+  ],
+  "triggered_events": [
+    {
+      "id": "hint-tooltip",
+      "trigger": "first_hint_request",
+      "message": "Hints cost points but never block you.",
+      "type": "tooltip",
+      "once": true
+    },
+    {
+      "id": "e-log-act1",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "log-act1",
+      "result_card": 102,
+      "message": "Found it: v4.2.0.",
+      "type": "reveal"
+    },
+    {
+      "id": "e-pillar-act1",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "pillar-act1",
+      "result_card": 103,
+      "message": "Facts checked.",
+      "type": "reveal"
+    },
+    {
+      "id": "e-rollback-act1",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "rollback-act1",
+      "result_card": 104,
+      "message": "✅ Checkout back. Next: the key.",
+      "type": "reveal"
+    },
+    {
+      "id": "e-wire-act2",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "wire-act2",
+      "result_card": 210,
+      "message": "Roles clear.",
+      "type": "reveal"
+    },
+    {
+      "id": "e-timeline-act2",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "timeline-act2",
+      "result_card": 212,
+      "message": "Path rebuilt.",
+      "type": "reveal"
+    },
+    {
+      "id": "e-cascade-act2",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "cascade-act2",
+      "result_card": 211,
+      "message": "✅ Breach contained. Next: the bill.",
+      "type": "reveal"
+    },
+    {
+      "id": "e-match-act3",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "match-act3",
+      "result_card": 310,
+      "message": "Every cost traced.",
+      "type": "reveal"
+    },
+    {
+      "id": "e-chain-act3",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "chain-act3",
+      "result_card": 311,
+      "message": "✅ Spend stopped. The CEO is back.",
+      "type": "reveal"
+    },
+    {
+      "id": "e-evidence-final",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "evidence-final",
+      "result_card": 410,
+      "message": "Guardrails set.",
+      "type": "reveal"
+    },
+    {
+      "id": "e-final",
+      "trigger": "puzzle_solved",
+      "puzzle_id": "defuse-final",
+      "result_card": 411,
+      "message": "🎉 11.11 is LIVE.",
+      "type": "ending"
+    }
+  ]
+}

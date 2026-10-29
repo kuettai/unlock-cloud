@@ -1,0 +1,68 @@
+{
+  "voices": {
+    "narrator": {
+      "voice_id": "Joanna",
+      "role": "Datin Sarah, BeliLah CEO. Calling from the airport, calm under pressure, no time to waste"
+    }
+  },
+  "intro": {
+    "segments": [
+      {
+        "voice": "narrator",
+        "text": "10 PM, 10 November. You're on call at BeliLah, Kuala Lumpur.",
+        "pause_after_ms": 600
+      },
+      {
+        "voice": "narrator",
+        "text": "At midnight, the 11.11 sale opens to three million shoppers.",
+        "pause_after_ms": 600
+      },
+      {
+        "voice": "narrator",
+        "text": "Datin Sarah, the CEO, calls: \"Checkout is down. Why are we down? Were we breached? What is it costing us?\"",
+        "pause_after_ms": 500
+      },
+      {
+        "voice": "narrator",
+        "text": "Three AWS Frontier Agents can answer her. Beat midnight.",
+        "emphasis": "strong"
+      }
+    ],
+    "audio": null
+  },
+  "ending": {
+    "success": {
+      "segments": [
+        {
+          "voice": "narrator",
+          "text": "\"Thank you. That's the honest answer, and it's the one I can take to the board.\"",
+          "pause_after_ms": 500
+        },
+        {
+          "voice": "narrator",
+          "text": "Midnight. 11.11 is live. You escaped the war room.",
+          "emphasis": "strong"
+        }
+      ],
+      "audio": null,
+      "next_episode": null,
+      "image": "assets/ending-success.png"
+    },
+    "failure": {
+      "segments": [
+        {
+          "voice": "narrator",
+          "text": "Midnight, and still no answers. The sale opened on a broken checkout.",
+          "pause_after_ms": 400
+        },
+        {
+          "voice": "narrator",
+          "text": "Try again. The agents will be waiting.",
+          "emphasis": "moderate"
+        }
+      ],
+      "audio": null,
+      "image": "assets/ending-failure.png"
+    }
+  }
+}

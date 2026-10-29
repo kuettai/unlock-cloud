@@ -1,0 +1,93 @@
+{
+  "id": "ep12-1111-meltdown",
+  "title": "Escape the War Room: 11.11 Meltdown",
+  "episode": 12,
+  "arc": "Frontier Agents",
+  "category": "aws",
+  "description": "10 PM, the night before the 11.11 sale. Checkout is down, login is under attack, and the bill has tripled. One shortcut caused all three. Find it with three AWS Frontier Agents before midnight.",
+  "difficulty": {
+    "tier": 1,
+    "label": "Booth (walk-up)"
+  },
+  "duration_minutes": 10,
+  "players": {
+    "min": 1,
+    "max": 1000,
+    "recommended": 1
+  },
+  "aws_topics": [
+    "AWS Frontier Agents",
+    "AWS DevOps Agent",
+    "AWS Security Agent (AWS Continuum)",
+    "AWS FinOps Agent (Preview)",
+    "Incident Response",
+    "Root Cause Analysis",
+    "Threat Modeling",
+    "Penetration Testing",
+    "AWS Cost Anomaly Detection",
+    "AWS CloudTrail",
+    "AWS WAF",
+    "Amazon GuardDuty",
+    "AWS Secrets Manager",
+    "Cost Allocation Tags"
+  ],
+  "mechanics_used": [
+    "log-lock",
+    "pillar-lock",
+    "terminal-lock",
+    "wire-lock",
+    "timeline-lock",
+    "cascade-lock",
+    "match-lock",
+    "chain-lock",
+    "evidence-board-lock",
+    "defuse-lock"
+  ],
+  "mechanics_taught": [
+    "puzzle_solving",
+    "knowledge_recall",
+    "sequencing",
+    "matching",
+    "deduction"
+  ],
+  "version": "0.2",
+  "start_button": "Take the call",
+  "lore_label": "💬 War Room",
+  "end_title": "11.11 is LIVE",
+  "map_style": "flow",
+  "has_narration_audio": false,
+  "learning_recap": {
+    "title": "🧠 What You Just Learned",
+    "cycle": [
+      {
+        "stage": "WHY DOWN",
+        "note": "AWS DevOps Agent: investigates from the first alarm, maps services, finds the cause, recommends the fix"
+      },
+      {
+        "stage": "BREACHED?",
+        "note": "AWS Security Agent (now part of AWS Continuum): flags risks in code and design, and maps attack paths, before launch"
+      },
+      {
+        "stage": "COST",
+        "note": "AWS FinOps Agent (Preview): ties each cost to CloudTrail and an owner"
+      },
+      {
+        "stage": "DECIDE",
+        "note": "You turn every finding into a guardrail and tell the CEO the truth"
+      }
+    ],
+    "benefits": [
+      "DevOps Agent investigates from the first alarm, maps your services and recommends the fix",
+      "You approve every production change",
+      "Security Agent flagged the key three weeks before it leaked",
+      "FinOps Agent reports and names the owner; people switch things off",
+      "Enterprise Support includes monthly DevOps Agent credits worth 75% of your support charge"
+    ],
+    "link": {
+      "label": "AWS Frontier Agents",
+      "url": "https://aws.amazon.com/ai/frontier-agents"
+    }
+  },
+  "cover": "assets/cover.png",
+  "notes_mode": true
+}

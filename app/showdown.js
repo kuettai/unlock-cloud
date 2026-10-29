@@ -137,10 +137,10 @@
 
   // Same-origin, versioned bank asset (SSOT §5). Tracks app/VERSION for the
   // ?v= cache-bust convention (NOT bumped by this task — local only).
-  const BANK_VERSION = '14';
-  // Relocated under app/showdown/ (2026-09-21): the old app/data/ path was not
-  // reliably present on S3. Local bundle stays the source (NOT the live
-  // /showdown/bank proxy). ?v= cache-buster tracks app/VERSION (not bumped here).
+  const BANK_VERSION = '18';
+  // The bundled FALLBACK copy, under app/showdown/ (2026-09-21: app/data/ was not
+  // reliably on S3). Since 2026-10-13 it is a deploy-time copy of LIVE_BANK_URL,
+  // not an independent source. ?v= is BANK_VERSION, bumped by deploy-showdown.sh.
   const BANK_URL = 'showdown/quiz-mode-question-bank.json?v=' + BANK_VERSION;
 
   // localStorage key for refresh/reconnect recovery (SSOT §7 deviation #5).
@@ -174,6 +174,10 @@
     // icon on the ballot/reveal/share instead of the raw slug. Resolution itself
     // never depended on this map (it indexes BANK_INDEX[winning_category]).
     { id: 'FrugalArchitect',     label: 'Frugal Architect',      icon: '💰' },
+    // AWS Cloud & AI Day Kuala Lumpur, 2026-11-04 (docs/quiz-mode-question-bank-my2026.json).
+    { id: 'malaysia-aws',        label: 'Malaysia & AWS',        icon: '🇲🇾' },
+    { id: 'well-architected',    label: 'Well-Architected',      icon: '🏛️' },
+    { id: 'cio-playbook',        label: 'The CIO’s Playbook',    icon: '📘' },
   ];
   const CAT_BY_ID = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
 
@@ -187,6 +191,9 @@
     'startups-innovation': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c3.5 3 5 7 5 11l-2 3H9l-2-3c0-4 1.5-8 5-11z"/><path d="M9 18l3 4 3-4z"/></svg>',
     'cloud-fundamentals': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h11v16H7a2 2 0 0 0-2 2V4a2 2 0 0 1 2-2zm0 16h9v2H7a1 1 0 0 1 0-2z"/></svg>',
     'FrugalArchitect': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 3.2c.5 0 .9.4.9.9v.6c1.4.2 2.5 1 2.8 2.2a.9.9 0 0 1-1.7.5c-.2-.6-.9-1-1.9-1-1.1 0-1.8.5-1.8 1.1 0 .5.4.8 1.9 1.1 1.9.4 3.4 1 3.4 2.8 0 1.4-1.1 2.3-2.7 2.5v.6a.9.9 0 0 1-1.8 0v-.6c-1.5-.2-2.6-1-3-2.2a.9.9 0 0 1 1.7-.6c.2.7 1 1.1 2.1 1.1 1.2 0 1.9-.5 1.9-1.1 0-.6-.5-.9-2-1.2-1.8-.4-3.3-1-3.3-2.7 0-1.3 1-2.2 2.6-2.5v-.6c0-.5.4-.9.9-.9z"/></svg>',
+    'malaysia-aws': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 3.2a8.8 8.8 0 1 0 6.9 14.4A7.2 7.2 0 1 1 13.5 3.2z"/><path d="M18 7.2l.9 1.9 2.1.2-1.6 1.4.5 2.1-1.9-1.1-1.9 1.1.5-2.1-1.6-1.4 2.1-.2z"/></svg>',
+    'well-architected': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5L2.5 7.5v1.5h19V7.5z"/><rect x="4.5" y="10.5" width="2.6" height="7.5"/><rect x="10.7" y="10.5" width="2.6" height="7.5"/><rect x="16.9" y="10.5" width="2.6" height="7.5"/><rect x="2.5" y="19.5" width="19" height="2"/></svg>',
+    'cio-playbook': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3h10a3 3 0 0 1 3 3v15H7a2 2 0 0 1-2-2V3zm2 15v1h9v-1H7z"/><path d="M19 6h1v15h-1z"/></svg>',
   };
   const SD_FLAG_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3v18H3V3h2zm2 0h13l-2.6 4L20 11H7V3z"/></svg>';
   const iconSvg = (id) => SD_ICONS[id] || SD_ICONS.vault;
@@ -217,6 +224,7 @@
     puzzleIndex: 0,
     puzzlesCompleted: 0,
     _solvedIndex: null,   // last puzzleIndex already credited (see onPuzzleSolved)
+    _mountGen: 0,         // bumps per mounted lock; stale lock callbacks are ignored
     playStartMs: 0,
     instance: null,
     // misc UI
@@ -238,14 +246,17 @@
   let BANK_FLAT = null;   // Map<id, { category, type, entry }>  (convenience)
   let bankReady = null;   // Promise resolving when the bank is indexed
 
-  // Bank-parity fix (Option A): the backend resolves /puzzles picks from the
-  // bank served at [S] /showdown/bank, which carries ALL live categories (7+,
-  // incl. FrugalArchitect). Fetching THAT at boot makes category drift between
-  // the client and backend structurally impossible. The same-origin local
-  // bundle (BANK_URL) stays as the offline/failure fallback — it has the same
-  // JSON shape ({ categories: { <cat>: { <type>: [entries] } }, ... }). MOCK
-  // never touches the network (stays fully offline via the local bundle).
-  const LIVE_BANK_URL = BASE_S + '/showdown/bank';
+  // The question bank's single source of truth (Jaz, 2026-10-13): the backend's
+  // bank file on its own CloudFront. Every bank — this live fetch, the bundled
+  // fallback, the checks — refers to this one URL. It replaced [S] /showdown/bank,
+  // which kept serving the Hanoi bank after the backend moved on.
+  //
+  // The same-origin local bundle (BANK_URL) stays as the offline/failure fallback.
+  // deploy-showdown.sh now COPIES the bundle from this URL at deploy time, so the
+  // two cannot drift. A plain GET with no custom headers, so the browser sends no
+  // CORS preflight (the URL answers OPTIONS with 403, GET with ACAO *). MOCK never
+  // touches the network (stays fully offline via the local bundle).
+  const LIVE_BANK_URL = 'https://d3onwrtixwre6b.cloudfront.net/quiz-mode-question-bank-my2026.json';
   const LIVE_BANK_TIMEOUT_MS = 5000; // cap the boot fetch so a hang falls back
 
   // Index a parsed bank into BANK / BANK_INDEX / BANK_FLAT. Shared verbatim by
@@ -379,7 +390,11 @@
   const MOCK_SESSION_ID = 'mock-session-0001';
   const MOCK_GAME_STATUS = 'active';
 
-  const MOCK_CATEGORIES = CATEGORIES.map(c => c.id);
+  // The categories of the bundled bank (the KL bank since 2026-10-05), so the
+  // offline ballot shows what the event will. CATEGORIES above stays the full
+  // label registry, because a live bank may carry any of them.
+  const MOCK_CATEGORIES = ['agentic-ai', 'aws-core-services', 'security',
+    'malaysia-aws', 'well-architected', 'cio-playbook'];
 
   // REAL bank ids per type for the winning category (agentic-ai). Mixed shapes
   // so P4 exercises: mcq decoys→options, pillar True/False, spelling multi-word.
@@ -915,13 +930,223 @@
         showScreen('play');
         enterPlay(standings);
         break;
-      case 'completed':
-        showScreen('results');
-        renderResults(standings);
+      case 'completed': {
+        const reveal = () => { showScreen('results'); renderResults(standings); };
+        // The recommend question comes BEFORE the score (FRONTEND.md step 4).
+        if (!askRecommendThen(reveal)) reveal();
         break;
+      }
       default:
         console.warn('[showdown] unknown state from standings:', st);
     }
+  }
+
+  /* ═══════════════════ PLAYER FEEDBACK (2026-10-19) ═══════════════════
+   * Two one-tap questions around the race, saved to a separate backend
+   * (contract: FRONTEND.md, "Showdown feedback API"):
+   *
+   *   after the name   "Do you know Kiro?"            1-5   POST /plays
+   *   before the score "Recommend re:Solve?"          1-10  POST /plays/{id}/recommend
+   *
+   * Built as a PANEL OVER the current screen, never as a screen of its own, so
+   * standings.state stays the only thing that moves a player between screens
+   * (invariant 8). Consequences, all deliberate:
+   *   - BOTH ARE COMPULSORY (Jaz, 2026-10-19): no Skip, no Escape, no timeout.
+   *     The Kiro panel therefore stays up over the vote until answered — one tap
+   *     is ~1s against a ~15s ballot.
+   *   - The recommend panel holds the RESULTS reveal (not the state): the podium,
+   *     its sound and its confetti start the moment the player taps.
+   *   - Compulsory to ANSWER, never blocked on the NETWORK. Saving is
+   *     fire-and-forget; the Kiro answer is kept in sessionStorage, so if the
+   *     register call failed it is re-sent before the recommend score, and the
+   *     recommend score always has a play to attach to.
+   *
+   * Mock mode never touches the network (as everywhere else): calls are recorded
+   * in window.__sdFeedback with a synthetic play_id, which is what the tests read. */
+  const FEEDBACK_API = 'https://xsf33zo179.execute-api.ap-southeast-5.amazonaws.com';
+  const SS_PLAY_ID = 'sd_play_id';
+  const SS_KIRO_ANSWER = 'sd_kiro_answer';   // set on answer: a refresh must not re-ask
+
+  const ssGet = (k) => { try { return sessionStorage.getItem(k); } catch { return null; } };
+  const ssSet = (k, v) => { try { sessionStorage.setItem(k, v); } catch { /* storage off */ } };
+  const ssDel = (k) => { try { sessionStorage.removeItem(k); } catch { /* storage off */ } };
+
+  // Per FRONTEND.md: retry once on 429/5xx/network, then give up quietly.
+  async function feedbackPost(path, body) {
+    if (MOCK) {
+      window.__sdFeedback = window.__sdFeedback || [];
+      window.__sdFeedback.push({ path, body });
+      // &mockfail=feedback drops the FIRST register, as flaky booth WiFi would, so
+      // the re-send before the recommend score can be exercised offline.
+      if (path === '/plays' && MOCK_FAIL === 'feedback' && !window.__sdFeedbackFailed) {
+        window.__sdFeedbackFailed = true;
+        return { status: 0, data: null };
+      }
+      if (path === '/plays') return { status: 201, data: { play_id: 'mock-play-' + Date.now().toString(36), ...body } };
+      return { status: 200, data: { ok: true } };
+    }
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const res = await fetch(FEEDBACK_API + path, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        if (res.status === 429 || res.status >= 500) throw new Error('retryable ' + res.status);
+        let data = null;
+        try { data = await res.json(); } catch { /* empty body */ }
+        return { status: res.status, data };
+      } catch (e) {
+        if (attempt === 1) { console.warn('[showdown] feedback ' + path + ' not saved: ' + (e && e.message)); return { status: 0, data: null }; }
+        await new Promise((r) => setTimeout(r, 500));
+      }
+    }
+    return { status: 0, data: null };
+  }
+
+  async function registerPlay(displayName, kiro) {
+    const name = String(displayName || '').trim().slice(0, 32);
+    if (!name || !(kiro >= 1 && kiro <= 5)) return;
+    const { status, data } = await feedbackPost('/plays', { display_name: name, kiro_familiarity: kiro });
+    if (status === 201 && data && data.play_id) ssSet(SS_PLAY_ID, data.play_id);
+  }
+  // Single-flight: the Kiro tap and the recommend fallback can both ask to register.
+  let registering = null;
+  function ensureRegistered() {
+    if (ssGet(SS_PLAY_ID)) return Promise.resolve();
+    const kiro = +ssGet(SS_KIRO_ANSWER);
+    if (!(kiro >= 1 && kiro <= 5)) return Promise.resolve();
+    if (!registering) registering = registerPlay(state.displayName, kiro).finally(() => { registering = null; });
+    return registering;
+  }
+
+  async function submitRecommend(score) {
+    await ensureRegistered();   // the Kiro register may have failed on booth WiFi
+    const playId = ssGet(SS_PLAY_ID);
+    if (!playId || !(score >= 1 && score <= 10)) return;
+    const { status } = await feedbackPost('/plays/' + encodeURIComponent(playId) + '/recommend', { recommend_score: score });
+    if (status === 200 || status === 404 || status === 409) ssDel(SS_PLAY_ID);
+  }
+
+  /* One reusable panel: a question and a 1..N scale where ONE tap is the answer.
+   * No separate submit button — the extra step is where surveys lose people. The
+   * chosen value is confirmed visually for a beat before the panel leaves, so a
+   * tap never feels swallowed. Keyboard: digits (0 = 10), Escape = skip. */
+  let askOpen = null;   // { kind, close(answered) }
+  function openAsk(cfg) {
+    if (askOpen) askOpen.close(false);
+    const el = document.createElement('div');
+    el.className = 'sd-ask sd-ask--' + cfg.kind;
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-labelledby', 'sd-ask-q');
+    const opts = [];
+    for (let n = cfg.min; n <= cfg.max; n++) {
+      opts.push('<button type="button" class="sd-ask-opt" role="radio" aria-checked="false" data-v="' + n + '" ' +
+        'aria-label="' + n + ' out of ' + cfg.max + (n === cfg.min ? ', ' + cfg.lowLabel : n === cfg.max ? ', ' + cfg.highLabel : '') + '">' +
+        '<span class="sd-ask-num">' + n + '</span></button>');
+    }
+    el.innerHTML =
+      '<div class="sd-ask-card">' +
+        '<div class="sd-ask-eyebrow">' + escapeHtml(cfg.eyebrow) + '</div>' +
+        '<h2 class="sd-ask-q" id="sd-ask-q">' + escapeHtml(cfg.question) + '</h2>' +
+        '<div class="sd-ask-scale" role="radiogroup" aria-label="' + escapeHtml(cfg.question) + '" ' +
+          'style="--n:' + (cfg.max - cfg.min + 1) + '">' + opts.join('') + '</div>' +
+        '<div class="sd-ask-ends" aria-hidden="true"><span>' + escapeHtml(cfg.lowLabel) + '</span>' +
+          '<span>' + escapeHtml(cfg.highLabel) + '</span></div>' +
+        '<div class="sd-ask-foot">' +
+          '<span class="sd-ask-note">' + escapeHtml(cfg.note) + '</span>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(el);
+
+    let done = false;
+    const close = (answered) => {
+      if (done) return;
+      done = true;
+      document.removeEventListener('keydown', onKey, true);
+      document.removeEventListener('focusin', onFocusIn, true);
+      el.classList.add('is-leaving');
+      setTimeout(() => el.remove(), 180);
+      if (askOpen && askOpen.el === el) askOpen = null;
+      if (cfg.onClose) cfg.onClose(answered);
+    };
+    const pick = (v) => {
+      if (done) return;
+      el.querySelectorAll('.sd-ask-opt').forEach((b) => {
+        const on = +b.dataset.v === v;
+        b.classList.toggle('is-picked', on);
+        b.setAttribute('aria-checked', on ? 'true' : 'false');
+        b.disabled = true;
+      });
+      el.querySelector('.sd-ask-note').textContent = cfg.thanks;
+      playSfxTick();
+      cfg.onAnswer(v);
+      setTimeout(() => close(true), 420);
+    };
+    const onKey = (e) => {
+      if (done || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === 'Escape') { e.preventDefault(); return; }   // compulsory: no way out but an answer
+      let v = /^[0-9]$/.test(e.key) ? +e.key : NaN;
+      if (v === 0 && cfg.max === 10) v = 10;
+      if (v >= cfg.min && v <= cfg.max) { e.preventDefault(); e.stopPropagation(); pick(v); }
+    };
+    el.addEventListener('click', (e) => {
+      const b = e.target.closest('.sd-ask-opt');
+      if (b) pick(+b.dataset.v);
+    });
+    document.addEventListener('keydown', onKey, true);
+    // Focus the middle option, not the first: a reflexive Enter must not record a 1.
+    // And keep focus INSIDE the dialog: the join flow focuses its own controls a
+    // beat after submit, which pulled focus out from under the panel, so a
+    // keyboard or screen-reader user was left on a control they cannot see.
+    const mid = el.querySelectorAll('.sd-ask-opt')[Math.floor((cfg.max - cfg.min) / 2)];
+    const focusMid = () => { if (!done && mid && typeof mid.focus === 'function') mid.focus({ preventScroll: true }); };
+    const onFocusIn = (e) => { if (!done && !el.contains(e.target)) focusMid(); };
+    document.addEventListener('focusin', onFocusIn, true);
+    requestAnimationFrame(focusMid);
+    setTimeout(focusMid, 120);
+    askOpen = { kind: cfg.kind, el, close };
+    return askOpen;
+  }
+
+  // Test harness only: the other suites drive the vote and the locks and would be
+  // blocked by a compulsory panel. Honoured in mock mode alone, so a real race can
+  // never be configured to skip the questions.
+  const NO_FEEDBACK = MOCK && params.get('nofeedback') === '1';
+  function askKiro() {
+    if (NO_FEEDBACK || ssGet(SS_KIRO_ANSWER) || (askOpen && askOpen.kind === 'kiro')) return;
+    openAsk({
+      kind: 'kiro',
+      eyebrow: 'Quick question',
+      question: 'Do you know Kiro?',
+      min: 1, max: 5,
+      lowLabel: 'Never heard of it', highLabel: 'I use it',
+      note: 'One tap, then you’re in.',
+      thanks: 'Thanks — you’re in.',
+      onAnswer: (v) => { ssSet(SS_KIRO_ANSWER, String(v)); ensureRegistered(); },
+    });
+  }
+
+  // Returns true when the recommend panel took over (results revealed on close).
+  let recoAsked = false;
+  function askRecommendThen(reveal) {
+    // Asked of everyone who answered the Kiro question (i.e. everyone who joined
+    // through the name screen), whether or not that answer reached the backend yet.
+    if (recoAsked || !(ssGet(SS_PLAY_ID) || ssGet(SS_KIRO_ANSWER))) return false;
+    recoAsked = true;
+    openAsk({
+      kind: 'recommend',
+      eyebrow: 'Before your results',
+      question: 'How likely are you to recommend re:Solve to a friend?',
+      min: 1, max: 10,
+      lowLabel: 'Not likely', highLabel: 'Very likely',
+      note: 'One tap, then your score.',
+      thanks: 'Thanks! Here’s your score…',
+      onAnswer: (v) => { submitRecommend(v); },
+      onClose: () => { reveal(); },
+    });
+    return true;
   }
 
   /* ══════════════════════════ SCREEN 1 · JOIN (P1) ════════════════ */
@@ -1302,7 +1527,8 @@
     if (errEl) errEl.textContent = '';
     state.displayName = name;
     pendingJoinName = name;
-    tryFireJoin();
+    tryFireJoin();   // the seat join runs underneath — the question never delays it
+    askKiro();
   }
 
   // The ONE place that POSTs /players. Fires immediately when a session_id is
@@ -2094,6 +2320,11 @@
 
       } else if (type === 'spelling') {
         const words = [];
+        // Parallel to words: each entry's fill-in-the-blank `question` (the
+        // Malaysia bank has one per entry), '' when absent (the Hanoi bank).
+        // A substituted entry carries its own question, so a clue always matches
+        // its word. docs/showdown-spelling-clue-handoff.md.
+        const clues = [];
         ids.forEach((id) => {
           let e = lookup('spelling', id);
           if (!e) {
@@ -2104,6 +2335,7 @@
           const w = String(e.answer || '');
           if (!w) { errors.push(bad(winningCategory, type, id, 'empty spelling answer')); return; }
           words.push(w); // explicit deterministic order (picks[] order), NOT pool+pickCount
+          clues.push(nonEmpty(e.question) ? String(e.question) : '');
         });
         if (words.length) {
           // Showdown opts into all three spelling-lock affordances. They default
@@ -2112,8 +2344,8 @@
           // fills every slot the pool is empty, so returning a letter is the only
           // way to correct it.
           slots.push({ id: 'spelling:' + ids.join(','), ui: 'spelling-lock', category: winningCategory,
-            type, question: 'Unscramble each answer.',
-            config: { title: 'SPELL IT OUT', words, sequential: true, scrambleLetters: true,
+            type, question: clues.some(Boolean) ? 'Unscramble the letters to fill each blank.' : 'Unscramble each answer.',
+            config: { title: 'SPELL IT OUT', words, clues, sequential: true, scrambleLetters: true,
                       clickSlotToReturn: true, keepOnWrong: true, upperCase: true } });
         }
 
@@ -2137,16 +2369,38 @@
           questions.push({ question: e.question || '', options, answer });
         });
         if (questions.length) {
-          slots.push({ id: 'mcq:' + ids.join(','), ui: 'wager-lock', category: winningCategory, type,
-            question: 'Answer each question to reach the target.',
+          /* Replacement questions for a miss. A wrong answer used to bring back the
+           * SAME question, so clicking through its four options guaranteed success.
+           * Now a miss swaps in a fresh question from the same category, taken from
+           * this list in order. Ordered by a hash of session_id, so every device in
+           * a race gets the same replacements in the same order, and the picked
+           * questions are excluded so a replacement is never one already seen. */
+          const picked = new Set(questions.map((q) => q.question));
+          const spareQuestions = [];
+          const mcqBucket = (BANK_INDEX && BANK_INDEX[winningCategory] && BANK_INDEX[winningCategory].mcq) || null;
+          if (mcqBucket && typeof mcqBucket.forEach === 'function') {
+            const cands = [];
+            mcqBucket.forEach((entry, id) => {
+              if (!mcqUsable(entry) || picked.has(entry.question || '')) return;
+              cands.push({ id, entry });
+            });
+            cands.sort((a, b) => fnv1a(String(sessionId) + ':mcq-spare:' + a.id) -
+                                 fnv1a(String(sessionId) + ':mcq-spare:' + b.id));
+            cands.slice(0, 12).forEach(({ entry }) => {
+              const options = Array.isArray(entry.options) ? entry.options.slice() : [entry.answer].concat(entry.decoys);
+              spareQuestions.push({ question: entry.question || '', options, answer: entry.answer });
+            });
+          }
+          slots.push({ id: 'mcq:' + ids.join(','), ui: 'mcq-lock', category: winningCategory, type,
+            question: questions.length > 1 ? 'Answer ' + questions.length + ' questions in a row.' : 'Answer the question.',
             config: {
-              target: questions.length, questions,
-              // Single tier: Showdown has no stake CHOICE and no penalties, so this is
-              // informational only. Colour moved off the episode-era #eab308 onto the
-              // VS Select warning hue; wager/penalty/showOptions untouched because they
-              // drive the component's target logic and how many options are revealed.
-              stakes: [{ label: 'Confident', wager: 1, penalty: 0, color: '#ffb020', showOptions: 4 }],
-              revealAnswerOnWrong: false, repeatOnWrong: true,
+              target: questions.length, questions, spareQuestions,
+              // Same option order on every device in the race.
+              seed: String(sessionId) + ':mcq',
+              // Show a miss (with the right answer) for the whole lockout, then
+              // swap the question just before the scrim lifts, as pillar-lock does.
+              wrongHoldMs: (WRONG_LOCK_SEC * 1000) - 150,
+              autoAdvanceMs: 650,
             } });
         }
       }
@@ -2193,9 +2447,16 @@
     clearWrongLockout(); // drop any lingering lockout before swapping puzzles
     state._solvedIndex = null; // this puzzle has not been credited yet (see onPuzzleSolved)
     mount.innerHTML = '';
+    /* Callbacks are bound to THIS mount. Every lock fires onSubmit/onWrong from a
+     * timer (keypad and pillar wait 400ms, spelling 400ms, mcq 450ms), and a timer
+     * outlives the DOM it was created for. The per-index guard in onPuzzleSolved is
+     * reset right here, so a late callback from the PREVIOUS lock would otherwise
+     * be credited to this one: a solve the player never made. A stale callback is
+     * now a no-op, whatever the timing. */
+    const gen = ++state._mountGen;
     state.instance = mountPuzzle(mount, puzzle, {
-      onSolved: onPuzzleSolved,
-      onWrong: onPuzzleWrong,
+      onSolved: () => { if (gen === state._mountGen) onPuzzleSolved(); },
+      onWrong: (m) => { if (gen === state._mountGen) onPuzzleWrong(m); },
     });
 
     /* Puzzle swaps were a hard cut: one lock vanished and the next appeared in the
@@ -2259,9 +2520,11 @@
           });
         }
         case 'spelling-lock':
-          return new SpellingLock(mount, {
+          // Showdown's own copy (spelling-lock-showdown.js); episodes keep SpellingLock.
+          return new SpellingLockShowdown(mount, {
             title: cfg.title,
             words: cfg.words,
+            clues: cfg.clues,                         // fill-in-the-blank line per word
             sequential: cfg.sequential,
             scrambleLetters: cfg.scrambleLetters,
             clickSlotToReturn: cfg.clickSlotToReturn, // click a slot to return a letter
@@ -2270,16 +2533,20 @@
             onSubmit: () => hooks.onSolved(),
             onWrong: (m) => hooks.onWrong(m),
           });
-        case 'wager-lock':
-          return new WagerLock(mount, {
+        case 'mcq-lock': {
+          // Showdown's final puzzle (mcq-lock-showdown.js); episodes keep WagerLock.
+          const spares = Array.isArray(cfg.spareQuestions) ? cfg.spareQuestions : [];
+          return new McqLockShowdown(mount, {
             target: cfg.target,
             questions: cfg.questions,
-            stakes: cfg.stakes,
-            revealAnswerOnWrong: cfg.revealAnswerOnWrong,
-            repeatOnWrong: cfg.repeatOnWrong,
+            nextQuestion: (n) => (spares.length ? spares[(n - 1) % spares.length] : null),
+            seed: cfg.seed,
+            autoAdvanceMs: cfg.autoAdvanceMs,
+            wrongHoldMs: cfg.wrongHoldMs,
             onSubmit: () => hooks.onSolved(),
             onWrong: (m) => hooks.onWrong(m),
           });
+        }
         default:
           mount.innerHTML = '<div class="sd-error">Unknown puzzle type: ' + escapeHtml(puzzle.ui || 'undefined') + '</div>';
           return null;
@@ -2365,7 +2632,14 @@
     ov.setAttribute('role', 'status');
     host.appendChild(ov);
     let rem = WRONG_LOCK_SEC;
-    const paint = () => { ov.textContent = 'Wrong. Try again in ' + rem + 's'; };
+    // The final puzzle replaces the question after a miss, so "try again" would
+    // be wrong there.
+    const cur = state.puzzles[state.puzzleIndex];
+    const what = cur && cur.ui === 'mcq-lock' ? 'New question in ' : 'Wrong. Try again in ';
+    const pill = document.createElement('span');
+    pill.className = 'sd-lockout-pill';
+    ov.appendChild(pill);
+    const paint = () => { pill.textContent = what + rem + 's'; };
     paint();
     wrongTimer = setInterval(() => {
       rem -= 1;
@@ -2980,6 +3254,8 @@
     // Reset the mock timeline so an offline ?mock=true walkthrough starts a fresh
     // round (no-op against the live backend).
     try { sessionStorage.removeItem('sd_mock_claimAt'); sessionStorage.removeItem('sd_mock_progress'); } catch {}
+    // A new player may be next: drop the feedback identity so they are asked fresh.
+    ssDel(SS_PLAY_ID); ssDel(SS_KIRO_ANSWER);
     location.reload();
   }
 
@@ -3216,10 +3492,10 @@
     mount._sdPressSfx = true;
     mount.addEventListener('pointerdown', (e) => {
       const t = e.target && e.target.closest
-        ? e.target.closest('button, .wlock-reel, .splk-letter, .kpdlk-key, .wglk-option, .pillk-pillar')
+        ? e.target.closest('button, .wlock-reel, .splks-letter, .kpdlk-key, .mcqs-option, .pillk-pillar')
         : null;
       if (!t) return;
-      if (t.classList.contains('splk-action')) return;  // Undo / Clear
+      if (t.classList.contains('splks-action')) return; // Undo / Clear
       if (t.disabled) return;
       playSfxTick();
     }, { passive: true });

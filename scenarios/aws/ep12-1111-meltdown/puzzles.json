@@ -1,0 +1,470 @@
+{
+  "puzzles": [
+    {
+      "id": "log-act1",
+      "type": "puzzle",
+      "ui": "log-lock",
+      "card_ref": 102,
+      "success_card": 102,
+      "description": "👆 Tap the 2 lines that show what changed, then tap Analyze.",
+      "config": {
+        "prompt": "What changed just before checkout broke?",
+        "lines": [
+          {
+            "text": "20:40:11 INFO  deploy  checkout-api v4.1.3 rollout complete (healthy)",
+            "correct": false
+          },
+          {
+            "text": "21:12:37 INFO  deploy  payment-service v2.8.1 rollout complete (healthy)",
+            "correct": false
+          },
+          {
+            "text": "21:47:02 INFO  deploy  checkout-api v4.2.0 \"flash-sale-banner\" by temp-hotfix-admin",
+            "correct": true
+          },
+          {
+            "text": "21:47:02 DIFF  config  PAYMENT_TIMEOUT_MS: 3000 -> 300",
+            "correct": true
+          },
+          {
+            "text": "21:48:15 ERROR checkout-api payment call timed out after 300 ms",
+            "correct": false
+          },
+          {
+            "text": "21:48:15 WARN  client  retry immediately (no backoff) attempt 2/5",
+            "correct": false
+          },
+          {
+            "text": "21:49:30 WARN  recommendation-service CPU 92%",
+            "correct": false
+          },
+          {
+            "text": "21:50:00 ALARM checkout-api 5xx rate 38%",
+            "correct": false
+          }
+        ]
+      },
+      "hints": [
+        "💬 \"Don't tell me what broke. Tell me what changed.\"",
+        "🤖 Look just before the first error at 21:48.",
+        "🤖 The v4.2.0 deploy line and the timeout change line."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "pillar-act1",
+      "type": "puzzle",
+      "ui": "pillar-lock",
+      "card_ref": 103,
+      "success_card": 103,
+      "description": "👆 What can the DevOps Agent really do? Tap TRUE or FALSE for each.",
+      "config": {
+        "pillars": [
+          "TRUE",
+          "FALSE"
+        ],
+        "statements": [
+          {
+            "text": "It starts investigating the moment an alarm fires.",
+            "answer": "TRUE"
+          },
+          {
+            "text": "It maps how your services connect.",
+            "answer": "TRUE"
+          },
+          {
+            "text": "It only works with AWS tools.",
+            "answer": "FALSE"
+          },
+          {
+            "text": "It learns from past incidents to prevent the next one.",
+            "answer": "TRUE"
+          },
+          {
+            "text": "It rolls back production without asking.",
+            "answer": "FALSE"
+          }
+        ]
+      },
+      "hints": [
+        "💬 \"What exactly are we paying for here?\"",
+        "🤖 I also work with Datadog, Splunk, GitHub, Slack and more. And I recommend; you approve.",
+        "🤖 TRUE, TRUE, FALSE, TRUE, FALSE."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "rollback-act1",
+      "type": "code_entry",
+      "ui": "terminal-lock",
+      "card_ref": 104,
+      "success_card": 104,
+      "description": "⌨️ Type the last healthy version, then tap Submit.",
+      "config": {
+        "answer": "4.1.3",
+        "accept_variations": [
+          "v4.1.3",
+          "v413",
+          "413"
+        ],
+        "caseSensitive": false,
+        "prompt": "DEVOPS AGENT · PLAN\ncurrent:  v4.2.0  (errors 38%)\nhealthy:  the 20:40 deploy\n> roll back checkout-api to _",
+        "falseOutputs": [
+          "That version isn't the last healthy build. Check the deployment log.",
+          "Look for the checkout-api deploy marked healthy before 21:47.",
+          "It's the checkout-api version deployed at 20:40."
+        ]
+      },
+      "hints": [
+        "💬 \"Put it back the way it was.\"",
+        "🤖 Check the 20:40 deploy in the log.",
+        "🤖 4.1.3"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "wire-act2",
+      "type": "puzzle",
+      "ui": "wire-lock",
+      "card_ref": 210,
+      "success_card": 210,
+      "description": "👆 Tap a defence, then tap its job. Then tap Connect.",
+      "config": {
+        "wires": [
+          {
+            "id": "w1",
+            "color": "#ef4444",
+            "label": "AWS Security Agent"
+          },
+          {
+            "id": "w2",
+            "color": "#3b82f6",
+            "label": "Amazon GuardDuty"
+          },
+          {
+            "id": "w3",
+            "color": "#22c55e",
+            "label": "AWS WAF"
+          },
+          {
+            "id": "w4",
+            "color": "#eab308",
+            "label": "AWS Secrets Manager"
+          }
+        ],
+        "sockets": [
+          {
+            "id": "s1",
+            "label": "Checks code before launch"
+          },
+          {
+            "id": "s2",
+            "label": "Spots threats live"
+          },
+          {
+            "id": "s3",
+            "label": "Blocks the bots"
+          },
+          {
+            "id": "s4",
+            "label": "Stores keys safely"
+          }
+        ],
+        "solution": {
+          "w1": "s1",
+          "w2": "s2",
+          "w3": "s3",
+          "w4": "s4"
+        },
+        "submitLabel": "⚡ Connect"
+      },
+      "hints": [
+        "💬 \"Who was supposed to catch this?\"",
+        "🤖 I work before launch. GuardDuty and WAF work live.",
+        "🤖 Security Agent→before launch, GuardDuty→live threats, WAF→bots, Secrets Manager→keys."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "timeline-act2",
+      "type": "timeline-lock",
+      "ui": "timeline-lock",
+      "card_ref": 212,
+      "success_card": 212,
+      "description": "👆 Put the predicted attack in order: tap two cards to swap them, then tap Confirm Order.",
+      "config": {
+        "enhanced": true,
+        "answer": [
+          "script",
+          "public",
+          "found",
+          "assume",
+          "launch"
+        ],
+        "events": [
+          {
+            "id": "script",
+            "label": "🔑 Admin key left in the deploy script"
+          },
+          {
+            "id": "public",
+            "label": "🌐 Script pushed to a public repo"
+          },
+          {
+            "id": "found",
+            "label": "🕵️ Attacker finds the key"
+          },
+          {
+            "id": "assume",
+            "label": "👤 Attacker signs in as admin"
+          },
+          {
+            "id": "launch",
+            "label": "⛏️ Attacker launches GPU instances"
+          }
+        ]
+      },
+      "hints": [
+        "💬 \"Start with what we did wrong.\"",
+        "🤖 It starts with the key in the script and ends with GPUs.",
+        "🤖 Script → public repo → attacker finds it → signs in → GPUs."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "cascade-act2",
+      "type": "puzzle",
+      "ui": "cascade-lock",
+      "card_ref": 211,
+      "success_card": 211,
+      "description": "👆 Answer 3 quick questions.",
+      "config": {
+        "steps": [
+          {
+            "question": "Which finding became the breach?",
+            "options": [
+              "Finding 1: SQL injection",
+              "Finding 2: error pages",
+              "Finding 3: the waived admin key",
+              "None. It was just bots"
+            ],
+            "answer": 2,
+            "after": "✓ Finding 3. Flagged CRITICAL, then waived."
+          },
+          {
+            "question": "CloudTrail shows the key's first use from the attacker's IP. When?",
+            "options": [
+              "Tonight at 21:47",
+              "Friday 7 Nov, when the script went public",
+              "Three weeks ago",
+              "Never"
+            ],
+            "answer": 1,
+            "after": "✓ Friday. The breach is three days old."
+          },
+          {
+            "question": "Which guardrail stops this next time?",
+            "options": [
+              "Block one country",
+              "No waivers on CRITICAL findings",
+              "Lock accounts after one bad login",
+              "Pen test once a year"
+            ],
+            "answer": 1,
+            "after": "✓ The agent did its job. The waiver let it through."
+          }
+        ],
+        "cupNames": [
+          "The finding",
+          "The timeline",
+          "The guardrail"
+        ],
+        "shuffle_options": true,
+        "pauseBetweenSteps": 2500,
+        "onComplete": {
+          "emojis": "🔑🌐⛏️",
+          "text": "Breached since Friday.",
+          "subtext": "The Security Agent saw it coming three weeks ago."
+        }
+      },
+      "hints": [
+        "💬 \"Forget the bots. What did we already know?\"",
+        "🤖 One finding was waived. When did the script go public?",
+        "🤖 Finding 3, Friday 7 Nov, no waivers on CRITICAL."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "match-act3",
+      "type": "puzzle",
+      "ui": "match-lock",
+      "card_ref": 310,
+      "success_card": 310,
+      "description": "👆 Tap a cost, then tap its cause.",
+      "config": {
+        "pairs": [
+          [
+            "💸 USD 6,200: GPUs in an unused Region",
+            "Launched with the leaked key"
+          ],
+          [
+            "💸 USD 3,000: load-test fleet",
+            "Friday's test, never switched off"
+          ],
+          [
+            "💸 USD 1,600: log ingestion",
+            "Debug logs left on after the test"
+          ]
+        ],
+        "cols": 2,
+        "faceUp": true
+      },
+      "hints": [
+        "💬 \"We didn't plan any of this. So who did?\"",
+        "🤖 CloudTrail shows temp-hotfix-admin launched the GPUs.",
+        "🤖 GPUs→leaked key, fleet→Friday's test, logs→debug logs."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "chain-act3",
+      "type": "puzzle",
+      "ui": "chain-lock",
+      "card_ref": 311,
+      "success_card": 311,
+      "description": "👆 The agent flagged this at 07:12 today. Tap its steps in order, first to last. Then tap Check.",
+      "config": {
+        "title": "What happened at 07:12",
+        "submitLabel": "Check",
+        "placeholder": "Tap the first step ↓",
+        "successText": "✅ Right order",
+        "wrongText": "❌ Not quite. Tap a step to remove it.",
+        "failMessage": "Not quite. Try again.",
+        "items": [
+          {
+            "id": "post",
+            "label": "Post to Jira/Slack",
+            "icon": "📨"
+          },
+          {
+            "id": "owner",
+            "label": "Name cause + owner",
+            "icon": "👤"
+          },
+          {
+            "id": "act",
+            "label": "Owner shuts it down",
+            "icon": "🛑"
+          },
+          {
+            "id": "flag",
+            "label": "Anomaly flagged",
+            "icon": "🚨"
+          },
+          {
+            "id": "trail",
+            "label": "Check CloudTrail",
+            "icon": "🔎"
+          }
+        ],
+        "answer": [
+          "flag",
+          "trail",
+          "owner",
+          "post",
+          "act"
+        ]
+      },
+      "hints": [
+        "💬 \"It found this at 7 AM? Why am I hearing at 11 PM?\"",
+        "🤖 I detect, investigate, report. People act.",
+        "🤖 Flagged → CloudTrail → cause + owner → post → owner acts."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "evidence-final",
+      "type": "puzzle",
+      "ui": "evidence-board-lock",
+      "card_ref": 410,
+      "success_card": 410,
+      "description": "👆 For each problem, pick its fix from the list. Then tap Confirm.",
+      "config": {
+        "connections": [
+          {
+            "step": "v4.2.0 skipped release review",
+            "finding": "Deploy only via the reviewed pipeline",
+            "icon": "🛠️"
+          },
+          {
+            "step": "A CRITICAL finding was waived",
+            "finding": "No waivers on CRITICAL findings",
+            "icon": "🔐"
+          },
+          {
+            "step": "The cost alert had no owner",
+            "finding": "Send agent findings to the owner",
+            "icon": "💸"
+          },
+          {
+            "step": "What caused all three?",
+            "finding": "One break-glass admin key",
+            "icon": "💡"
+          }
+        ]
+      },
+      "hints": [
+        "💬 \"Don't blame the agents. What did we ignore?\"",
+        "🤖 One fix per problem: the pipeline, the waiver, the owner.",
+        "🤖 🛠️→reviewed pipeline, 🔐→no waivers, 💸→the owner, 💡→one admin key."
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "defuse-final",
+      "type": "puzzle",
+      "ui": "defuse-lock",
+      "card_ref": 411,
+      "success_card": 411,
+      "description": "⏰ 45 seconds. Switch ON only what's true, fill both boxes, then tap Defuse.",
+      "config": {
+        "tasks": [
+          {
+            "type": "toggle",
+            "label": "\"It was just bots\"",
+            "answer": false
+          },
+          {
+            "type": "toggle",
+            "label": "\"An admin key leaked on Friday. It's revoked.\"",
+            "answer": true
+          },
+          {
+            "type": "toggle",
+            "label": "\"Customer data access is under review.\"",
+            "answer": true
+          },
+          {
+            "type": "code",
+            "label": "Finding we waived (number)",
+            "answer": "3"
+          },
+          {
+            "type": "code",
+            "label": "Version restored",
+            "answer": "4.1.3"
+          }
+        ],
+        "onTimeout": "Midnight came and the CEO had no answer. Try again!",
+        "timeSeconds": 45
+      },
+      "hints": [
+        "💬 \"I can take bad news. Not surprises.\"",
+        "🤖 The bots were noise. The key was real.",
+        "🤖 OFF, ON, ON, 3, 4.1.3."
+      ],
+      "mandatory": true,
+      "isFinal": true
+    }
+  ]
+}
