@@ -2940,10 +2940,13 @@
         for (let i = 0; i < pc; i++) dots += '<span class="sd-pg-dot"></span>';
         return '<span class="sd-pg-player' + (isMe ? ' sd-pg-player--me' : '') +
           '" data-pid="' + escapeHtml(r.player_id || '') + '">' +
-          '<span class="sd-pg-ghost" data-ghost="idle" aria-hidden="true"></span>' +
+          /* Position + status instead of the ghost racers (2026-10-29): the ghost is
+           * Kiro's mark and its brand guidelines govern every use of it. The race
+           * reads from the position and the status anyway. */
+          '<span class="sd-pg-pos" aria-label="position">\u2013</span>' +
           '<span class="sd-pg-name">' + escapeHtml(sdName(r, dup)) + (isMe ? ' (you)' : '') + '</span>' +
           '<span class="sd-pg-dots"><span class="sd-pg-runner"></span>' + dots + '</span>' +
-          '<span class="sd-pg-flag" hidden>Done</span>' +
+          '<span class="sd-pg-status">0/' + pc + '</span>' +
           '</span>';
       }).join('');
     }
@@ -2977,33 +2980,21 @@
       const solved = Math.round(pct / 100 * pc);
       lane.style.setProperty('--solved', solved);
       lane.querySelectorAll('.sd-pg-dot').forEach((d, i) => d.classList.toggle('is-filled', i < solved));
-      const flag = lane.querySelector('.sd-pg-flag');
-      if (flag) flag.hidden = pct < 100;
+      const pos = lane.querySelector('.sd-pg-pos');
+      if (pos) pos.textContent = rank != null ? String(rank) : '\u2013';
+      const status = lane.querySelector('.sd-pg-status');
+      if (status) {
+        const done = pct >= 100;
+        const text = done ? 'Done' : solved + '/' + pc;
+        if (status.textContent !== text) status.textContent = text;
+        status.classList.toggle('is-done', done);
+      }
 
       // A4 — LEADER shimmer: persistent gold sheen on the current 1st place
       // (collapses to a static gold tint under reduced motion, via CSS).
       lane.classList.toggle('sd-pg-leader', rank === 1);
 
-      /* Ghost racer state. Priority: done > leading > trailing > running > idle.
-       * "running" needs a movement signal, so it holds for ~1.5s after a solve
-       * rather than only on the poll where pct changed — otherwise the run cycle
-       * would flicker for a single frame every few questions. "trailing" only
-       * applies once someone is actually ahead (rank > 1 and any progress made),
-       * so nobody gets the teary ghost merely for being at 0% on the start line. */
       const was = prev && prev[lane.dataset.pid];
-
-      const ghost = lane.querySelector('.sd-pg-ghost');
-      if (ghost) {
-        if (was && pct > was.pct) lane._sdMovedAt = Date.now();
-        const moving = lane._sdMovedAt && (Date.now() - lane._sdMovedAt) < 1500;
-        let g;
-        if (pct >= 100) g = 'done';
-        else if (rank === 1 && pct > 0) g = 'leading';
-        else if (moving) g = 'running';
-        else if (rank != null && rank > 1 && pct > 0) g = 'trailing';
-        else g = 'idle';
-        if (ghost.dataset.ghost !== g) ghost.dataset.ghost = g;
-      }
 
       curr[lane.dataset.pid] = { pct: pct, rank: rank };
 
@@ -3113,26 +3104,15 @@
           ? '<span class="sd-lb-correct">' + pct + '%</span>' +
             (elapsed != null ? '<span class="sd-lb-time">' + fmtTime(elapsed) + '</span>' : '')
           : '<span class="sd-lb-dnf">DNF</span><span class="sd-lb-correct">' + pct + '%</span>';
-        /* Kiro on the podium. The ghost carried the whole race on the progress bar
-         * and then vanished at the one moment players actually screenshot, which
-         * made the results card read as a different product. Top three only — a
-         * ghost on every row down to 5th is noise, not a reward. Reuses the
-         * progress-bar art and its data-ghost states, so the winner's sparkle here
-         * is literally the same frame they were chasing. */
-        const ghost = i < 3
-          ? '<span class="sd-lb-ghost" data-ghost="' +
-            (isWin ? 'leading' : finished ? 'running' : 'trailing') + '" aria-hidden="true"></span>'
-          : '';
         /* The highlight marks YOU, not the winner. Every player at the booth looks at
          * their own laptop and the first question is "which one am I?" — the winner
          * is already named by the headline, the crown, the centre plate and the
-         * sparkle ghost. A tag instead of a " (you)" suffix: on a 3-up plate the
+         * top rank. A tag instead of a " (you)" suffix: on a 3-up plate the
          * suffix ate the name's width and truncated it. */
         const youTag = isMe ? '<span class="sd-lb-you">You</span>' : '';
         return '<li class="sd-lb-row' + (isMe ? ' sd-lb-row--me' : '') + (isWin ? ' sd-lb-row--win' : '') +
           '" data-pid="' + escapeHtml(r.player_id || '') + '"' + (isMe ? ' aria-current="true"' : '') + '>' +
           youTag +
-          ghost +
           '<span class="sd-lb-rank">' + rank + '</span>' +
           '<span class="sd-lb-name">' + escapeHtml(sdName(r, dup)) + '</span>' +
           '<span class="sd-lb-stats">' + stats + '</span>' +

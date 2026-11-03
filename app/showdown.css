@@ -786,50 +786,36 @@ img, svg { display: block; max-width: 100%; }
           mask-image: linear-gradient(to bottom, #000 calc(100% - 6px), transparent);
 }
 
-/* Lane columns: ghost | name | dots | done-flag.
+/* Lane columns: position | name | dots | status.
    The name column was a hard 88px, which ellipsised at ~8 characters. 132px fits
    a 12-char name (the join input's cap) at this type size without pushing the
    dots off a half-width booth pane. */
 .sd-pg-player {
   position: relative;
-  display: grid; grid-template-columns: 30px 132px minmax(0, 1fr) auto;
+  display: grid; grid-template-columns: 22px 132px minmax(0, 1fr) 40px;
   align-items: center; gap: 10px;
   padding: 6px 8px;
   border: 1px solid transparent;
 }
 
-/* Ghost racer — state read from data-ghost, set per poll in renderRace().
-   GIFs are decorative; the lane's name + dots already carry the information, so
-   these are aria-hidden and collapse to a static frame under reduced motion. */
-.sd-pg-ghost {
-  width: 30px; height: 30px;
-  background-repeat: no-repeat; background-position: center bottom; background-size: contain;
-  image-rendering: pixelated;
-  /* No scaleX flip — the source GIFs already face right, which is the direction
-     of travel along the dot track. */
+/* Position and status replaced the ghost racers on 2026-10-29: the ghost is Kiro's
+   mark, and the Kiro brand guidelines govern every use of it. Position is the
+   server's rank; status is puzzles solved ("3/5"), then "Done". Both are tabular
+   so the column doesn't twitch as numbers change. */
+.sd-pg-pos {
+  color: var(--text-muted);
+  font: 700 14px/1 var(--font-display); font-variant-numeric: tabular-nums;
+  text-align: center;
 }
-/* The ghost art is white with a light outline — drawn for the dark ground. On the
-   light theme it all but disappears, so give it an edge. drop-shadow follows the
-   GIF's alpha, so this outlines the sprite itself rather than boxing it. */
-.sd-theme-light .sd-pg-ghost,
-.sd-theme-light .sd-lb-ghost {
-  filter: drop-shadow(0 0 1px rgba(26, 18, 38, .85))
-          drop-shadow(0 1px 2px rgba(26, 18, 38, .35));
+.sd-pg-player--me .sd-pg-pos { color: var(--mode-color); }
+.sd-pg-leader .sd-pg-pos { color: var(--text); }
+.sd-pg-status {
+  color: var(--text-secondary);
+  font: 700 11px/1 var(--font-display); font-variant-numeric: tabular-nums;
+  letter-spacing: .04em; text-align: right; text-transform: uppercase;
 }
+.sd-pg-status.is-done { color: var(--success); }
 
-/* One art map for both places a ghost appears: the race lanes and the results
-   podium (.sd-lb-ghost). Keeping them on the same selector list is what guarantees
-   the winner's sparkle on the podium is the identical frame they were chasing. */
-.sd-pg-ghost[data-ghost="idle"],
-.sd-lb-ghost[data-ghost="idle"]     { background-image: url("assets/showdown/ghost_sleep_idle.gif"); opacity: .55; }
-.sd-pg-ghost[data-ghost="running"],
-.sd-lb-ghost[data-ghost="running"]  { background-image: url("assets/showdown/ghost_run.gif"); }
-.sd-pg-ghost[data-ghost="leading"],
-.sd-lb-ghost[data-ghost="leading"]  { background-image: url("assets/showdown/ghost_sparkle_idle.gif"); }
-.sd-pg-ghost[data-ghost="trailing"],
-.sd-lb-ghost[data-ghost="trailing"] { background-image: url("assets/showdown/ghost_teary_idle.gif"); }
-.sd-pg-ghost[data-ghost="done"],
-.sd-lb-ghost[data-ghost="done"]     { background-image: url("assets/showdown/ghost_sparkle_idle.gif"); }
 /* Your own lane: hoisted to the top with order (NOT a DOM reorder — the server's
    rank order is rendered verbatim), and STUCK there. Once the panel scrolls, a
    player who is mid-table would otherwise scroll their own progress out of view,
@@ -861,13 +847,6 @@ img, svg { display: block; max-width: 100%; }
   transition: transform .18s ease-out;
 }
 .sd-pg-player--me .sd-pg-runner { background: var(--mode-color); }
-.sd-pg-flag {
-  display: inline-flex; align-items: center; gap: .3rem;
-  color: var(--success);
-  font: 700 9px/1 var(--font-display); letter-spacing: .06em; text-transform: uppercase;
-}
-.sd-pg-flag::before { content: ""; width: 6px; height: 6px; background: currentColor; }
-.sd-pg-flag[hidden] { display: none; }
 /* Leader marker - a subtle raised tint, no animated sheen/glow. */
 .sd-pg-leader:not(.sd-pg-player--me) { background: color-mix(in srgb, var(--mode-color) 8%, var(--panel)); }
 
@@ -1038,7 +1017,7 @@ img, svg { display: block; max-width: 100%; }
 @keyframes sd-lb-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
 /* Top three as tiered podium plates (rows pre-sorted best-first by JS). */
-/* 1st is marked by height, centre position and the sparkle ghost — deliberately
+/* 1st is marked by height, centre position and its rank — deliberately
    NOT by the mode colour, which is reserved for the viewer's own row below. */
 #results-board .sd-lb-row:nth-child(1) {
   grid-column: 2; grid-row: 1;
@@ -1059,19 +1038,6 @@ img, svg { display: block; max-width: 100%; }
   border-top: 3px solid var(--text-muted);
 }
 #results-board .sd-lb-row:nth-child(n+4) { grid-column: 1 / -1; }
-
-/* Kiro on the podium (JS injects .sd-lb-ghost on the top three only; the art map
-   lives with .sd-pg-ghost so both places stay in step). The champion's is larger
-   because the plate is taller — the ghost should read as standing ON the plate, and
-   a uniform size made 1st look emptier than 2nd. */
-.sd-lb-ghost {
-  width: 40px; height: 40px; flex: 0 0 auto;
-  background-repeat: no-repeat; background-position: center bottom; background-size: contain;
-  image-rendering: pixelated;
-}
-#results-board .sd-lb-row:nth-child(1) .sd-lb-ghost { width: 54px; height: 54px; }
-/* 4th and below are flat rows, where a sprite would just push the name around. */
-#results-board .sd-lb-row:nth-child(n+4) .sd-lb-ghost { display: none; }
 
 #results-board .sd-lb-row:nth-child(1) .sd-lb-rank { color: var(--text); font-size: 30px; }
 #results-board .sd-lb-row:nth-child(2) .sd-lb-rank { color: var(--text-secondary); font-size: 24px; }
@@ -1672,9 +1638,8 @@ img, svg { display: block; max-width: 100%; }
     max-height: 168px;
   }
   .sd-progress-panel:has(> .sd-pg-player:nth-child(4)) .sd-pg-player {
-    grid-template-columns: 26px minmax(0, 1fr) auto auto; gap: 8px;
+    grid-template-columns: 20px minmax(0, 1fr) auto 36px; gap: 8px;
   }
-  .sd-progress-panel:has(> .sd-pg-player:nth-child(4)) .sd-pg-ghost { width: 26px; height: 26px; }
   .sd-screen--play > .sd-play-bar,
   .sd-screen--play > .sd-progress-panel,
   .sd-screen--play > .sd-puzzle-wrap { max-width: 640px; }
@@ -1714,8 +1679,6 @@ img, svg { display: block; max-width: 100%; }
   #results-board .sd-lb-row:nth-child(2) { min-height: 86px; padding-top: 14px; }
   #results-board .sd-lb-row:nth-child(3) { min-height: 74px; padding-top: 14px; }
   #results-board .sd-lb-row:nth-child(n+4) { padding-top: 8px; padding-bottom: 8px; }
-  #results-board .sd-lb-row:nth-child(1) .sd-lb-ghost { width: 44px; height: 44px; }
-  .sd-lb-ghost { width: 34px; height: 34px; }
 }
 @media (max-height: 700px) {
   #play-mount .kpdlk-key { padding: 8px; }
