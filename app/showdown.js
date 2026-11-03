@@ -175,7 +175,7 @@
     // never depended on this map (it indexes BANK_INDEX[winning_category]).
     { id: 'FrugalArchitect',     label: 'Frugal Architect',      icon: '💰' },
     // AWS Cloud & AI Day Kuala Lumpur, 2026-11-04 (docs/quiz-mode-question-bank-my2026.json).
-    { id: 'malaysia-aws',        label: 'Malaysia & AWS',        icon: '🇲🇾' },
+    { id: 'malaysia-aws',        label: 'Malaysia & AWS',        icon: '🌺' },   // Hibiscus, the national flower
     { id: 'well-architected',    label: 'Well-Architected',      icon: '🏛️' },
     { id: 'cio-playbook',        label: 'The CIO’s Playbook',    icon: '📘' },
   ];
@@ -191,7 +191,7 @@
     'startups-innovation': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c3.5 3 5 7 5 11l-2 3H9l-2-3c0-4 1.5-8 5-11z"/><path d="M9 18l3 4 3-4z"/></svg>',
     'cloud-fundamentals': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h11v16H7a2 2 0 0 0-2 2V4a2 2 0 0 1 2-2zm0 16h9v2H7a1 1 0 0 1 0-2z"/></svg>',
     'FrugalArchitect': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 3.2c.5 0 .9.4.9.9v.6c1.4.2 2.5 1 2.8 2.2a.9.9 0 0 1-1.7.5c-.2-.6-.9-1-1.9-1-1.1 0-1.8.5-1.8 1.1 0 .5.4.8 1.9 1.1 1.9.4 3.4 1 3.4 2.8 0 1.4-1.1 2.3-2.7 2.5v.6a.9.9 0 0 1-1.8 0v-.6c-1.5-.2-2.6-1-3-2.2a.9.9 0 0 1 1.7-.6c.2.7 1 1.1 2.1 1.1 1.2 0 1.9-.5 1.9-1.1 0-.6-.5-.9-2-1.2-1.8-.4-3.3-1-3.3-2.7 0-1.3 1-2.2 2.6-2.5v-.6c0-.5.4-.9.9-.9z"/></svg>',
-    'malaysia-aws': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 3.2a8.8 8.8 0 1 0 6.9 14.4A7.2 7.2 0 1 1 13.5 3.2z"/><path d="M18 7.2l.9 1.9 2.1.2-1.6 1.4.5 2.1-1.9-1.1-1.9 1.1.5-2.1-1.6-1.4 2.1-.2z"/></svg>',
+    'malaysia-aws': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><defs><mask id="sd-hibiscus"><rect width="24" height="24" fill="#fff"/><circle cx="12" cy="12" r="2.1" fill="#000"/><path d="M12.4 11.4L19.2 4.6" stroke="#000" stroke-width="2.4" stroke-linecap="round"/></mask></defs><g mask="url(#sd-hibiscus)"><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(0 12 12)"/><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(72 12 12)"/><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(144 12 12)"/><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(216 12 12)"/><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(288 12 12)"/></g><path d="M12.6 11.2L18.4 5.4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="19.4" cy="4.4" r="1.25"/><circle cx="20.9" cy="6.3" r=".8"/><circle cx="17.6" cy="2.9" r=".8"/></svg>',  // Hibiscus (bunga raya), Malaysia's national flower
     'well-architected': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5L2.5 7.5v1.5h19V7.5z"/><rect x="4.5" y="10.5" width="2.6" height="7.5"/><rect x="10.7" y="10.5" width="2.6" height="7.5"/><rect x="16.9" y="10.5" width="2.6" height="7.5"/><rect x="2.5" y="19.5" width="19" height="2"/></svg>',
     'cio-playbook': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3h10a3 3 0 0 1 3 3v15H7a2 2 0 0 1-2-2V3zm2 15v1h9v-1H7z"/><path d="M19 6h1v15h-1z"/></svg>',
   };
