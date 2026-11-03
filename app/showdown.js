@@ -394,7 +394,7 @@
   // offline ballot shows what the event will. CATEGORIES above stays the full
   // label registry, because a live bank may carry any of them.
   const MOCK_CATEGORIES = ['agentic-ai', 'aws-core-services', 'security',
-    'malaysia-aws', 'well-architected', 'cio-playbook'];
+    'malaysia-aws', 'well-architected'];   // cio-playbook removed upstream (d9e8138)
 
   // REAL bank ids per type for the winning category (agentic-ai). Mixed shapes
   // so P4 exercises: mcq decoys→options, pillar True/False, spelling multi-word.
@@ -932,8 +932,9 @@
         break;
       case 'completed': {
         const reveal = () => { showScreen('results'); renderResults(standings); };
-        // The recommend question comes BEFORE the score (FRONTEND.md step 4).
-        if (!askRecommendThen(reveal)) reveal();
+        // The recommend question comes BEFORE the score (FRONTEND.md step 4),
+        // unless this player already answered it when they finished.
+        revealResultsAfterRecommend(reveal);
         break;
       }
       default:
@@ -966,6 +967,7 @@
   const FEEDBACK_API = 'https://xsf33zo179.execute-api.ap-southeast-5.amazonaws.com';
   const SS_PLAY_ID = 'sd_play_id';
   const SS_KIRO_ANSWER = 'sd_kiro_answer';   // set on answer: a refresh must not re-ask
+  const SS_RECO_DONE = 'sd_reco_done';       // same for the recommend question
 
   const ssGet = (k) => { try { return sessionStorage.getItem(k); } catch { return null; } };
   const ssSet = (k, v) => { try { sessionStorage.setItem(k, v); } catch { /* storage off */ } };
@@ -1114,39 +1116,57 @@
   // blocked by a compulsory panel. Honoured in mock mode alone, so a real race can
   // never be configured to skip the questions.
   const NO_FEEDBACK = MOCK && params.get('nofeedback') === '1';
-  function askKiro() {
-    if (NO_FEEDBACK || ssGet(SS_KIRO_ANSWER) || (askOpen && askOpen.kind === 'kiro')) return;
+  /* Asked BEFORE the name (Jaz, 2026-11-04): it opens the moment the name step
+   * appears, over the name box, so nobody can key a name without answering. The
+   * answer is stored now and registered together with the name at submit
+   * (POST /plays needs both). */
+  function askKiro(after) {
+    if (NO_FEEDBACK || ssGet(SS_KIRO_ANSWER) || (askOpen && askOpen.kind === 'kiro')) { if (after) after(); return; }
     openAsk({
       kind: 'kiro',
       eyebrow: 'Quick question',
       question: 'Do you know Kiro?',
       min: 1, max: 5,
       lowLabel: 'Never heard of it', highLabel: 'I use it',
-      note: 'One tap, then you’re in.',
-      thanks: 'Thanks — you’re in.',
-      onAnswer: (v) => { ssSet(SS_KIRO_ANSWER, String(v)); ensureRegistered(); },
+      note: 'One tap, then enter your name.',
+      thanks: 'Thanks!',
+      onAnswer: (v) => { ssSet(SS_KIRO_ANSWER, String(v)); },
+      onClose: () => { if (after) after(); },
     });
   }
 
-  // Returns true when the recommend panel took over (results revealed on close).
+  /* Recommend: asked when the player's OWN game ends (Jaz, 2026-11-04):
+   *   - they crack all five locks  → asked straight away, then the spectator card;
+   *   - the round ends first (time up, or the host stops it) → asked before results.
+   * Once per player per round. If the round ends while the panel is still open
+   * (a finisher who hasn't tapped yet), the results wait for the tap. */
   let recoAsked = false;
-  function askRecommendThen(reveal) {
-    // Asked of everyone who answered the Kiro question (i.e. everyone who joined
-    // through the name screen), whether or not that answer reached the backend yet.
-    if (recoAsked || !(ssGet(SS_PLAY_ID) || ssGet(SS_KIRO_ANSWER))) return false;
+  let recoThen = null;          // what to reveal when the panel closes
+  function askRecommend(ctx, then) {
+    // Everyone who answered the Kiro question, whether or not that answer reached
+    // the backend yet (submitRecommend re-registers first if it didn't).
+    if (recoAsked || ssGet(SS_RECO_DONE) || !(ssGet(SS_PLAY_ID) || ssGet(SS_KIRO_ANSWER))) return false;
     recoAsked = true;
+    recoThen = then || null;
+    const finished = ctx === 'finished';
     openAsk({
       kind: 'recommend',
-      eyebrow: 'Before your results',
+      eyebrow: finished ? 'You finished!' : 'Before your results',
       question: 'How likely are you to recommend re:Solve to a friend?',
       min: 1, max: 10,
       lowLabel: 'Not likely', highLabel: 'Very likely',
-      note: 'One tap, then your score.',
-      thanks: 'Thanks! Here’s your score…',
-      onAnswer: (v) => { submitRecommend(v); },
-      onClose: () => { reveal(); },
+      note: finished ? 'One tap, then watch the rest of the race.' : 'One tap, then your score.',
+      thanks: finished ? 'Thanks!' : 'Thanks! Here’s your score…',
+      onAnswer: (v) => { ssSet(SS_RECO_DONE, '1'); submitRecommend(v); },
+      onClose: () => { const f = recoThen; recoThen = null; if (f) f(); },
     });
     return true;
+  }
+  // Round over. Ask now if not asked yet; if the panel is already open, the results
+  // reveal when it closes; otherwise reveal straight away.
+  function revealResultsAfterRecommend(reveal) {
+    if (askOpen && askOpen.kind === 'recommend') { recoThen = reveal; return; }
+    if (!askRecommend('ended', reveal)) reveal();
   }
 
   /* ══════════════════════════ SCREEN 1 · JOIN (P1) ════════════════ */
@@ -1513,7 +1533,8 @@
     showJoinButton(true);
     if (errEl) errEl.textContent = '';
     if (form) form.onsubmit = onNameSubmit;
-    if (nameInput && typeof nameInput.focus === 'function') nameInput.focus();
+    // Kiro question first; the name box gets focus once it's answered.
+    askKiro(() => { if (nameInput && typeof nameInput.focus === 'function') nameInput.focus(); });
   }
 
   // Submit just captures the name and defers to tryFireJoin (single join path).
@@ -1527,8 +1548,8 @@
     if (errEl) errEl.textContent = '';
     state.displayName = name;
     pendingJoinName = name;
-    tryFireJoin();   // the seat join runs underneath — the question never delays it
-    askKiro();
+    tryFireJoin();
+    ensureRegistered();   // POST /plays with this name + the Kiro answer given before it
   }
 
   // The ONE place that POSTs /players. Fires immediately when a session_id is
@@ -2089,7 +2110,10 @@
       state.puzzleIndex = Math.min(resume, slots.length - 1);
       if (resume >= slots.length) {
         // Already finished everything — spectate until the server flips to completed.
-        enterFinishedWaiting(standings);
+        // (Was `enterFinishedWaiting(standings)`: no `standings` exists in this
+        // function, so a finisher who refreshed hit a ReferenceError and got the
+        // load-error panel instead of the spectator card. Live since 2026-09-22.)
+        enterFinishedWaiting(state.standings);
       } else {
         if (resume > 0) console.info('[showdown] resuming at puzzle ' + (resume + 1) + '/' + slots.length);
         renderPuzzle();
@@ -2852,6 +2876,7 @@
   // Enter the finished-and-waiting state (arms the per-poll refresh above).
   function enterFinishedWaiting(standings) {
     state._finishedWaiting = true;
+    askRecommend('finished');   // their own game is over: ask now (once; no-op after)
     const q = $('play-question');
     if (q) q.textContent = 'All five locks cracked. You’re in — watching the rest of the race…';
     renderFinishedWaiting(standings || state._lastStandings);
@@ -3235,7 +3260,7 @@
     // round (no-op against the live backend).
     try { sessionStorage.removeItem('sd_mock_claimAt'); sessionStorage.removeItem('sd_mock_progress'); } catch {}
     // A new player may be next: drop the feedback identity so they are asked fresh.
-    ssDel(SS_PLAY_ID); ssDel(SS_KIRO_ANSWER);
+    ssDel(SS_PLAY_ID); ssDel(SS_KIRO_ANSWER); ssDel(SS_RECO_DONE);
     location.reload();
   }
 
