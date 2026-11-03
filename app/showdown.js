@@ -137,7 +137,7 @@
 
   // Same-origin, versioned bank asset (SSOT §5). Tracks app/VERSION for the
   // ?v= cache-bust convention (NOT bumped by this task — local only).
-  const BANK_VERSION = '18';
+  const BANK_VERSION = '19';
   // The bundled FALLBACK copy, under app/showdown/ (2026-09-21: app/data/ was not
   // reliably on S3). Since 2026-10-13 it is a deploy-time copy of LIVE_BANK_URL,
   // not an independent source. ?v= is BANK_VERSION, bumped by deploy-showdown.sh.
@@ -175,7 +175,7 @@
     // never depended on this map (it indexes BANK_INDEX[winning_category]).
     { id: 'FrugalArchitect',     label: 'Frugal Architect',      icon: '💰' },
     // AWS Cloud & AI Day Kuala Lumpur, 2026-11-04 (docs/quiz-mode-question-bank-my2026.json).
-    { id: 'malaysia-aws',        label: 'Malaysia & AWS',        icon: '🇲🇾' },
+    { id: 'malaysia-aws',        label: 'Malaysia & AWS',        icon: '🌺' },   // Hibiscus, the national flower
     { id: 'well-architected',    label: 'Well-Architected',      icon: '🏛️' },
     { id: 'cio-playbook',        label: 'The CIO’s Playbook',    icon: '📘' },
   ];
@@ -191,7 +191,7 @@
     'startups-innovation': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c3.5 3 5 7 5 11l-2 3H9l-2-3c0-4 1.5-8 5-11z"/><path d="M9 18l3 4 3-4z"/></svg>',
     'cloud-fundamentals': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h11v16H7a2 2 0 0 0-2 2V4a2 2 0 0 1 2-2zm0 16h9v2H7a1 1 0 0 1 0-2z"/></svg>',
     'FrugalArchitect': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 3.2c.5 0 .9.4.9.9v.6c1.4.2 2.5 1 2.8 2.2a.9.9 0 0 1-1.7.5c-.2-.6-.9-1-1.9-1-1.1 0-1.8.5-1.8 1.1 0 .5.4.8 1.9 1.1 1.9.4 3.4 1 3.4 2.8 0 1.4-1.1 2.3-2.7 2.5v.6a.9.9 0 0 1-1.8 0v-.6c-1.5-.2-2.6-1-3-2.2a.9.9 0 0 1 1.7-.6c.2.7 1 1.1 2.1 1.1 1.2 0 1.9-.5 1.9-1.1 0-.6-.5-.9-2-1.2-1.8-.4-3.3-1-3.3-2.7 0-1.3 1-2.2 2.6-2.5v-.6c0-.5.4-.9.9-.9z"/></svg>',
-    'malaysia-aws': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 3.2a8.8 8.8 0 1 0 6.9 14.4A7.2 7.2 0 1 1 13.5 3.2z"/><path d="M18 7.2l.9 1.9 2.1.2-1.6 1.4.5 2.1-1.9-1.1-1.9 1.1.5-2.1-1.6-1.4 2.1-.2z"/></svg>',
+    'malaysia-aws': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><defs><mask id="sd-hibiscus"><rect width="24" height="24" fill="#fff"/><circle cx="12" cy="12" r="2.1" fill="#000"/><path d="M12.4 11.4L19.2 4.6" stroke="#000" stroke-width="2.4" stroke-linecap="round"/></mask></defs><g mask="url(#sd-hibiscus)"><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(0 12 12)"/><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(72 12 12)"/><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(144 12 12)"/><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(216 12 12)"/><ellipse cx="12" cy="6.7" rx="4.3" ry="5.3" transform="rotate(288 12 12)"/></g><path d="M12.6 11.2L18.4 5.4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="19.4" cy="4.4" r="1.25"/><circle cx="20.9" cy="6.3" r=".8"/><circle cx="17.6" cy="2.9" r=".8"/></svg>',  // Hibiscus (bunga raya), Malaysia's national flower
     'well-architected': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5L2.5 7.5v1.5h19V7.5z"/><rect x="4.5" y="10.5" width="2.6" height="7.5"/><rect x="10.7" y="10.5" width="2.6" height="7.5"/><rect x="16.9" y="10.5" width="2.6" height="7.5"/><rect x="2.5" y="19.5" width="19" height="2"/></svg>',
     'cio-playbook': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3h10a3 3 0 0 1 3 3v15H7a2 2 0 0 1-2-2V3zm2 15v1h9v-1H7z"/><path d="M19 6h1v15h-1z"/></svg>',
   };
@@ -2940,10 +2940,13 @@
         for (let i = 0; i < pc; i++) dots += '<span class="sd-pg-dot"></span>';
         return '<span class="sd-pg-player' + (isMe ? ' sd-pg-player--me' : '') +
           '" data-pid="' + escapeHtml(r.player_id || '') + '">' +
-          '<span class="sd-pg-ghost" data-ghost="idle" aria-hidden="true"></span>' +
+          /* Position + status instead of the ghost racers (2026-10-29): the ghost is
+           * Kiro's mark and its brand guidelines govern every use of it. The race
+           * reads from the position and the status anyway. */
+          '<span class="sd-pg-pos" aria-label="position">\u2013</span>' +
           '<span class="sd-pg-name">' + escapeHtml(sdName(r, dup)) + (isMe ? ' (you)' : '') + '</span>' +
           '<span class="sd-pg-dots"><span class="sd-pg-runner"></span>' + dots + '</span>' +
-          '<span class="sd-pg-flag" hidden>Done</span>' +
+          '<span class="sd-pg-status">0/' + pc + '</span>' +
           '</span>';
       }).join('');
     }
@@ -2977,33 +2980,21 @@
       const solved = Math.round(pct / 100 * pc);
       lane.style.setProperty('--solved', solved);
       lane.querySelectorAll('.sd-pg-dot').forEach((d, i) => d.classList.toggle('is-filled', i < solved));
-      const flag = lane.querySelector('.sd-pg-flag');
-      if (flag) flag.hidden = pct < 100;
+      const pos = lane.querySelector('.sd-pg-pos');
+      if (pos) pos.textContent = rank != null ? String(rank) : '\u2013';
+      const status = lane.querySelector('.sd-pg-status');
+      if (status) {
+        const done = pct >= 100;
+        const text = done ? 'Done' : solved + '/' + pc;
+        if (status.textContent !== text) status.textContent = text;
+        status.classList.toggle('is-done', done);
+      }
 
       // A4 — LEADER shimmer: persistent gold sheen on the current 1st place
       // (collapses to a static gold tint under reduced motion, via CSS).
       lane.classList.toggle('sd-pg-leader', rank === 1);
 
-      /* Ghost racer state. Priority: done > leading > trailing > running > idle.
-       * "running" needs a movement signal, so it holds for ~1.5s after a solve
-       * rather than only on the poll where pct changed — otherwise the run cycle
-       * would flicker for a single frame every few questions. "trailing" only
-       * applies once someone is actually ahead (rank > 1 and any progress made),
-       * so nobody gets the teary ghost merely for being at 0% on the start line. */
       const was = prev && prev[lane.dataset.pid];
-
-      const ghost = lane.querySelector('.sd-pg-ghost');
-      if (ghost) {
-        if (was && pct > was.pct) lane._sdMovedAt = Date.now();
-        const moving = lane._sdMovedAt && (Date.now() - lane._sdMovedAt) < 1500;
-        let g;
-        if (pct >= 100) g = 'done';
-        else if (rank === 1 && pct > 0) g = 'leading';
-        else if (moving) g = 'running';
-        else if (rank != null && rank > 1 && pct > 0) g = 'trailing';
-        else g = 'idle';
-        if (ghost.dataset.ghost !== g) ghost.dataset.ghost = g;
-      }
 
       curr[lane.dataset.pid] = { pct: pct, rank: rank };
 
@@ -3113,26 +3104,15 @@
           ? '<span class="sd-lb-correct">' + pct + '%</span>' +
             (elapsed != null ? '<span class="sd-lb-time">' + fmtTime(elapsed) + '</span>' : '')
           : '<span class="sd-lb-dnf">DNF</span><span class="sd-lb-correct">' + pct + '%</span>';
-        /* Kiro on the podium. The ghost carried the whole race on the progress bar
-         * and then vanished at the one moment players actually screenshot, which
-         * made the results card read as a different product. Top three only — a
-         * ghost on every row down to 5th is noise, not a reward. Reuses the
-         * progress-bar art and its data-ghost states, so the winner's sparkle here
-         * is literally the same frame they were chasing. */
-        const ghost = i < 3
-          ? '<span class="sd-lb-ghost" data-ghost="' +
-            (isWin ? 'leading' : finished ? 'running' : 'trailing') + '" aria-hidden="true"></span>'
-          : '';
         /* The highlight marks YOU, not the winner. Every player at the booth looks at
          * their own laptop and the first question is "which one am I?" — the winner
          * is already named by the headline, the crown, the centre plate and the
-         * sparkle ghost. A tag instead of a " (you)" suffix: on a 3-up plate the
+         * top rank. A tag instead of a " (you)" suffix: on a 3-up plate the
          * suffix ate the name's width and truncated it. */
         const youTag = isMe ? '<span class="sd-lb-you">You</span>' : '';
         return '<li class="sd-lb-row' + (isMe ? ' sd-lb-row--me' : '') + (isWin ? ' sd-lb-row--win' : '') +
           '" data-pid="' + escapeHtml(r.player_id || '') + '"' + (isMe ? ' aria-current="true"' : '') + '>' +
           youTag +
-          ghost +
           '<span class="sd-lb-rank">' + rank + '</span>' +
           '<span class="sd-lb-name">' + escapeHtml(sdName(r, dup)) + '</span>' +
           '<span class="sd-lb-stats">' + stats + '</span>' +
